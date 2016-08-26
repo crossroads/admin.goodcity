@@ -1,6 +1,7 @@
 .receive-list {
+  margin-left: 0rem;
   > li {
-    border-top: $light-blue solid 1px;
+    list-style: none;
     border-bottom: $light-blue solid 1px;
     margin: 10px 0px;
     position: relative;
@@ -26,6 +27,26 @@
     padding: 3px 0 3px 10px;
     background-color: #23416A;
   }
+  .package-missing {
+    background-color: black;
+  }
+  .package-received {
+    background-color: #428bca;
+  }
+  .package-expecting {
+    background-color: #6fab4a;
+  }
+  .package-description {
+    padding: 10px 0 0 20px;
+  }
+  .location-name {
+    text-align: center;
+    word-break: break-all;
+    left: 1rem;
+  }
+  .inventory-number {
+    text-align: right;
+  }
   .sep {
     clear: both;
     + div {
@@ -38,6 +59,10 @@
     width: 100%;
     max-width: 400px;
     right: 0;
+    top: 1.8rem;
+    @media #{$small-only} {
+      top: 1.5rem;
+    }
     > div {
       display: table-cell;
       width: 25%;
@@ -70,7 +95,7 @@
   }
   .options-link-open {
     right: 0;
-    height: 89px;
+    height: 26px;
     display: flex;
     align-items: center;
   }

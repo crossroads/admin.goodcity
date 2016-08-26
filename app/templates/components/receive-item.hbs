@@ -4,16 +4,38 @@
 
 {{#each packages as |package idx|}}
   <div>
-    <div class="package-name">
-      {{package.quantity}}x
-      {{package.packageName}}
+    <div class="package-name package-{{pState}}">
+      <div class="small-3 columns">
+        {{#if (is-equal pState "missing")}}
+          <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+        {{/if}}
+        {{capitalize-string pState}}
+      </div>
+      <div class="small-5 columns location-name">
+        <i class="fa fa-map-marker"></i>
+        {{#if package.inventoryNumber}}
+          {{package.location.name}}
+        {{else}}
+          NA
+        {{/if}}
+      </div>
+      <div class="small-4 columns inventory-number">
+        <i class="fa {{if item.isSet 'fa-tags' 'fa-tag'}}"></i>
+        {{#if package.inventoryNumber}}
+          {{package.inventoryNumber}}
+        {{else}}
+          NA
+        {{/if}}
+      </div>
     </div>
     <img src="{{package.displayImageUrl}}" />
-    <div>
+    <div class="package-description">
+      <div class="ellipsis name one-line-ellipsis">{{package.quantity}} x {{package.packageName}}</div>
       {{receive-menu packageId=package.id}}
-      {{js-or package.notes item.donorDescription}}
-
-      <br/><br/>
+      <div class="ellipsis two-line-ellipsis">
+        {{js-or package.notes item.donorDescription}}
+      </div>
+      <br/>
       {{package.dimensions}}
     </div>
   </div>
