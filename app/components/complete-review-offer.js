@@ -73,9 +73,17 @@ export default Ember.Component.extend({
       }
 
       var loadingView = getOwner(this).lookup('component:loading').append();
+      var beginIndex = completeReviewMessage.indexOf("[")+1;
+      var endIndex   = completeReviewMessage.indexOf("]");
+      var url_with_text = completeReviewMessage.slice(beginIndex, endIndex);
+      var url_text_begin = url_with_text.indexOf("|");
+      var url_text = url_with_text.slice(0, url_text_begin);
+      var url_for = url_with_text.slice(url_text_begin+1);
+
       var url = `/offers/${offerId}/${action}`;
 
-      completeReviewMessage = completeReviewMessage.replace("[click_here(transport_page)]",`<a href='/offers/${offerId}/plan_delivery'>${this.get("i18n").t("customized_variables.click_here")}</a>`);
+      completeReviewMessage = completeReviewMessage.replace("["+url_with_text+"]",`<a href='/offers/${offerId}/plan_delivery'>${url_text}</a>`);
+
 
       new AjaxPromise(url, "PUT", this.get('session.authToken'), {offer: offerProperties, complete_review_message: completeReviewMessage})
         .then(data => {

@@ -173,7 +173,7 @@ I18nTranslationsZhTw =
       "van": "麵包車"
       "receiving" : "正在接收這項捐獻"
       "offer_cancelled_by": "這項捐獻由 {{lastName}} {{firstName}} 取消"
-      "complete_review_message": "正在審查閣下的捐獻項目， 請 [click_here(transport_page)] 安排遞送服務。"
+      "complete_review_message": "正在審查閣下的捐獻項目， 請 [click_here|transport_page] 安排遞送服務。"
       "choose_ggv_option": "選擇GoGoVan租賃服務"
       "finished_review": "完成審查了嗎？"
       "add_message_to_donor": "聯絡捐款人："
