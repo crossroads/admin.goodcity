@@ -73,9 +73,7 @@ export default Ember.Component.extend({
       }
 
       var loadingView = getOwner(this).lookup('component:loading').append();
-      var beginIndex = completeReviewMessage.indexOf("[")+1;
-      var endIndex   = completeReviewMessage.indexOf("]");
-      var url_with_text = completeReviewMessage.slice(beginIndex, endIndex);
+      var url_with_text = completeReviewMessage.slice(completeReviewMessage.indexOf("[")+1, completeReviewMessage.indexOf("]"));
       var url_text_begin = url_with_text.indexOf("|");
       var url_text = url_with_text.slice(0, url_text_begin);
       var url_for = url_with_text.slice(url_text_begin+1);
