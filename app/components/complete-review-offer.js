@@ -77,13 +77,11 @@ export default Ember.Component.extend({
       var url_text_begin = url_with_text.indexOf("|");
       var url_text = url_with_text.slice(0, url_text_begin);
       var url_for = url_with_text.slice(url_text_begin+1);
-
       var url = `/offers/${offerId}/${action}`;
 
       if(url_for === 'transport_page'){
         completeReviewMessage = completeReviewMessage.replace("["+url_with_text+"]",`<a href='/offers/${offerId}/plan_delivery'>${url_text}</a>`);
       }
-
 
       new AjaxPromise(url, "PUT", this.get('session.authToken'), {offer: offerProperties, complete_review_message: completeReviewMessage})
         .then(data => {
