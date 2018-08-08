@@ -8,6 +8,25 @@ platform :ios do
     COPYRIGHT = "#{Time.now.year} Crossroads Foundation Limited"
   end
 
+  lane :prepare_certificates do |options|
+
+    sh("base64 -D -o Certificates.p12 <<< \"#{options[:cert]}\"", log: false)
+    create_keychain(
+        name: "default_keychain",
+        default_keychain: true,
+        unlock: true,
+        password: ENV['KEYCHAIN_PWD']
+    )
+    import_certificate(
+      certificate_path: "fastlane/Certificates.p12",
+      certificate_password: ENV['CERTIFICATE_PASSWORD'],
+      keychain_name: "default_keychain",
+      keychain_password: ENV['KEYCHAIN_PWD']
+    )
+    unlock_keychain(path:"default_keychain", password:ENV['KEYCHAIN_PWD'])
+    sh "security set-keychain-settings -t 3600 -l ~/Library/Keychains/default_keychain-db"
+  end
+
   desc "Generate staging build (just upload to TestFairy)"
   lane :staging do
     raise_if_no_env_var(["FL_TESTFAIRY_API_KEY"])
@@ -54,7 +73,7 @@ platform :android do
 
   desc "Generate staging build (just upload to TestFairy)"
   lane :staging do
-    raise_if_no_env_var(["FL_TESTFAIRY_API_KEY"])
+    raise_if_no_env_var(["FL_TESTFAIRY_API_KEY", "TESTFAIRY_IPA_PATH"])
     testfairy
   end
 
