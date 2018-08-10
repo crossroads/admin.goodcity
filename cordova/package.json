@@ -1,0 +1,17 @@
+{
+  "name": "hk.goodcity.adminstaging",
+  "version": "0.14.017",
+  "displayName": "S. Admin GoodCity",
+  "cordova": {
+    "platforms": [
+      "ios",
+      "android",
+      "windows"
+    ]
+  },
+  "dependencies": {
+    "cordova-ios": "https://github.com/apache/cordova-ios.git#4.5.5",
+    "cordova-android": "~5.1.1",
+    "cordova-windows": "~4.3.1"
+  }
+}
