@@ -111,6 +111,6 @@
     <plugin name="cordova-plugin-ios-no-export-compliance" spec="https://github.com/mikaoelitiana/cordova-plugin-ios-no-export-compliance.git" />
     <plugin name="com.phonegap.plugins.twilioclient" spec="https://github.com/crossroads/twilio_client_phonegap.git" />
     <engine name="ios" spec="https://github.com/apache/cordova-ios.git#4.5.5" />
-    <engine name="android" spec="~5.1.1" />
+    <engine name="android" spec="~6.3.0" />
     <engine name="windows" spec="~4.3.1" />
 </widget>
