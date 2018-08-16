@@ -298,12 +298,12 @@ def ios_build_config
   team_id = ENV['IOS_DEVELOPMENT_TEAM_ID']
 
   if(environment === 'production')
-    provisioning_profile = ENV['PROVISIONING_PROFILE_PROD']
+    provisioning_profile = ENV['PROVISIONING_PROFILE_ADMIN_PROD']
     code_signing = IOS_RELEASEMODE_BUILDCONF[:code_signing]
     package_type = IOS_RELEASEMODE_BUILDCONF[:package_type]
     icloud_container_environment = IOS_RELEASEMODE_BUILDCONF[:icloud_container_environment]
   else
-    provisioning_profile = ENV['PROVISIONING_PROFILE_STAGING']
+    provisioning_profile = ENV['PROVISIONING_PROFILE_ADMIN_STAGING']
     code_signing = IOS_DEBUGMODE_BUILDCONF[:code_signing]
     package_type = IOS_DEBUGMODE_BUILDCONF[:package_type]
     icloud_container_environment = IOS_DEBUGMODE_BUILDCONF[:icloud_container_environment]
