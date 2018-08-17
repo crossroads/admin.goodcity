@@ -50,7 +50,7 @@ test:
 
 deployment:
   staging:
-    branch: master
+    branch: GCW-1996-xcode-upgrade
     commands:
       - bundle exec cap staging deploy
       - bundle exec rake staging android app:build
