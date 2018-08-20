@@ -48,7 +48,7 @@ TESTFAIRY_PLUGIN_NAME = "com.testfairy.cordova-plugin"
 SPLUNKMINT_PLUGIN_URL = "https://github.com/crossroads/cordova-plugin-splunkmint.git"
 KEYSTORE_FILE = "#{CORDOVA_PATH}/goodcity.keystore"
 BUILD_JSON_FILE = "#{CORDOVA_PATH}/build.json"
-
+IOS_SIGNING_STYLE = false
 IOS_DEBUGMODE_BUILDCONF = {
   code_signing: "\'iPhone Developer\'",
   package_type: 'development',
@@ -152,15 +152,6 @@ namespace :cordova do
       end
     end
   end
-  desc "Adding cordova cordova-gradle-release"
-  # task :install_relase do
-  #   sh %{ cd #{CORDOVA_PATH}; cordova-update-config --appname "#{app_name}" --appid #{app_id} --appversion #{app_version} }
-  #   Dir.chdir(CORDOVA_PATH) do
-  #     if platform == "android"
-
-  #     end
-  #   end
-  # end
   desc "Cordova build {platform}"
   task build: :prepare do
     Dir.chdir(CORDOVA_PATH) do
