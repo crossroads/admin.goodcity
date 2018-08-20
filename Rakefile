@@ -66,7 +66,7 @@ task default: %w(app:build)
 # Main namespace
 namespace :app do
   desc "Builds the app"
-  task build: %w(ember:install ember:build cordova:install cordova:prepare cordova:install_relase cordova:build)
+  task build: %w(ember:install ember:build cordova:install cordova:prepare cordova:build)
   desc "Uploads the app to TestFairy and Azure storage"
   task deploy: %w(testfairy:upload azure:upload)
   desc "Equivalent to rake app:build app:deploy"
@@ -142,6 +142,7 @@ namespace :cordova do
       system({"ENVIRONMENT" => environment}, "cordova prepare #{platform}")
       unless platform == "ios"
         sh %{ cordova plugin add #{SPLUNKMINT_PLUGIN_URL} --variable MINT_APIKEY="#{splunk_mint_key}" }
+        sh %{ cordova plugin add cordova-android-support-gradle-release --variable ANDROID_SUPPORT_VERSION=27 }
       end
     end
     if platform == "ios"
@@ -152,12 +153,14 @@ namespace :cordova do
     end
   end
   desc "Adding cordova cordova-gradle-release"
-  task :install_relase do
-    sh %{ cd #{CORDOVA_PATH}; cordova-update-config --appname "#{app_name}" --appid #{app_id} --appversion #{app_version} }
-    if platform == "android"
-      sh %{ cordova plugin add cordova-android-support-gradle-release --variable ANDROID_SUPPORT_VERSION=27 }
-    end
-  end
+  # task :install_relase do
+  #   sh %{ cd #{CORDOVA_PATH}; cordova-update-config --appname "#{app_name}" --appid #{app_id} --appversion #{app_version} }
+  #   Dir.chdir(CORDOVA_PATH) do
+  #     if platform == "android"
+
+  #     end
+  #   end
+  # end
   desc "Cordova build {platform}"
   task build: :prepare do
     Dir.chdir(CORDOVA_PATH) do
