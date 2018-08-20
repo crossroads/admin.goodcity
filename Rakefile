@@ -66,7 +66,7 @@ task default: %w(app:build)
 # Main namespace
 namespace :app do
   desc "Builds the app"
-  task build: %w(ember:install ember:build cordova:install cordova:prepare cordova:build)
+  task build: %w(ember:install ember:build cordova:install cordova:prepare cordova:install_relase cordova:build)
   desc "Uploads the app to TestFairy and Azure storage"
   task deploy: %w(testfairy:upload azure:upload)
   desc "Equivalent to rake app:build app:deploy"
@@ -149,6 +149,13 @@ namespace :cordova do
         sh %{ cordova plugin add #{TESTFAIRY_PLUGIN_URL} } if environment == "staging"
         sh %{ cordova plugin remove #{TESTFAIRY_PLUGIN_NAME}; true } if environment == "production"
       end
+    end
+  end
+  desc "Adding cordova cordova-gradle-release"
+  task :install_relase do
+    sh %{ cd #{CORDOVA_PATH}; cordova-update-config --appname "#{app_name}" --appid #{app_id} --appversion #{app_version} }
+    if platform == "android"
+      sh %{ cordova plugin add cordova-android-support-gradle-release --variable ANDROID_SUPPORT_VERSION=27 }
     end
   end
   desc "Cordova build {platform}"
