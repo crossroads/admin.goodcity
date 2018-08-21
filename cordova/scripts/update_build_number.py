@@ -21,8 +21,10 @@ import os
 import sys
 from xml.etree import ElementTree
 
+CONST_BUILD_NUMBER = "4"
+
 def get_circleci_build():
-    build_number = os.getenv('CIRCLE_BUILD_NUM')
+    build_number = CONST_BUILD_NUMBER + os.getenv('CIRCLE_BUILD_NUM')
     if not build_number:
         print "Missing build number, skip updating"
         sys.exit()
