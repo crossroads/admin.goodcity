@@ -89,8 +89,8 @@ export default Ember.Controller.extend({
               this.transitionToRoute(this.get("backLinkPath"));
             })
             .catch(error => { offer.rollback(); throw error; })
-            .finally(() => {loadingView.destroy();});
-        },this.get("i18n").t("not_now"), null);
+            .finally(() => {loadingView.destroy(); this.set("cancelByMe", false);});
+        },this.get("i18n").t("review_item.not_now"), null);
     },
 
     submitOffer() {
