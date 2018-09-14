@@ -13,7 +13,9 @@ export default SelectList.extend( {
     this._super(...arguments);
     if (!this.get('didUpdatedOnce') && this.get('pkg') !== null && this.get('pkg.item.packageType') !== null){
         var packageType = this.get('pkg.packageType') || this.get('pkg.item.packageType');
-        this.set('pkg.notes', packageType.get('name'));
+        if (this.get('pkg.notes') === packageType.get('name') || this.get('pkg.notes') === "") {
+          this.set('pkg.notes', packageType.get('name'));
+        }
         this.set('pkg.packageType', packageType);
       Ember.$("textarea#"+this.get('index')).val(this.get('pkg.notes'));
       this.set('didUpdatedOnce', false);
@@ -22,7 +24,6 @@ export default SelectList.extend( {
 
   didUpdate() {
     this._super(...arguments);
-    this.set('pkg.notes', this.get('pkg.packageType.name'));
     this.set('pkg.packageType', this.get('pkg.packageType'));
     this.set('didUpdatedOnce', true);
   },

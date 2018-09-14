@@ -48,6 +48,10 @@ export default DS.Model.extend({
     return this.get('packageType.name');
   }),
 
+  changedNotes: Ember.computed('notes', function(){
+    return this.get('notes');
+  }),
+
   packageTypeId:   Ember.computed.foreignKey('packageType.id'),
 
   packageTypeObject: Ember.computed('packageType', function(){
