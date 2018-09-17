@@ -79,7 +79,7 @@ test("Assign description same as the assigned Package Name for the first time", 
   visit("/offers/"+ offer.id +"/review_item/"+ item.id+"/accept");
 
   andThen(function() {
-    Ember.$('.label_input').click();
+    Ember.$('.search_label_input').click();
   });
 
   andThen(function() {
@@ -89,7 +89,7 @@ test("Assign description same as the assigned Package Name for the first time", 
 
   andThen(function(){
     assert.equal(currentURL(), "/offers/"+offer.id+"/review_item/"+item.id+"/accept");
-    assert.equal($('.label_input input').val(), packageType.get('name'));
+    assert.equal($('.search_label_input input').val(), packageType.get('name'));
     assert.equal($('#comment0').val(), packageType.get('name'));
   });
 });
@@ -99,7 +99,7 @@ test("Should save edited description", function(assert) {
   visit("/offers/"+ offer.id +"/review_item/"+ item.id+"/accept");
 
   andThen(function() {
-    Ember.$('.label_input').click();
+    Ember.$('.search_label_input').click();
   });
 
   andThen(function() {

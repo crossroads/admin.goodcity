@@ -12,14 +12,19 @@ export default SelectList.extend( {
   didRender() {
     this._super(...arguments);
     if (!this.get('didUpdatedOnce') && this.get('pkg') !== null && this.get('pkg.item.packageType') !== null){
-        var packageType = this.get('pkg.packageType') || this.get('pkg.item.packageType');
-        if (this.get('pkg.notes') === packageType.get('name') || this.get('pkg.notes') === "") {
+        var packageType = this.get('pkg.item.packageType');
+
+        if (this.isPackageTypeChanged(packageType)) {
           this.set('pkg.notes', packageType.get('name'));
         }
         this.set('pkg.packageType', packageType);
       Ember.$("textarea#"+this.get('index')).val(this.get('pkg.notes'));
       this.set('didUpdatedOnce', false);
     }
+  },
+
+  isPackageTypeChanged(packageType) {
+    return this.get('pkg.notes') === packageType.get('name') || this.get('pkg.notes').trim().length === 0 || (this.get('pkg.packageType.name') !== packageType.get('name'));
   },
 
   didUpdate() {

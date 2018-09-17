@@ -48,9 +48,7 @@ export default DS.Model.extend({
     return this.get('packageType.name');
   }),
 
-  changedNotes: Ember.computed('notes', function(){
-    return this.get('notes');
-  }),
+  changedNotes: Ember.computed.alias("notes"),
 
   packageTypeId:   Ember.computed.foreignKey('packageType.id'),
 
