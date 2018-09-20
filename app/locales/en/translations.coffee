@@ -148,6 +148,7 @@ I18nTranslationsEn =
         "delete_offer": "Delete Offer"
         "submit_offer": "Re-submit Offer"
         "merge_offer": "Merge Offer"
+        "yes": "Yes"
 
     "mark_received":
       "delivered_by": "Delivered by:"

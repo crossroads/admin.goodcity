@@ -148,6 +148,7 @@ I18nTranslationsZhTw =
         "delete_offer": "刪除捐贈項目"
         "submit_offer": "重新提交捐贈項目"
         "merge_offer": "合拼捐贈項目"
+        "yes": "Yes"
 
     "mark_received":
       "delivered_by": "運送人員："

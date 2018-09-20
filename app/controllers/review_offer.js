@@ -80,7 +80,7 @@ export default Ember.Controller.extend({
       this.send("toggleOfferOptions");
       var offer = this.get("model");
       this.get("messageBox").custom(this.get("i18n").t("delete_confirm"),
-        this.get("i18n").t("review_offer.options.delete_offer"),
+        this.get("i18n").t("review_offer.options.yes"),
         () => {
           this.set("cancelByMe", true);
           var loadingView = getOwner(this).lookup('component:loading').append();
