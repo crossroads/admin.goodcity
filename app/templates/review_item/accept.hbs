@@ -32,7 +32,7 @@
                 </div>
                 <div class="row bottom ui">
                   <div class="small-10 medium-11 columns head" >
-                    {{auto-resize-textarea data-autoresize=true id=(concat 'comment' index) name="comment" value=pkg.packageName  placeholder=(t "placeholder.comments") required="required" pattern=".*\S.*" }}
+                    {{auto-resize-textarea data-autoresize=true id=(concat 'comment' index) name="comment" value=pkg.changedNotes  placeholder=(t "placeholder.comments") required="required" pattern=".*\S.*" }}
                   </div>
                   <div class="small-2 medium-1 columns icon" {{action "clearText" (concat 'comment' index) on="click"}}>
                     <i class="fa fa-times-circle remove-text"></i>

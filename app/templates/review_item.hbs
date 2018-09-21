@@ -44,7 +44,7 @@
 
       <div class="row top-bottom-margin">
         <div class="small-12 columns link item_lable_input">
-          {{#link-to "search_label" model}}
+          {{#link-to "search_label" model classNames="search_label_input"}}
             {{input value=(if itemType itemType.name "") placeholder=(t "review_item.add_item_label")}}
           {{/link-to}}
         </div>
