@@ -131,8 +131,9 @@ export default Ember.Controller.extend({
             this.get("reviewOfferController").set("displayCompleteReviewPopup", offer.get("allItemsReviewed") && offer.get("isUnderReview"));
           })
           .catch(error => {
-            item.rollback();
-
+            if(item) {
+              item.rollback();
+            }
             if (error.errors instanceof Array &&
               error.errors.filter(e => !!e["requires_gogovan_cancellation"]).length > 0) {
               return this.transitionToRoute('offer.cancel_gogovan', offer);
