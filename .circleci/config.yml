@@ -260,7 +260,7 @@ jobs:
           command: npm i -g cordova-update-config
       - run:
           name: install cordova globally
-          command: npm i -g cordova@6.5.0
+          command: npm i -g cordova@7.1.0
       - run:
           name: create keychain and import certificates
           command: bundle exec fastlane ios prepare_certificates cert:$CERTIFICATES
