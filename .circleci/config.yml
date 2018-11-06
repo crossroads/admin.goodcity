@@ -190,6 +190,12 @@ jobs:
             unzip -d $ANDROID_HOME/tools /tmp/gradle.zip
             mv $ANDROID_HOME/tools/gradle-3.3 $ANDROID_HOME/tools/gradle
       - run:
+          name: Download Google-services file
+          command: |
+            yarn run azure-filestore download -d admin/$ENVIRONMENT -f google-services.json
+            mv google-services.json ~/code/cordova
+          working_directory: ~/code
+      - run:
           name: Download Keystore File
           command: yarn run azure-filestore download -f $KEYSTORE
           working_directory: cordova
