@@ -202,8 +202,8 @@ jobs:
       - run:
           name: Download Google Play Store Key file
           command: |
-           yarn run azure-filestore download -d google-play -f $GOOGLE_PLAY_KEY_FILE
-           mv $GOOGLE_PLAY_KEY_FILE ~/code/fastlane
+            yarn run azure-filestore download -d google-play -f $GOOGLE_PLAY_KEY_FILE
+            mv $GOOGLE_PLAY_KEY_FILE ~/code/fastlane
           working_directory: ~/code
       - run:
           name: android build
