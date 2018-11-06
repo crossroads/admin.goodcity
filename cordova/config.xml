@@ -91,7 +91,6 @@
   <plugin name="cordova-plugin-actionsheet" spec="https://github.com/EddyVerbruggen/cordova-plugin-actionsheet.git" />
   <plugin name="cordova-plugin-camera" spec="^4.0.0" />
   <plugin name="cordova-plugin-splashscreen" spec="~3.1.0" />
-  <plugin name="com.testfairy.cordova-plugin" spec="https://github.com/testfairy/testfairy-cordova-plugin" />
   <plugin name="phonegap-plugin-barcodescanner" spec="https://github.com/wildabeast/BarcodeScanner.git" />
   <plugin name="cordova-plugin-ios-no-export-compliance" spec="https://github.com/mikaoelitiana/cordova-plugin-ios-no-export-compliance.git" />
   <plugin name="com.phonegap.plugins.twilioclient" spec="https://github.com/crossroads/twilio_client_phonegap.git" />
