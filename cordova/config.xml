@@ -8,6 +8,7 @@
   <hook src="scripts/update_build_number.py" type="before_prepare" />
   <platform name="android">
     <hook src="scripts/copyAndroidAssets.js" type="after_prepare" />
+    <resource-file src="google-services.json" target="google-services.json" />
     <preference name="LoadUrlTimeoutValue" value="120000" />
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="5000" />
