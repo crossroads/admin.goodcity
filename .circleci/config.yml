@@ -190,14 +190,20 @@ jobs:
             unzip -d $ANDROID_HOME/tools /tmp/gradle.zip
             mv $ANDROID_HOME/tools/gradle-3.3 $ANDROID_HOME/tools/gradle
       - run:
+          name: Download Google-services file
+          command: |
+            yarn run azure-filestore download -d admin/$ENVIRONMENT -f google-services.json
+            mv google-services.json ~/code/cordova
+          working_directory: ~/code
+      - run:
           name: Download Keystore File
           command: yarn run azure-filestore download -f $KEYSTORE
           working_directory: cordova
       - run:
           name: Download Google Play Store Key file
           command: |
-           yarn run azure-filestore download -d google-play -f $GOOGLE_PLAY_KEY_FILE
-           mv $GOOGLE_PLAY_KEY_FILE ~/code/fastlane
+            yarn run azure-filestore download -d google-play -f $GOOGLE_PLAY_KEY_FILE
+            mv $GOOGLE_PLAY_KEY_FILE ~/code/fastlane
           working_directory: ~/code
       - run:
           name: android build
@@ -230,8 +236,8 @@ jobs:
           command: |
             echo 'export PATH=$PATH:`yarn bin`' >> $BASH_ENV
             echo 'export ENVIRONMENT=$(if [ "$CIRCLE_BRANCH" == "live" ]; then echo production; else echo staging; fi)' >> $BASH_ENV
-            echo 'export PROVISIONING_PROFILE=$(if [ "$CIRCLE_BRANCH" == "live" ]; then echo $ENCODED_PROD_PROVISIONING_PROFILE; else echo $ENCODED_STAGING_PROVISIONING_PROFILE; fi)' >> $BASH_ENV
-            echo 'export CERTIFICATES=$(if [ "$CIRCLE_BRANCH" == "live" ]; then echo $ENCODED_PROD_CERT; else echo $ENCODED_STAGING_CERT; fi)' >> $BASH_ENV
+            echo 'export PROVISIONING_PROFILE=$(if [ "$CIRCLE_BRANCH" == "live" ]; then echo $PROD_PROVISIONING_PROFILE; else echo $STAGING_PROVISIONING_PROFILE; fi)' >> $BASH_ENV
+            echo 'export CERTIFICATE=$(if [ "$CIRCLE_BRANCH" == "live" ]; then echo $PROD_CERT; else echo $STAGING_CERT; fi)' >> $BASH_ENV
             echo 'export STAGING=$(if [ "$CIRCLE_BRANCH" == "live" ]; then echo false; else echo true; fi)' >> $BASH_ENV
       - run:
           command: |
@@ -248,22 +254,28 @@ jobs:
       - attach_workspace:
           at: ~/code
       - run:
-          name: make Provisioning Profiles directory
-          command: mkdir -pv ~/Library/MobileDevice/Provisioning\ Profiles/
+          name: Download Provisioning Profile
+          command: |
+              mkdir -pv ~/Library/MobileDevice/Provisioning\ Profiles/
+              yarn run azure-filestore download -d admin/$ENVIRONMENT -f $PROVISIONING_PROFILE
+              mv $PROVISIONING_PROFILE ~/Library/MobileDevice/Provisioning\ Profiles
+          working_directory: ~/code
       - run:
-          name: decode Provisioning Profiles
-          context: org-global
-          command: base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/App_Store.mobileprovision <<< "${PROVISIONING_PROFILE}"
+          name: Download P12 certificate
+          command: |
+              yarn run azure-filestore download -f $CERTIFICATE
+              mv $CERTIFICATE ~/code/fastlane
+          working_directory: ~/code
       - run: pod setup
       - run:
           name: install cordova-update-config globally
           command: npm i -g cordova-update-config
       - run:
           name: install cordova globally
-          command: npm i -g cordova@6.5.0
+          command: npm i -g cordova@7.1.0
       - run:
           name: create keychain and import certificates
-          command: bundle exec fastlane ios prepare_certificates cert:$CERTIFICATES
+          command: bundle exec fastlane ios prepare_certificates cert:$CERTIFICATE
           working_directory: ~/code
       - run:
           name: iOS build
@@ -293,36 +305,36 @@ workflows:
               - tests
             filters:
               branches:
-                only: /^(master|live)$/
+                only: /^(master|live|GCW-2184-push-plugin-upgrade)$/
         - www_build:
             requires:
               - tests
               - package_dependencies
             filters:
               branches:
-                only: /^(master|live)$/
+                only: /^(master|live|GCW-2184-push-plugin-upgrade)$/
         - www_deploy:
             requires:
               - www_build
             filters:
               branches:
-                only: /^(master|live)$/
+                only: /^(master|live|GCW-2184-push-plugin-upgrade)$/
         - ember_cordova_build:
             requires:
               - tests
               - package_dependencies
             filters:
               branches:
-                only: /^(master|live)$/
+                only: /^(master|live|GCW-2184-push-plugin-upgrade)$/
         - android_build_and_deploy:
             requires:
               - ember_cordova_build
             filters:
               branches:
-                only: /^(master|live)$/
+                only: /^(master|live|GCW-2184-push-plugin-upgrade)$/
         - ios_build_and_deploy:
             requires:
               - ember_cordova_build
             filters:
               branches:
-                only: /^(master|live)$/
+                only: /^(master|live|GCW-2184-push-plugin-upgrade)$/
