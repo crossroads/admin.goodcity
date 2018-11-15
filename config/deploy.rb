@@ -1,4 +1,4 @@
-lock '3.4.0'
+lock '3.11.0'
 
 set :application, 'admin.goodcity'
 set :deploy_to, '/var/www/html/admin.goodcity.hk'

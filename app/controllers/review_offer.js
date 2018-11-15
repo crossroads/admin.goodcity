@@ -79,17 +79,18 @@ export default Ember.Controller.extend({
     cancelOffer() {
       this.send("toggleOfferOptions");
       var offer = this.get("model");
-      this.get("messageBox").confirm(this.get("i18n").t("delete_confirm"), () => {
-        this.set("cancelByMe", true);
-        var loadingView = getOwner(this).lookup('component:loading').append();
-        offer.deleteRecord();
-        offer.save()
-          .then(() => {
-            this.transitionToRoute(this.get("backLinkPath"));
-          })
-          .catch(error => { offer.rollback(); throw error; })
-          .finally(() => {loadingView.destroy(); this.set("cancelByMe", false);});
-        });
+      this.get("messageBox").custom(this.get("i18n").t("delete_confirm"),
+        this.get("i18n").t("review_offer.options.yes"),
+        () => {
+          this.set("cancelByMe", true);
+          var loadingView = getOwner(this).lookup('component:loading').append();
+          offer.destroyRecord()
+            .then(() => {
+              this.transitionToRoute(this.get("backLinkPath"));
+            })
+            .catch(error => { offer.rollback(); throw error; })
+            .finally(() => {loadingView.destroy(); this.set("cancelByMe", false);});
+        },this.get("i18n").t("review_item.not_now"), null);
     },
 
     submitOffer() {

@@ -1,13 +1,12 @@
 {
   "name": "goodcity",
   "dependencies": {
-    "ember": "~2.12.0",
+    "ember": "~2.13.0",
     "ember-cli-shims": "0.1.1",
     "ember-cli-test-loader": "0.2.2",
     "cloudinary": "~1.0.12",
-    "ember-i18n": "5.0.2",
-    "moment": "^2.19.2",
-    "foundation": "~5.5.0",
+    "moment": "^2.22.2",
+    "foundation": "~5.5.3",
     "fastclick": "^1.0.6",
     "jquery-placeholder": "^2.3.1",
     "jquery.cookie": "~1.4.1",
@@ -29,6 +28,6 @@
     "ember-qunit-notifications": "0.1.0",
     "ember-cli-shims": "0.1.1",
     "qunit-notifications": "~0.1.0",
-    "ember": "~2.12.0"
+    "ember": "~2.13.0"
   }
 }

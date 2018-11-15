@@ -52,7 +52,7 @@ test("visit accept item tab without item_type", function(assert) {
 });
 
 test("visit accepted item with item_type", function(assert) {
-  assert.expect(21);
+  assert.expect(20);
   visit("/offers/" + offer.id + "/review_item/" + item1.id + "/accept");
   andThen(function() {
     assert.equal(currentURL(), "/offers/" + offer.id + "/review_item/" + item1.id + "/accept");
@@ -67,8 +67,7 @@ test("visit accepted item with item_type", function(assert) {
     assert.equal($.trim($(".detail_container:eq(1)").text()).indexOf(package2.get('packageType.name')) > 0, true);
 
     // display package component notes
-    assert.equal($('.detail_container div.ui div textarea').val(), "Category1");
-    assert.equal($('.detail_container div.ui div textarea').val(), "Category1");
+    assert.equal($('.detail_container div.ui div textarea').val(), item1.get('packageType.packages').get('firstObject.notes'));
 
     // display quantity value
     assert.equal(parseInt($(".detail_container:eq(0) input[name='qty']").val()), package1.get('quantity'));
