@@ -26,17 +26,17 @@ export default Ember.Component.extend({
       var options = {"formats": "CODE_128"};
       // add camera permission for scanning barcode here
       var permissions = cordova.plugins.permissions;
+      var permissionError = () => {
+        console.warn('Camera permission is not turned on');
+      };
       permissions.hasPermission(permissions.CAMERA, function( status ){
         if ( status.hasPermission ) {
           cordova.plugins.barcodeScanner.scan(onSuccess, onError, options);
         }
         else {
-          permissions.requestPermission(permissions.CAMERA, success, error);
-          function error() {
-            console.warn('Camera permission is not turned on');
-          }
-          function success( status ) {
-            if( !status.hasPermission ) error();
+          permissions.requestPermission(permissions.CAMERA, success, permissionError);
+          var success = (status) => {
+            if( !status.hasPermission ) { permissionError(); }
             cordova.plugins.barcodeScanner.scan(onSuccess, onError, options);
           };
         }
