@@ -164,7 +164,7 @@ I18nTranslationsEn =
       "message_donor": "Message Donor"
       "finish_review_request": "Please finish reviewing items first!"
       "accepted_items": "Accepted Items"
-      "gogovan_requirement": "Gogovan Reqirement"
+      "gogovan_requirement": "Gogovan Requirement"
       "crossroads_requirement": "Crossroads Requirement"
       "complete_review": "Complete Review"
       "ggv_hire": "Gogovan Hire Requirement"
