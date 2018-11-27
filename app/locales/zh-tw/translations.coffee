@@ -20,6 +20,9 @@ I18nTranslationsZhTw =
     "users":
       "search": "搜尋使用者"
 
+    "camera_scan":
+      "permission_error": "Camera permission is not turned on."
+
     "holiday":
       "name": "假期名稱"
       "date": "日期"
