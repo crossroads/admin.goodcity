@@ -20,6 +20,9 @@ I18nTranslationsEn =
     "users":
       "search": "Search User"
 
+    "camera_scan":
+      "permission_error": "Camera permission is not turned on."
+
     "holiday":
       "name": "Holiday Name"
       "date": "Date"

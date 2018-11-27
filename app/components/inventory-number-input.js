@@ -4,12 +4,50 @@ import AjaxPromise from '../utils/ajax-promise';
 const { getOwner } = Ember;
 
 export default Ember.Component.extend({
-
+  i18n: Ember.inject.service(),
   attributeBindings: ["name", "inputId", "value", "invalid", "disabled", "packageId"],
   isCordovaApp: config.cordova.enabled,
   messageBox: Ember.inject.service(),
   showMenu: false,
   bardcodeReadonly: true,
+
+  checkPermissionAndScan() {
+    let _this = this;
+    let permissions = cordova.plugins.permissions;
+    let permissionError = () => {
+      let error_message = this.get("i18n").t("camera_scan.permission_error");
+      _this.get("messageBox").alert(error_message);
+    };
+    let permissionSuccess = (status) => {
+      //after requesting check for permission then, permit to scan
+      if( status.hasPermission ) {
+        _this.scan();
+      } else {
+        permissionError();
+      }
+    };
+    permissions.hasPermission(permissions.CAMERA, function( status ){
+      //check permission here
+      if ( status.hasPermission ) {
+        _this.scan();
+      }
+      else {
+        //request permission here
+        permissions.requestPermission(permissions.CAMERA, permissionSuccess, permissionError);
+      }
+    });
+  },
+
+  scan() {
+    let options = {"formats": "CODE_128"};
+    let onError = error => this.get("messageBox").alert("Scanning failed: " + error);
+    let onSuccess = res => {
+      if (!res.cancelled) {
+        this.set("value", res.text);
+      }
+    };
+    cordova.plugins.barcodeScanner.scan(onSuccess, onError, options);
+  },
 
   actions: {
     toggleMenu() {
@@ -17,30 +55,7 @@ export default Ember.Component.extend({
     },
 
     scanBarcode() {
-      var onSuccess = res => {
-        if (!res.cancelled) {
-          this.set("value", res.text);
-        }
-      };
-      var onError = error => this.get("messageBox").alert("Scanning failed: " + error);
-      var options = {"formats": "CODE_128"};
-      // add camera permission for scanning barcode here
-      var permissions = cordova.plugins.permissions;
-      var permissionError = () => {
-        console.warn('Camera permission is not turned on');
-      };
-      permissions.hasPermission(permissions.CAMERA, function( status ){
-        if ( status.hasPermission ) {
-          cordova.plugins.barcodeScanner.scan(onSuccess, onError, options);
-        }
-        else {
-          permissions.requestPermission(permissions.CAMERA, success, permissionError);
-          var success = (status) => {
-            if( !status.hasPermission ) { permissionError(); }
-            cordova.plugins.barcodeScanner.scan(onSuccess, onError, options);
-          };
-        }
-      });
+      this.checkPermissionAndScan();
     },
 
     printBarcode() {
