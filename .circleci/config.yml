@@ -70,7 +70,7 @@ jobs:
           command: dockerize -wait tcp://localhost:4201 -timeout 1m
       - run:
           name: Run Ember tests
-          command: COVERAGE=true yarn run yarn test
+          command: COVERAGE=true yarn run ember test
       - persist_to_workspace:
           root: .
           paths:
