@@ -250,10 +250,10 @@ jobs:
           name: Setup Environment variables
           command: |
             echo 'export PATH=$PATH:`yarn bin`' >> $BASH_ENV
-            echo 'export ENVIRONMENT=$(if [ "$CIRCLE_BRANCH" == "live" ]; then echo production; else echo staging; fi)' >> $BASH_ENV
-            echo 'export PROVISIONING_PROFILE=$(if [ "$CIRCLE_BRANCH" == "live" ]; then echo $PROD_PROVISIONING_PROFILE; else echo $STAGING_PROVISIONING_PROFILE; fi)' >> $BASH_ENV
-            echo 'export CERTIFICATE=$(if [ "$CIRCLE_BRANCH" == "live" ]; then echo $PROD_CERT; else echo $STAGING_CERT; fi)' >> $BASH_ENV
             echo 'export STAGING=$(if [ "$CIRCLE_BRANCH" == "live" ]; then echo false; else echo true; fi)' >> $BASH_ENV
+            echo 'export ENVIRONMENT=$(if [ "$CIRCLE_BRANCH" == "live" ]; then echo production; else echo staging; fi)' >> $BASH_ENV
+            echo 'export PROVISIONING_PROFILE=$(if [ "$CIRCLE_BRANCH" == "live" ]; then echo 'GoodCity_Admin.mobileprovision'; else echo 'GoodCity_Admin_Staging.mobileprovision'; fi)' >> $BASH_ENV
+            echo 'export CERTIFICATE=$(if [ "$CIRCLE_BRANCH" == "live" ]; then echo 'Goodcity_2019.p12'; else echo 'GoodCity_2018_Development.p12'; fi)' >> $BASH_ENV
       - run:
           command: |
               npm rebuild node-sass
@@ -283,13 +283,13 @@ jobs:
           working_directory: ~/code
       - run: pod setup
       - run:
-          name: install cordova-update-config globally
+          name: Install cordova-update-config globally
           command: npm i -g cordova-update-config
       - run:
-          name: install cordova globally
+          name: Install cordova globally
           command: npm i -g cordova@7.1.0
       - run:
-          name: create keychain and import certificates
+          name: Create keychain and import p12 certificate
           command: bundle exec fastlane ios prepare_certificates cert:$CERTIFICATE
           working_directory: ~/code
       - run:
@@ -299,7 +299,7 @@ jobs:
       - store_artifacts:
           path: cordova/platforms/ios/build/device
       - run:
-          name: release ios build
+          name: Release ios build
           command: bundle exec fastlane ios ${ENVIRONMENT}
           working_directory: ~/code
 

@@ -228,7 +228,8 @@ DEPENDENCIES
   credentials_manager
   fastlane
   nokogiri
+  plist
   rake
 
 BUNDLED WITH
-   1.16.0
+   1.16.1
