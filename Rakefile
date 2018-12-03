@@ -243,9 +243,9 @@ end
 def mobile_provisioning_file
   prefix = ['~', 'Library', 'MobileDevice', 'Provisioning\ Profiles']
   file = if production_env?
-      "GoodCity_Stock.mobileprovision"
+      "GoodCity_Admin.mobileprovision"
     else
-      "GoodCity_Stock_Staging.mobileprovision"
+      "GoodCity_Admin_Staging.mobileprovision"
     end
   File.join(prefix, file)
 end
