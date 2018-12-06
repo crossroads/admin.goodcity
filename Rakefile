@@ -31,6 +31,7 @@
 require "json"
 require "fileutils"
 require "rake/clean"
+require 'plist'
 
 ROOT_PATH = File.dirname(__FILE__)
 CORDOVA_PATH = "#{ROOT_PATH}/cordova"
@@ -46,17 +47,6 @@ TESTFAIRY_PLUGIN_NAME = "com.testfairy.cordova-plugin"
 SPLUNKMINT_PLUGIN_URL = "https://github.com/crossroads/cordova-plugin-splunkmint.git"
 KEYSTORE_FILE = "#{CORDOVA_PATH}/goodcity.keystore"
 BUILD_JSON_FILE = "#{CORDOVA_PATH}/build.json"
-IOS_SIGNING_STYLE = false
-IOS_DEBUGMODE_BUILDCONF = {
-  code_signing: "\'iPhone Developer\'",
-  package_type: 'development',
-  icloud_container_environment: 'Development'
-}.freeze
-IOS_RELEASEMODE_BUILDCONF = {
-  code_signing: "\'iPhone Distribution\'",
-  package_type: 'app-store',
-  icloud_container_environment: 'Production'
-}.freeze
 
 # Default task
 task default: %w(app:build)
@@ -109,6 +99,12 @@ namespace :cordova do
   desc "Cordova build {platform}"
   task build: :prepare do
     Dir.chdir(CORDOVA_PATH) do
+      #Temporary fix for phonegap-plugin-push
+      if platform == 'android'
+        sh %{ cordova plugin add phonegap-plugin-push@2.1.2 }
+      else
+        sh %{ cordova plugin add phonegap-plugin-push@1.9.2 --variable SENDER_ID="XXXXXXX" }
+      end
       build = (environment == "staging" && platform == 'android') ? "debug" : "release"
       extra_params = (platform === "android") ? '' : ios_build_config
       system({"ENVIRONMENT" => environment}, "cordova compile #{platform} --#{build} --device #{extra_params}")
@@ -244,23 +240,45 @@ def app_version
   end
 end
 
-def ios_build_config
-  signing_style = IOS_SIGNING_STYLE
-  team_id = ENV['IOS_DEVELOPMENT_TEAM_ID']
+def mobile_provisioning_file
+  prefix = ['~', 'Library', 'MobileDevice', 'Provisioning\ Profiles']
+  file = if production_env?
+      "GoodCity_Admin.mobileprovision"
+    else
+      "GoodCity_Admin_Staging.mobileprovision"
+    end
+  File.join(prefix, file)
+end
 
-  if(environment === 'production')
-    provisioning_profile = ENV['PROVISIONING_PROFILE_ADMIN_PROD']
-    code_signing = IOS_RELEASEMODE_BUILDCONF[:code_signing]
-    package_type = IOS_RELEASEMODE_BUILDCONF[:package_type]
-    icloud_container_environment = IOS_RELEASEMODE_BUILDCONF[:icloud_container_environment]
-  else
-    provisioning_profile = ENV['PROVISIONING_PROFILE_ADMIN_STAGING']
-    code_signing = IOS_DEBUGMODE_BUILDCONF[:code_signing]
-    package_type = IOS_DEBUGMODE_BUILDCONF[:package_type]
-    icloud_container_environment = IOS_DEBUGMODE_BUILDCONF[:icloud_container_environment]
+def mobile_provisioning_plist
+  @mobile_provisioning_plist ||= begin
+    profile = `openssl smime -inform der -verify -noverify -in #{mobile_provisioning_file}`
+    Plist.parse_xml(profile)
   end
+end
 
-  " --codeSignIdentity=#{code_signing} --developmentTeam=#{team_id} --packageType=#{package_type} --provisioningProfile=\'#{provisioning_profile}\' --automaticProvisionin=#{signing_style} --icloud_container_environment=#{icloud_container_environment}"
+def ios_build_config
+  opts = {}
+  opts["developmentTeam"] = mobile_provisioning_plist["TeamIdentifier"].first
+  opts["automaticProvisionin"] = false
+  opts["provisioningProfile"] = mobile_provisioning_plist["UUID"]
+  if production_env?
+    opts["codeSignIdentity"] = "\'iPhone Distribution\'"
+    opts["packageType"] = "app-store"
+    opts["icloud_container_environment"] = "Production"
+  else
+    opts["codeSignIdentity"] = "\'iPhone Developer\'"
+    opts["packageType"] = 'development'
+    opts["icloud_container_environment"] = "Development"
+  end
+  opts.map do |key, value|
+    "--#{key}=#{value}"
+  end.join(" ")
+  #" --codeSignIdentity=#{code_signing} --developmentTeam=#{team_id} --packageType=#{package_type} --provisioningProfile=\'#{provisioning_profile}\' --automaticProvisionin=#{signing_style} --icloud_container_environment=#{icloud_container_environment}"
+end
+
+def production_env?
+  environment == 'production'
 end
 
 def testfairy_upload_script

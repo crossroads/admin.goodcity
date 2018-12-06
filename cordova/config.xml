@@ -83,8 +83,8 @@
   <engine name="android" spec="~6.3.0" />
   <engine name="windows" spec="~4.3.1" />
   <plugin name="cordova-plugin-statusbar" spec="~2.1.1" />
-  <plugin name="phonegap-plugin-push" spec="~2.1.2"/>
   <plugin name="cordova-plugin-device" spec="^1.1.1" />
+  <plugin name="cordova-plugin-android-permissions" spec="https://github.com/NeoLSN/cordova-plugin-android-permissions" />
   <plugin name="cordova-plugin-whitelist" spec="~1.2.1" />
   <plugin name="cordova-plugin-inappbrowser" spec="~1.2.0" />
   <plugin name="cordova-plugin-network-information" spec="^1.2.0" />
@@ -95,3 +95,4 @@
   <plugin name="cordova-plugin-ios-no-export-compliance" spec="https://github.com/mikaoelitiana/cordova-plugin-ios-no-export-compliance.git" />
   <plugin name="com.phonegap.plugins.twilioclient" spec="https://github.com/crossroads/twilio_client_phonegap.git" />
 </widget>
+

@@ -10,11 +10,11 @@ module.exports = function(defaults) {
     },
     minifyJS: {
       options: {
-        exclude: ["**/goodcity.js"]
+        exclude: ["**/*.js"]
       }
     },
     fingerprint: {
-      extensions: ['css', 'png', 'jpg', 'gif', 'map'],
+      extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map'],
       enabled: webRelease
     },
     gzip: {

@@ -20,6 +20,9 @@ I18nTranslationsEn =
     "users":
       "search": "Search User"
 
+    "camera_scan":
+      "permission_error": "Camera permission is not turned on."
+
     "holiday":
       "name": "Holiday Name"
       "date": "Date"
@@ -164,7 +167,7 @@ I18nTranslationsEn =
       "message_donor": "Message Donor"
       "finish_review_request": "Please finish reviewing items first!"
       "accepted_items": "Accepted Items"
-      "gogovan_requirement": "Gogovan Reqirement"
+      "gogovan_requirement": "Gogovan Requirement"
       "crossroads_requirement": "Crossroads Requirement"
       "complete_review": "Complete Review"
       "ggv_hire": "Gogovan Hire Requirement"
