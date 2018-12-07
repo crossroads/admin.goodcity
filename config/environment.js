@@ -1,5 +1,5 @@
 /* jshint node: true */
-
+const pkgJson = require("../package.json");
 module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'goodcity',
@@ -60,7 +60,7 @@ module.exports = function(environment) {
       PRELOAD_AUTHORIZED_TYPES: ["package_type","donor_condition","rejection_reason","role", "timeslot", "gogovan_transport", "crossroads_transport", "location", "cancellation_reason", "holiday"],
       SHA: process.env.APP_SHA || "00000000",
       SHARED_SHA:  process.env.APP_SHARED_SHA || "00000000",
-      VERSION: process.env.VERSION || "1.0.0"
+      VERSION: pkgJson.version || "1.0.0"
     },
 
     cordova: {
