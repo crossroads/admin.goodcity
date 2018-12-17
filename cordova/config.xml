@@ -63,16 +63,20 @@
     </feature>
     <preference name="Orientation" value="portrait" />
     <preference name="Fullscreen" value="true" />
-    <config-file file="*-Info.plist" mode="merge" target="NSCameraUsageDescription">
+    <preference name="CAMERA_USAGE_DESCRIPTION" default=" " />
+    <config-file target="*-Info.plist" parent="NSCameraUsageDescription">
       <string>Needs camera access to take photo</string>
     </config-file>
-    <config-file file="*-Info.plist" mode="merge" target="NSPhotoLibraryUsageDescription">
+    <preference name="PHOTOLIBRARY_USAGE_DESCRIPTION" default=" " />
+    <config-file target="*-Info.plist" parent="NSPhotoLibraryUsageDescription">
       <string>Needs photo library access to get photos from there</string>
     </config-file>
-    <config-file file="*-Info.plist" mode="merge" target="NSPhotoLibraryAddUsageDescription">
+    <preference name="PHOTOLIBRARY_ADD_USAGE_DESCRIPTION" default=" " />
+    <config-file target="*-Info.plist" parent="NSPhotoLibraryAddUsageDescription">
       <string>Needs photo library access to save photos</string>
     </config-file>
-    <config-file file="*-Info.plist" mode="merge" target="NSMicrophoneUsageDescription">
+    <preference name="MICROPHONEUSAGE_USAGE_DESCRIPTION" default=" " />
+    <config-file target="*-Info.plist" parent="NSMicrophoneUsageDescription">
       <string>Needs permission to use the microphone</string>
     </config-file>
   </platform>
