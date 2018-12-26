@@ -10,23 +10,23 @@
       disabled=bardcodeReadonly
     }}
 
-    <i class="fa fa-exclamation-triangle"></i>
+    <i class="exclamation-triangle">{{fa-icon 'exclamation-triangle'}}</i>
   </div>
 
   <a class="small-2 columns" {{action "toggleMenu"}}>
-    <i class="fa fa-ellipsis-v options"></i>
+    <i class="options">{{fa-icon 'ellipsis-v'}}</i>
     <div class="options_menu_list {{if showMenu '' 'hidden'}}">
       {{#if isCordovaApp}}
       <div class="option_menu">
         <a {{action "scanBarcode"}}>
-          <i class="fa fa-barcode"></i>
+          <i>{{fa-icon 'barcode'}}</i>
           {{t "receive_package.scan_barcode"}}
         </a>
       </div>
       {{/if}}
       <div class="option_menu">
         <a {{action "enterBarcode"}}>
-          <i class="fa fa-keyboard-o"></i>
+          <i>{{fa-icon 'keyboard'}}</i>
           {{t "receive_package.enter_barcode"}}
         </a>
       </div>
@@ -34,6 +34,6 @@
   </a>
 
   <div class="small-2 columns" {{action "printBarcode"}}>
-    <i class= "fa fa-print"></i>
+    <i class = 'print-icon'>{{fa-icon 'print'}}</i>
   </div>
 </div>

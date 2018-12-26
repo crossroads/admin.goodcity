@@ -1,10 +1,10 @@
-<a {{action "toggleOfferOptions"}}><i class="fa fa-ellipsis-v options"></i></a>
+<a {{action "toggleOfferOptions"}}><i class="options">{{fa-icon 'ellipsis-v'}}</i></a>
 
 <div class="options_menu_list {{if displayOfferOptions '' 'hidden'}}">
   {{#unless offer.isFinished}}
     <div class="add_item_option option_menu">
       <a id="camera_icon" {{action "addItem"}} title="Camera" >
-        <i class="fa fa-camera"></i>
+        <i>{{fa-icon 'camera'}}</i>
         {{t "review_offer.options.add_item"}}
       </a>
     </div>
@@ -13,7 +13,7 @@
   {{#if offer.allowResubmit}}
     <div class="option_menu">
       <a {{action "submitOffer"}} >
-        <i class="fa fa-shopping-cart"></i>
+        <i>{{fa-icon 'shopping-cart'}}</i>
         {{t "review_offer.options.submit_offer"}}
       </a>
     </div>
@@ -33,7 +33,7 @@
 
   <div class="option_menu">
     <a {{action "cancelOffer"}}>
-      <i class="fa fa-trash"></i>
+      <i>{{fa-icon 'trash'}}</i>
       {{t "review_offer.options.delete_offer"}}
     </a>
   </div>
@@ -41,7 +41,7 @@
   {{#if offer.canMerged}}
     <div class="merge_option option_menu">
       {{#link-to "offer.merge" offer}}
-        <i class="fa fa-compress"></i>
+        <i>{{fa-icon 'compress'}}</i>
         {{t "review_offer.options.merge_offer"}}
       {{/link-to}}
     </div>

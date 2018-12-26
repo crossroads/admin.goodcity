@@ -19,7 +19,7 @@
           allHolidays=allHolidays
           placeholder=(t "holiday.date")
           pattern="[a-zA-Z]{3}\s?[a-zA-Z]{3}\s?[0-9]{1,2}"}}
-        <i class="fa fa-calendar calender_icon"></i>
+        <i class="calender_icon">{{fa-icon 'calendar'}}</i>
       </div>
       <div class="small-3 large-2 columns">
         <button class="right" {{action "saveHoliday"}}>Save</button>
@@ -46,10 +46,10 @@
       {{day.year}}
     </div>
     <div class="small-2 columns" {{action "removeHoliday" day}}>
-      <i class="fa fa-trash"></i>
+      <i>{{fa-icon 'trash'}}</i>
     </div>
     <div class="small-2 columns" {{action "displayEditForm"}}>
-      <i class="fa fa-pencil edit-item-link"></i>
+      <i class="edit-item-link">{{fa-icon 'pencil'}}</i>
     </div>
   </div>
 

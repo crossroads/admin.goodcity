@@ -73,12 +73,12 @@
     display: none !important;
   }
 
-  .columns > .fa {
+  .columns > i {
     float: right;
   }
 
   .has-error {
-    .fa.fa-exclamation-triangle {
+    .exclamation-triangle {
       color: $coral-red;
       display: inline-block !important;
       margin-top: -1.6rem;
@@ -98,7 +98,7 @@
       font-size: 0.9rem;
     }
 
-    .fa.fa-exclamation-triangle {
+    .exclamation-triangle {
       display: inline-block !important;
     }
   }
@@ -111,11 +111,11 @@
     display: block;
   }
 
-  .fa.fa-exclamation-triangle {
+  .exclamation-triangle {
     display: none;
   }
 
-  .inventory-number .columns > .fa {
+  .inventory-number .columns > i {
     color: white;
     font-size: 1.5rem;
     padding: 0.2rem 1rem;
