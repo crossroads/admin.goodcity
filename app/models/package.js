@@ -43,6 +43,9 @@ export default DS.Model.extend({
   donorConditionId: Ember.computed.foreignKey('donorCondition.id'),
 
   isReceived: Ember.computed.equal("state", "received"),
+  isNotMissing: Ember.computed("state", function() {
+    return this.get('state') !== 'missing';
+  }),
 
   packageName: Ember.computed('packageType', function(){
     return this.get('packageType.name');
