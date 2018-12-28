@@ -142,14 +142,13 @@ export default Ember.Controller.extend({
       pkg.save()
         .then(() => {
           new AjaxPromise("/inventory_numbers/remove_number", "PUT", _this.get('session.authToken'), { code: inventoryNumber }).then(() => {
-            loadingView.destroy();
             _this.transitionToRoute("review_offer.receive");
           });
         })
         .catch(() => {
-          loadingView.destroy();
           _this.send('pkgUpdateError', pkg);
-        });
+        })
+        .finally(() => loadingView.destroy());
     },
 
     receivePackage() {
