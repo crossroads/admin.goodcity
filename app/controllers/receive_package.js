@@ -1,5 +1,6 @@
 import Ember from 'ember';
 const { getOwner } = Ember;
+import AjaxPromise from 'goodcity/utils/ajax-promise';
 
 export default Ember.Controller.extend({
 
@@ -133,17 +134,21 @@ export default Ember.Controller.extend({
       if(this.get("hasErrors")) {
         this.get("package").rollbackAttributes();
       }
+      var _this = this;
       var loadingView = getOwner(this).lookup('component:loading').append();
       var pkg = this.get("package");
+      var inventoryNumber = pkg.get('inventoryNumber');
       pkg.set('inventoryNumber', null);
       pkg.save()
         .then(() => {
-          loadingView.destroy();
-          this.transitionToRoute("review_offer.receive");
+          new AjaxPromise("/inventory_numbers/remove_number", "PUT", _this.get('session.authToken'), { code: inventoryNumber }).then(() => {
+            loadingView.destroy();
+            _this.transitionToRoute("review_offer.receive");
+          });
         })
         .catch(() => {
           loadingView.destroy();
-          this.send('pkgUpdateError', pkg);
+          _this.send('pkgUpdateError', pkg);
         });
     },
 
