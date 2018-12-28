@@ -133,11 +133,21 @@ export default Ember.Controller.extend({
       if(this.get("hasErrors")) {
         this.get("package").rollbackAttributes();
       }
-      this.transitionToRoute("review_offer.receive");
+      var loadingView = getOwner(this).lookup('component:loading').append();
+      var pkg = this.get("package");
+      pkg.set('inventoryNumber', null);
+      pkg.save()
+        .then(() => {
+          loadingView.destroy();
+          this.transitionToRoute("review_offer.receive");
+        })
+        .catch(() => {
+          loadingView.destroy();
+          this.send('pkgUpdateError', pkg);
+        });
     },
 
     receivePackage() {
-      var _this = this;
       var pkgData = this.get("packageForm");
 
       this.set("invalidQuantity", (pkgData.quantity.toString().length === 0));
@@ -178,13 +188,17 @@ export default Ember.Controller.extend({
         })
         .catch(() => {
           loadingView.destroy();
-          var errorMessage = pkg.get("errors.firstObject.message") || pkg.get('adapterError.errors.firstObject.title');
-          if(errorMessage === "Adapter Error" || errorMessage.indexOf("Connection error") >= 0) {
-            this.get("messageBox").alert("could not contact Stockit, try again later.", () => pkg.rollbackAttributes());
-          } else {
-            _this.set("hasErrors", true);
-          }
+          this.send('pkgUpdateError', pkg);
         });
+    },
+
+    pkgUpdateError(pkg) {
+      var errorMessage = pkg.get("errors.firstObject.message") || pkg.get('adapterError.errors.firstObject.title');
+      if(errorMessage === "Adapter Error" || errorMessage.indexOf("Connection error") >= 0) {
+        this.get("messageBox").alert("could not contact Stockit, try again later.", () => pkg.rollbackAttributes());
+      } else {
+        this.set("hasErrors", true);
+      }
     },
 
     resetInputs() {

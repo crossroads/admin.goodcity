@@ -58,7 +58,7 @@
       <div class="small-4 columns inventory-number">
         {{#toggle-receive-menu-list}}
           <i class="fa {{if item.isSet 'fa-tags' 'fa-tag'}}"></i>
-          {{#if package.isDisplayInventoryNumber}}
+          {{#if package.inventoryNumber}}
             {{package.inventoryNumber}}
           {{else}}
             NA

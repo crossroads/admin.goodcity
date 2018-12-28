@@ -44,10 +44,6 @@ export default DS.Model.extend({
 
   isReceived: Ember.computed.equal("state", "received"),
 
-  isDisplayInventoryNumber: Ember.computed("state", 'inventoryNumber', function() {
-    return this.get('inventoryNumber') && this.get('state') !== 'missing';
-  }),
-
   packageName: Ember.computed('packageType', function(){
     return this.get('packageType.name');
   }),
