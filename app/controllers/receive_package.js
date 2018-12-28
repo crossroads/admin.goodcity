@@ -1,5 +1,6 @@
 import Ember from 'ember';
 const { getOwner } = Ember;
+import AjaxPromise from 'goodcity/utils/ajax-promise';
 
 export default Ember.Controller.extend({
 
@@ -133,11 +134,24 @@ export default Ember.Controller.extend({
       if(this.get("hasErrors")) {
         this.get("package").rollbackAttributes();
       }
-      this.transitionToRoute("review_offer.receive");
+      var _this = this;
+      var loadingView = getOwner(this).lookup('component:loading').append();
+      var pkg = this.get("package");
+      var inventoryNumber = pkg.get('inventoryNumber');
+      pkg.set('inventoryNumber', null);
+      pkg.save()
+        .then(() => {
+          new AjaxPromise("/inventory_numbers/remove_number", "PUT", _this.get('session.authToken'), { code: inventoryNumber }).then(() => {
+            _this.transitionToRoute("review_offer.receive");
+          });
+        })
+        .catch(() => {
+          _this.send('pkgUpdateError', pkg);
+        })
+        .finally(() => loadingView.destroy());
     },
 
     receivePackage() {
-      var _this = this;
       var pkgData = this.get("packageForm");
 
       this.set("invalidQuantity", (pkgData.quantity.toString().length === 0));
@@ -178,13 +192,17 @@ export default Ember.Controller.extend({
         })
         .catch(() => {
           loadingView.destroy();
-          var errorMessage = pkg.get("errors.firstObject.message") || pkg.get('adapterError.errors.firstObject.title');
-          if(errorMessage === "Adapter Error" || errorMessage.indexOf("Connection error") >= 0) {
-            this.get("messageBox").alert("could not contact Stockit, try again later.", () => pkg.rollbackAttributes());
-          } else {
-            _this.set("hasErrors", true);
-          }
+          this.send('pkgUpdateError', pkg);
         });
+    },
+
+    pkgUpdateError(pkg) {
+      var errorMessage = pkg.get("errors.firstObject.message") || pkg.get('adapterError.errors.firstObject.title');
+      if(errorMessage === "Adapter Error" || errorMessage.indexOf("Connection error") >= 0) {
+        this.get("messageBox").alert("could not contact Stockit, try again later.", () => pkg.rollbackAttributes());
+      } else {
+        this.set("hasErrors", true);
+      }
     },
 
     resetInputs() {
