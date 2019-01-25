@@ -47,6 +47,7 @@
     <icon height="72" src="res/ios/Icon-72x72~ipad.png" width="72" />
     <icon height="152" src="res/ios/Icon-76x76@2x~ipad.png" width="152" />
     <icon height="76" src="res/ios/Icon-76x76~ipad.png" width="76" />
+    <icon height="1024" src="res/ios/Icon-App-1024.png" width="1024" /
     <icon height="29" src="res/ios/icon29x29.png" width="29" />
     <splash height="480" src="res/ios/Default~iphone.png" width="320" />
     <splash height="960" src="res/ios/Default@2x~iphone.png" width="640" />
