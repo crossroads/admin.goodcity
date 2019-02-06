@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 
 aliases:
 
@@ -332,7 +332,7 @@ jobs:
           working_directory: ~/code
 
 workflows:
-    version: 2
+    version: 2.1
     build-test-and-deploy:
       jobs:
         - checkout_code
