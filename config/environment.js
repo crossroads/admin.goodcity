@@ -46,6 +46,8 @@ module.exports = function(environment) {
       // when it is created
       NAME: 'admin.goodcity',
       TITLE: 'Admin',
+      IOS_APP_ID: '1013288708',
+      ANDROID_APP_ID: "hk.goodcity.admin",
       BANNER_IMAGE: 'assets/images/admin.png',
       CLOUD_NAME: 'ddoadcjjl',
       CLOUD_API_KEY: 926849638736153,
