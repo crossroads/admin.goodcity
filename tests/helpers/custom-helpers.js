@@ -38,4 +38,4 @@ export default function() {
     Ember.run.scheduleOnce('afterRender', this, callback);
   });
 
-}()
+}() // jshint ignore:line
