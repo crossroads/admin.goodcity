@@ -12,7 +12,7 @@ export default AuthorizeRoute.extend({
       var donor = currentOffer.get('createdBy');
       this.set("currentDonor", donor);
       this.set("currentOffer", currentOffer);
-      return this.store.query('offer', { created_by_id: donor.get('id'), states: ['donor_non_draft'] });
+      return this.store.query('offer', { created_by_id: donor.get('id'), states: ['donor_non_draft'], summarize: 'true' });
     }
   },
 

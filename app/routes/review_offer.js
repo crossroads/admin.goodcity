@@ -22,10 +22,22 @@ export default AuthorizeRoute.extend({
     }
   },
 
+  hasLoadedAssociations(offer) {
+    let items = offer.get('items');
+    return items && items.length > 0;
+  },
+
+  loadIfAbsent(offerId) {
+    let offer = this.get("store").peekRecord("offer", offerId);
+    if (offer && this.hasLoadedAssociations(offer)) {
+      return offer;
+    }
+    return this.store.findRecord('offer', offerId);
+  },
+
   model() {
     var offerId = this.modelFor('offer').get('id');
-    var offer = this.get("store").peekRecord("offer", offerId);
-    return offer || this.store.findRecord('offer', offerId);
+    return this.loadIfAbsent(offerId);
   },
 
   setupController(controller, model) {
