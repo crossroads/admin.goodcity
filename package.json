@@ -12,6 +12,17 @@
     "build": "EMBER_CLI_CORDOVA=0 ember build",
     "test": "EMBER_CLI_CORDOVA=0 ember test --server --test-port 7358"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,json,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
   "repository": {
     "url": "https://github.com/crossroads/admin.goodcity.git",
     "private": true
@@ -62,7 +73,10 @@
     "express": "^4.16.3",
     "glob": "^5.0.14",
     "smoke-and-mirrors": "https://github.com/crossroads/smoke-and-mirrors.git#master",
-    "xml2js": "^0.4.19"
+    "xml2js": "^0.4.19",
+    "husky": "^1.2.0",
+    "lint-staged": "^8.1.0",
+    "prettier": "1.15.3"
   },
   "dependencies": {
     "azure-api": "git://github.com/crossroads/azure-api.git#master",
