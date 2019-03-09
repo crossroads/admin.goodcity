@@ -86,6 +86,7 @@
     "cordova-update-config": "^1.0.2",
     "ember-cli-test-loader": "^1.1.0",
     "ember-resolver": "^4.5.5",
+    "extend": "2.0.2",
     "loader.js": "^4.0.0",
     "minimatch": "3.0.2",
     "phantomjs-prebuilt": "^2.1.14",
