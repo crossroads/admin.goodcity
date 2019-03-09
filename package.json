@@ -72,11 +72,11 @@
     "ember-welcome-page": "^3.2.0",
     "express": "^4.16.3",
     "glob": "^5.0.14",
-    "smoke-and-mirrors": "https://github.com/crossroads/smoke-and-mirrors.git#master",
-    "xml2js": "^0.4.19",
     "husky": "^1.2.0",
     "lint-staged": "^8.1.0",
-    "prettier": "1.15.3"
+    "prettier": "1.15.3",
+    "smoke-and-mirrors": "https://github.com/crossroads/smoke-and-mirrors.git#master",
+    "xml2js": "^0.4.19"
   },
   "dependencies": {
     "azure-api": "git://github.com/crossroads/azure-api.git#master",
@@ -87,6 +87,7 @@
     "ember-cli-test-loader": "^1.1.0",
     "ember-resolver": "^4.5.5",
     "loader.js": "^4.0.0",
+    "minimatch": "3.0.2",
     "phantomjs-prebuilt": "^2.1.14",
     "shared-goodcity": "git://github.com/crossroads/shared.goodcity.git#master",
     "slick-carousel": "^1.5.8"
