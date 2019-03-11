@@ -88,6 +88,7 @@
     "ember-cli-test-loader": "^1.1.0",
     "ember-resolver": "^4.5.5",
     "extend": "2.0.2",
+    "hoek": "4.2.1",
     "loader.js": "^4.0.0",
     "minimatch": "3.0.2",
     "npm": "3.8.3",
