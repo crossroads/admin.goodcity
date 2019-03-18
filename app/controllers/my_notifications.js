@@ -35,9 +35,10 @@ export default offers.extend({
   }),
 
   myNotifications: Ember.computed("showUnread", "allNotifications", function() {
-    return this.get("showUnread")
-      ? this.get("unreadNotifications")
-      : this.get("allNotifications");
+    if (this.get("showUnread")) {
+      return this.get("unreadNotifications");
+    }
+    return this.get("allNotifications");
   }),
 
   unreadNotifications: Ember.computed("allNotifications.[]", function() {
