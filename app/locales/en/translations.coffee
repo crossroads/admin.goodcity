@@ -101,7 +101,7 @@ I18nTranslationsEn =
 
     "my_notifications":
       "heading" : "{{name}}'s Offer"
-      "all_notifications" : "All notifications"
+      "all_notifications" : "Show all notifications"
       "show_unread" : "Show unread only"
       "mark_all_read" : "Mark all read"
       "no_unread": "No unread messages!"

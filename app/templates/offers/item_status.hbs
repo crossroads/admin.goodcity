@@ -1,0 +1,15 @@
+<span>
+  {{#if offer.isReceiving }}
+    {{ offer.computedExpectingPackageCount }} {{t 'review_offer.expecting'}},
+    {{ offer.computedReceivedPackageCount }} {{t 'offer.offer_details.received'}},
+    {{ offer.computedMissingPackageCount }} {{t 'offer.offer_details.missing'}}
+  {{else if offer.isReceived}}
+    {{ offer.computedReceivedPackageCount }} {{t 'offer.offer_details.received'}},
+    {{ offer.computedMissingPackageCount }} {{t 'offer.offer_details.missing'}},
+    {{ offer.computedRejectedItemsCount }} {{t 'offer.offer_details.rejected'}}
+  {{else}}
+    {{ offer.computedApprovedItemsCount }} {{t 'offer.offer_details.accepted'}},
+    {{ offer.computedRejectedItemsCount }} {{t 'offer.offer_details.rejected'}},
+    {{ offer.computedSubmittedItemsCount }} {{t 'offer.offer_details.pending'}}
+  {{/if}}
+</span>

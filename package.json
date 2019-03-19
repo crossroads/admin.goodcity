@@ -1,6 +1,6 @@
 {
   "name": "goodcity",
-  "version": "0.15.5",
+  "version": "0.15.6",
   "description": "The GoodCity Admin app enables administrators to process donated goods.",
   "private": true,
   "directories": {
@@ -11,6 +11,17 @@
     "start": "EMBER_CLI_CORDOVA=0 ember serve --port 4201 --live-reload-port 35730",
     "build": "EMBER_CLI_CORDOVA=0 ember build",
     "test": "EMBER_CLI_CORDOVA=0 ember test --server --test-port 7358"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,json,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "repository": {
     "url": "https://github.com/crossroads/admin.goodcity.git",
@@ -61,6 +72,9 @@
     "ember-welcome-page": "^3.2.0",
     "express": "^4.16.3",
     "glob": "^5.0.14",
+    "husky": "^1.2.0",
+    "lint-staged": "^8.1.0",
+    "prettier": "1.15.3",
     "smoke-and-mirrors": "https://github.com/crossroads/smoke-and-mirrors.git#master",
     "xml2js": "^0.4.19"
   },
@@ -70,9 +84,15 @@
     "codeclimate-test-reporter": "^0.5.0",
     "cordova": "7.1.0",
     "cordova-update-config": "^1.0.2",
+    "deep-extend": "0.5.1",
     "ember-cli-test-loader": "^1.1.0",
     "ember-resolver": "^4.5.5",
+    "extend": "2.0.2",
+    "hoek": "4.2.1",
     "loader.js": "^4.0.0",
+    "lodash": "4.17.11",
+    "minimatch": "3.0.2",
+    "npm": "3.8.3",
     "phantomjs-prebuilt": "^2.1.14",
     "shared-goodcity": "git://github.com/crossroads/shared.goodcity.git#master",
     "slick-carousel": "^1.5.8"

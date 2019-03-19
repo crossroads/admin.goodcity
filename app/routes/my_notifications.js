@@ -1,3 +1,11 @@
-import AuthorizeRoute from './authorize';
+import AuthorizeRoute from "./authorize";
 
-export default AuthorizeRoute.extend();
+export default AuthorizeRoute.extend({
+  resetController: function(controller, isExiting) {
+    this._super.apply(this, arguments);
+
+    if (isExiting) {
+      controller.set("hasLoadedReadMessages", false);
+    }
+  }
+});
