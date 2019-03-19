@@ -26,16 +26,6 @@
         <div class='no_result'>{{t "search.no_results"}}</div>
       {{/if}}
 
-      {{#if hasFilter}}
-        {{#if fetchMoreResult}}
-          <div class='find_more_link'>
-            <a href="#" {{action "searchOnServer"}}>
-              {{t "search.server_search"}}
-            </a>
-          </div>
-        {{/if}}
-      {{/if}}
-
     </div>
   </div>
 </section>
