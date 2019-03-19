@@ -57,28 +57,7 @@ export default offers.extend({
       var key =
         isPrivate + message.get("offer.id") + (message.get("itemId") || "");
       if (!keys[key]) {
-        var props = [
-          "id",
-          "itemId",
-          "offer",
-          "sender",
-          "createdAt",
-          "isPrivate"
-        ];
-        var notification = Ember.Object.create(message.getProperties(props));
-        notification.set(
-          "unreadCount",
-          message.get("state") === "unread" ? 1 : 0
-        );
-        notification.set("text", message.get("body"));
-        notification.set("isSingleMessage", message.get("state") === "unread");
-        if (notification.get("itemId")) {
-          notification.set(
-            "item",
-            this.get("store").peekRecord("item", notification.get("itemId"))
-          );
-        }
-
+        let notification = this.buildNotification(message);
         keys[key] = notification;
         res.push(notification);
       } else if (message.get("state") === "unread") {
@@ -90,6 +69,22 @@ export default offers.extend({
     });
     return res;
   }),
+
+  buildNotification(message) {
+    const props = ["id", "itemId", "offer", "sender", "createdAt", "isPrivate"];
+
+    let notification = Ember.Object.create(message.getProperties(props));
+    notification.set("unreadCount", message.get("state") === "unread" ? 1 : 0);
+    notification.set("text", message.get("body"));
+    notification.set("isSingleMessage", message.get("state") === "unread");
+    if (notification.get("itemId")) {
+      notification.set(
+        "item",
+        this.get("store").peekRecord("item", notification.get("itemId"))
+      );
+    }
+    return notification;
+  },
 
   actions: {
     view(messageId) {
