@@ -3,7 +3,7 @@ module.exports = function(app) {
   let offersRouter = express.Router();
   let image_id = "1407764294/default/test_image.jpg";
 
-  let emoty_search = {
+  let empty_search = {
     offers: [],
     items: [],
     images: [],
@@ -262,7 +262,7 @@ module.exports = function(app) {
     if (JSON.stringify(offers_json).indexOf(searchText) >= 0) {
       return res.send(offers_json);
     }
-    return res.send(emoty_search);
+    return res.send(empty_search);
   });
 
   offersRouter.get("/:id", function(req, res) {
