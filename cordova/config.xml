@@ -66,7 +66,7 @@
     <preference name="Fullscreen" value="true" />
     <preference name="CAMERA_USAGE_DESCRIPTION" default=" " />
     <config-file target="*-Info.plist" parent="NSCameraUsageDescription">
-      <string>Needs camera access to take photo</string>
+      <string>So you can add item to Donor's offer</string>
     </config-file>
     <preference name="PHOTOLIBRARY_USAGE_DESCRIPTION" default=" " />
     <config-file target="*-Info.plist" parent="NSPhotoLibraryUsageDescription">
