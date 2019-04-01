@@ -84,6 +84,7 @@
     "codeclimate-test-reporter": "^0.5.0",
     "cordova": "7.1.0",
     "cordova-update-config": "^1.0.2",
+    "cryptiles": "^4.1.2",
     "deep-extend": "^0.5.1",
     "ember-cli-test-loader": "^1.1.0",
     "ember-resolver": "^4.5.5",
