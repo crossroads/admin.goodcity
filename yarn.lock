@@ -10615,9 +10615,9 @@ sha@~2.0.1:
     graceful-fs "^4.1.2"
     readable-stream "^2.0.2"
 
-"shared-goodcity@git://github.com/crossroads/shared.goodcity.git#master":
+"shared-goodcity@git://github.com/crossroads/shared.goodcity.git#ember-upgrade":
   version "0.0.0"
-  resolved "git://github.com/crossroads/shared.goodcity.git#0e96963ef19251caa6a7cb25634c62c94e19400f"
+  resolved "git://github.com/crossroads/shared.goodcity.git#2e86dcddccee84c8cde585e5628801159a99c03e"
   dependencies:
     ember-cli-babel "^5.1.6"
     ember-cli-coffeescript "^1.13.2"
