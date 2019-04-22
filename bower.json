@@ -1,8 +1,7 @@
 {
   "name": "goodcity",
   "dependencies": {
-    "ember": "~2.13.0",
-    "ember-cli-shims": "0.1.1",
+    "ember": "~2.16.0",
     "ember-cli-test-loader": "0.2.2",
     "cloudinary": "~1.0.12",
     "moment": "^2.22.2",
@@ -28,6 +27,6 @@
     "ember-qunit-notifications": "0.1.0",
     "ember-cli-shims": "0.1.1",
     "qunit-notifications": "~0.1.0",
-    "ember": "~2.13.0"
+    "ember": "~2.16.0"
   }
 }
