@@ -1,5 +1,3 @@
-/* eslint-env node */
-
 module.exports = {
   browsers: [
     'ie 9',
@@ -8,4 +6,3 @@ module.exports = {
     'last 1 Safari versions'
   ]
 };
-

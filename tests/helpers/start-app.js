@@ -1,6 +1,12 @@
-import Ember from 'ember';
+// import Ember from 'ember';
 import Application from '../../app';
-import Router from '../../router';
+// import Router from '../../router';
+import {
+  merge
+} from '@ember/polyfills';
+import {
+  run
+} from '@ember/runloop';
 import config from '../../config/environment';
 import './custom-helpers';
 
@@ -21,28 +27,35 @@ export default function startApp(attrs, permissionId) {
 
   let application;
 
-  let attributes = Ember.merge({}, config.APP);
-  attributes = Ember.merge(attributes, attrs); // use defaults, but you can override;
+  let attributes = merge({}, config.APP);
+  attributes.autoboot = true;
+  attributes = merge(attributes, attrs); // use defaults, but you can override;
 
   Router.reopen({
     location: 'none'
   });
 
-  Ember.run(function() {
+  return run(function () {
     application = Application.create(attributes);
     application.__container__.lookup('service:i18n').set("locale", "en");
     application.setupForTesting();
     application.injectTestHelpers();
+    // return application;
   });
 
   //window.navigator = {onLine:true,plugins:[]};
-  window.alert = function(message) { console.log("Alert: " + message); };
-  window.confirm = function(message) { console.log("Confirm: " + message); return true; };
+  window.alert = function (message) {
+    console.log("Alert: " + message);
+  };
+  window.confirm = function (message) {
+    console.log("Confirm: " + message);
+    return true;
+  };
   Ember.$("head").append("<style>.loading-indicator, .reveal-modal-bg, .reveal-modal {display:none !important;}</style>");
   lookup("service:logger").error = message => QUnit.assert.equal(message, "");
 
   //needed by application controller init
-  lookup("controller:subscriptions").actions.wire = function() {};
+  lookup("controller:subscriptions").actions.wire = function () {};
 
   return application;
 }

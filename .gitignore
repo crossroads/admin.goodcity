@@ -1,37 +1,23 @@
-# See http://help.github.com/ignore-files/ for more about ignoring files.
+# See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-dist
-tmp
-log
+/dist
+/tmp
 
 # dependencies
-node_modules
-bower_components
-
-# fastlane
-Preview.html
-fastlane/report.xml
-fastlane/*.json
-
-# code signing
-*.mobileprovision
-*.keystore
-*.p12
+/node_modules
+/bower_components
 
 # misc
-.sass-cache
-connect.lock
-coverage/*
-coverage_*
-libpeerconnection.log
-npm-debug.log
+/.sass-cache
+/connect.lock
+/coverage/*
+/libpeerconnection.log
+npm-debug.log*
+yarn-error.log
 testem.log
-cordova/www
-cordova/platforms
-.hgignore
-.DS_Store
-cordova/plugins/*
-.ios_build.lock
-cordova/*.keystore
-cordova/build.json
+
+# ember-try
+.node_modules.ember-try/
+bower.json.ember-try
+package.json.ember-try

@@ -1,11 +1,10 @@
-/* global require, module */
-var EmberApp = require("ember-cli/lib/broccoli/ember-app");
+'use strict';
+const EmberApp = require("ember-cli/lib/broccoli/ember-app");
 var webRelease =
-  process.env.EMBER_CLI_CORDOVA === "0" &&
-  ["production", "staging"].indexOf(process.env.EMBER_ENV) !== -1;
+  process.env.EMBER_CLI_CORDOVA === "0" && ["production", "staging"].indexOf(process.env.EMBER_ENV) !== -1;
 
-module.exports = function(defaults) {
-  var app = new EmberApp(defaults, {
+module.exports = function (defaults) {
+  let app = new EmberApp(defaults, {
     sourcemaps: {
       enabled: true,
       extensions: ["js"]
