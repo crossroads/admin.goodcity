@@ -1,11 +1,11 @@
-/* jshint node: true */
+'use strict';
 const pkgJson = require("../package.json");
-module.exports = function(environment) {
-  var ENV = {
+module.exports = function (environment) {
+  let ENV = {
     modulePrefix: 'goodcity',
-    environment: environment,
-    baseURL: '/',
-    defaultLocationType: 'auto',
+    environment,
+    rootURL: '/',
+    locationType: 'auto',
 
     'emberRollbarClient': {
       enabled: environment !== 'test' && environment !== 'development',
@@ -31,6 +31,10 @@ module.exports = function(environment) {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
       }
+    },
+    EXTEND_PROTOTYPES: {
+      // Prevent Ember Data from overriding Date.parse.
+      Date: false
     },
     contentSecurityPolicy: {
       "img-src": "'self' data: https://res.cloudinary.com filesystem: *",
@@ -61,9 +65,9 @@ module.exports = function(environment) {
       NAMESPACE: 'api/v1',
 
       PRELOAD_TYPES: ["territory"],
-      PRELOAD_AUTHORIZED_TYPES: ["package_type","donor_condition","rejection_reason","role", "timeslot", "gogovan_transport", "crossroads_transport", "location", "cancellation_reason", "holiday"],
+      PRELOAD_AUTHORIZED_TYPES: ["package_type", "donor_condition", "rejection_reason", "role", "timeslot", "gogovan_transport", "crossroads_transport", "location", "cancellation_reason", "holiday"],
       SHA: process.env.APP_SHA || "00000000",
-      SHARED_SHA:  process.env.APP_SHARED_SHA || "00000000",
+      SHARED_SHA: process.env.APP_SHARED_SHA || "00000000",
       VERSION: pkgJson.version || "1.0.0"
     },
 
@@ -117,7 +121,7 @@ module.exports = function(environment) {
     ENV.cordova.enabled = false;
     // Testem prefers this...
     ENV.baseURL = '/';
-    ENV.locationType = 'auto';
+    ENV.locationType = 'none';
 
     // keep test console output quieter
     ENV.APP.LOG_ACTIVE_GENERATION = false;
@@ -128,6 +132,7 @@ module.exports = function(environment) {
     // RESTAdapter Settings
     ENV.APP.API_HOST_URL = 'http://localhost:4201';
     ENV.ADMIN_APP_HOST_URL = 'http://localhost:4201';
+    ENV.APP.autoboot = false;
   }
 
   if (environment === 'production') {
@@ -154,7 +159,9 @@ module.exports = function(environment) {
       'https://eventgw.twilio.com/v1/EndpointEvents'
     ].join(' ');
     //google analytics
-    ENV.googleAnalytics = { webPropertyId: 'UA-62978462-2' };
+    ENV.googleAnalytics = {
+      webPropertyId: 'UA-62978462-2'
+    };
     ENV.cordova.GcmSenderId = '876198075877';
   }
 
@@ -179,7 +186,9 @@ module.exports = function(environment) {
       'wss://chunderw-vpc-gll.twilio.com/signal',
       'https://eventgw.twilio.com/v1/EndpointEvents'
     ].join(' ');
-    ENV.googleAnalytics = { webPropertyId: 'UA-62978462-3' };
+    ENV.googleAnalytics = {
+      webPropertyId: 'UA-62978462-3'
+    };
     ENV.cordova.GcmSenderId = '907786683525';
 
     // VSO build
@@ -191,7 +200,7 @@ module.exports = function(environment) {
     ENV.staging = false;
   }
 
-  ENV.APP.SERVER_PATH  = ENV.APP.API_HOST_URL + '/' + ENV.APP.NAMESPACE;
+  ENV.APP.SERVER_PATH = ENV.APP.API_HOST_URL + '/' + ENV.APP.NAMESPACE;
 
   return ENV;
 };
