@@ -1,9 +1,10 @@
-'use strict';
+"use strict";
 const EmberApp = require("ember-cli/lib/broccoli/ember-app");
 var webRelease =
-  process.env.EMBER_CLI_CORDOVA === "0" && ["production", "staging"].indexOf(process.env.EMBER_ENV) !== -1;
+  process.env.EMBER_CLI_CORDOVA === "0" &&
+  ["production", "staging"].indexOf(process.env.EMBER_ENV) !== -1;
 
-module.exports = function (defaults) {
+module.exports = function(defaults) {
   let app = new EmberApp(defaults, {
     sourcemaps: {
       enabled: true,
@@ -26,6 +27,13 @@ module.exports = function (defaults) {
     },
     "ember-cli-babel": {
       includePolyfill: true
+    },
+    babel: {
+      // enable "loose" mode
+      loose: true,
+      // don't transpile generator functions
+      exclude: ["transform-regenerator"],
+      plugins: ["transform-object-rest-spread"]
     }
   });
 

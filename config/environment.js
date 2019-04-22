@@ -5,7 +5,7 @@ module.exports = function (environment) {
     modulePrefix: 'goodcity',
     environment,
     rootURL: '/',
-    locationType: 'auto',
+    defaultLocationType: 'auto',
 
     'emberRollbarClient': {
       enabled: environment !== 'test' && environment !== 'development',
