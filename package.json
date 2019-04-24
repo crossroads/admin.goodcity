@@ -1,6 +1,6 @@
 {
   "name": "goodcity",
-  "version": "0.15.6",
+  "version": "0.15.7",
   "description": "The GoodCity Admin app enables administrators to process donated goods.",
   "private": true,
   "directories": {
@@ -84,15 +84,16 @@
     "codeclimate-test-reporter": "^0.5.0",
     "cordova": "7.1.0",
     "cordova-update-config": "^1.0.2",
-    "deep-extend": "0.5.1",
+    "cryptiles": "^4.1.2",
+    "deep-extend": "^0.5.1",
     "ember-cli-test-loader": "^1.1.0",
     "ember-resolver": "^4.5.5",
     "extend": "2.0.2",
     "hoek": "4.2.1",
     "loader.js": "^4.0.0",
-    "lodash": "4.17.11",
-    "minimatch": "3.0.2",
-    "npm": "3.8.3",
+    "lodash": "^4.17.11",
+    "minimatch": "^3.0.2",
+    "npm": "^3.8.3",
     "phantomjs-prebuilt": "^2.1.14",
     "shared-goodcity": "git://github.com/crossroads/shared.goodcity.git#master",
     "slick-carousel": "^1.5.8"
