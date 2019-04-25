@@ -10,6 +10,7 @@ import "../factories/schedule";
 import "../factories/gogovan_order";
 import "../factories/delivery";
 import "../factories/role";
+import $ from "jquery";
 
 var App,
   offer1,
@@ -47,12 +48,18 @@ module("Reviewer: Display Offer Status", {
       type: "GET",
       status: 200,
       responseText: {
-        roles: [role.toJSON({ includeId: true })]
+        roles: [
+          role.toJSON({
+            includeId: true
+          })
+        ]
       }
     });
 
     reviewer = FactoryGuy.make("user");
-    offer1 = FactoryGuy.make("offer_with_items", { state: "submitted" });
+    offer1 = FactoryGuy.make("offer_with_items", {
+      state: "submitted"
+    });
 
     offer2 = FactoryGuy.make("offer_with_items", {
       state: "under_review",
@@ -60,9 +67,13 @@ module("Reviewer: Display Offer Status", {
     });
     reviewerName = reviewer.get("firstName") + " " + reviewer.get("lastName");
 
-    offer3 = FactoryGuy.make("offer_with_items", { state: "reviewed" });
+    offer3 = FactoryGuy.make("offer_with_items", {
+      state: "reviewed"
+    });
 
-    schedule = FactoryGuy.make("schedule", { scheduledAt: "12/01/2014" });
+    schedule = FactoryGuy.make("schedule", {
+      scheduledAt: "12/01/2014"
+    });
     delivery1 = FactoryGuy.make("delivery", {
       deliveryType: "Alternate",
       schedule: schedule
@@ -95,13 +106,25 @@ module("Reviewer: Display Offer Status", {
       reviewedBy: reviewer
     });
 
-    offer8 = FactoryGuy.make("offer", { state: "under_review" });
-    item8 = FactoryGuy.make("item", { state: "rejected", offer: offer8 });
+    offer8 = FactoryGuy.make("offer", {
+      state: "under_review"
+    });
+    item8 = FactoryGuy.make("item", {
+      state: "rejected",
+      offer: offer8
+    });
 
-    offer9 = FactoryGuy.make("offer", { state: "under_review" });
-    item9 = FactoryGuy.make("item", { state: "accepted", offer: offer9 });
+    offer9 = FactoryGuy.make("offer", {
+      state: "under_review"
+    });
+    item9 = FactoryGuy.make("item", {
+      state: "accepted",
+      offer: offer9
+    });
 
-    offer10 = FactoryGuy.make("offer_with_items", { state: "received" });
+    offer10 = FactoryGuy.make("offer_with_items", {
+      state: "received"
+    });
 
     ggv_order11 = FactoryGuy.make("gogovan_active_order");
     delivery11 = FactoryGuy.make("delivery", {
@@ -112,7 +135,9 @@ module("Reviewer: Display Offer Status", {
       state: "scheduled",
       delivery: delivery11
     });
-    offer12 = FactoryGuy.make("offer_with_items", { state: "cancelled" });
+    offer12 = FactoryGuy.make("offer_with_items", {
+      state: "cancelled"
+    });
   },
 
   afterEach: function() {

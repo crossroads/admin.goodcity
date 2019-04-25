@@ -2,6 +2,7 @@ import { run, scheduleOnce } from "@ember/runloop";
 import { registerAsyncHelper, registerHelper } from "@ember/test";
 import FactoryGuy from "ember-data-factory-guy";
 import "../factories/user";
+import $ from "jquery";
 
 export default function() {
   registerAsyncHelper("loginUser", function(app, url) {

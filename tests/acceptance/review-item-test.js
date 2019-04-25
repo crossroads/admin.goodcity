@@ -6,6 +6,7 @@ import "../factories/role";
 import "../factories/item";
 import "../factories/package";
 import FactoryGuy from "ember-data-factory-guy";
+import $ from "jquery";
 
 var App,
   role,
@@ -21,9 +22,15 @@ module("Display review Item", {
   beforeEach: function() {
     App = startApp({}, 2);
     role = FactoryGuy.make("role");
-    offer = FactoryGuy.make("offer", { state: "under_review" });
-    item = FactoryGuy.make("item_with_type", { state: "accepted" });
-    packageType = FactoryGuy.make("package_type", { visibleInSelects: true });
+    offer = FactoryGuy.make("offer", {
+      state: "under_review"
+    });
+    item = FactoryGuy.make("item_with_type", {
+      state: "accepted"
+    });
+    packageType = FactoryGuy.make("package_type", {
+      visibleInSelects: true
+    });
     package1 = FactoryGuy.make("package", {
       item: item,
       packageType: packageType,
@@ -45,7 +52,11 @@ module("Display review Item", {
       type: "GET",
       status: 200,
       responseText: {
-        roles: [role.toJSON({ includeId: true })]
+        roles: [
+          role.toJSON({
+            includeId: true
+          })
+        ]
       }
     });
     $.mockjax({
@@ -53,7 +64,11 @@ module("Display review Item", {
       type: "GET",
       status: 200,
       responseText: {
-        packages_locations: [packages_location.toJSON({ includeId: true })]
+        packages_locations: [
+          packages_location.toJSON({
+            includeId: true
+          })
+        ]
       }
     });
     $.mockjax({
@@ -61,7 +76,11 @@ module("Display review Item", {
       type: "GET",
       status: 200,
       responseText: {
-        orders_packages: [orders_pkg1.toJSON({ includeId: true })]
+        orders_packages: [
+          orders_pkg1.toJSON({
+            includeId: true
+          })
+        ]
       }
     });
     $.mockjax({
@@ -69,7 +88,11 @@ module("Display review Item", {
       type: "GET",
       status: 200,
       responseText: {
-        package_types: [packageType.toJSON({ includeId: true })]
+        package_types: [
+          packageType.toJSON({
+            includeId: true
+          })
+        ]
       }
     });
     $.mockjax({
@@ -77,7 +100,11 @@ module("Display review Item", {
       type: "PUT",
       status: 200,
       responseText: {
-        package: [package2.toJSON({ includeId: true })]
+        package: [
+          package2.toJSON({
+            includeId: true
+          })
+        ]
       }
     });
     $.mockjax({
@@ -85,8 +112,16 @@ module("Display review Item", {
       type: "PUT",
       status: 200,
       responseText: {
-        item: [item.toJSON({ includeId: true })],
-        package: [package2.toJSON({ includeId: true })]
+        item: [
+          item.toJSON({
+            includeId: true
+          })
+        ],
+        package: [
+          package2.toJSON({
+            includeId: true
+          })
+        ]
       }
     });
   },

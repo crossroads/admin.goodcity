@@ -5,6 +5,7 @@ import "../factories/user_profile";
 import "../factories/role";
 import FactoryGuy from "ember-data-factory-guy";
 import TestHelper from "ember-data-factory-guy/factory-guy-test-helper";
+import $ from "jquery";
 
 var App, hk_user, non_hk_user, role;
 
@@ -19,7 +20,11 @@ module("Acceptance: Login", {
       type: "GET",
       status: 200,
       responseText: {
-        roles: [role.toJSON({ includeId: true })]
+        roles: [
+          role.toJSON({
+            includeId: true
+          })
+        ]
       }
     });
 

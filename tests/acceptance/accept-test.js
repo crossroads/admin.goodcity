@@ -7,6 +7,7 @@ import "../factories/role";
 import "../factories/package";
 import FactoryGuy from "ember-data-factory-guy";
 import TestHelper from "ember-data-factory-guy/factory-guy-test-helper";
+import $ from "jquery";
 
 var App,
   offer,
@@ -30,11 +31,17 @@ module("Reviewer: Accept Item Tab", {
       type: "GET",
       status: 200,
       responseText: {
-        roles: [role.toJSON({ includeId: true })]
+        roles: [
+          role.toJSON({
+            includeId: true
+          })
+        ]
       }
     });
 
-    offer = FactoryGuy.make("offer", { state: "under_review" });
+    offer = FactoryGuy.make("offer", {
+      state: "under_review"
+    });
     item1 = FactoryGuy.make("item_with_type", {
       offer: offer,
       state: "accepted"
@@ -48,7 +55,9 @@ module("Reviewer: Accept Item Tab", {
       packageType: item1.get("packageType")
     });
 
-    item2 = FactoryGuy.make("item", { offer: offer });
+    item2 = FactoryGuy.make("item", {
+      offer: offer
+    });
 
     item3 = FactoryGuy.make("item_with_type", {
       offer: offer,

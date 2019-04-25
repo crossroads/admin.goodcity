@@ -7,6 +7,7 @@ import "../factories/message";
 import "../factories/offer";
 import "../factories/item";
 import "../factories/role";
+import $ from "jquery";
 
 var App, offer, item, message1, message2, message3, role;
 
@@ -20,11 +21,22 @@ module("Reviewer: Display Item Messages", {
       type: "GET",
       status: 200,
       responseText: {
-        roles: [role.toJSON({ includeId: true })]
+        roles: [
+          role.toJSON({
+            includeId: true
+          })
+        ]
       }
     });
-    offer = { id: "300", state: "under_review" };
-    item = { id: "110", state: "submitted", offer_id: offer.id };
+    offer = {
+      id: "300",
+      state: "under_review"
+    };
+    item = {
+      id: "110",
+      state: "submitted",
+      offer_id: offer.id
+    };
     message1 = {
       id: "44",
       offer_id: offer.id,

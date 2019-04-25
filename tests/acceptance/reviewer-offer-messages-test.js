@@ -8,6 +8,7 @@ import "../factories/message";
 import "../factories/offer";
 import "../factories/user";
 import "../factories/role";
+import $ from "jquery";
 
 var App,
   offer,
@@ -31,13 +32,24 @@ module("Reviewer: Display Offer Messages", {
       type: "GET",
       status: 200,
       responseText: {
-        roles: [role.toJSON({ includeId: true })]
+        roles: [
+          role.toJSON({
+            includeId: true
+          })
+        ]
       }
     });
     user1 = FactoryGuy.make("user");
     user2 = FactoryGuy.make("user_with_image");
-    offer = { id: 33, state: "under_review" };
-    offer1 = { id: 34, createdBy: user1, state: "under_review" };
+    offer = {
+      id: 33,
+      state: "under_review"
+    };
+    offer1 = {
+      id: 34,
+      createdBy: user1,
+      state: "under_review"
+    };
     message4 = {
       id: 81,
       offer_id: offer1.id,
@@ -82,14 +94,19 @@ module("Reviewer: Display Offer Messages", {
       url: "/api/v1/message*",
       type: "GET",
       status: 200,
-      responseText: { messages }
+      responseText: {
+        messages
+      }
     });
 
     $.mockjax({
       url: "/api/v1/offer*",
       type: "GET",
       status: 200,
-      responseText: { offers, messages }
+      responseText: {
+        offers,
+        messages
+      }
     });
   },
 

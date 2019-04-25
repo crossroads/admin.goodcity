@@ -7,6 +7,7 @@ import { merge } from "@ember/polyfills";
 import { run } from "@ember/runloop";
 import config from "../../config/environment";
 import "./custom-helpers";
+import $ from "jquery";
 
 export default function startApp(attrs, permissionId) {
   //place setting of localStorage variables here so app doesn't cache values from previous tests
