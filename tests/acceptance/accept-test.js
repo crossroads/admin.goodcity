@@ -80,7 +80,7 @@ module("Reviewer: Accept Item Tab", {
   },
 
   afterEach: function() {
-    Em.run(function() {
+    run(function() {
       TestHelper.teardown();
     });
     run(App, "destroy");

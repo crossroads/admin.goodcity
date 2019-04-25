@@ -80,7 +80,7 @@ module("Reviewer: Display Item Messages", {
   },
 
   afterEach: function() {
-    Em.run(function() {
+    run(function() {
       TestHelper.teardown();
     });
     run(App, "destroy");

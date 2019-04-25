@@ -86,7 +86,7 @@ module("Scheduled Offers", {
     });
   },
   afterEach: function() {
-    Em.run(function() {
+    run(function() {
       TestHelper.teardown();
     });
     run(App, "destroy");

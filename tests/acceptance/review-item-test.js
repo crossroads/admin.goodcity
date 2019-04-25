@@ -6,7 +6,6 @@ import "../factories/role";
 import "../factories/item";
 import "../factories/package";
 import FactoryGuy from "ember-data-factory-guy";
-import $ from "jquery";
 
 var App,
   role,

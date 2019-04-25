@@ -62,7 +62,7 @@ module("Reviewer: Display Item Status", {
   },
 
   afterEach: function() {
-    Em.run(function() {
+    run(function() {
       TestHelper.teardown();
     });
     run(App, "destroy");

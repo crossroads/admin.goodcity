@@ -13,7 +13,7 @@ module("Subscriptions", {
     TestHelper.setup();
   },
   afterEach: function() {
-    Em.run(function() {
+    run(function() {
       TestHelper.teardown();
     });
     run(App, "destroy");

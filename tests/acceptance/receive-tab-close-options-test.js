@@ -8,7 +8,6 @@ import "../factories/offer";
 import FactoryGuy from "ember-data-factory-guy";
 import TestHelper from "ember-data-factory-guy/factory-guy-test-helper";
 import "../factories/role";
-import $ from "jquery";
 
 var App, ofr1, item, pkg1, pkg2, pkg3, order_pkg, packages_location, role;
 
@@ -59,7 +58,7 @@ module("Received Tab close options", {
     });
   },
   afterEach: function() {
-    Em.run(function() {
+    run(function() {
       TestHelper.teardown();
     });
     run(App, "destroy");
