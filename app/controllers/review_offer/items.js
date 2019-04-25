@@ -1,13 +1,18 @@
-import Ember from 'ember';
+import { computed } from "@ember/object";
+import { sort, alias } from "@ember/object/computed";
+import Controller from "@ember/controller";
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   sortProperties: ["latestUpdatedTime:desc"],
-  sortedItems: Ember.computed.sort("offerAndItems", "sortProperties"),
-  items: Ember.computed.alias('model.items'),
+  sortedItems: sort("offerAndItems", "sortProperties"),
+  items: alias("model.items"),
 
-  offerAndItems: Ember.computed('items.@each.state', function(){
+  offerAndItems: computed("items.@each.state", function() {
     // avoid deleted-items which are not persisted yet.
-    var elements = this.get('items').rejectBy('state', 'draft').rejectBy('isDeleted', true).toArray();
+    var elements = this.get("items")
+      .rejectBy("state", "draft")
+      .rejectBy("isDeleted", true)
+      .toArray();
 
     // add offer to array for general messages display
     elements.push(this.get("model"));

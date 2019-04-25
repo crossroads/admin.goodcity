@@ -1,22 +1,26 @@
-import Ember from 'ember';
-import { module, test } from 'qunit';
-import startApp from '../helpers/start-app';
-import FactoryGuy from 'ember-data-factory-guy';
-import '../factories/role';
+import { run } from "@ember/runloop";
+import { module, test } from "qunit";
+import startApp from "../helpers/start-app";
+import FactoryGuy from "ember-data-factory-guy";
+import "../factories/role";
 
 var App, role;
 
-module('Home Page', {
+module("Home Page", {
   beforeEach: function() {
     App = startApp({}, 1);
     role = FactoryGuy.make("role");
-    $.mockjax({url: '/api/v1/role*', type: 'GET', status: 200,responseText: {
-      roles: [role.toJSON({includeId: true})]
+    $.mockjax({
+      url: "/api/v1/role*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        roles: [role.toJSON({ includeId: true })]
       }
     });
   },
   afterEach: function() {
-    Ember.run(App, 'destroy');
+    run(App, "destroy");
   }
 });
 
@@ -25,7 +29,7 @@ test("redirect to offers page if logged-in as Reviewer", function(assert) {
   App = startApp({}, 1);
   visit("/");
 
-  andThen(function(){
+  andThen(function() {
     assert.equal(currentURL(), "/offers/my_list/reviewing");
   });
 });
@@ -35,7 +39,7 @@ test("redirect to offers page if logged-in as Supervisor", function(assert) {
   App = startApp({}, 2);
   visit("/");
 
-  andThen(function(){
+  andThen(function() {
     assert.equal(currentURL(), "/offers/submitted");
   });
 });
@@ -43,11 +47,11 @@ test("redirect to offers page if logged-in as Supervisor", function(assert) {
 test("redirect to login page if try to visit home page", function(assert) {
   assert.expect(1);
   App = startApp();
-  lookup('service:session').set('authToken', null);
+  lookup("service:session").set("authToken", null);
 
   visit("/");
 
-  andThen(function(){
+  andThen(function() {
     assert.equal(currentURL(), "/login");
   });
 });

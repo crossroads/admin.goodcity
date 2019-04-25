@@ -1,17 +1,20 @@
-import Ember from "ember";
+import { getOwner } from "@ember/application";
+import EmberObject, { computed } from "@ember/object";
+import { inject as service } from "@ember/service";
+import { sort } from "@ember/object/computed";
 import offers from "./offers";
 
 export default offers.extend({
   sortProperties: ["createdAt:desc"],
-  sortedModel: Ember.computed.sort("model", "sortProperties"),
-  messagesUtil: Ember.inject.service("messages"),
-  store: Ember.inject.service(),
+  sortedModel: sort("model", "sortProperties"),
+  messagesUtil: service("messages"),
+  store: service(),
 
-  allMessages: Ember.computed(function() {
+  allMessages: computed(function() {
     return this.store.peekAll("message");
   }),
 
-  model: Ember.computed(
+  model: computed(
     "allMessages.@each.state",
     "session.currentUser.id",
     "allMessages.@each.offer.createdBy",
@@ -25,7 +28,7 @@ export default offers.extend({
   ),
 
   hasLoadedReadMessages: false,
-  showUnread: Ember.computed({
+  showUnread: computed({
     get: function() {
       return true;
     },
@@ -34,22 +37,22 @@ export default offers.extend({
     }
   }),
 
-  myNotifications: Ember.computed("showUnread", "allNotifications", function() {
+  myNotifications: computed("showUnread", "allNotifications", function() {
     if (this.get("showUnread")) {
       return this.get("unreadNotifications");
     }
     return this.get("allNotifications");
   }),
 
-  unreadNotifications: Ember.computed("allNotifications.[]", function() {
+  unreadNotifications: computed("allNotifications.[]", function() {
     return this.get("allNotifications").rejectBy("unreadCount", 0);
   }),
 
-  readNotifications: Ember.computed("allNotifications.[]", function() {
+  readNotifications: computed("allNotifications.[]", function() {
     return this.get("allNotifications").filterBy("unreadCount", 0);
   }),
 
-  allNotifications: Ember.computed("model.@each.state", function() {
+  allNotifications: computed("model.@each.state", function() {
     var keys = {};
     var res = [];
     this.get("sortedModel").forEach(message => {
@@ -73,7 +76,7 @@ export default offers.extend({
   buildNotification(message) {
     const props = ["id", "itemId", "offer", "sender", "createdAt", "isPrivate"];
 
-    let notification = Ember.Object.create(message.getProperties(props));
+    let notification = EmberObject.create(message.getProperties(props));
     notification.set("unreadCount", message.get("state") === "unread" ? 1 : 0);
     notification.set("text", message.get("body"));
     notification.set("isSingleMessage", message.get("state") === "unread");
@@ -107,7 +110,7 @@ export default offers.extend({
 
       if (!showUnread && !this.get("hasLoadedReadMessages")) {
         // We want to show all messages, we load them if they haven't been loaded yet
-        let loadingView = Ember.getOwner(this)
+        let loadingView = getOwner(this)
           .lookup("component:loading")
           .append();
         return this.get("messagesUtil")

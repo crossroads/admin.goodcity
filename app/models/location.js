@@ -1,13 +1,13 @@
-import DS from 'ember-data';
-import Ember from 'ember';
+import { computed } from "@ember/object";
+import DS from "ember-data";
 
 var attr = DS.attr;
 
 export default DS.Model.extend({
-  building:  attr('string'),
-  area:      attr('string'),
+  building: attr("string"),
+  area: attr("string"),
 
-  name: Ember.computed('building', 'area', function(){
-    return this.get('building') + this.get('area');
+  name: computed("building", "area", function() {
+    return this.get("building") + this.get("area");
   })
 });

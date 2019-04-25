@@ -1,4 +1,4 @@
-import Ember from "ember";
+import { run } from "@ember/runloop";
 import startApp from "../helpers/start-app";
 import FactoryGuy from "ember-data-factory-guy";
 import TestHelper from "ember-data-factory-guy/factory-guy-test-helper";
@@ -97,7 +97,7 @@ module("Reviewer: Display Offer Messages", {
     Em.run(function() {
       TestHelper.teardown();
     });
-    Ember.run(App, "destroy");
+    run(App, "destroy");
     $.mockjax.clear();
   }
 });

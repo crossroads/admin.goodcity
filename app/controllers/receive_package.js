@@ -1,25 +1,31 @@
-import Ember from 'ember';
-const { getOwner } = Ember;
-import AjaxPromise from 'goodcity/utils/ajax-promise';
+import { scheduleOnce } from "@ember/runloop";
+import { on } from "@ember/object/evented";
+import { computed } from "@ember/object";
+import { alias } from "@ember/object/computed";
+import { inject as service } from "@ember/service";
+import Controller, { inject as controller } from "@ember/controller";
+import { getOwner } from "@ember/application";
+import AjaxPromise from "goodcity/utils/ajax-promise";
 
-export default Ember.Controller.extend({
+export default Controller.extend({
+  messageBox: service(),
+  cordova: service(),
 
-  messageBox: Ember.inject.service(),
-  cordova: Ember.inject.service(),
-
-  package: Ember.computed.alias("model"),
+  package: alias("model"),
   watchErrors: true,
   isAndroidDevice: false,
-  i18n: Ember.inject.service(),
-  reviewOfferController: Ember.inject.controller("review_offer"),
+  i18n: service(),
+  reviewOfferController: controller("review_offer"),
 
-  donorConditions: Ember.computed(function(){
-    return this.get("store").peekAll('donor_condition').sortBy('id');
+  donorConditions: computed(function() {
+    return this.get("store")
+      .peekAll("donor_condition")
+      .sortBy("id");
   }),
 
-  selectedCondition: Ember.computed.alias("model.donorCondition"),
+  selectedCondition: alias("model.donorCondition"),
 
-  grades: Ember.computed(function(){
+  grades: computed(function() {
     return [
       { name: this.get("i18n").t("receive_package.grade_a"), id: "A" },
       { name: this.get("i18n").t("receive_package.grade_b"), id: "B" },
@@ -28,40 +34,45 @@ export default Ember.Controller.extend({
     ];
   }),
 
-  selectedGrade: Ember.computed("model", function(){
+  selectedGrade: computed("model", function() {
     var grade = this.get("model.grade");
-    return this.get("grades").filterBy('id', grade).get("firstObject");
+    return this.get("grades")
+      .filterBy("id", grade)
+      .get("firstObject");
   }),
 
-  offer: Ember.computed("model", function(){
+  offer: computed("model", function() {
     return this.get("store").peekRecord("offer", this.get("package.offerId"));
   }),
 
-  identifyDevice: Ember.on('init', function() {
+  identifyDevice: on("init", function() {
     var isAndroidDevice = this.get("cordova").isAndroid();
     this.set("isAndroidDevice", isAndroidDevice);
   }),
 
-  location: Ember.computed("locationId", function(){
+  location: computed("locationId", function() {
     return this.store.peekRecord("location", this.get("locationId"));
   }),
 
-  locationId: Ember.computed("package", {
+  locationId: computed("package", {
     get: function() {
-      return this.get("package.location.id") || this.get("package.packageType.location.id");
+      return (
+        this.get("package.location.id") ||
+        this.get("package.packageType.location.id")
+      );
     },
     set: function(key, value) {
       return value;
     }
   }),
 
-  locations: Ember.computed(function(){
+  locations: computed(function() {
     return this.store.peekAll("location");
   }),
 
-  packageForm: Ember.computed("package.inventoryNumber", {
+  packageForm: computed("package.inventoryNumber", {
     get: function() {
-      var pkg = this.get('package');
+      var pkg = this.get("package");
       return {
         quantity: pkg.get("quantity"),
         length: pkg.get("length"),
@@ -83,16 +94,28 @@ export default Ember.Controller.extend({
     }
   }),
 
-  hasErrors: Ember.computed('invalidQuantity', 'invalidInventoryNo', 'invalidDescription', 'invalidLocation', 'watchErrors', {
-    get: function() {
-      return this.get("invalidQuantity") || this.get("invalidInventoryNo") || this.get("invalidDescription") || this.get("invalidLocation");
-    },
-    set: function(key, value) {
-      return value;
+  hasErrors: computed(
+    "invalidQuantity",
+    "invalidInventoryNo",
+    "invalidDescription",
+    "invalidLocation",
+    "watchErrors",
+    {
+      get: function() {
+        return (
+          this.get("invalidQuantity") ||
+          this.get("invalidInventoryNo") ||
+          this.get("invalidDescription") ||
+          this.get("invalidLocation")
+        );
+      },
+      set: function(key, value) {
+        return value;
+      }
     }
-  }),
+  ),
 
-  invalidQuantity: Ember.computed({
+  invalidQuantity: computed({
     get: function() {
       return this.get("package.quantity").length === 0;
     },
@@ -101,7 +124,7 @@ export default Ember.Controller.extend({
     }
   }),
 
-  invalidLocation: Ember.computed('locationId', {
+  invalidLocation: computed("locationId", {
     get: function() {
       return this.get("locationId") === undefined;
     },
@@ -110,7 +133,7 @@ export default Ember.Controller.extend({
     }
   }),
 
-  invalidDescription: Ember.computed({
+  invalidDescription: computed({
     get: function() {
       return this.get("package.notes").length === 0;
     },
@@ -119,9 +142,11 @@ export default Ember.Controller.extend({
     }
   }),
 
-  invalidInventoryNo: Ember.computed({
+  invalidInventoryNo: computed({
     get: function() {
-      var isValid = this.verifyInventoryNumber(this.get("package.inventoryNumber"));
+      var isValid = this.verifyInventoryNumber(
+        this.get("package.inventoryNumber")
+      );
       return isValid;
     },
     set: function(key, value) {
@@ -130,23 +155,32 @@ export default Ember.Controller.extend({
   }),
 
   actions: {
-    moveBack(){
-      if(this.get("hasErrors")) {
+    moveBack() {
+      if (this.get("hasErrors")) {
         this.get("package").rollbackAttributes();
       }
       var _this = this;
-      var loadingView = getOwner(this).lookup('component:loading').append();
+      var loadingView = getOwner(this)
+        .lookup("component:loading")
+        .append();
       var pkg = this.get("package");
-      var inventoryNumber = pkg.get('inventoryNumber');
-      pkg.set('inventoryNumber', null);
-      pkg.save()
+      var inventoryNumber = pkg.get("inventoryNumber");
+      pkg.set("inventoryNumber", null);
+      pkg
+        .save()
         .then(() => {
-          new AjaxPromise("/inventory_numbers/remove_number", "PUT", _this.get('session.authToken'), { code: inventoryNumber }).then(() => {})
-          .catch(() => {})
-          .finally(() => _this.transitionToRoute("review_offer.receive"));
+          new AjaxPromise(
+            "/inventory_numbers/remove_number",
+            "PUT",
+            _this.get("session.authToken"),
+            { code: inventoryNumber }
+          )
+            .then(() => {})
+            .catch(() => {})
+            .finally(() => _this.transitionToRoute("review_offer.receive"));
         })
         .catch(() => {
-          _this.send('pkgUpdateError', pkg);
+          _this.send("pkgUpdateError", pkg);
         })
         .finally(() => loadingView.destroy());
     },
@@ -154,20 +188,24 @@ export default Ember.Controller.extend({
     receivePackage() {
       var pkgData = this.get("packageForm");
 
-      this.set("invalidQuantity", (pkgData.quantity.toString().length === 0));
-      this.set("invalidDescription", (pkgData.notes.length === 0));
+      this.set("invalidQuantity", pkgData.quantity.toString().length === 0);
+      this.set("invalidDescription", pkgData.notes.length === 0);
 
       var validInventory = this.verifyInventoryNumber(pkgData.inventoryNumber);
       this.set("invalidInventoryNo", !validInventory);
 
       this.notifyPropertyChange("watchErrors"); // this will recalculate 'hasErrors' property, sometimes it does return true for valid form.
-      if(this.get("hasErrors")) { return false; }
+      if (this.get("hasErrors")) {
+        return false;
+      }
 
-      var loadingView = getOwner(this).lookup('component:loading').append();
+      var loadingView = getOwner(this)
+        .lookup("component:loading")
+        .append();
       var pkg = this.get("package");
 
       var locationId = this.get("locationId.id") || this.get("locationId");
-      if(locationId) {
+      if (locationId) {
         var location = this.get("store").peekRecord("location", locationId);
         pkg.set("location", location);
       }
@@ -182,24 +220,37 @@ export default Ember.Controller.extend({
       pkg.set("grade", this.get("selectedGrade.id"));
       pkg.set("donorCondition", this.get("selectedCondition"));
 
-      pkg.save()
+      pkg
+        .save()
         .then(() => {
           loadingView.destroy();
-          pkg.set('packagesLocationsAttributes',{});
+          pkg.set("packagesLocationsAttributes", {});
           this.transitionToRoute("review_offer.receive");
-          Ember.run.scheduleOnce('afterRender', this, () =>
-          this.get("reviewOfferController").set("displayCompleteReceivePopup", this.get("offer.readyForClosure")));
+          scheduleOnce("afterRender", this, () =>
+            this.get("reviewOfferController").set(
+              "displayCompleteReceivePopup",
+              this.get("offer.readyForClosure")
+            )
+          );
         })
         .catch(() => {
           loadingView.destroy();
-          this.send('pkgUpdateError', pkg);
+          this.send("pkgUpdateError", pkg);
         });
     },
 
     pkgUpdateError(pkg) {
-      var errorMessage = pkg.get("errors.firstObject.message") || pkg.get('adapterError.errors.firstObject.title');
-      if(errorMessage === "Adapter Error" || errorMessage.indexOf("Connection error") >= 0) {
-        this.get("messageBox").alert("could not contact Stockit, try again later.", () => pkg.rollbackAttributes());
+      var errorMessage =
+        pkg.get("errors.firstObject.message") ||
+        pkg.get("adapterError.errors.firstObject.title");
+      if (
+        errorMessage === "Adapter Error" ||
+        errorMessage.indexOf("Connection error") >= 0
+      ) {
+        this.get("messageBox").alert(
+          "could not contact Stockit, try again later.",
+          () => pkg.rollbackAttributes()
+        );
       } else {
         this.set("hasErrors", true);
       }
@@ -216,5 +267,4 @@ export default Ember.Controller.extend({
   verifyInventoryNumber: function(value) {
     return /^[A-Z]{0,1}[0-9]{5,6}(Q[0-9]*){0,1}$/i.test(value);
   }
-
 });
