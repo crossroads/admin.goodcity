@@ -1,10 +1,17 @@
-import Ember from 'ember';
+import { inject as service } from "@ember/service";
+import Component from "@ember/component";
 
-export default Ember.Component.extend({
-  attributeBindings: ["record", "recordId", "placeholder", "content", "enabled"],
+export default Component.extend({
+  attributeBindings: [
+    "record",
+    "recordId",
+    "placeholder",
+    "content",
+    "enabled"
+  ],
   isAndroidDevice: false,
   enabled: true,
-  cordova: Ember.inject.service(),
+  cordova: service(),
 
   didInsertElement() {
     var isAndroidDevice = this.get("cordova").isAndroid();

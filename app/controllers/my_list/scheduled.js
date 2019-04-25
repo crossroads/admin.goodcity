@@ -1,17 +1,28 @@
-import Ember from 'ember';
+import { computed } from "@ember/object";
+import { sort } from "@ember/object/computed";
+import Controller from "@ember/controller";
 
-export default Ember.Controller.extend({
-  sortProperties: ["unreadMessagesCount:desc", "delivery.schedule.scheduledAt:desc"],
-  arrangedContent: Ember.computed.sort("model", "sortProperties"),
+export default Controller.extend({
+  sortProperties: [
+    "unreadMessagesCount:desc",
+    "delivery.schedule.scheduledAt:desc"
+  ],
+  arrangedContent: sort("model", "sortProperties"),
 
-  allOffers: Ember.computed(function(){
+  allOffers: computed(function() {
     return this.store.peekAll("offer");
   }),
 
-  model: Ember.computed("allOffers.@each.state", "session.currentUser.id", function(){
-    var currentUserId = this.get('session.currentUser.id');
-    var currentUser = this.store.peekRecord('user', currentUserId);
+  model: computed(
+    "allOffers.@each.state",
+    "session.currentUser.id",
+    function() {
+      var currentUserId = this.get("session.currentUser.id");
+      var currentUser = this.store.peekRecord("user", currentUserId);
 
-    return this.get("allOffers").filterBy("isScheduled").filterBy("reviewedBy", currentUser);
-  })
+      return this.get("allOffers")
+        .filterBy("isScheduled")
+        .filterBy("reviewedBy", currentUser);
+    }
+  )
 });

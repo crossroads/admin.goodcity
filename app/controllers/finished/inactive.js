@@ -1,17 +1,18 @@
-import Ember from 'ember';
+import { computed } from "@ember/object";
+import { sort } from "@ember/object/computed";
+import Controller from "@ember/controller";
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   sortProperties: ["unreadMessagesCount:desc", "inactiveAt:desc"],
-  arrangedContent: Ember.computed.sort("model", "sortProperties"),
+  arrangedContent: sort("model", "sortProperties"),
 
   displaySearchOfferMessage: true,
 
-  allOffers: Ember.computed(function(){
+  allOffers: computed(function() {
     return this.store.peekAll("offer");
   }),
 
-  model: Ember.computed("allOffers.@each.state", function(){
+  model: computed("allOffers.@each.state", function() {
     return this.get("allOffers").filterBy("isInactive");
   })
-
 });

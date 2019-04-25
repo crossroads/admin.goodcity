@@ -1,20 +1,20 @@
-import { test, moduleForModel } from 'ember-qunit';
-import Ember from 'ember';
+import { get } from "@ember/object";
+import { test, moduleForModel } from "ember-qunit";
 
-moduleForModel('orders_package', 'OrdersPackage Model', {
-  needs: ['model:designation', 'model:package']
+moduleForModel("orders_package", "OrdersPackage Model", {
+  needs: ["model:designation", "model:package"]
 });
 
-test('check attributes', function(assert){
+test("check attributes", function(assert) {
   assert.expect(7);
   var model = this.subject();
-  var state = Object.keys(model.toJSON()).indexOf('state') > -1;
-  var sentOn = Object.keys(model.toJSON()).indexOf('sentOn') > -1;
-  var quantity = Object.keys(model.toJSON()).indexOf('quantity') > -1;
-  var designationId = Object.keys(model.toJSON()).indexOf('designationId') > -1;
-  var itemId = Object.keys(model.toJSON()).indexOf('itemId') > -1;
-  var order_id = Object.keys(model.toJSON()).indexOf('order_id') > -1;
-  var packageId = Object.keys(model.toJSON()).indexOf('packageId') > -1;
+  var state = Object.keys(model.toJSON()).indexOf("state") > -1;
+  var sentOn = Object.keys(model.toJSON()).indexOf("sentOn") > -1;
+  var quantity = Object.keys(model.toJSON()).indexOf("quantity") > -1;
+  var designationId = Object.keys(model.toJSON()).indexOf("designationId") > -1;
+  var itemId = Object.keys(model.toJSON()).indexOf("itemId") > -1;
+  var order_id = Object.keys(model.toJSON()).indexOf("order_id") > -1;
+  var packageId = Object.keys(model.toJSON()).indexOf("packageId") > -1;
 
   assert.ok(packageId);
   assert.ok(order_id);
@@ -25,18 +25,21 @@ test('check attributes', function(assert){
   assert.ok(state);
 });
 
-test('Relationships with other models', function(assert){
+test("Relationships with other models", function(assert) {
   assert.expect(4);
 
-  var orders_package = this.store().modelFor('orders_package');
-  var relationshipsWithPackage = Ember.get(orders_package, 'relationshipsByName').get('package');
-  var relationshipsWithDesignation = Ember.get(orders_package, 'relationshipsByName').get('designation');
+  var orders_package = this.store().modelFor("orders_package");
+  var relationshipsWithPackage = get(orders_package, "relationshipsByName").get(
+    "package"
+  );
+  var relationshipsWithDesignation = get(
+    orders_package,
+    "relationshipsByName"
+  ).get("designation");
 
-  assert.equal(relationshipsWithDesignation.key, 'designation');
-  assert.equal(relationshipsWithDesignation.kind, 'belongsTo');
+  assert.equal(relationshipsWithDesignation.key, "designation");
+  assert.equal(relationshipsWithDesignation.kind, "belongsTo");
 
-  assert.equal(relationshipsWithPackage.key, 'package');
-  assert.equal(relationshipsWithPackage.kind, 'belongsTo');
+  assert.equal(relationshipsWithPackage.key, "package");
+  assert.equal(relationshipsWithPackage.kind, "belongsTo");
 });
-
-

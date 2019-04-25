@@ -1,7 +1,8 @@
-import Ember from "ember";
+import { filterBy } from "@ember/object/computed";
+import Controller from "@ember/controller";
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   queryParams: ["state"],
   state: "expecting",
-  items: Ember.computed.filterBy("model.items", "state", "accepted")
+  items: filterBy("model.items", "state", "accepted")
 });

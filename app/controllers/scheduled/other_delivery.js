@@ -1,15 +1,13 @@
-import Ember from 'ember';
-import scheduleController from './collection';
+import { computed } from "@ember/object";
+import scheduleController from "./collection";
 
 export default scheduleController.extend({
-
-  allScheduled: Ember.computed('dropOff.[]', {
+  allScheduled: computed("dropOff.[]", {
     get: function() {
-      return this.get('dropOff');
+      return this.get("dropOff");
     },
     set: function(key, value) {
       return value;
     }
   })
-
 });
