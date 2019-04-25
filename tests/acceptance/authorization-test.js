@@ -3,6 +3,7 @@ import { module, test } from "qunit";
 import startApp from "../helpers/start-app";
 import FactoryGuy from "ember-data-factory-guy";
 import "../factories/role";
+import $ from "jquery";
 
 var App, role;
 
@@ -15,7 +16,11 @@ module("Authorization", {
       type: "GET",
       status: 200,
       responseText: {
-        roles: [role.toJSON({ includeId: true })]
+        roles: [
+          role.toJSON({
+            includeId: true
+          })
+        ]
       }
     });
   },
