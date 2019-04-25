@@ -11,6 +11,7 @@ import "../factories/gogovan_order";
 import "../factories/delivery";
 import "../factories/address";
 import "../factories/role";
+import $ from "jquery";
 
 var App, offer, user, ggvOrder, delivery, address, contact, item, role;
 
@@ -26,16 +27,26 @@ module("Search Offers", {
       type: "GET",
       status: 200,
       responseText: {
-        roles: [role.toJSON({ includeId: true })]
+        roles: [
+          role.toJSON({
+            includeId: true
+          })
+        ]
       }
     });
 
-    user = FactoryGuy.make("user", { firstName: "Johnny", mobile: "99999999" });
+    user = FactoryGuy.make("user", {
+      firstName: "Johnny",
+      mobile: "99999999"
+    });
     offer = FactoryGuy.make("offer_with_items", {
       state: "scheduled",
       createdBy: user
     });
-    item = FactoryGuy.make("item", { offer: offer, state: "accepted" });
+    item = FactoryGuy.make("item", {
+      offer: offer,
+      state: "accepted"
+    });
 
     ggvOrder = FactoryGuy.make("gogovan_active_order");
     contact = FactoryGuy.make("contact");
@@ -44,7 +55,9 @@ module("Search Offers", {
       offer: offer,
       contact: contact
     });
-    address = FactoryGuy.make("address", { addressable: contact });
+    address = FactoryGuy.make("address", {
+      addressable: contact
+    });
   },
   afterEach: function() {
     Em.run(function() {

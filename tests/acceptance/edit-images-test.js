@@ -5,6 +5,7 @@ import "../factories/offer";
 import FactoryGuy from "ember-data-factory-guy";
 import "../factories/role";
 import TestHelper from "ember-data-factory-guy/factory-guy-test-helper";
+import $ from "jquery";
 
 var App, offer, role;
 
@@ -18,10 +19,16 @@ module("Add new Item", {
       type: "GET",
       status: 200,
       responseText: {
-        roles: [role.toJSON({ includeId: true })]
+        roles: [
+          role.toJSON({
+            includeId: true
+          })
+        ]
       }
     });
-    offer = FactoryGuy.make("offer_with_items", { state: "under_review" });
+    offer = FactoryGuy.make("offer_with_items", {
+      state: "under_review"
+    });
   },
   afterEach: function() {
     Em.run(function() {

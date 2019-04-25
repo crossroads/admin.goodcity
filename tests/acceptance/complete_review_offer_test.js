@@ -7,6 +7,7 @@ import { module, test } from "qunit";
 import "../factories/offer";
 import "../factories/item";
 import "../factories/packages_location";
+import $ from "jquery";
 
 var App, offer1, reviewer, item1, packages_location, role;
 
@@ -14,12 +15,17 @@ module("In Review Offers", {
   beforeEach: function() {
     App = startApp({}, 2);
     TestHelper.setup();
-    reviewer = FactoryGuy.make("user", { id: 3 });
+    reviewer = FactoryGuy.make("user", {
+      id: 3
+    });
     offer1 = FactoryGuy.make("offer", {
       state: "under_review",
       reviewedBy: reviewer
     });
-    item1 = FactoryGuy.make("item", { state: "accepted", offer: offer1 });
+    item1 = FactoryGuy.make("item", {
+      state: "accepted",
+      offer: offer1
+    });
     packages_location = FactoryGuy.make("packages_location");
 
     role = FactoryGuy.make("role");
@@ -29,7 +35,11 @@ module("In Review Offers", {
       type: "GET",
       status: 200,
       responseText: {
-        roles: [role.toJSON({ includeId: true })]
+        roles: [
+          role.toJSON({
+            includeId: true
+          })
+        ]
       }
     });
 
@@ -38,7 +48,11 @@ module("In Review Offers", {
       type: "GET",
       status: 200,
       responseText: {
-        packages_locations: [packages_location.toJSON({ includeId: true })]
+        packages_locations: [
+          packages_location.toJSON({
+            includeId: true
+          })
+        ]
       }
     });
   },

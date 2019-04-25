@@ -4,6 +4,7 @@ import "../helpers/custom-helpers";
 import FactoryGuy from "ember-data-factory-guy";
 import TestHelper from "ember-data-factory-guy/factory-guy-test-helper";
 import { module, test } from "qunit";
+import $ from "jquery";
 
 var App, role;
 
@@ -18,7 +19,11 @@ module("Submitted Offers", {
       type: "GET",
       status: 200,
       responseText: {
-        roles: [role.toJSON({ includeId: true })]
+        roles: [
+          role.toJSON({
+            includeId: true
+          })
+        ]
       }
     });
   },

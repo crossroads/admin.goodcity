@@ -3,6 +3,7 @@ import startApp from "../helpers/start-app";
 import FactoryGuy from "ember-data-factory-guy";
 import TestHelper from "ember-data-factory-guy/factory-guy-test-helper";
 import { module, test } from "qunit";
+import $ from "jquery";
 
 var App;
 
@@ -25,8 +26,12 @@ test("updateStore doesn't process before response to model.save request", functi
   var store = FactoryGuy.store;
   var subscriptions = lookup("controller:subscriptions");
   var user = FactoryGuy.make("user");
-  FactoryGuy.make("user_profile", { id: user.id });
-  var offer = { id: 2 };
+  FactoryGuy.make("user_profile", {
+    id: user.id
+  });
+  var offer = {
+    id: 2
+  };
 
   $.mockjaxSettings.logging = true;
   $.mockjax({
@@ -36,20 +41,30 @@ test("updateStore doesn't process before response to model.save request", functi
       run(function() {
         subscriptions.update_store(
           {
-            item: { offer: offer },
-            sender: { user: user.toJSON({ includeId: true }) },
+            item: {
+              offer: offer
+            },
+            sender: {
+              user: user.toJSON({
+                includeId: true
+              })
+            },
             operation: "create"
           },
           function() {}
         );
       });
-      this.responseText = { offer: offer };
+      this.responseText = {
+        offer: offer
+      };
     }
   });
 
   run(function() {
     store
-      .createRecord("offer", { createdBy: user })
+      .createRecord("offer", {
+        createdBy: user
+      })
       .save()
       .then(function() {
         assert.equal(store.peekAll("offer").get("length"), 1);

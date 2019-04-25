@@ -9,6 +9,7 @@ import "../factories/gogovan_order";
 import "../factories/delivery";
 import FactoryGuy from "ember-data-factory-guy";
 import TestHelper from "ember-data-factory-guy/factory-guy-test-helper";
+import $ from "jquery";
 
 var App,
   offer,
@@ -44,7 +45,11 @@ module("Review Offer Logistics", {
       type: "GET",
       status: 200,
       responseText: {
-        roles: [role.toJSON({ includeId: true })]
+        roles: [
+          role.toJSON({
+            includeId: true
+          })
+        ]
       }
     });
 
@@ -53,12 +58,25 @@ module("Review Offer Logistics", {
       state: "under_review",
       reviewedBy: reviewer
     });
-    item = FactoryGuy.make("item", { offer: offer, state: "submitted" });
-    offer2 = FactoryGuy.make("offer", { state: "scheduled" });
-    item2 = FactoryGuy.make("item", { state: "accepted", offer: offer2 });
+    item = FactoryGuy.make("item", {
+      offer: offer,
+      state: "submitted"
+    });
+    offer2 = FactoryGuy.make("offer", {
+      state: "scheduled"
+    });
+    item2 = FactoryGuy.make("item", {
+      state: "accepted",
+      offer: offer2
+    });
 
-    offer3 = FactoryGuy.make("offer", { state: "under_review" });
-    item3 = FactoryGuy.make("item", { state: "rejected", offer: offer3 });
+    offer3 = FactoryGuy.make("offer", {
+      state: "under_review"
+    });
+    item3 = FactoryGuy.make("item", {
+      state: "rejected",
+      offer: offer3
+    });
 
     ggv_order1 = FactoryGuy.make("gogovan_order");
     delivery1 = FactoryGuy.make("delivery", {
@@ -69,7 +87,10 @@ module("Review Offer Logistics", {
       state: "scheduled",
       delivery: delivery1
     });
-    item5 = FactoryGuy.make("item", { state: "accepted", offer: offer5 });
+    item5 = FactoryGuy.make("item", {
+      state: "accepted",
+      offer: offer5
+    });
 
     ggv_order2 = FactoryGuy.make("gogovan_active_order", {
       ggvUuid: "123456",
@@ -84,7 +105,10 @@ module("Review Offer Logistics", {
       state: "scheduled",
       delivery: delivery2
     });
-    item6 = FactoryGuy.make("item", { state: "accepted", offer: offer6 });
+    item6 = FactoryGuy.make("item", {
+      state: "accepted",
+      offer: offer6
+    });
 
     offer7 = FactoryGuy.make("offer_with_items", {
       state: "received",

@@ -4,6 +4,7 @@ import "../helpers/custom-helpers";
 import FactoryGuy from "ember-data-factory-guy";
 import TestHelper from "ember-data-factory-guy/factory-guy-test-helper";
 import { module, test } from "qunit";
+import $ from "jquery";
 
 var App, user, role, userRole, userRole1;
 
@@ -18,7 +19,11 @@ module("Users", {
       type: "GET",
       status: 200,
       responseText: {
-        roles: [role.toJSON({ includeId: true })]
+        roles: [
+          role.toJSON({
+            includeId: true
+          })
+        ]
       }
     });
 
@@ -28,7 +33,11 @@ module("Users", {
       type: "GET",
       status: 200,
       responseText: {
-        users: [user.toJSON({ includeId: true })]
+        users: [
+          user.toJSON({
+            includeId: true
+          })
+        ]
       }
     });
   },
@@ -50,8 +59,12 @@ test("redirect to users page after role save", function(assert) {
     status: 200,
     responseText: {
       user_roles: [
-        userRole.toJSON({ includeId: true }),
-        userRole1.toJSON({ includeId: true })
+        userRole.toJSON({
+          includeId: true
+        }),
+        userRole1.toJSON({
+          includeId: true
+        })
       ]
     }
   });
@@ -61,7 +74,11 @@ test("redirect to users page after role save", function(assert) {
     type: "PUT",
     status: 200,
     responseText: {
-      user: [user.toJSON({ includeId: true })]
+      user: [
+        user.toJSON({
+          includeId: true
+        })
+      ]
     }
   });
 

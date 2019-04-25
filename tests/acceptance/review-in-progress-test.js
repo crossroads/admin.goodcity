@@ -8,6 +8,7 @@ import "../factories/offer";
 import "../factories/item";
 import "../factories/packages_location";
 import "../factories/role";
+import $ from "jquery";
 
 var App,
   offer1,
@@ -29,10 +30,16 @@ module("In Review Offers", {
       type: "GET",
       status: 200,
       responseText: {
-        roles: [role.toJSON({ includeId: true })]
+        roles: [
+          role.toJSON({
+            includeId: true
+          })
+        ]
       }
     });
-    reviewer = FactoryGuy.make("user", { id: 3 });
+    reviewer = FactoryGuy.make("user", {
+      id: 3
+    });
     offer1 = FactoryGuy.make("offer_with_items", {
       state: "under_review",
       reviewedBy: reviewer
@@ -44,14 +51,24 @@ module("In Review Offers", {
       state: "reviewed",
       reviewedBy: reviewer
     });
-    item1 = FactoryGuy.make("item", { state: "accepted", offer: offer2 });
-    item2 = FactoryGuy.make("item", { state: "rejected", offer: offer2 });
+    item1 = FactoryGuy.make("item", {
+      state: "accepted",
+      offer: offer2
+    });
+    item2 = FactoryGuy.make("item", {
+      state: "rejected",
+      offer: offer2
+    });
     $.mockjax({
       url: "/api/v1/packages_location*",
       type: "GET",
       status: 200,
       responseText: {
-        packages_locations: [packages_location.toJSON({ includeId: true })]
+        packages_locations: [
+          packages_location.toJSON({
+            includeId: true
+          })
+        ]
       }
     });
   },

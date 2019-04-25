@@ -7,6 +7,7 @@ import "../factories/offer";
 import "../factories/role";
 import FactoryGuy from "ember-data-factory-guy";
 import TestHelper from "ember-data-factory-guy/factory-guy-test-helper";
+import $ from "jquery";
 
 var App,
   offer1,
@@ -28,11 +29,20 @@ module("Received Offers", {
       type: "GET",
       status: 200,
       responseText: {
-        roles: [role.toJSON({ includeId: true })]
+        roles: [
+          role.toJSON({
+            includeId: true
+          })
+        ]
       }
     });
-    item1 = FactoryGuy.make("item", { state: "accepted" });
-    offer1 = FactoryGuy.make("offer", { state: "received", items: [item1] });
+    item1 = FactoryGuy.make("item", {
+      state: "accepted"
+    });
+    offer1 = FactoryGuy.make("offer", {
+      state: "received",
+      items: [item1]
+    });
     packages_location = FactoryGuy.make("packages_location");
     orders_pkg1 = FactoryGuy.make("orders_package", {
       id: 500,
@@ -71,7 +81,11 @@ test("expecting, received and missing count", function(assert) {
     type: "GET",
     status: 200,
     responseText: {
-      packages_locations: [packages_location.toJSON({ includeId: true })]
+      packages_locations: [
+        packages_location.toJSON({
+          includeId: true
+        })
+      ]
     }
   });
   $.mockjax({
@@ -79,7 +93,11 @@ test("expecting, received and missing count", function(assert) {
     type: "GET",
     status: 200,
     responseText: {
-      orders_packages: [orders_pkg1.toJSON({ includeId: true })]
+      orders_packages: [
+        orders_pkg1.toJSON({
+          includeId: true
+        })
+      ]
     }
   });
 

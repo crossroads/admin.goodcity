@@ -10,6 +10,7 @@ import "../factories/schedule";
 import "../factories/gogovan_order";
 import "../factories/delivery";
 import "../factories/role";
+import $ from "jquery";
 
 var App, offer, item1, item2, item3, message1, message2, donor, msg_time, role;
 
@@ -24,11 +25,17 @@ module("Reviewer: Display Offer Tab", {
       type: "GET",
       status: 200,
       responseText: {
-        roles: [role.toJSON({ includeId: true })]
+        roles: [
+          role.toJSON({
+            includeId: true
+          })
+        ]
       }
     });
 
-    offer = FactoryGuy.make("offer", { state: "under_review" });
+    offer = FactoryGuy.make("offer", {
+      state: "under_review"
+    });
     msg_time = new Date().setHours(0, 0, 0);
     message1 = FactoryGuy.make("message", {
       sender: donor,
@@ -36,9 +43,18 @@ module("Reviewer: Display Offer Tab", {
       item: null,
       createdAt: msg_time
     });
-    item1 = FactoryGuy.make("item", { state: "accepted", offer: offer });
-    item2 = FactoryGuy.make("item", { state: "rejected", offer: offer });
-    item3 = FactoryGuy.make("item", { state: "submitted", offer: offer });
+    item1 = FactoryGuy.make("item", {
+      state: "accepted",
+      offer: offer
+    });
+    item2 = FactoryGuy.make("item", {
+      state: "rejected",
+      offer: offer
+    });
+    item3 = FactoryGuy.make("item", {
+      state: "submitted",
+      offer: offer
+    });
     message2 = FactoryGuy.make("message", {
       sender: donor,
       offer: offer,

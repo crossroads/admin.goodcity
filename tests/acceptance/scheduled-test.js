@@ -11,6 +11,7 @@ import "../factories/schedule";
 import "../factories/gogovan_order";
 import "../factories/delivery";
 import "../factories/role";
+import $ from "jquery";
 
 var App,
   offer1,
@@ -36,17 +37,25 @@ module("Scheduled Offers", {
       type: "GET",
       status: 200,
       responseText: {
-        roles: [role.toJSON({ includeId: true })]
+        roles: [
+          role.toJSON({
+            includeId: true
+          })
+        ]
       }
     });
 
-    delivery1 = FactoryGuy.make("delivery", { deliveryType: "Gogovan" });
+    delivery1 = FactoryGuy.make("delivery", {
+      deliveryType: "Gogovan"
+    });
     offer1 = FactoryGuy.make("offer_with_items", {
       state: "scheduled",
       delivery: delivery1
     });
 
-    ggv_order = FactoryGuy.make("gogovan_order", { status: "pending" });
+    ggv_order = FactoryGuy.make("gogovan_order", {
+      status: "pending"
+    });
     schedule4 = FactoryGuy.make("schedule", {
       scheduledAt: new Date(new Date().setDate(new Date().getDate() + 30))
     });
@@ -60,13 +69,17 @@ module("Scheduled Offers", {
       delivery: delivery4
     });
 
-    delivery2 = FactoryGuy.make("delivery", { deliveryType: "Alternate" });
+    delivery2 = FactoryGuy.make("delivery", {
+      deliveryType: "Alternate"
+    });
     offer2 = FactoryGuy.make("offer_with_items", {
       state: "scheduled",
       delivery: delivery2
     });
 
-    delivery3 = FactoryGuy.make("delivery", { deliveryType: "Drop Off" });
+    delivery3 = FactoryGuy.make("delivery", {
+      deliveryType: "Drop Off"
+    });
     offer3 = FactoryGuy.make("offer_with_items", {
       state: "scheduled",
       delivery: delivery3

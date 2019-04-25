@@ -3,6 +3,7 @@ import { test, moduleForComponent } from "ember-qunit";
 import startApp from "../../helpers/start-app";
 import TestHelper from "ember-data-factory-guy/factory-guy-test-helper";
 import hbs from "htmlbars-inline-precompile";
+import $ from "jquery";
 
 var App;
 

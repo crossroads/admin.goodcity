@@ -4,6 +4,7 @@ import startApp from "../../helpers/start-app";
 import FactoryGuy from "ember-data-factory-guy";
 import TestHelper from "ember-data-factory-guy/factory-guy-test-helper";
 import hbs from "htmlbars-inline-precompile";
+import $ from "jquery";
 
 var App, locations, location1;
 

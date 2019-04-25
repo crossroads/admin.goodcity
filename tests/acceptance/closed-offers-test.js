@@ -6,6 +6,7 @@ import "../factories/item";
 import FactoryGuy from "ember-data-factory-guy";
 import "../factories/role";
 import TestHelper from "ember-data-factory-guy/factory-guy-test-helper";
+import $ from "jquery";
 
 var App, offer, item, role;
 
@@ -13,15 +14,24 @@ module("Closed Offer", {
   beforeEach: function() {
     App = startApp({}, 2);
     TestHelper.setup();
-    offer = FactoryGuy.make("offer", { state: "closed" });
-    item = FactoryGuy.make("item", { state: "rejected", offer: offer });
+    offer = FactoryGuy.make("offer", {
+      state: "closed"
+    });
+    item = FactoryGuy.make("item", {
+      state: "rejected",
+      offer: offer
+    });
     role = FactoryGuy.make("role");
     $.mockjax({
       url: "/api/v1/role*",
       type: "GET",
       status: 200,
       responseText: {
-        roles: [role.toJSON({ includeId: true })]
+        roles: [
+          role.toJSON({
+            includeId: true
+          })
+        ]
       }
     });
   },

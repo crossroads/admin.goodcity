@@ -22,7 +22,11 @@ module("Display not found error", {
       type: "GET",
       status: 200,
       responseText: {
-        roles: [role.toJSON({ includeId: true })]
+        roles: [
+          role.toJSON({
+            includeId: true
+          })
+        ]
       }
     });
     App.__container__.lookup("service:logger").error = () => {};
@@ -50,7 +54,10 @@ testSkip("Display error popup for invalid item", function(assert) {
   assert.expect(1);
   $(".reveal-modal").remove();
   visit("/offers/" + offer.id + "/review_item/invalid/accept");
-  $.mockjax({ url: "/api/v1/items/*", status: 404 });
+  $.mockjax({
+    url: "/api/v1/items/*",
+    status: 404
+  });
 
   andThen(function() {
     assert.equal($("#messageBoxText").text(), t("404_error").toString());

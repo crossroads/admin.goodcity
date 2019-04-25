@@ -6,6 +6,7 @@ import { module, test } from "qunit";
 import "../factories/offer";
 import "../factories/item";
 import "../factories/role";
+import $ from "jquery";
 
 var App, offer1, offer2, item2, item1, item3, item4, offer3, item5, role;
 
@@ -19,20 +20,45 @@ module("Reviewer: Display Item Status", {
       type: "GET",
       status: 200,
       responseText: {
-        roles: [role.toJSON({ includeId: true })]
+        roles: [
+          role.toJSON({
+            includeId: true
+          })
+        ]
       }
     });
 
-    offer1 = FactoryGuy.make("offer", { state: "submitted" });
-    item1 = FactoryGuy.make("item", { offer: offer1, state: "submitted" });
+    offer1 = FactoryGuy.make("offer", {
+      state: "submitted"
+    });
+    item1 = FactoryGuy.make("item", {
+      offer: offer1,
+      state: "submitted"
+    });
 
-    offer2 = FactoryGuy.make("offer", { state: "under_review" });
-    item2 = FactoryGuy.make("item", { offer: offer2, state: "submitted" });
-    item3 = FactoryGuy.make("item", { offer: offer2, state: "accepted" });
-    item4 = FactoryGuy.make("item", { offer: offer2, state: "rejected" });
+    offer2 = FactoryGuy.make("offer", {
+      state: "under_review"
+    });
+    item2 = FactoryGuy.make("item", {
+      offer: offer2,
+      state: "submitted"
+    });
+    item3 = FactoryGuy.make("item", {
+      offer: offer2,
+      state: "accepted"
+    });
+    item4 = FactoryGuy.make("item", {
+      offer: offer2,
+      state: "rejected"
+    });
 
-    offer3 = FactoryGuy.make("offer", { state: "cancelled" });
-    item5 = FactoryGuy.make("item", { offer: offer3, state: "accepted" });
+    offer3 = FactoryGuy.make("offer", {
+      state: "cancelled"
+    });
+    item5 = FactoryGuy.make("item", {
+      offer: offer3,
+      state: "accepted"
+    });
   },
 
   afterEach: function() {

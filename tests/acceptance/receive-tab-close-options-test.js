@@ -8,6 +8,7 @@ import "../factories/offer";
 import FactoryGuy from "ember-data-factory-guy";
 import TestHelper from "ember-data-factory-guy/factory-guy-test-helper";
 import "../factories/role";
+import $ from "jquery";
 
 var App, ofr1, item, pkg1, pkg2, pkg3, order_pkg, packages_location, role;
 
@@ -15,8 +16,13 @@ module("Received Tab close options", {
   beforeEach: function() {
     App = startApp({}, 2);
     TestHelper.setup();
-    item = FactoryGuy.make("item", { state: "accepted" });
-    ofr1 = FactoryGuy.make("offer", { state: "received", items: [item] });
+    item = FactoryGuy.make("item", {
+      state: "accepted"
+    });
+    ofr1 = FactoryGuy.make("offer", {
+      state: "received",
+      items: [item]
+    });
     packages_location = FactoryGuy.make("packages_location");
     role = FactoryGuy.make("role");
     $.mockjax({
@@ -24,7 +30,11 @@ module("Received Tab close options", {
       type: "GET",
       status: 200,
       responseText: {
-        roles: [role.toJSON({ includeId: true })]
+        roles: [
+          role.toJSON({
+            includeId: true
+          })
+        ]
       }
     });
     order_pkg = FactoryGuy.make("orders_package", {
@@ -64,7 +74,11 @@ test("Clicking on receive item options closes other receive-options if already o
     type: "GET",
     status: 200,
     responseText: {
-      packages_locations: [packages_location.toJSON({ includeId: true })]
+      packages_locations: [
+        packages_location.toJSON({
+          includeId: true
+        })
+      ]
     }
   });
   $.mockjax({
@@ -72,7 +86,11 @@ test("Clicking on receive item options closes other receive-options if already o
     type: "GET",
     status: 200,
     responseText: {
-      orders_packages: [order_pkg.toJSON({ includeId: true })]
+      orders_packages: [
+        order_pkg.toJSON({
+          includeId: true
+        })
+      ]
     }
   });
 
@@ -95,7 +113,11 @@ test("Clicking on other item detail closes item options", function(assert) {
     type: "GET",
     status: 200,
     responseText: {
-      packages_locations: [packages_location.toJSON({ includeId: true })]
+      packages_locations: [
+        packages_location.toJSON({
+          includeId: true
+        })
+      ]
     }
   });
   $.mockjax({
@@ -103,7 +125,11 @@ test("Clicking on other item detail closes item options", function(assert) {
     type: "GET",
     status: 200,
     responseText: {
-      orders_packages: [order_pkg.toJSON({ includeId: true })]
+      orders_packages: [
+        order_pkg.toJSON({
+          includeId: true
+        })
+      ]
     }
   });
 
