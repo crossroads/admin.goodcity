@@ -5,7 +5,11 @@ import { sort } from "@ember/object/computed";
 import offers from "./offers";
 
 export default offers.extend({
-  sortProperties: ["createdAt:desc"],
+  init() {
+    this._super(...arguments);
+    this.sortProperties = ["createdAt:desc"];
+  },
+
   sortedModel: sort("model", "sortProperties"),
   messagesUtil: service("messages"),
   store: service(),

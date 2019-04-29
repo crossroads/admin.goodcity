@@ -104,7 +104,7 @@ test("redirect to reviewing offers page", function(assert) {
       assert.equal(itemStatus, " 0 Accepted, 0 rejected, 2 pending ");
     };
 
-    runloopFix(assertions);
+    run(assertions);
   });
 });
 
@@ -139,6 +139,6 @@ test("redirect to reviewed offers page", function(assert) {
       assert.equal(itemStatus, " 1 Accepted, 1 rejected, 0 pending ");
     };
 
-    runloopFix(assertions);
+    run(assertions);
   });
 });

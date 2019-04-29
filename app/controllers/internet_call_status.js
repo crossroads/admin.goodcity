@@ -2,8 +2,12 @@ import Controller from "@ember/controller";
 
 export default Controller.extend({
   activeCall: false,
-  twilio_device: {},
   donorName: null,
+
+  init() {
+    this._super(...arguments);
+    this.twilio_device = {};
+  },
 
   actions: {
     hangupCall() {

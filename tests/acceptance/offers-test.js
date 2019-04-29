@@ -28,7 +28,7 @@ module("Submitted Offers", {
     });
   },
   afterEach: function() {
-    Em.run(function() {
+    run(function() {
       TestHelper.teardown();
     });
     run(App, "destroy");
@@ -60,7 +60,7 @@ test("redirect to offers page", function(assert) {
       assert.equal(itemStatus, " 0 Accepted, 0 rejected, 1 pending ");
     };
 
-    runloopFix(assertions);
+    run(assertions);
   });
 });
 
@@ -78,6 +78,6 @@ test("display submitted offer", function(assert) {
       });
     };
 
-    runloopFix(assertions);
+    run(assertions);
   });
 });

@@ -13,7 +13,11 @@ export default Component.extend({
   isCordovaApp: config.cordova.enabled,
   hidden: empty("mobile"),
   currentUserId: alias("session.currentUser.id"),
-  internetCallStatus: {},
+
+  init() {
+    this._super(...arguments);
+    this.internetCallStatus = {};
+  },
 
   hasTwilioSupport: computed(
     "hasTwilioBrowserSupport",

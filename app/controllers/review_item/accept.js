@@ -18,9 +18,13 @@ export default Controller.extend({
   offer: alias("item.offer"),
   itemTypeId: alias("reviewItem.itemTypeId"),
   isItemAccepted: equal("item.state", "accepted"),
-  packages: [],
   isAccepting: false,
   itemSaving: false,
+
+  init() {
+    this._super(...arguments);
+    this.packages = [];
+  },
 
   itemPackages: alias("item.packages"),
 

@@ -9,7 +9,7 @@ import "../factories/item";
 import "../factories/packages_location";
 import $ from "jquery";
 
-var App, offer1, reviewer, item1, packages_location, role;
+var App, offer1, reviewer, packages_location, role;
 
 module("In Review Offers", {
   beforeEach: function() {
@@ -21,10 +21,6 @@ module("In Review Offers", {
     offer1 = FactoryGuy.make("offer", {
       state: "under_review",
       reviewedBy: reviewer
-    });
-    item1 = FactoryGuy.make("item", {
-      state: "accepted",
-      offer: offer1
     });
     packages_location = FactoryGuy.make("packages_location");
 

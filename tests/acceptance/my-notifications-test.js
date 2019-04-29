@@ -156,7 +156,7 @@ test("all notifications - display threads with icons and unread message count", 
       // assert.equal($(offer_private_thread).find(".fa-users").length > 0, true);
     };
 
-    runloopFix(assertions);
+    run(assertions);
   });
 });
 
@@ -191,6 +191,6 @@ test("filter unread notifications by default", function(assert) {
       assert.equal(currentURL(), "/my_notifications");
       assert.equal($(".thread").length, 2);
     };
-    runloopFix(assertions);
+    run(assertions);
   });
 });

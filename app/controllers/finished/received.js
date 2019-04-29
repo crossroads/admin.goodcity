@@ -3,7 +3,11 @@ import { sort } from "@ember/object/computed";
 import Controller from "@ember/controller";
 
 export default Controller.extend({
-  sortProperties: ["unreadMessagesCount:desc", "receivedAt:desc"],
+  init() {
+    this._super(...arguments);
+    this.sortProperties = ["unreadMessagesCount:desc", "receivedAt:desc"];
+  },
+
   arrangedContent: sort("model", "sortProperties"),
 
   displaySearchOfferMessage: true,

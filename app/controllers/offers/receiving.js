@@ -4,7 +4,11 @@ import { sort } from "@ember/object/computed";
 import Controller from "@ember/controller";
 
 export default Controller.extend({
-  sortProperties: ["unreadMessagesCount:desc", "startReceivingAt:desc"],
+  init() {
+    this._super(...arguments);
+    this.sortProperties = ["unreadMessagesCount:desc", "startReceivingAt:desc"];
+  },
+
   arrangedContent: sort("model", "sortProperties"),
 
   i18n: service(),
