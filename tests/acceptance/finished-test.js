@@ -9,16 +9,16 @@ import TestHelper from "ember-data-factory-guy/factory-guy-test-helper";
 import "../helpers/custom-helpers";
 import $ from "jquery";
 
-var App, reviewer, offer1, item1, offer2, role;
+var App, role;
 
 module("Finished Offers", {
   beforeEach: function() {
     App = startApp({}, 2);
     TestHelper.setup();
     role = FactoryGuy.make("role");
-    reviewer = FactoryGuy.make("user", {
-      id: 3
-    });
+    // reviewer = FactoryGuy.make("user", {
+    //   id: 3
+    // });
     $.mockjax({
       url: "/api/v1/role*",
       type: "GET",
@@ -32,19 +32,19 @@ module("Finished Offers", {
       }
     });
 
-    offer1 = FactoryGuy.make("offer", {
-      state: "closed",
-      reviewedBy: reviewer
-    });
-    item1 = FactoryGuy.make("item", {
-      state: "rejected",
-      offer: offer1
-    });
+    // offer1 = FactoryGuy.make("offer", {
+    //   state: "closed",
+    //   reviewedBy: reviewer
+    // });
+    // item1 = FactoryGuy.make("item", {
+    //   state: "rejected",
+    //   offer: offer1
+    // });
 
-    offer2 = FactoryGuy.make("offer", {
-      state: "received",
-      reviewedBy: reviewer
-    });
+    // offer2 = FactoryGuy.make("offer", {
+    //   state: "received",
+    //   reviewedBy: reviewer
+    // });
   },
   afterEach: function() {
     run(App, "destroy");
@@ -76,7 +76,7 @@ test("redirect to finished offers page", function(assert) {
       assert.equal(itemStatus, " 0 Received, 0 missing, 0 rejected ");
     };
 
-    runloopFix(assertions);
+    run(assertions);
   });
 });
 

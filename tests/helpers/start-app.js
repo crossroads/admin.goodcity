@@ -2,7 +2,7 @@
 import $ from "jquery";
 
 import Application from "../../app";
-// import Router from '../../router';
+import Router from "../../router";
 import { merge } from "@ember/polyfills";
 import { run } from "@ember/runloop";
 import config from "../../config/environment";

@@ -5,7 +5,11 @@ import { getOwner } from "@ember/application";
 
 export default Controller.extend({
   user: alias("model"),
-  selectedRoleIds: [],
+
+  init() {
+    this._super(...arguments);
+    this.selectedRoleIds = [];
+  },
 
   permissions: computed(function() {
     return this.store

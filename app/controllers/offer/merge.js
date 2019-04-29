@@ -6,7 +6,10 @@ import { getOwner } from "@ember/application";
 import AjaxPromise from "goodcity/utils/ajax-promise";
 
 export default Controller.extend({
-  sortProperties: ["updatedAt:desc"],
+  init() {
+    this._super(...arguments);
+    this.sortProperties = ["updatedAt:desc"];
+  },
   arrangedContent: sort("offersForMerge", "sortProperties"),
 
   offerDonor: alias("model.createdBy"),

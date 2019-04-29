@@ -8,7 +8,7 @@ import "../factories/role";
 import TestHelper from "ember-data-factory-guy/factory-guy-test-helper";
 import $ from "jquery";
 
-var App, offer, item, role;
+var App, offer, role;
 
 module("Closed Offer", {
   beforeEach: function() {
@@ -16,10 +16,6 @@ module("Closed Offer", {
     TestHelper.setup();
     offer = FactoryGuy.make("offer", {
       state: "closed"
-    });
-    item = FactoryGuy.make("item", {
-      state: "rejected",
-      offer: offer
     });
     role = FactoryGuy.make("role");
     $.mockjax({

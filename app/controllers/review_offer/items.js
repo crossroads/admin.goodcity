@@ -3,7 +3,11 @@ import { sort, alias } from "@ember/object/computed";
 import Controller from "@ember/controller";
 
 export default Controller.extend({
-  sortProperties: ["latestUpdatedTime:desc"],
+  init() {
+    this._super(...arguments);
+    this.sortProperties = ["latestUpdatedTime:desc"];
+  },
+
   sortedItems: sort("offerAndItems", "sortProperties"),
   items: alias("model.items"),
 

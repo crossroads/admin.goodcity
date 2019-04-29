@@ -4,10 +4,14 @@ import Controller from "@ember/controller";
 import scheduledOffersMixin from "./../../mixins/scheduled_offers";
 
 export default Controller.extend(scheduledOffersMixin, {
-  sortProperties: [
-    "unreadMessagesCount:desc",
-    "delivery.schedule.scheduledAt:desc"
-  ],
+  init() {
+    this._super(...arguments);
+    this.sortProperties = [
+      "unreadMessagesCount:desc",
+      "delivery.schedule.scheduledAt:desc"
+    ];
+  },
+
   arrangedContent: sort("allScheduled", "sortProperties"),
 
   filterValue: computed({

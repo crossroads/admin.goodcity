@@ -7,7 +7,7 @@ import FactoryGuy from "ember-data-factory-guy";
 import TestHelper from "ember-data-factory-guy/factory-guy-test-helper";
 import $ from "jquery";
 
-var App, hk_user, non_hk_user, role;
+var App, hk_user, role;
 
 module("Acceptance: Login", {
   beforeEach: function() {
@@ -29,7 +29,6 @@ module("Acceptance: Login", {
     });
 
     hk_user = FactoryGuy.make("with_hk_mobile");
-    non_hk_user = FactoryGuy.make("with_non_hk_mobile");
 
     lookup("controller:subscriptions").pusher = {
       get: function() {

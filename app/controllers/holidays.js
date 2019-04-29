@@ -2,6 +2,10 @@ import { sort } from "@ember/object/computed";
 import Controller from "@ember/controller";
 
 export default Controller.extend({
-  sortProperties: ["holiday"],
+  init() {
+    this._super(...arguments);
+    this.sortProperties = ["holiday"];
+  },
+
   arrangedContent: sort("model", "sortProperties")
 });

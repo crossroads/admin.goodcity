@@ -9,17 +9,7 @@ import FactoryGuy from "ember-data-factory-guy";
 import TestHelper from "ember-data-factory-guy/factory-guy-test-helper";
 import $ from "jquery";
 
-var App,
-  offer,
-  item1,
-  item2,
-  package1,
-  package2,
-  item3,
-  package3,
-  item4,
-  package4,
-  role;
+var App, offer, item1, item2, package1, package2, item3, item4, role;
 
 module("Reviewer: Accept Item Tab", {
   beforeEach: function() {
@@ -64,18 +54,10 @@ module("Reviewer: Accept Item Tab", {
       donorDescription: null,
       donorCondition: null
     });
-    package3 = FactoryGuy.make("package", {
-      item: item3,
-      packageType: item3.get("packageType")
-    });
 
     item4 = FactoryGuy.make("item_with_type", {
       offer: offer,
       state: "rejected"
-    });
-    package4 = FactoryGuy.make("package", {
-      item: item4,
-      packageType: item4.get("packageType")
     });
   },
 

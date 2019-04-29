@@ -11,7 +11,14 @@ module.exports = {
   },
   rules: {},
   globals: {
-    moment: true
+    moment: true,
+    logoutUser: true,
+    lookup: true,
+    expect: true,
+    equal: true,
+    QUnit: true,
+    cordova: true,
+    Twilio: true
   },
   overrides: [
     // node files

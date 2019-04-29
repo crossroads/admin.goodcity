@@ -1,5 +1,3 @@
-import $ from "jquery";
-
 export default function() {
   QUnit.test(arguments[0] + " (SKIPPED)", function() {
     QUnit.expect(0); //dont expect any tests
