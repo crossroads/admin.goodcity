@@ -1,5 +1,5 @@
 import $ from "jquery";
-import { later, run } from "@ember/runloop";
+import { run } from "@ember/runloop";
 import { module, test } from "qunit";
 import "../factories/offer";
 import startApp from "../helpers/start-app";
@@ -12,7 +12,7 @@ var App, offer, t, role;
 module("Display not found error", {
   beforeEach: function() {
     App = startApp();
-    later = () => true;
+    // later = () => true;
     offer = FactoryGuy.make("offer");
     var i18n = App.__container__.lookup("service:i18n");
     t = i18n.t.bind(i18n);
