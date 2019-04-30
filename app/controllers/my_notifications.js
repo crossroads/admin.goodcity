@@ -19,9 +19,8 @@ export default offers.extend({
   }),
 
   model: computed(
-    "allMessages.@each.state",
+    "allMessages.{@each.state,@each.offer.createdBy}",
     "session.currentUser.id",
-    "allMessages.@each.offer.createdBy",
     function() {
       var currentUserId = this.get("session.currentUser.id");
 

@@ -26,8 +26,7 @@ export default Component.extend({
   ),
 
   preventEdit: computed(
-    "package.hasAllPackagesDispatched",
-    "package.hasAllPackagesDesignated",
+    "package.{hasAllPackagesDispatched,hasAllPackagesDesignated}",
     function() {
       let pkg = this.get("store").peekRecord("package", this.get("packageId"));
       return (
@@ -101,8 +100,14 @@ export default Component.extend({
 
   deliveredOptions: computed(function() {
     return [
-      { value: "Unknown", name: this.get("i18n").t("mark_received.unknown") },
-      { value: "Gogovan", name: this.get("i18n").t("mark_received.gogovan") },
+      {
+        value: "Unknown",
+        name: this.get("i18n").t("mark_received.unknown")
+      },
+      {
+        value: "Gogovan",
+        name: this.get("i18n").t("mark_received.gogovan")
+      },
       {
         value: "Alternate",
         name: this.get("i18n").t("mark_received.crossroads_truck")

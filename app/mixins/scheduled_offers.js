@@ -28,8 +28,7 @@ export default Mixin.create({
   }),
 
   allScheduledOffers: computed(
-    "allValidOffers.@each.isScheduled",
-    "allValidOffers.@each.isFinished",
+    "allValidOffers.{@each.isScheduled,@each.isFinished}",
     "allValidDeliveries.[]",
     function() {
       this.get("allValidDeliveries"); // extra call
