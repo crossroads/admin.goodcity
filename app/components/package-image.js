@@ -17,8 +17,7 @@ export default Component.extend({
   }),
 
   images: computed(
-    "currentPackage.item.images.[]",
-    "currentPackage.packageImages.[]",
+    "currentPackage.{item.images.[],packageImages.[]}",
     function() {
       // if(this.get("currentPackage.packageImages.length") > 0) {
       //   return this.get("currentPackage.packageImages");

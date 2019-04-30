@@ -33,7 +33,7 @@ export default Controller.extend({
     return this.get("i18n").t("items.add_item.description_placeholder").string;
   }),
 
-  formData: computed("model.donorCondition", "model.donorDescription", {
+  formData: computed("model.{donorCondition,donorDescription}", {
     get: function() {
       return {
         donorConditionId: this.get("model.donorCondition.id"),
@@ -52,7 +52,7 @@ export default Controller.extend({
     return this.get("application.currentRouteName").indexOf("accept") >= 0;
   }),
 
-  isEditing: computed("item", "item.donorDescription", "item.donorCondition", {
+  isEditing: computed("item", "item.{donorDescription,donorCondition}", {
     get: function() {
       var item = this.get("item");
       var description = $.trim(item.get("donorDescription"));

@@ -14,20 +14,38 @@ export default DS.Model.extend({
   width: attr("number"),
   height: attr("number"),
   notes: attr("string"),
-  state: attr("string", { defaultValue: "expecting" }),
+  state: attr("string", {
+    defaultValue: "expecting"
+  }),
   state_event: attr("string"),
   receivedAt: attr("date"),
   rejectedAt: attr("date"),
   createdAt: attr("date"),
   updatedAt: attr("date"),
-  item: belongsTo("item", { async: false }),
-  packageType: belongsTo("package_type", { async: false }),
-  designation: belongsTo("designation", { async: true }),
-  location: belongsTo("location", { async: false }),
-  donorCondition: belongsTo("donor_condition", { async: false }),
-  ordersPackages: hasMany("orders_package", { async: true }),
-  packageImages: hasMany("package_image", { async: false }),
-  packagesLocations: hasMany("packages_location", { async: true }),
+  item: belongsTo("item", {
+    async: false
+  }),
+  packageType: belongsTo("package_type", {
+    async: false
+  }),
+  designation: belongsTo("designation", {
+    async: true
+  }),
+  location: belongsTo("location", {
+    async: false
+  }),
+  donorCondition: belongsTo("donor_condition", {
+    async: false
+  }),
+  ordersPackages: hasMany("orders_package", {
+    async: true
+  }),
+  packageImages: hasMany("package_image", {
+    async: false
+  }),
+  packagesLocations: hasMany("packages_location", {
+    async: true
+  }),
   offerId: attr("number"),
   inventoryNumber: attr("string"),
   grade: attr("string"),
@@ -110,9 +128,7 @@ export default DS.Model.extend({
   }),
 
   hasOneDesignatedPackage: computed(
-    "ordersPackages.@each.quantity",
-    "ordersPackages.@each.state",
-    "ordersPackages.[]",
+    "ordersPackages.{@each.quantity,.@each.state,[]",
     function() {
       var designatedOrdersPackages = this.get("ordersPackages").filterBy(
         "state",
@@ -126,9 +142,7 @@ export default DS.Model.extend({
   ),
 
   hasOneDispatchedPackage: computed(
-    "ordersPackages.@each.quantity",
-    "ordersPackages.@each.state",
-    "ordersPackages.[]",
+    "ordersPackages.{@each.quantity,@each.state,[]}",
     function() {
       var dispatchedOrdersPackages = this.get("ordersPackages").filterBy(
         "state",
@@ -142,9 +156,7 @@ export default DS.Model.extend({
   ),
 
   remainingQty: computed(
-    "ordersPackages.@each.quantity",
-    "ordersPackages.[]",
-    "ordersPackages.@each.state",
+    "ordersPackages.{@each.quantity,[],@each.state}",
     "receivedQuantity",
     function() {
       var qty = 0;
@@ -160,9 +172,7 @@ export default DS.Model.extend({
   ),
 
   hasAllPackagesDispatched: computed(
-    "ordersPackages.@each.quantity",
-    "ordersPackages.@each.state",
-    "ordersPackages.[]",
+    "ordersPackages.{@each.quantity,@each.state,[]}",
     function() {
       var ordersPackages = this.store.query("ordersPackage", {
         search_by_package_id: this.get("id")
@@ -186,9 +196,7 @@ export default DS.Model.extend({
   ),
 
   hasAllPackagesDesignated: computed(
-    "ordersPackages.@each.quantity",
-    "ordersPackages.@each.state",
-    "ordersPackages.[]",
+    "ordersPackages.{@each.quantity,@each.state,[]",
     function() {
       var received_quantity = this.get("receivedQuantity");
       var totalDesignatedQty = 0;
@@ -204,27 +212,21 @@ export default DS.Model.extend({
   ),
 
   designatedOrdersPackages: computed(
-    "ordersPackages.@each.quantity",
-    "ordersPackages.@each.state",
-    "ordersPackages.[]",
+    "ordersPackages.{@each.quantity,@each.state,[]}",
     function() {
       return this.get("ordersPackages").filterBy("state", "designated");
     }
   ),
 
   dispatchedOrdersPackages: computed(
-    "ordersPackages.@each.quantity",
-    "ordersPackages.@each.state",
-    "ordersPackages.[]",
+    "ordersPackages.{@each.quantity,@each.state,[]}",
     function() {
       return this.get("ordersPackages").filterBy("state", "dispatched");
     }
   ),
 
   totalDispatchedQty: computed(
-    "ordersPackages.@each.quantity",
-    "ordersPackages.@each.state",
-    "ordersPackages.[]",
+    "ordersPackages.{@each.quantity,@each.state,[]}",
     function() {
       var totalDispatchedQty = 0;
       var dispatchedOrdersPackages = this.get("ordersPackages").filterBy(
@@ -239,9 +241,7 @@ export default DS.Model.extend({
   ),
 
   totalDesignatedQty: computed(
-    "ordersPackages.@each.quantity",
-    "ordersPackages.@each.state",
-    "ordersPackages.[]",
+    "ordersPackages.{@each.quantity,@each.state,[]}",
     function() {
       var totalDesignatedQty = 0;
       var dispatchedOrdersPackages = this.get("ordersPackages").filterBy(
@@ -264,24 +264,21 @@ export default DS.Model.extend({
   }),
 
   hasSingleLocation: computed(
-    "packagesLocations.[]",
-    "packagesLocations.@each.quantity",
+    "packagesLocations.{[], @each.quantity}",
     function() {
       return isEqual(this.get("packagesLocations.length"), 1);
     }
   ),
 
   firstLocationName: computed(
-    "packagesLocations.[]",
-    "packagesLocations.@each.quantity",
+    "packagesLocations.{[],@each.quantity}",
     function() {
       return this.get("packagesLocations.firstObject.location.name");
     }
   ),
 
   hasMultiLocations: computed(
-    "packagesLocations.[]",
-    "packagesLocations.@each.quantity",
+    "packagesLocations.{[],@each.quantity}",
     function() {
       return this.get("packagesLocations.length") > 1;
     }
