@@ -1,4 +1,4 @@
-import { debounce, run } from "@ember/runloop";
+import { run } from "@ember/runloop";
 import startApp from "../helpers/start-app";
 import FactoryGuy from "ember-data-factory-guy";
 import TestHelper from "ember-data-factory-guy/factory-guy-test-helper";
@@ -19,7 +19,7 @@ module("Search Offers", {
   beforeEach: function() {
     App = startApp({}, 2);
     TestHelper.setup();
-    debounce = (context, func) => func.call(context);
+    run.debounce = (context, func) => func.call(context);
 
     role = FactoryGuy.make("role");
     $.mockjax({
