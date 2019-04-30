@@ -127,8 +127,11 @@ export default DS.Model.extend({
     );
   }),
 
+  // eslint-disable-next-line ember/use-brace-expansion
   hasOneDesignatedPackage: computed(
-    "ordersPackages.{@each.quantity,.@each.state,[]",
+    "ordersPackages.@each.quantity",
+    "ordersPackages.@each.state",
+    "ordersPackages.[]",
     function() {
       var designatedOrdersPackages = this.get("ordersPackages").filterBy(
         "state",
@@ -141,8 +144,11 @@ export default DS.Model.extend({
     }
   ),
 
+  // eslint-disable-next-line ember/use-brace-expansion
   hasOneDispatchedPackage: computed(
-    "ordersPackages.{@each.quantity,@each.state,[]}",
+    "ordersPackages.@each.quantity",
+    "ordersPackages.@each.state",
+    "ordersPackages.[]}",
     function() {
       var dispatchedOrdersPackages = this.get("ordersPackages").filterBy(
         "state",
@@ -155,8 +161,11 @@ export default DS.Model.extend({
     }
   ),
 
+  // eslint-disable-next-line ember/use-brace-expansion
   remainingQty: computed(
-    "ordersPackages.{@each.quantity,[],@each.state}",
+    "ordersPackages.@each.quantity",
+    "ordersPackages.[]",
+    "ordersPackages.@each.state",
     "receivedQuantity",
     function() {
       var qty = 0;
@@ -171,8 +180,11 @@ export default DS.Model.extend({
     }
   ),
 
+  // eslint-disable-next-line ember/use-brace-expansion
   hasAllPackagesDispatched: computed(
-    "ordersPackages.{@each.quantity,@each.state,[]}",
+    "ordersPackages.@each.quantity",
+    "ordersPackages.@each.state",
+    "ordersPackages.[]",
     function() {
       var ordersPackages = this.store.query("ordersPackage", {
         search_by_package_id: this.get("id")
@@ -195,8 +207,11 @@ export default DS.Model.extend({
     }
   ),
 
+  // eslint-disable-next-line ember/use-brace-expansion
   hasAllPackagesDesignated: computed(
-    "ordersPackages.{@each.quantity,@each.state,[]",
+    "ordersPackages.@each.quantity",
+    "ordersPackages.@each.state",
+    "ordersPackages.[]",
     function() {
       var received_quantity = this.get("receivedQuantity");
       var totalDesignatedQty = 0;
@@ -211,22 +226,31 @@ export default DS.Model.extend({
     }
   ),
 
+  // eslint-disable-next-line ember/use-brace-expansion
   designatedOrdersPackages: computed(
-    "ordersPackages.{@each.quantity,@each.state,[]}",
+    "ordersPackages.@each.quantity",
+    "ordersPackages.@each.state",
+    "ordersPackages.[]",
     function() {
       return this.get("ordersPackages").filterBy("state", "designated");
     }
   ),
 
+  // eslint-disable-next-line ember/use-brace-expansion
   dispatchedOrdersPackages: computed(
-    "ordersPackages.{@each.quantity,@each.state,[]}",
+    "ordersPackages.@each.quantity",
+    "ordersPackages.@each.state",
+    "ordersPackages.[]",
     function() {
       return this.get("ordersPackages").filterBy("state", "dispatched");
     }
   ),
 
+  // eslint-disable-next-line ember/use-brace-expansion
   totalDispatchedQty: computed(
-    "ordersPackages.{@each.quantity,@each.state,[]}",
+    "ordersPackages.@each.quantity",
+    "ordersPackages.@each.state",
+    "ordersPackages.[]",
     function() {
       var totalDispatchedQty = 0;
       var dispatchedOrdersPackages = this.get("ordersPackages").filterBy(
@@ -240,8 +264,11 @@ export default DS.Model.extend({
     }
   ),
 
+  // eslint-disable-next-line ember/use-brace-expansion
   totalDesignatedQty: computed(
-    "ordersPackages.{@each.quantity,@each.state,[]}",
+    "ordersPackages.@each.quantity",
+    "ordersPackages.@each.state",
+    "ordersPackages.[]",
     function() {
       var totalDesignatedQty = 0;
       var dispatchedOrdersPackages = this.get("ordersPackages").filterBy(
@@ -264,21 +291,24 @@ export default DS.Model.extend({
   }),
 
   hasSingleLocation: computed(
-    "packagesLocations.{[], @each.quantity}",
+    "packagesLocations.[]",
+    "packagesLocations@each.quantity",
     function() {
       return isEqual(this.get("packagesLocations.length"), 1);
     }
   ),
 
   firstLocationName: computed(
-    "packagesLocations.{[],@each.quantity}",
+    "packagesLocations.[]",
+    "packagesLocations@each.quantity",
     function() {
       return this.get("packagesLocations.firstObject.location.name");
     }
   ),
 
   hasMultiLocations: computed(
-    "packagesLocations.{[],@each.quantity}",
+    "packagesLocations.[]",
+    "packagesLocations@each.quantity",
     function() {
       return this.get("packagesLocations.length") > 1;
     }
