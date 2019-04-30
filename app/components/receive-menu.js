@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { debounce } from "@ember/runloop";
 import $ from "jquery";
 import { computed } from "@ember/object";
