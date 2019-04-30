@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import $ from "jquery";
 import { inject as service } from "@ember/service";
 import Component from "@ember/component";
@@ -51,7 +52,9 @@ export default Component.extend({
   },
 
   scan() {
-    let options = { formats: "CODE_128" };
+    let options = {
+      formats: "CODE_128"
+    };
     let onError = error =>
       this.get("messageBox").alert("Scanning failed: " + error);
     let onSuccess = res => {
@@ -79,7 +82,9 @@ export default Component.extend({
         "/packages/print_barcode",
         "POST",
         this.get("session.authToken"),
-        { package_id: this.get("packageId") }
+        {
+          package_id: this.get("packageId")
+        }
       )
         .catch(xhr => {
           if (xhr.status !== 200) {
