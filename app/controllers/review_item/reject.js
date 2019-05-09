@@ -48,6 +48,7 @@ export default Controller.extend({
 
   selectedId: computed("rejectionReasonId", {
     get: function() {
+      // eslint-disable-next-line ember/no-side-effects
       this.set("isBlank", false);
       var reasonId = this.get("rejectionReasonId");
       if (reasonId) {
