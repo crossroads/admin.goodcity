@@ -19,8 +19,8 @@ moduleForModel("item", "Item Model", {
   ]
 });
 
-test("Item is a valid ember-data Model", function() {
-  expect(1);
+test("Item is a valid ember-data Model", function(assert) {
+  assert.expect(1);
 
   var store = this.store();
   var record = null;
@@ -34,11 +34,11 @@ test("Item is a valid ember-data Model", function() {
     record = store.peekRecord("item", 1);
   });
 
-  equal(record.get("donorDescription"), "test-item");
+  assert.equal(record.get("donorDescription"), "test-item");
 });
 
-testSkip("Default image for item", function() {
-  expect(1);
+testSkip("Default image for item", function(assert) {
+  assert.expect(1);
 
   var store = this.store();
   var defaultImageURL = null;
@@ -60,11 +60,13 @@ testSkip("Default image for item", function() {
     defaultImageURL = record.get("defaultImageURL");
   });
 
-  equal(defaultImageURL, "testimage2");
+  assert.equal(defaultImageURL, "testimage2");
 });
 
-testSkip("Default image for item when no favourite is selected", function() {
-  expect(1);
+testSkip("Default image for item when no favourite is selected", function(
+  assert
+) {
+  assert.expect(1);
 
   var store = this.store();
   var defaultImageURL = null;
@@ -83,5 +85,5 @@ testSkip("Default image for item when no favourite is selected", function() {
     defaultImageURL = record.get("defaultImageURL");
   });
 
-  equal(defaultImageURL, "testimage1");
+  assert.equal(defaultImageURL, "testimage1");
 });
