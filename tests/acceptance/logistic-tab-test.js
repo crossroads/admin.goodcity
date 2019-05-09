@@ -35,7 +35,7 @@ module("Review Offer Logistics", {
   beforeEach: function() {
     App = startApp({}, 2);
     TestHelper.setup();
-    lookup("service:session").set("isAdmin", true);
+    this.owner.lookup("service:session").set("isAdmin", true);
     var i18n = App.__container__.lookup("service:i18n");
     t = i18n.t.bind(i18n);
 
