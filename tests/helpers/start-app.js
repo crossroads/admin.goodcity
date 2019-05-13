@@ -37,9 +37,9 @@ export default function startApp(attrs, permissionId) {
   return run(function() {
     application = Application.create(attributes);
     application.__container__.lookup("service:i18n").set("locale", "en");
-    application.setupForTesting();
+    // application.setupForTesting();
     application.injectTestHelpers();
-    // return application;
+    return application;
   });
 
   //window.navigator = {onLine:true,plugins:[]};
