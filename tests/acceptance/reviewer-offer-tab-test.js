@@ -152,7 +152,7 @@ test("visit accepted item", function(assert) {
 });
 
 test("visit rejected item", function(assert) {
-  assert.expect();
+  assert.expect(1);
   visit("/offers/" + offer.id + "/review_offer/items");
   andThen(function() {
     click(".list li a:contains('" + item2.get("donorDescription") + "')");

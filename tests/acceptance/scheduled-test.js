@@ -2,8 +2,8 @@ import { run } from "@ember/runloop";
 import startApp from "../helpers/start-app";
 import FactoryGuy from "ember-data-factory-guy";
 import TestHelper from "ember-data-factory-guy/factory-guy-test-helper";
-import testSkip from "../helpers/test-skip";
-import { module } from "qunit";
+// import testSkip from "../helpers/test-skip";
+import { module, skip } from "qunit";
 import "../factories/user";
 import "../factories/offer";
 import "../factories/item";
@@ -93,7 +93,7 @@ module("Scheduled Offers", {
   }
 });
 
-testSkip("viewing collection schedule", function(assert) {
+skip("viewing collection schedule", function(assert) {
   assert.expect(5);
   visit("/offers/scheduled");
 
@@ -118,7 +118,7 @@ testSkip("viewing collection schedule", function(assert) {
   });
 });
 
-testSkip("viewing gogovan delivery schedule", function(assert) {
+skip("viewing gogovan delivery schedule", function(assert) {
   assert.expect(4);
   visit("/offers/scheduled/gogovan");
 
@@ -135,7 +135,7 @@ testSkip("viewing gogovan delivery schedule", function(assert) {
   });
 });
 
-testSkip("filtering gogovan delivery schedule", function(assert) {
+skip("filtering gogovan delivery schedule", function(assert) {
   assert.expect(5);
   visit("/offers/scheduled/gogovan");
 
@@ -166,7 +166,7 @@ testSkip("filtering gogovan delivery schedule", function(assert) {
   });
 });
 
-testSkip("viewing other delivery schedule", function(assert) {
+skip("viewing other delivery schedule", function(assert) {
   assert.expect(4);
   visit("/offers/scheduled/other_delivery");
 

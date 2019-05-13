@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { run } from "@ember/runloop";
-import { test, moduleForModel } from "ember-qunit";
+import { test, moduleForModel, skip } from "ember-qunit";
 import FactoryGuy from "ember-data-factory-guy";
 import testSkip from "../../helpers/test-skip";
 
@@ -45,7 +45,7 @@ test("offer is a valid ember-data Model", function(assert) {
   assert.equal(record.get("collectionContactName"), "Test");
 });
 
-testSkip("Count of items within an offer", function(assert) {
+skip("Count of items within an offer", function(assert) {
   assert.expect(1);
 
   var store = this.store();
@@ -61,7 +61,7 @@ testSkip("Count of items within an offer", function(assert) {
       items: [item1.id, item2.id]
     });
 
-    return store.find("offer", offer.id).then(function(offer1) {
+    return store.peekRecord("offer", offer.id).then(function(offer1) {
       offer1.get("items").then(function() {
         console.log(offer1.get("itemCount"));
         assert.equal(offer1.get("itemCount"), 2);

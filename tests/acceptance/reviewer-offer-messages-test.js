@@ -2,8 +2,7 @@ import { run } from "@ember/runloop";
 import startApp from "../helpers/start-app";
 import FactoryGuy from "ember-data-factory-guy";
 import TestHelper from "ember-data-factory-guy/factory-guy-test-helper";
-import testSkip from "../helpers/test-skip";
-import { module, test } from "qunit";
+import { module, test, skip } from "qunit";
 import "../factories/message";
 import "../factories/offer";
 import "../factories/user";
@@ -189,7 +188,7 @@ test("offer-messages from staff should add unread bubble in supervisor message t
   });
 });
 
-testSkip("offer-message with image", function(assert) {
+skip("offer-message with image", function(assert) {
   assert.expect(1);
   visit("/offers/" + offer1.id + "/donor_messages");
   andThen(function() {
