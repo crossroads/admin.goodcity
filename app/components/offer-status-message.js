@@ -143,7 +143,7 @@ export default Component.extend({
 
   actions: {
     startReview() {
-      this.sendAction("startReview");
+      this.startReview();
     }
   }
 });

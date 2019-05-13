@@ -37,7 +37,7 @@ export default Component.extend({
     setPackageImage() {
       var image = this.get("selectedImage");
       this.get("package").favouriteImage = image;
-      this.sendAction("setPackageImage", this.get("index"), image);
+      this.setPackageImage(this.get("index"), image);
     },
 
     displayImagesListOverlay() {
