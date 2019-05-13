@@ -28,8 +28,8 @@ moduleForModel("offer", "Offer Model", {
   ]
 });
 
-test("offer is a valid ember-data Model", function() {
-  expect(1);
+test("offer is a valid ember-data Model", function(assert) {
+  assert.expect(1);
 
   var store = this.store();
   var record = null;
@@ -42,11 +42,11 @@ test("offer is a valid ember-data Model", function() {
     record = store.peekRecord("offer", 1);
   });
 
-  equal(record.get("collectionContactName"), "Test");
+  assert.equal(record.get("collectionContactName"), "Test");
 });
 
-testSkip("Count of items within an offer", function() {
-  expect(1);
+testSkip("Count of items within an offer", function(assert) {
+  assert.expect(1);
 
   var store = this.store();
 
@@ -64,7 +64,7 @@ testSkip("Count of items within an offer", function() {
     return store.find("offer", offer.id).then(function(offer1) {
       offer1.get("items").then(function() {
         console.log(offer1.get("itemCount"));
-        equal(offer1.get("itemCount"), 2);
+        assert.equal(offer1.get("itemCount"), 2);
       });
     });
   });
