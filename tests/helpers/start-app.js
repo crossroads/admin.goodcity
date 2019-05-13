@@ -34,29 +34,29 @@ export default function startApp(attrs, permissionId) {
     location: "none"
   });
 
-  return run(function() {
+  run(function() {
     application = Application.create(attributes);
     application.__container__.lookup("service:i18n").set("locale", "en");
-    // application.setupForTesting();
+    application.setupForTesting();
     application.injectTestHelpers();
     return application;
   });
 
   //window.navigator = {onLine:true,plugins:[]};
-  window.alert = function(message) {
-    console.log("Alert: " + message);
-  };
-  window.confirm = function(message) {
-    console.log("Confirm: " + message);
-    return true;
-  };
-  $("head").append(
-    "<style>.loading-indicator, .reveal-modal-bg, .reveal-modal {display:none !important;}</style>"
-  );
-  lookup("service:logger").error = message => QUnit.assert.equal(message, "");
+  // window.alert = function(message) {
+  //   console.log("Alert: " + message);
+  // };
+  // window.confirm = function(message) {
+  //   console.log("Confirm: " + message);
+  //   return true;
+  // };
+  // $("head").append(
+  //   "<style>.loading-indicator, .reveal-modal-bg, .reveal-modal {display:none !important;}</style>"
+  // );
+  // lookup("service:logger").error = message => QUnit.assert.equal(message, "");
 
-  //needed by application controller init
-  lookup("controller:subscriptions").actions.wire = function() {};
+  // //needed by application controller init
+  // lookup("controller:subscriptions").actions.wire = function() {};
 
   return application;
 }
