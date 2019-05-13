@@ -1,5 +1,5 @@
 import { run } from "@ember/runloop";
-import { test, moduleForModel } from "ember-qunit";
+import { test, moduleForModel, skip } from "ember-qunit";
 import testSkip from "../../helpers/test-skip";
 
 moduleForModel("item", "Item Model", {
@@ -37,7 +37,7 @@ test("Item is a valid ember-data Model", function(assert) {
   assert.equal(record.get("donorDescription"), "test-item");
 });
 
-testSkip("Default image for item", function(assert) {
+skip("Default image for item", function(assert) {
   assert.expect(1);
 
   var store = this.store();
@@ -63,9 +63,7 @@ testSkip("Default image for item", function(assert) {
   assert.equal(defaultImageURL, "testimage2");
 });
 
-testSkip("Default image for item when no favourite is selected", function(
-  assert
-) {
+skip("Default image for item when no favourite is selected", function(assert) {
   assert.expect(1);
 
   var store = this.store();

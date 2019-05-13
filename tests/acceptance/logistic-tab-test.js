@@ -9,6 +9,7 @@ import "../factories/gogovan_order";
 import "../factories/delivery";
 import FactoryGuy from "ember-data-factory-guy";
 import TestHelper from "ember-data-factory-guy/factory-guy-test-helper";
+import { getOwner } from "@ember/application";
 import $ from "jquery";
 
 var App,
@@ -35,7 +36,9 @@ module("Review Offer Logistics", {
   beforeEach: function() {
     App = startApp({}, 2);
     TestHelper.setup();
-    this.owner.lookup("service:session").set("isAdmin", true);
+    getOwner(this)
+      .lookup("service:session")
+      .set("isAdmin", true);
     var i18n = App.__container__.lookup("service:i18n");
     t = i18n.t.bind(i18n);
 

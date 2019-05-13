@@ -1,9 +1,8 @@
 import $ from "jquery";
 import { run } from "@ember/runloop";
-import { module, test } from "qunit";
+import { module, test, skip } from "qunit";
 import "../factories/offer";
 import startApp from "../helpers/start-app";
-import testSkip from "../helpers/test-skip";
 import FactoryGuy from "ember-data-factory-guy";
 import "../factories/role";
 
@@ -39,7 +38,7 @@ module("Display not found error", {
 // Test cases with responses as error-statuscodes fails
 // https://github.com/emberjs/ember.js/issues/12791
 
-testSkip("Display error popup for invalid offer", function(assert) {
+skip("Display error popup for invalid offer", function(assert) {
   assert.expect(1);
   $(".reveal-modal").remove();
   visit("/offers/invalid/review_offer/items");
@@ -50,7 +49,7 @@ testSkip("Display error popup for invalid offer", function(assert) {
   });
 });
 
-testSkip("Display error popup for invalid item", function(assert) {
+skip("Display error popup for invalid item", function(assert) {
   assert.expect(1);
   $(".reveal-modal").remove();
   visit("/offers/" + offer.id + "/review_item/invalid/accept");

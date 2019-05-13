@@ -3,7 +3,7 @@ import startApp from "../helpers/start-app";
 import FactoryGuy from "ember-data-factory-guy";
 import TestHelper from "ember-data-factory-guy/factory-guy-test-helper";
 import testSkip from "../helpers/test-skip";
-import { module, test } from "qunit";
+import { module, test, skip } from "qunit";
 import "../factories/offer";
 import "../factories/role";
 import $ from "jquery";
@@ -61,7 +61,7 @@ test("visit rejected item without item_type", function(assert) {
   });
 });
 
-testSkip("visit rejected item with item_type", function(assert) {
+skip("visit rejected item with item_type", function(assert) {
   assert.expect(4);
   visit("/offers/" + offer.id + "/review_item/" + item1.id + "/reject");
   andThen(function() {
@@ -98,7 +98,7 @@ test("validate at least one option selected", function(assert) {
   });
 });
 
-testSkip("display message for quality option", function(assert) {
+skip("display message for quality option", function(assert) {
   assert.expect(3);
   visit("/offers/" + offer.id + "/review_item/" + item1.id + "/reject");
   andThen(function() {
