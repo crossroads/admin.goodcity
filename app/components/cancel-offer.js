@@ -53,7 +53,7 @@ export default Component.extend({
       offer.set("state_event", "cancel");
 
       offer.save().finally(() => {
-        this.sendAction("toggleAction");
+        this.toggleAction();
         loadingView.destroy();
       });
     }

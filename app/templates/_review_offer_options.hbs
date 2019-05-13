@@ -21,13 +21,13 @@
 
   {{#unless offer.hideInactiveOfferOption}}
     <div class="option_menu">
-      {{inactive-offer offer=offer toggleAction="toggleOfferOptions"}}
+      {{inactive-offer offer=offer toggleAction=(action "toggleOfferOptions")}}
     </div>
   {{/unless}}
 
   {{#unless offer.hideCancelOfferOption}}
     <div class="option_menu">
-      {{cancel-offer offer=offer toggleAction="toggleOfferOptions"}}
+      {{cancel-offer offer=offer toggleAction=(action "toggleOfferOptions")}}
     </div>
   {{/unless}}
 

@@ -46,7 +46,7 @@ export default Component.extend({
         })
         .finally(() => {
           loadingView.destroy();
-          this.sendAction("toggleAction");
+          this.toggleAction();
         });
     }
   }
