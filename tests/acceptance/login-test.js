@@ -1,5 +1,7 @@
 import { run } from "@ember/runloop";
-import startApp from "../helpers/start-app";
+// import startApp from "../helpers/start-app";
+import { setupApplicationTest } from "ember-qunit";
+// import moduleForAcceptance from "guides-app/tests/helpers/module-for-acceptance";
 import { module, test } from "qunit";
 import "../factories/user_profile";
 import "../factories/role";
@@ -11,7 +13,7 @@ var App, hk_user, role;
 
 module("Acceptance: Login", {
   beforeEach: function() {
-    App = startApp({}, 2);
+    // App = startApp({}, 2);
     TestHelper.setup();
 
     role = FactoryGuy.make("role");
@@ -30,7 +32,7 @@ module("Acceptance: Login", {
 
     hk_user = FactoryGuy.make("with_hk_mobile");
 
-    lookup("controller:subscriptions").pusher = {
+    this.application.__container__.lookup("controller:subscriptions").pusher = {
       get: function() {
         return {};
       },

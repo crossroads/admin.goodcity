@@ -7,13 +7,14 @@ import "../factories/role";
 import "../factories/package";
 import FactoryGuy from "ember-data-factory-guy";
 import TestHelper from "ember-data-factory-guy/factory-guy-test-helper";
+// import moduleForAcceptance from "guides-app/tests/helpers/module-for-acceptance";
 import $ from "jquery";
 
 var App, offer, item1, item2, package1, package2, item3, item4, role;
 
 module("Reviewer: Accept Item Tab", {
   beforeEach: function() {
-    App = startApp({}, 2);
+    // App = startApp({}, 2);
     TestHelper.setup();
     role = FactoryGuy.make("role");
     $.mockjax({
