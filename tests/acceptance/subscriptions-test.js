@@ -1,13 +1,16 @@
 import { run } from "@ember/runloop";
 import startApp from "../helpers/start-app";
 import FactoryGuy from "ember-data-factory-guy";
+import moduleForAcceptance from "guides-app/tests/helpers/module-for-acceptance";
 import TestHelper from "ember-data-factory-guy/factory-guy-test-helper";
 import { module, test } from "qunit";
+import { getOwner } from "@ember/application";
+
 import $ from "jquery";
 
 var App;
 
-module("Subscriptions", {
+moduleForAcceptance("Subscriptions", {
   beforeEach: function() {
     App = startApp();
     TestHelper.setup();
@@ -24,7 +27,9 @@ test("updateStore doesn't process before response to model.save request", functi
   assert.expect(2);
 
   var store = FactoryGuy.store;
-  var subscriptions = lookup("controller:subscriptions");
+  var subscriptions = this.application.__container__.lookup(
+    "controller:subscriptions"
+  );
   var user = FactoryGuy.make("user");
   FactoryGuy.make("user_profile", {
     id: user.id
