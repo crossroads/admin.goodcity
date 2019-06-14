@@ -2,19 +2,21 @@
 
   <section class="main-section receive_package_modal">
 
-    <div class="row single-row {{if hasErrors 'form-errors' 'no-error'}}">
-      <div class="small-1 columns">
-        <i class="fa fa-exclamation-triangle"></i>
-      </div>
+    <div class="row single-row form-errors">
+      {{#if isInvalidInventoryNo}}
+        <div class="small-1 columns">
+          <i class="fa fa-exclamation-triangle"></i>
+        </div>
+      {{/if}}
       <div class="small-11 columns">
 
-        <div class={{if invalidInventoryNo 'show-error' 'no-error'}}>{{t "receive_package.invalid_inventory"}}</div>
+        <div class={{if isInvalidInventoryNo 'show-error' 'no-error'}}>{{t "receive_package.invalid_inventory"}}</div>
 
-        <div class={{if invalidQuantity 'show-error' 'no-error'}}>{{t "receive_package.invalid_quantity"}}</div>
+        <div class={{if isInvalidQuantity 'show-error' 'no-error'}}>{{t "receive_package.invalid_quantity"}}</div>
 
-        <div class={{if invalidDescription 'show-error' 'no-error'}}>{{t "receive_package.invalid_description"}}</div>
+        <div class={{if isInvalidDescription 'show-error' 'no-error'}}>{{t "receive_package.invalid_description"}}</div>
 
-        <div class={{if invalidLocation 'show-error' 'no-error'}}>{{t "receive_package.invalid_location"}}</div>
+        <div class={{if isInvalidLocation 'show-error' 'no-error'}}>{{t "receive_package.invalid_location"}}</div>
 
         {{#each package.errors.messages as |message|}}
           <div class='show-error'>{{message}}</div>
@@ -32,13 +34,13 @@
       </div>
 
       <div class="row inputs-row">
-        <div class="small-12 columns {{if invalidDescription 'has-error'}}">
+        <div class="small-12 columns {{if isInvalidDescription 'has-error'}}">
           {{auto-resize-textarea data-autoresize=true name="notes" value=packageForm.notes placeholder=(t "placeholder.comments") maxlength="50" required="required" pattern=".*\S.*" id=(concat 'notes' package.id)}}
         </div>
       </div>
 
       <div class="row inputs-row">
-        <div class="small-3 columns {{if invalidQuantity 'has-error'}}">
+        <div class="small-3 columns {{if isInvalidQuantity 'has-error'}}">
           {{numeric-input id=(concat 'qty' package.id) name="qty" value=packageForm.quantity placeholder=(t "placeholder.qty") maxlength="8" pattern="\d{1,8}"}}
           <i class="fa fa-exclamation-triangle"></i>
         </div>
@@ -75,7 +77,7 @@
       </div>
     </div>
 
-    {{inventory-number-input inputId=(concat 'inventory_number' package.id) value=inventoryNumber packageId=package.id invalid=invalidInventoryNo name="inventoryNumber" }}
+    {{inventory-number-input inputId=(concat 'inventory_number' package.id) value=inventoryNumber packageId=package.id invalid=isInvalidInventoryNo name="inventoryNumber" }}
 
     <div class="row inventory-number">
       <div class="small-12 columns">

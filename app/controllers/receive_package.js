@@ -65,14 +65,7 @@ export default Ember.Controller.extend({
     return this.store.peekAll("location");
   }),
 
-  inventoryNumber: Ember.computed("package.inventoryNumber", {
-    get: function() {
-      return this.get("package.inventoryNumber");
-    },
-    set: function(key, value) {
-      return value;
-    }
-  }),
+  inventoryNumber: Ember.computed.alias("package.inventoryNumber"),
 
   packageForm: Ember.computed("package", {
     get: function() {
@@ -84,77 +77,44 @@ export default Ember.Controller.extend({
         height: pkg.get("height"),
         notes: pkg.get("notes")
       };
-    },
-    set: function(key, value) {
-      return {
-        quantity: value.get("quantity"),
-        length: value.get("length"),
-        width: value.get("width"),
-        height: value.get("height"),
-        notes: value.get("notes")
-      };
     }
+  }),
+
+  isInvalidQuantity: Ember.computed("packageForm.quantity", function() {
+    const quantity = this.get("packageForm.quantity");
+    return Number(quantity) < 1;
+  }),
+
+  isInvalidLocation: Ember.computed("locationId", function() {
+    return this.get("locationId") === undefined;
+  }),
+
+  isInvalidDescription: Ember.computed("packageForm.notes", function() {
+    return this.get("package.notes").length === 0;
+  }),
+
+  isInvalidInventoryNo: Ember.computed("inventoryNumber", function() {
+    console.log(
+      "isInvalidInventoryNo:",
+      this.verifyInventoryNumber(this.get("inventoryNumber"))
+    );
+    return !this.verifyInventoryNumber(this.get("inventoryNumber"));
   }),
 
   hasErrors: Ember.computed(
-    "invalidQuantity",
-    "invalidInventoryNo",
-    "invalidDescription",
-    "invalidLocation",
-    "watchErrors",
-    {
-      get: function() {
-        return (
-          this.get("invalidQuantity") ||
-          this.get("invalidInventoryNo") ||
-          this.get("invalidDescription") ||
-          this.get("invalidLocation")
-        );
-      },
-      set: function(key, value) {
-        return value;
-      }
+    "isInvalidQuantity",
+    "isInvalidDescription",
+    "isInvalidLocation",
+    "isInvalidInventoryNo",
+    function() {
+      return (
+        this.get("isInvalidQuantity") ||
+        this.get("isInvalidInventoryNo") ||
+        this.get("isInvalidDescription") ||
+        this.get("isInvalidLocation")
+      );
     }
   ),
-
-  invalidQuantity: Ember.computed({
-    get: function() {
-      return this.get("package.quantity").length === 0;
-    },
-    set: function(key, value) {
-      return value;
-    }
-  }),
-
-  invalidLocation: Ember.computed("locationId", {
-    get: function() {
-      return this.get("locationId") === undefined;
-    },
-    set: function(key, value) {
-      return value;
-    }
-  }),
-
-  invalidDescription: Ember.computed({
-    get: function() {
-      return this.get("package.notes").length === 0;
-    },
-    set: function(key, value) {
-      return value;
-    }
-  }),
-
-  invalidInventoryNo: Ember.computed({
-    get: function() {
-      var isValid = this.verifyInventoryNumber(
-        this.get("package.inventoryNumber")
-      );
-      return isValid;
-    },
-    set: function(key, value) {
-      return value;
-    }
-  }),
 
   receivePackageParams() {
     const pkgData = this.get("packageForm");
@@ -176,22 +136,6 @@ export default Ember.Controller.extend({
     pkg.set("grade", this.get("selectedGrade.id"));
     pkg.set("donorCondition", this.get("selectedCondition"));
     return pkg;
-  },
-
-  isPackageValid() {
-    const pkgData = this.get("packageForm");
-    const inventoryNumber = this.get("inventoryNumber");
-    this.set("invalidQuantity", pkgData.quantity.toString().length === 0);
-    this.set("invalidDescription", pkgData.notes.length === 0);
-
-    const validInventory = this.verifyInventoryNumber(inventoryNumber);
-    this.set("invalidInventoryNo", !validInventory);
-
-    this.notifyPropertyChange("watchErrors"); // this will recalculate 'hasErrors' property, sometimes it does return true for valid form.
-    if (this.get("hasErrors")) {
-      return false;
-    }
-    return true;
   },
 
   actions: {
@@ -226,7 +170,7 @@ export default Ember.Controller.extend({
     },
 
     receivePackage() {
-      if (!this.isPackageValid()) {
+      if (!this.hasErrors) {
         return false;
       }
       const loadingView = getOwner(this)
