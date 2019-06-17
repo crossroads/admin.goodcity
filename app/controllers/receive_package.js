@@ -11,6 +11,7 @@ export default Ember.Controller.extend({
   isAndroidDevice: false,
   i18n: Ember.inject.service(),
   reviewOfferController: Ember.inject.controller("review_offer"),
+  displayError: false,
 
   donorConditions: Ember.computed(function() {
     return this.get("store")
@@ -94,27 +95,17 @@ export default Ember.Controller.extend({
   }),
 
   isInvalidInventoryNo: Ember.computed("inventoryNumber", function() {
-    console.log(
-      "isInvalidInventoryNo:",
-      this.verifyInventoryNumber(this.get("inventoryNumber"))
-    );
     return !this.verifyInventoryNumber(this.get("inventoryNumber"));
   }),
 
-  hasErrors: Ember.computed(
-    "isInvalidQuantity",
-    "isInvalidDescription",
-    "isInvalidLocation",
-    "isInvalidInventoryNo",
-    function() {
-      return (
-        this.get("isInvalidQuantity") ||
-        this.get("isInvalidInventoryNo") ||
-        this.get("isInvalidDescription") ||
-        this.get("isInvalidLocation")
-      );
-    }
-  ),
+  isPackageValid: function() {
+    return (
+      this.get("isInvalidQuantity") ||
+      this.get("isInvalidInventoryNo") ||
+      this.get("isInvalidDescription") ||
+      this.get("isInvalidLocation")
+    );
+  },
 
   receivePackageParams() {
     const pkgData = this.get("packageForm");
@@ -170,7 +161,8 @@ export default Ember.Controller.extend({
     },
 
     receivePackage() {
-      if (!this.hasErrors) {
+      if (this.isPackageValid()) {
+        this.set("displayError", true);
         return false;
       }
       const loadingView = getOwner(this)
@@ -209,7 +201,7 @@ export default Ember.Controller.extend({
           () => pkg.rollbackAttributes()
         );
       } else {
-        this.set("hasErrors", true);
+        this.set("displayError", true);
       }
     },
 

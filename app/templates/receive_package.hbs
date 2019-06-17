@@ -2,28 +2,30 @@
 
   <section class="main-section receive_package_modal">
 
-    <div class="row single-row form-errors">
-      {{#if isInvalidInventoryNo}}
-        <div class="small-1 columns">
-          <i class="fa fa-exclamation-triangle"></i>
+    {{#if displayError}}
+      <div class="row single-row form-errors">
+        {{#if isInvalidInventoryNo}}
+          <div class="small-1 columns">
+            <i class="fa fa-exclamation-triangle"></i>
+          </div>
+        {{/if}}
+        <div class="small-11 columns">
+
+          <div class={{if isInvalidInventoryNo 'show-error' 'no-error'}}>{{t "receive_package.invalid_inventory"}}</div>
+
+          <div class={{if isInvalidQuantity 'show-error' 'no-error'}}>{{t "receive_package.invalid_quantity"}}</div>
+
+          <div class={{if isInvalidDescription 'show-error' 'no-error'}}>{{t "receive_package.invalid_description"}}</div>
+
+          <div class={{if isInvalidLocation 'show-error' 'no-error'}}>{{t "receive_package.invalid_location"}}</div>
+
+          {{#each package.errors.messages as |message|}}
+            <div class='show-error'>{{message}}</div>
+          {{/each}}
+
         </div>
-      {{/if}}
-      <div class="small-11 columns">
-
-        <div class={{if isInvalidInventoryNo 'show-error' 'no-error'}}>{{t "receive_package.invalid_inventory"}}</div>
-
-        <div class={{if isInvalidQuantity 'show-error' 'no-error'}}>{{t "receive_package.invalid_quantity"}}</div>
-
-        <div class={{if isInvalidDescription 'show-error' 'no-error'}}>{{t "receive_package.invalid_description"}}</div>
-
-        <div class={{if isInvalidLocation 'show-error' 'no-error'}}>{{t "receive_package.invalid_location"}}</div>
-
-        {{#each package.errors.messages as |message|}}
-          <div class='show-error'>{{message}}</div>
-        {{/each}}
-
       </div>
-    </div>
+    {{/if}}
 
     <div class="row box-white">
 
