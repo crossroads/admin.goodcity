@@ -4,13 +4,12 @@
 
     {{#if displayError}}
       <div class="row single-row form-errors">
-        {{#if isInvalidInventoryNo}}
+        {{#if isPackageInvalid}}
           <div class="small-1 columns">
             <i class="fa fa-exclamation-triangle"></i>
           </div>
         {{/if}}
         <div class="small-11 columns">
-
           <div class={{if isInvalidInventoryNo 'show-error' 'no-error'}}>{{t "receive_package.invalid_inventory"}}</div>
 
           <div class={{if isInvalidQuantity 'show-error' 'no-error'}}>{{t "receive_package.invalid_quantity"}}</div>
@@ -22,7 +21,6 @@
           {{#each package.errors.messages as |message|}}
             <div class='show-error'>{{message}}</div>
           {{/each}}
-
         </div>
       </div>
     {{/if}}

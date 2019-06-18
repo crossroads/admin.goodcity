@@ -81,31 +81,56 @@ export default Ember.Controller.extend({
     }
   }),
 
+  disableDisplayError() {
+    this.set("displayError", false);
+  },
+
   isInvalidQuantity: Ember.computed("packageForm.quantity", function() {
-    const quantity = this.get("packageForm.quantity");
-    return Number(quantity) < 1;
+    const isValid = this.get("packageForm.quantity") < 1;
+    if (isValid) {
+      this.disableDisplayError();
+    }
+    return isValid;
   }),
 
   isInvalidLocation: Ember.computed("locationId", function() {
-    return this.get("locationId") === undefined;
+    const isValid = !this.get("locationId");
+    if (isValid) {
+      this.disableDisplayError();
+    }
+    return isValid;
   }),
 
   isInvalidDescription: Ember.computed("packageForm.notes", function() {
-    return this.get("package.notes").length === 0;
+    const isValid = this.get("package.notes").length === 0;
+    if (isValid) {
+      this.disableDisplayError();
+    }
+    return isValid;
   }),
 
   isInvalidInventoryNo: Ember.computed("inventoryNumber", function() {
-    return !this.verifyInventoryNumber(this.get("inventoryNumber"));
+    const isValid = !this.verifyInventoryNumber(this.get("inventoryNumber"));
+    if (isValid) {
+      this.disableDisplayError();
+    }
+    return isValid;
   }),
 
-  isPackageValid: function() {
-    return (
-      this.get("isInvalidQuantity") ||
-      this.get("isInvalidInventoryNo") ||
-      this.get("isInvalidDescription") ||
-      this.get("isInvalidLocation")
-    );
-  },
+  isPackageInvalid: Ember.computed(
+    "isInvalidQuantity",
+    "isInvalidInventoryNo",
+    "isInvalidDescription",
+    "isInvalidLocation",
+    function() {
+      return (
+        this.get("isInvalidQuantity") ||
+        this.get("isInvalidInventoryNo") ||
+        this.get("isInvalidDescription") ||
+        this.get("isInvalidLocation")
+      );
+    }
+  ),
 
   receivePackageParams() {
     const pkgData = this.get("packageForm");
@@ -161,7 +186,7 @@ export default Ember.Controller.extend({
     },
 
     receivePackage() {
-      if (this.isPackageValid()) {
+      if (this.get("isPackageInvalid")) {
         this.set("displayError", true);
         return false;
       }
