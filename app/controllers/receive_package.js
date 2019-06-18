@@ -50,16 +50,11 @@ export default Ember.Controller.extend({
     return this.store.peekRecord("location", this.get("locationId"));
   }),
 
-  locationId: Ember.computed("package", {
-    get: function() {
-      return (
-        this.get("package.location.id") ||
-        this.get("package.packageType.location.id")
-      );
-    },
-    set: function(key, value) {
-      return value;
-    }
+  locationId: Ember.computed("package", function() {
+    return (
+      this.get("package.location.id") ||
+      this.get("package.packageType.location.id")
+    );
   }),
 
   locations: Ember.computed(function() {
@@ -81,40 +76,24 @@ export default Ember.Controller.extend({
     }
   }),
 
-  disableDisplayError() {
-    this.set("displayError", false);
+  enableDisplayError() {
+    this.set("displayError", true);
   },
 
   isInvalidQuantity: Ember.computed("packageForm.quantity", function() {
-    const isValid = this.get("packageForm.quantity") < 1;
-    if (isValid) {
-      this.disableDisplayError();
-    }
-    return isValid;
+    return this.get("packageForm.quantity") < 1;
   }),
 
   isInvalidLocation: Ember.computed("locationId", function() {
-    const isValid = !this.get("locationId");
-    if (isValid) {
-      this.disableDisplayError();
-    }
-    return isValid;
+    return !this.get("locationId");
   }),
 
   isInvalidDescription: Ember.computed("packageForm.notes", function() {
-    const isValid = this.get("package.notes").length === 0;
-    if (isValid) {
-      this.disableDisplayError();
-    }
-    return isValid;
+    return this.get("package.notes").length === 0;
   }),
 
   isInvalidInventoryNo: Ember.computed("inventoryNumber", function() {
-    const isValid = !this.verifyInventoryNumber(this.get("inventoryNumber"));
-    if (isValid) {
-      this.disableDisplayError();
-    }
-    return isValid;
+    return !this.verifyInventoryNumber(this.get("inventoryNumber"));
   }),
 
   isPackageInvalid: Ember.computed(
@@ -187,7 +166,7 @@ export default Ember.Controller.extend({
 
     receivePackage() {
       if (this.get("isPackageInvalid")) {
-        this.set("displayError", true);
+        this.enableDisplayError();
         return false;
       }
       const loadingView = getOwner(this)
@@ -226,7 +205,7 @@ export default Ember.Controller.extend({
           () => pkg.rollbackAttributes()
         );
       } else {
-        this.set("displayError", true);
+        this.enableDisplayError();
       }
     },
 
