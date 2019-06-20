@@ -1,0 +1,28 @@
+<div class="state-filter-block">
+  {{!-- Offer Priority Checkbox --}}
+  <div class="row">
+    <div class="type-filter-title small-12 medium-12 large-12 columns">
+      Only Show Priority Offers
+    </div>
+  </div>
+  <div class="row">
+    <div class='checkbox small-12 medium-12 large-12 columns'>
+      {{offer-filter-checkbox name="showPriority"}}
+    </div>
+  </div>
+  <br/>
+
+  {{!-- Offer Status Block --}}
+  <div class="row">
+    <div class="type-filter-title small-12 medium-12 large-12 columns">
+      Offer Statuses
+    </div>
+  </div>
+  {{#each offerStateFilters as |state|}}
+    <div class="row">
+      <div class='checkbox small-12 medium-12 large-12 columns'>
+        {{offer-filter-checkbox name=state}}
+      </div>
+    </div>
+  {{/each}}
+</div>

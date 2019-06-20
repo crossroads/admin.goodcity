@@ -1,16 +1,21 @@
-<div class="row">
-  <div class="small-12 columns search-box ui">
-    {{focus-textfield
-      name="searchText"
-      id="searchText"
-      placeholder=(t 'search.placeholder')
-      value=searchText }}
+<div class="row search-box ui">
+  <div class="row">
+    <div class="small-2 columns">
+      <i class="fa fa-angle-left" {{action "cancelSearch"}}>Back</i>
+    </div>
+    <div class="small-10 columns">
+      {{focus-textfield
+        name="searchText"
+        id="searchText"
+        placeholder=(t 'search.placeholder')
+        value=searchText }}
 
-    {{#if hasSearchText}}
-      <i class="fa fa-times-circle" {{action "clearSearch"}}></i>
-    {{/if}}
-    <a href="#" {{action "cancelSearch"}}>{{t "cancel"}}</a>
+      {{#if hasSearchText}}
+        <i class="fa fa-times-circle" {{action "clearSearch"}}></i>
+      {{/if}}
+    </div>
   </div>
+  {{offer-filters-button}}
 </div>
 
 <section class="main-section review_offer search">
@@ -25,7 +30,6 @@
       {{else if hasFilter}}
         <div class='no_result'>{{t "search.no_results"}}</div>
       {{/if}}
-
     </div>
   </div>
 </section>

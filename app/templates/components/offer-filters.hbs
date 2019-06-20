@@ -1,0 +1,16 @@
+<div class="order-filters">
+  <div class="row">
+    <div class="small-6 columns">
+      <button {{action "applyFilters"}} class="button expand filter-btn apply">Apply</button>
+    </div>
+    <div class="small-6 columns">
+      <button {{action "clearFilters"}} class="button expand filter-btn clear">Clear</button>
+    </div>
+  </div>
+
+  {{#if applyStateFilter}}
+    {{partial "state_filters"}}
+  {{else}}
+    {{partial "time_filters"}}
+  {{/if}}
+</div>

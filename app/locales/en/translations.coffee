@@ -64,6 +64,35 @@ I18nTranslationsEn =
         "missing": "missing"
         "start_receiving_by": "{{firstName}} {{lastName}} began receiving"
         "inactive": "Marked as inactive"
+    offer_filters:
+      time_presets:
+        overdue: "Overdue",
+        today: "Today",
+        tomorrow: "Tomorrow",
+        week: "This week",
+        next_week: "Next week",
+        month: "This month",
+        next_month: "Next month"
+
+      button_state: "State"
+      showPriority: "Show Priority"
+      showPriority_info: "Have remained in a state too long. Need attention."
+      new: "New"
+      new_info: "Offers that have yet to be reviewed."
+      reviewing: "Reviewing"
+      reviewing_info: "Offers currently being reviewed."
+      reviewed: "Reviewed"
+      reviewed_info: "Offers that need to be scheduled."
+      scheduled: "Scheduled"
+      scheduled_info: "GoodCity order being dispatctched now."
+      receiving: "Receiving"
+      receivining_info: "We are unloading truck right now"
+      received: "Received"
+      received_info: "Success"
+      cancelled: "Cancelled"
+      cancelled_info: "Failed"
+      inactive: "Inactive"
+      inactive_info: "Donor non-responsive"
 
     "items":
       "add_item":

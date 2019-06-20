@@ -1,0 +1,72 @@
+<div class="filter-buttons">
+  <div class="small-4 columns">
+
+    <!-- State button -->
+    <div
+      id="order-state-filter"
+      class="button expand filter-button-css {{if hasStateFilters 'filter-button-border'}}"
+    >
+      <!-- Close btn -->
+      {{#if hasStateFilters}}
+        <div class="remove-filters-icon" {{action "clearStateFilters"}}>
+          <i class="fa fa-times"></i>
+        </div>
+      {{/if}}
+
+      <!-- Open btn -->
+      <div class="button-text" {{action "redirectTofilters" "applyStateFilter"}} >
+        {{#if (is-equal offerStateFilters.length 0) }}
+          {{t 'offer_filters.button_state'}}
+        {{else if (is-equal offerStateFilters.length 1) }}
+          {{t (concat 'offer_filters.' offerStateFilters.firstObject) }}
+        {{else}}
+          {{t 'offer_filters.button_state'}}: {{offerStateFilters.length}}
+        {{/if}}
+        State
+      </div>
+    </div>
+  </div>
+
+  <!-- Type button -->
+  <div class="small-4 columns">
+    <div
+      id="order-type-filter"
+      class="button expand filter-button-css {{if hasTypeFilters 'filter-button-border'}}">
+
+
+      {{#if hasTypeFilters}}
+        <div class="remove-filters-icon" {{action "clearTypeFilters"}}>
+          <i class="fa fa-times"></i>
+        </div>
+      {{/if}}
+
+      <div class="button-text">
+        All
+      </div>
+    </div>
+  </div>
+
+  <!-- Time ranges -->
+  <div class="small-4 columns">
+    <div
+      id="order-time-filter"
+      class="button expand filter-button-css {{if hasTimeFilters 'filter-button-border'}}">
+
+        {{#if hasTimeFilters}}
+          <div class="remove-filters-icon" {{action "clearTimeFilters"}}>
+            <i class="fa fa-times"></i>
+          </div>
+        {{/if}}
+
+        <div class="button-text" {{action "redirectTofilters" "applyTimeFilter"}} >
+          {{!-- {{#if orderTimeRange.preset }}
+            {{t (concat 'order_filters.time_presets.' orderTimeRange.preset) }}
+          {{else}}
+            {{t 'order_filters.button_due'}}
+          {{/if}} --}}
+          Due
+        </div>
+      </div>
+  </div>
+</div>
+
