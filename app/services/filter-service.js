@@ -58,8 +58,13 @@ export default Ember.Service.extend(Ember.Evented, {
     this.set("offerStateFilters", []);
   },
 
+  clearOrderTimeFilters() {
+    this.setOrderTimeRange(null);
+  },
+
   clearFilters() {
     this.clearOfferStateFilters();
+    this.clearOrderTimeFilters();
   },
 
   hasOrderFilters: Ember.computed("offerStateFilters", function() {

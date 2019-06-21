@@ -2283,7 +2283,7 @@ broccoli-asset-rewrite@^1.1.0:
   dependencies:
     broccoli-filter "^1.2.3"
 
-broccoli-babel-transpiler@^5.5.0, broccoli-babel-transpiler@^5.6.2:
+broccoli-babel-transpiler@^5.5.0, broccoli-babel-transpiler@^5.6.0, broccoli-babel-transpiler@^5.6.2:
   version "5.7.4"
   resolved "https://registry.yarnpkg.com/broccoli-babel-transpiler/-/broccoli-babel-transpiler-5.7.4.tgz#2b0611ce9e5d98b8d8d2b49ae1219af2f52767e3"
   integrity sha512-gI14Pqc4qbmn5RW4SuAmybLiOoYW59D+HzQyhY6WdaGMAjikKBwJN0p17phyvafQ+kvG0mUiMd83lgHLeATnEA==
@@ -2698,6 +2698,18 @@ broccoli-plugin@^1.0.0, broccoli-plugin@^1.1.0, broccoli-plugin@^1.2.0, broccoli
     quick-temp "^0.1.3"
     rimraf "^2.3.4"
     symlink-or-copy "^1.1.8"
+
+broccoli-sass-source-maps@^1.8.0:
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/broccoli-sass-source-maps/-/broccoli-sass-source-maps-1.8.1.tgz#115e32be25dc5f1686af1c8d1fa4c4c62749f0b6"
+  integrity sha1-EV4yviXcXxaGrxyNH6TExidJ8LY=
+  dependencies:
+    broccoli-caching-writer "^3.0.3"
+    include-path-searcher "^0.1.0"
+    mkdirp "^0.3.5"
+    node-sass "^3.8.0"
+    object-assign "^2.0.0"
+    rsvp "^3.0.6"
 
 broccoli-sass-source-maps@^2.1.0:
   version "2.2.0"
@@ -4569,6 +4581,17 @@ ember-cli-babel-plugin-helpers@^1.1.0:
   resolved "https://registry.yarnpkg.com/ember-cli-babel-plugin-helpers/-/ember-cli-babel-plugin-helpers-1.1.0.tgz#de3baedd093163b6c2461f95964888c1676325ac"
   integrity sha512-Zr4my8Xn+CzO0gIuFNXji0eTRml5AxZUTDQz/wsNJ5AJAtyFWCY4QtKdoELNNbiCVGt1lq5yLiwTm4scGKu6xA==
 
+ember-cli-babel@5.1.10:
+  version "5.1.10"
+  resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-5.1.10.tgz#d403f178aab602e1337c403c5a58c0200a8969aa"
+  integrity sha1-1APxeKq2AuEzfEA8WljAIAqJaao=
+  dependencies:
+    broccoli-babel-transpiler "^5.6.0"
+    broccoli-funnel "^1.0.0"
+    clone "^1.0.2"
+    ember-cli-version-checker "^1.0.2"
+    resolve "^1.1.2"
+
 ember-cli-babel@5.2.4:
   version "5.2.4"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-5.2.4.tgz#5ce4f46b08ed6f6d21e878619fb689719d6e8e13"
@@ -4591,7 +4614,7 @@ ember-cli-babel@^5.0.0, ember-cli-babel@^5.1.10, ember-cli-babel@^5.1.3, ember-c
     ember-cli-version-checker "^1.0.2"
     resolve "^1.1.2"
 
-ember-cli-babel@^6.0.0, ember-cli-babel@^6.1.0, ember-cli-babel@^6.11.0, ember-cli-babel@^6.12.0, ember-cli-babel@^6.16.0, ember-cli-babel@^6.6.0, ember-cli-babel@^6.8.1, ember-cli-babel@^6.8.2:
+ember-cli-babel@^6.0.0, ember-cli-babel@^6.1.0, ember-cli-babel@^6.11.0, ember-cli-babel@^6.12.0, ember-cli-babel@^6.16.0, ember-cli-babel@^6.3.0, ember-cli-babel@^6.6.0, ember-cli-babel@^6.8.1, ember-cli-babel@^6.8.2:
   version "6.18.0"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-6.18.0.tgz#3f6435fd275172edeff2b634ee7b29ce74318957"
   integrity sha512-7ceC8joNYxY2wES16iIBlbPSxwKDBhYwC8drU3ZEvuPDMwVv1KzxCNu1fvxyFEBWhwaRNTUxSCsEVoTd9nosGA==
@@ -4893,6 +4916,17 @@ ember-cli-release@^1.0.0-beta.2:
     semver "^4.3.1"
     silent-error "^1.0.0"
 
+ember-cli-sass@5.5.2:
+  version "5.5.2"
+  resolved "https://registry.yarnpkg.com/ember-cli-sass/-/ember-cli-sass-5.5.2.tgz#7430cb3c9cb99d0888532c1c6be56fc879c42977"
+  integrity sha1-dDDLPJy5nQiIUywca+VvyHnEKXc=
+  dependencies:
+    broccoli-merge-trees "^1.1.0"
+    broccoli-sass-source-maps "^1.8.0"
+    ember-cli-babel "5.1.10"
+    ember-cli-version-checker "^1.0.2"
+    merge "^1.2.0"
+
 ember-cli-sass@^7.1.2:
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/ember-cli-sass/-/ember-cli-sass-7.2.0.tgz#293d1a94c43c1fdbb3835378e43d255e8ad5c961"
@@ -5141,6 +5175,14 @@ ember-i18n@^5.2.1:
     ember-cli-babel "^6.11.0"
     ember-cli-version-checker "^2.1.0"
     ember-getowner-polyfill "^2.2.0"
+
+ember-infinite-list@1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/ember-infinite-list/-/ember-infinite-list-1.0.4.tgz#12ded002454b2272afb2bab7b7561ca7ecb1099c"
+  integrity sha512-BKYa3H1zRmICBf8n2H68POslYJeK0TZOOQ2z44yc5BlPkzD9Ar5Sa6pT/zcdoCh1tFZ0DNoimOGImWt771m2pA==
+  dependencies:
+    ember-cli-babel "^6.3.0"
+    ember-cli-sass "5.5.2"
 
 ember-inflector@^1.9.4:
   version "1.12.1"
@@ -9310,7 +9352,7 @@ node-releases@^1.1.23:
   dependencies:
     semver "^5.3.0"
 
-node-sass@^3.3.3:
+node-sass@^3.3.3, node-sass@^3.8.0:
   version "3.13.1"
   resolved "https://registry.yarnpkg.com/node-sass/-/node-sass-3.13.1.tgz#7240fbbff2396304b4223527ed3020589c004fc2"
   integrity sha1-ckD7v/I5YwS0IjUn7TAgWJwAT8I=

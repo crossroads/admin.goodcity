@@ -75,6 +75,7 @@ I18nTranslationsEn =
         next_month: "Next month"
 
       button_state: "State"
+      button_due: "Due"
       showPriority: "Show Priority"
       showPriority_info: "Have remained in a state too long. Need attention."
       new: "New"

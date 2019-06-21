@@ -22,7 +22,6 @@
         {{else}}
           {{t 'offer_filters.button_state'}}: {{offerStateFilters.length}}
         {{/if}}
-        State
       </div>
     </div>
   </div>
@@ -59,12 +58,11 @@
         {{/if}}
 
         <div class="button-text" {{action "redirectTofilters" "applyTimeFilter"}} >
-          {{!-- {{#if orderTimeRange.preset }}
-            {{t (concat 'order_filters.time_presets.' orderTimeRange.preset) }}
+          {{#if orderTimeRange.preset }}
+            {{t (concat 'offer_filters.time_presets.' orderTimeRange.preset) }}
           {{else}}
-            {{t 'order_filters.button_due'}}
-          {{/if}} --}}
-          Due
+            {{t 'offer_filters.button_due'}}
+          {{/if}}
         </div>
       </div>
   </div>

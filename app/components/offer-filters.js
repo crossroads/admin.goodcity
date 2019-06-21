@@ -31,6 +31,18 @@ function isChecked(filter) {
   return Ember.$(`#${filter}`)[0].checked;
 }
 
+function startOfDay(date) {
+  return moment(date)
+    .startOf("day")
+    .toDate();
+}
+
+function endOfDay(date) {
+  return moment(date)
+    .endOf("day")
+    .toDate();
+}
+
 const STATE = "state";
 const TYPE = "type";
 const TIME = "time";
@@ -94,6 +106,12 @@ export default Ember.Component.extend({
     this.navigateAway();
   },
 
+  applyTimeFilters() {
+    const { preset, after, before } = this.get("selectedTimeRange");
+    this.get("filterService").setOrderTimeRange(preset || { after, before });
+    this.navigateAway();
+  },
+
   navigateAway() {
     this.get("router").transitionTo("search");
   },
@@ -121,6 +139,9 @@ export default Ember.Component.extend({
           "offerStateFilters"
         );
       }
+      if (this.get("applyTimeFilter")) {
+        return this.applyTimeFilters();
+      }
     },
 
     selectTimePreset(presetKey) {
@@ -132,6 +153,14 @@ export default Ember.Component.extend({
       if (this.get("applyStateFilter")) {
         return this.uncheckAll("allOfferStateFilters");
       }
+    },
+
+    setBeforeTime(before) {
+      this._setRangeProperty("before", endOfDay(before));
+    },
+
+    setAfterTime(after) {
+      this._setRangeProperty("after", startOfDay(after));
     }
   }
 });
