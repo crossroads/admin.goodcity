@@ -2,6 +2,9 @@ import Ember from "ember";
 import { translationMacro as t } from "ember-i18n";
 import backNavigator from "./../mixins/back_navigator";
 import AjaxPromise from "goodcity/utils/ajax-promise";
+import utilityMethods from "../utils/utility-methods";
+import _ from "lodash";
+
 const { getOwner } = Ember;
 
 export default Ember.Controller.extend(backNavigator, {
@@ -9,6 +12,7 @@ export default Ember.Controller.extend(backNavigator, {
   searchText: "",
   searchPlaceholder: t("search.placeholder"),
   i18n: Ember.inject.service(),
+  filterService: Ember.inject.service(),
 
   allUsers: Ember.computed(function() {
     return this.store.peekAll("user");
@@ -48,6 +52,26 @@ export default Ember.Controller.extend(backNavigator, {
     this.searchOnServer();
   },
 
+  getSearchQuery() {
+    return {
+      searchText: this.get("filter")
+    };
+  },
+
+  getFilterQuery() {
+    const filterService = this.get("filterService");
+    let isPriority = filterService.isPriority();
+    let stateFilters = _.without(
+      filterService.get("offerStateFilters"),
+      "showPriority"
+    );
+
+    return {
+      state: utilityMethods.stringifyArray(stateFilters),
+      priority: isPriority
+    };
+  },
+
   searchOnServer() {
     let search = this.get("filter");
     if (!search) {
@@ -55,10 +79,17 @@ export default Ember.Controller.extend(backNavigator, {
       return;
     }
 
+    const filterService = this.get("filterService");
+    let isPriority = filterService.isPriority();
+    let stateFilters = _.without(
+      filterService.get("offerStateFilters"),
+      "showPriority"
+    );
+
     let loadingView = getOwner(this)
       .lookup("component:loading")
       .append();
-    let url = `/offers/search?searchText=${search}`;
+    let url = `/offers/search?searchText=${search}&state=${stateFilters}&priority=${isPriority}`;
     let store = this.get("store");
 
     new AjaxPromise(url, "GET", this.get("session.authToken"))

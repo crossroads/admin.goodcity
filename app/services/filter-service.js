@@ -36,12 +36,6 @@ export const STATE_FILTERS = {
   INACTIVE: "inactive"
 };
 
-export const TYPE_FILTERS = {
-  APPOINTMENT: "appointment",
-  ONLINE_ORDER: "online_orders",
-  SHIPMENT: "shipment"
-};
-
 // --- Service
 
 export default Ember.Service.extend(Ember.Evented, {
@@ -58,24 +52,24 @@ export default Ember.Service.extend(Ember.Evented, {
     this.set("offerStateFilters", []);
   },
 
-  clearOrderTimeFilters() {
-    this.setOrderTimeRange(null);
+  clearOfferTimeFilters() {
+    this.setOfferTimeRange(null);
   },
 
   clearFilters() {
     this.clearOfferStateFilters();
-    this.clearOrderTimeFilters();
+    this.clearOfferTimeFilters();
   },
 
-  hasOrderFilters: Ember.computed("offerStateFilters", function() {
-    const timeRange = this.get("orderTimeRange");
+  hasOfferFilters: Ember.computed("offerStateFilters", function() {
+    const timeRange = this.get("offerTimeRange");
     return this.get("offerStateFilters").length > 0;
   }),
 
-  // --- Order time filters
+  // --- Offer time filters
 
-  _orderTimeSettings: PERSISTENT_VAR(
-    "orderTimeSettings",
+  _offerTimeSettings: PERSISTENT_VAR(
+    "offerTimeSettings",
     {},
     {
       after: raw => new Date(raw),
@@ -83,44 +77,44 @@ export default Ember.Service.extend(Ember.Evented, {
     }
   ),
 
-  orderTimeRangePresets: Ember.computed(function() {
+  offerTimeRangePresets: Ember.computed(function() {
     return timeRanges;
   }).volatile(),
 
   /**
-   * Saves the time range filter for order search
+   * Saves the time range filter for offer search
    *
    * @param {String|Object} range A time range OR a preset name
    */
-  setOrderTimeRange(range) {
+  setOfferTimeRange(range) {
     if (_.isString(range)) {
       const preset = range;
-      this.set("_orderTimeSettings", { preset });
+      this.set("_offerTimeSettings", { preset });
     } else {
-      this.set("_orderTimeSettings", {
+      this.set("_offerTimeSettings", {
         preset: null,
         after: _.get(range, "after"),
         before: _.get(range, "before")
       });
     }
 
-    this.notifyPropertyChange("orderTimeRange");
+    this.notifyPropertyChange("offerTimeRange");
   },
 
   /**
-   * Returns the order time range filter
+   * Returns the offer time range filter
    * If a preset was previously selected, it will be re-computed based
    * on the current time.
    *
    * @param {String|Object} range A time range OR a preset name
    */
-  orderTimeRange: Ember.computed(function() {
+  offerTimeRange: Ember.computed(function() {
     const { preset = "", after = null, before = null } = this.get(
-      "_orderTimeSettings"
+      "_offerTimeSettings"
     );
 
     if (preset) {
-      return _.extend({ preset }, this.get(`orderTimeRangePresets.${preset}`));
+      return _.extend({ preset }, this.get(`offerTimeRangePresets.${preset}`));
     }
     return { preset, after, before };
   }).volatile()

@@ -3,7 +3,7 @@
 
     <!-- State button -->
     <div
-      id="order-state-filter"
+      id="offer-state-filter"
       class="button expand filter-button-css {{if hasStateFilters 'filter-button-border'}}"
     >
       <!-- Close btn -->
@@ -26,10 +26,10 @@
     </div>
   </div>
 
-  <!-- Type button -->
+  <!-- All button -->
   <div class="small-4 columns">
     <div
-      id="order-type-filter"
+      id="off-all-filter"
       class="button expand filter-button-css {{if hasTypeFilters 'filter-button-border'}}">
 
 
@@ -58,8 +58,8 @@
         {{/if}}
 
         <div class="button-text" {{action "redirectTofilters" "applyTimeFilter"}} >
-          {{#if orderTimeRange.preset }}
-            {{t (concat 'offer_filters.time_presets.' orderTimeRange.preset) }}
+          {{#if offerTimeRange.preset }}
+            {{t (concat 'offer_filters.time_presets.' offerTimeRange.preset) }}
           {{else}}
             {{t 'offer_filters.button_due'}}
           {{/if}}

@@ -9,15 +9,15 @@ export default Ember.Component.extend({
     return this.get("offerStateFilters").length > 0;
   }),
 
-  orderTimeRange: Ember.computed.alias("filterService.orderTimeRange"),
+  offerTimeRange: Ember.computed.alias("filterService.offerTimeRange"),
 
-  hasTimeFilters: Ember.computed("orderTimeRange", function() {
-    const { preset, after, before } = this.get("orderTimeRange");
+  hasTimeFilters: Ember.computed("offerTimeRange", function() {
+    const { preset, after, before } = this.get("offerTimeRange");
     return preset || after || before;
   }),
 
   presetTimeKeys: Ember.computed(function() {
-    return _.keys(this.get("filterService.orderTimeRangePresets"));
+    return _.keys(this.get("filterService.offerTimeRangePresets"));
   }),
 
   actions: {
@@ -34,7 +34,7 @@ export default Ember.Component.extend({
     },
 
     clearTimeFilters() {
-      this.get("filterService").clearOrderTimeFilters();
+      this.get("filterService").clearOfferTimeFilters();
     }
   }
 });

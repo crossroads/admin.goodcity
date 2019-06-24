@@ -70,7 +70,7 @@ export default Ember.Component.extend({
   }),
 
   presetTimeKeys: Ember.computed(function() {
-    return _.keys(this.get("filterService.orderTimeRangePresets"));
+    return _.keys(this.get("filterService.offerTimeRangePresets"));
   }),
 
   filterContext: Ember.computed("applyStateFilter", function() {
@@ -108,7 +108,7 @@ export default Ember.Component.extend({
 
   applyTimeFilters() {
     const { preset, after, before } = this.get("selectedTimeRange");
-    this.get("filterService").setOrderTimeRange(preset || { after, before });
+    this.get("filterService").setOfferTimeRange(preset || { after, before });
     this.navigateAway();
   },
 
