@@ -5,10 +5,8 @@
         {{schedule-selection schedules=allScheduled currentController=this on-change=(action (mut filterValue)) }}
       {{/if}}
 
-      {{#vertical-collection
+      {{#vertical-collection estimateHeight=90  staticHeight=false
         content=(js-x "p0 || p1" filteredOffers (js-x "p0 || p1" arrangedContent model))
-        defaultHeight=90
-        alwaysUseDefaultHeight=true
         containerSelector="body"
         as |offer|
         }}

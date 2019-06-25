@@ -6,9 +6,10 @@
       <ul class="list list-activity list-offer-items">
 
         {{#vertical-collection
-          content=arrangedContent
-          defaultHeight=90
-          alwaysUseDefaultHeight=true
+          arrangedContent
+          tagName='ul'
+          estimateHeight=216
+          staticHeight=false
           containerSelector="body"
           as |offer|
           }}

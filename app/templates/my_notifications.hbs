@@ -26,10 +26,10 @@
       {{#if myNotifications}}
         <ul class="list list-notifications">
 
-          {{#vertical-collection
+          {{#vertical-collection estimatedHeight=216 staticHeight=false
             containerSelector="body"
             content=myNotifications
-            alwaysUseDefaultHeight=true
+            estimateHeight=216
             as |notification|
             }}
               <li>{{partial "notificationThread"}}</li>
