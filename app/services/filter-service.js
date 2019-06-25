@@ -56,15 +56,27 @@ export default Ember.Service.extend(Ember.Evented, {
     this.setOfferTimeRange(null);
   },
 
+  clearReviewFilters() {
+    this.set("selfReviewFilter", false);
+  },
+
   clearFilters() {
     this.clearOfferStateFilters();
     this.clearOfferTimeFilters();
+    this.clearReviewFilters();
   },
 
   hasOfferFilters: Ember.computed("offerStateFilters", function() {
     const timeRange = this.get("offerTimeRange");
     return this.get("offerStateFilters").length > 0;
   }),
+
+  // --- Reviewer filters
+  selfReviewFilter: PERSISTENT_VAR("selfReviewFilter", false),
+
+  enableReviewFilter() {
+    this.set("selfReviewFilter", true);
+  },
 
   // --- Offer time filters
 

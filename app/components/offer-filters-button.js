@@ -11,6 +11,8 @@ export default Ember.Component.extend({
 
   offerTimeRange: Ember.computed.alias("filterService.offerTimeRange"),
 
+  selfReviewFilter: Ember.computed.alias("filterService.selfReviewFilter"),
+
   hasTimeFilters: Ember.computed("offerTimeRange", function() {
     const { preset, after, before } = this.get("offerTimeRange");
     return preset || after || before;
@@ -35,6 +37,14 @@ export default Ember.Component.extend({
 
     clearTimeFilters() {
       this.get("filterService").clearOfferTimeFilters();
+    },
+
+    enableReviewFilter() {
+      this.get("filterService").enableReviewFilter();
+    },
+
+    clearReviewFilters() {
+      this.get("filterService").clearReviewFilters();
     }
   }
 });

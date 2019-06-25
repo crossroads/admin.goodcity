@@ -74,6 +74,8 @@ I18nTranslationsEn =
         month: "This month",
         next_month: "Next month"
 
+      self_review: "Mine"
+      all_review: "All"
       button_state: "State"
       button_due: "Due"
       showPriority: "Show Priority"

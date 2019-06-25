@@ -30,17 +30,21 @@
   <div class="small-4 columns">
     <div
       id="off-all-filter"
-      class="button expand filter-button-css {{if hasTypeFilters 'filter-button-border'}}">
+      class="button expand filter-button-css {{if selfReviewFilter 'filter-button-border'}}">
 
 
-      {{#if hasTypeFilters}}
-        <div class="remove-filters-icon" {{action "clearTypeFilters"}}>
+      {{#if selfReviewFilter}}
+        <div class="remove-filters-icon" {{action "clearReviewFilters"}}>
           <i class="fa fa-times"></i>
         </div>
       {{/if}}
 
-      <div class="button-text">
-        All
+      <div class="button-text" {{action "enableReviewFilter"}}>
+        {{#if selfReviewFilter}}
+          {{t 'offer_filters.self_review'}}
+        {{else}}
+          {{t 'offer_filters.all_review'}}
+        {{/if}}
       </div>
     </div>
   </div>

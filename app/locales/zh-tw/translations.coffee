@@ -75,6 +75,8 @@ I18nTranslationsZhTw =
         month: "This month",
         next_month: "Next month"
 
+      self_review: "Mine"
+      all_review: "All"
       button_state: "State"
       showPriority: "Show Priority"
       showPriority_info: "Have remained in a state too long. Need attention."
