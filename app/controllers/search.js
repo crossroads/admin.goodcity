@@ -60,7 +60,8 @@ export default Ember.Controller.extend(backNavigator, {
 
   getFilterQuery() {
     const filterService = this.get("filterService");
-    let isPriority = filterService.isPriority();
+    const isPriority = filterService.isPriority();
+    const { after, before } = filterService.get("offerTimeRange");
     let stateFilters = _.without(
       filterService.get("offerStateFilters"),
       "showPriority"
@@ -68,8 +69,34 @@ export default Ember.Controller.extend(backNavigator, {
 
     return {
       state: utilityMethods.stringifyArray(stateFilters),
-      priority: isPriority
+      priority: isPriority,
+      after: after && after.getTime(),
+      before: before && before.getTime()
     };
+  },
+
+  getSearchQuery() {
+    return {
+      searchText: this.get("searchText")
+    };
+  },
+
+  getPaginationQuery(pageNo) {
+    return {
+      per_page: 25,
+      page: pageNo
+    };
+  },
+
+  getReviewerFilter() {
+    return {
+      selfReview: this.get("filterService.selfReviewFilter")
+    };
+  },
+
+  trimQuery(query) {
+    // Remove any undefined values
+    return _.pickBy(query, _.identity);
   },
 
   searchOnServer() {
@@ -78,27 +105,25 @@ export default Ember.Controller.extend(backNavigator, {
       this.set("filteredResults", null);
       return;
     }
-
-    const filterService = this.get("filterService");
-    let isPriority = filterService.isPriority();
-    let stateFilters = _.without(
-      filterService.get("offerStateFilters"),
-      "showPriority"
+    const params = this.trimQuery(
+      _.merge(
+        { slug: "search" },
+        this.getFilterQuery(),
+        this.getReviewerFilter(),
+        this.getSearchQuery(),
+        this.getPaginationQuery(1)
+      )
     );
-
     let loadingView = getOwner(this)
       .lookup("component:loading")
       .append();
-    let url = `/offers/search?searchText=${search}&state=${stateFilters}&priority=${isPriority}`;
     let store = this.get("store");
 
-    new AjaxPromise(url, "GET", this.get("session.authToken"))
+    store
+      .query("offer", params)
       .then(data => {
         store.pushPayload(data);
-        const results = data.offers
-          .map(o => store.peekRecord("offer", o.id))
-          .filter(Boolean);
-        this.set("filteredResults", results);
+        this.set("filteredResults", data);
       })
       .finally(() => {
         loadingView.destroy();
