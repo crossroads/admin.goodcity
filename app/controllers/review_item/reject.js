@@ -50,7 +50,7 @@ export default Ember.Controller.extend({
       if (reasonId) {
         return reasonId;
       } else {
-        if (this.get("rejectReason") && this.get("rejectReason").length > 0) {
+        if (this.get("rejectReason") && this.get("rejectReason").length) {
           return "-1";
         }
       }
@@ -72,7 +72,7 @@ export default Ember.Controller.extend({
       .get("packages");
     if (
       pkgs &&
-      pkgs.length > 0 &&
+      pkgs.length &&
       (pkgs.get("firstObject.hasAllPackagesDesignated") ||
         pkgs.get("firstObject.hasAllPackagesDispatched"))
     ) {
