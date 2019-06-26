@@ -99,6 +99,24 @@ export default Ember.Controller.extend({
     return true;
   },
 
+  rejectProperties() {
+    let rejectProperties = this.getProperties("rejectReason");
+    rejectProperties.rejectionComments = this.get("rejectMsg");
+    rejectProperties.rejectionReason = this.store.peekRecord(
+      "rejection_reason",
+      this.get("selectedId")
+    );
+    rejectProperties.state_event = "reject";
+    rejectProperties.id = this.get("itemId");
+
+    rejectProperties.offer = this.get("offer.model");
+    rejectProperties.packageType = this.store.peekRecord(
+      "packageType",
+      this.get("itemTypeId")
+    );
+    return rejectProperties;
+  },
+
   actions: {
     setRejectOption() {
       this.set("selectedId", "-1");
@@ -113,8 +131,7 @@ export default Ember.Controller.extend({
         return false;
       }
       var selectedReason = this.get("selectedId");
-      var rejectProperties = this.getProperties("rejectReason");
-      rejectProperties.rejectionComments = this.get("rejectMsg");
+      var rejectProperties = this.rejectProperties();
 
       if (!this.rejectValidation(selectedReason, rejectProperties)) {
         return false;
@@ -131,19 +148,6 @@ export default Ember.Controller.extend({
         var loadingView = getOwner(this)
           .lookup("component:loading")
           .append();
-        rejectProperties.rejectionReason = this.store.peekRecord(
-          "rejection_reason",
-          selectedReason
-        );
-        rejectProperties.state_event = "reject";
-        rejectProperties.id = this.get("itemId");
-
-        rejectProperties.offer = offer;
-        rejectProperties.packageType = this.store.peekRecord(
-          "packageType",
-          this.get("itemTypeId")
-        );
-
         var item = this.store.peekRecord("item", this.get("itemId"));
         item.setProperties(rejectProperties);
 
@@ -168,7 +172,6 @@ export default Ember.Controller.extend({
             ) {
               return this.transitionToRoute("offer.cancel_gogovan", offer);
             }
-
             throw error;
           })
           .finally(() => loadingView.destroy());
