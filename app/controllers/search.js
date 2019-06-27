@@ -11,7 +11,9 @@ export default Ember.Controller.extend(backNavigator, {
   filter: "",
   searchText: "",
   searchPlaceholder: t("search.placeholder"),
+  minSearchTextLength: 2,
   i18n: Ember.inject.service(),
+  displayResults: false,
   filterService: Ember.inject.service(),
 
   allUsers: Ember.computed(function() {
@@ -43,19 +45,26 @@ export default Ember.Controller.extend(backNavigator, {
   }),
 
   onSearchTextChange: Ember.observer("searchText", function() {
-    // wait before applying the filter
-    Ember.run.debounce(this, this.applyFilter, 500);
+    if (this.get("searchText").length > this.get("minSearchTextLength")) {
+      this.reloadResults();
+    }
   }),
 
-  applyFilter: function() {
-    this.set("filter", this.get("searchText"));
-    this.searchOnServer();
+  reloadResults() {
+    this.hideResults();
+    Ember.run.debounce(this, this.showResults, 500);
   },
 
-  getSearchQuery() {
-    return {
-      searchText: this.get("filter")
-    };
+  hideResults() {
+    Ember.run(() => {
+      this.set("displayResults", false);
+    });
+  },
+
+  showResults() {
+    Ember.run(() => {
+      this.set("displayResults", true);
+    });
   },
 
   getFilterQuery() {
@@ -99,38 +108,20 @@ export default Ember.Controller.extend(backNavigator, {
     return _.pickBy(query, _.identity);
   },
 
-  searchOnServer() {
-    let search = this.get("filter");
-    if (!search) {
-      this.set("filteredResults", null);
-      return;
-    }
-    const params = this.trimQuery(
-      _.merge(
-        { slug: "search" },
-        this.getFilterQuery(),
-        this.getReviewerFilter(),
-        this.getSearchQuery(),
-        this.getPaginationQuery(1)
-      )
-    );
-    let loadingView = getOwner(this)
-      .lookup("component:loading")
-      .append();
-    let store = this.get("store");
-
-    store
-      .query("offer", params)
-      .then(data => {
-        store.pushPayload(data);
-        this.set("filteredResults", data);
-      })
-      .finally(() => {
-        loadingView.destroy();
-      });
-  },
-
   actions: {
+    loadMoreOffers(pageNo) {
+      const params = this.trimQuery(
+        _.merge(
+          { slug: "search" },
+          this.getFilterQuery(),
+          this.getReviewerFilter(),
+          this.getSearchQuery(),
+          this.getPaginationQuery(pageNo)
+        )
+      );
+      return this.get("store").query("offer", params);
+    },
+
     clearSearch(isCancelled) {
       this.set("filter", "");
       this.set("searchText", "");

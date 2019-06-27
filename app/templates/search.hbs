@@ -21,12 +21,15 @@
 <section class="main-section review_offer search">
   <div class="row">
     <div class="small-12 columns item-content">
-      {{#if filteredResults}}
-        <ul class="list list-activity list-offer-items">
-          {{#each filteredResults as |offer|}}
-            {{partial 'offers/offer_details'}}
-          {{/each}}
-        </ul>
+      {{#if displayResults}}
+        {{#infinite-list height="82vh" loadMore=(action "loadMoreOffers") as |items| }}
+          <ul class="list list-activity list-offer-items">
+            {{#each items as |offer|}}
+              {{log offer}}
+              {{partial 'offers/offer_details'}}
+            {{/each}}
+          </ul>
+        {{/infinite-list}}
       {{else if hasFilter}}
         <div class='no_result'>{{t "search.no_results"}}</div>
       {{/if}}
