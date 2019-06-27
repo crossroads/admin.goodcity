@@ -1,7 +1,8 @@
 <div class="row search-box ui">
   <div class="row">
-    <div class="small-2 columns">
-      <i class="fa fa-angle-left" {{action "cancelSearch"}}>Back</i>
+    <div class="small-2 columns back-icon" {{action "cancelSearch"}}>
+      <i class="fa fa-angle-left"></i>
+      <span>Back</span>
     </div>
     <div class="small-10 columns">
       {{focus-textfield
@@ -11,7 +12,7 @@
         value=searchText }}
 
       {{#if hasSearchText}}
-        <i class="fa fa-times-circle" {{action "clearSearch"}}></i>
+        <i class="fa fa-times-circle clear-search" {{action "clearSearch"}}></i>
       {{/if}}
     </div>
   </div>

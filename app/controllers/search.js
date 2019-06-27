@@ -11,7 +11,7 @@ export default Ember.Controller.extend(backNavigator, {
   filter: "",
   searchText: "",
   searchPlaceholder: t("search.placeholder"),
-  minSearchTextLength: 2,
+  minSearchTextLength: 1,
   i18n: Ember.inject.service(),
   displayResults: false,
   filterService: Ember.inject.service(),
@@ -131,9 +131,7 @@ export default Ember.Controller.extend(backNavigator, {
     },
 
     cancelSearch() {
-      Ember.$("#searchText").blur();
-      this.send("clearSearch", true);
-      this.send("togglePath", "search");
+      this.transitionToRoute("my_list.reviewing");
     }
   }
 });
