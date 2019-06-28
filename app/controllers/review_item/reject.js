@@ -16,13 +16,8 @@ export default Ember.Controller.extend({
   itemPackages: Ember.computed.alias("item.packages"),
   rejectMsg: "",
 
-  rejectReason: Ember.computed("itemId", {
-    get: function() {
-      return this.get("reviewItem.model.rejectReason");
-    },
-    set: function(key, value) {
-      return value;
-    }
+  rejectReason: Ember.computed("itemId", function() {
+    return this.get("reviewItem.model.rejectReason");
   }),
 
   isBlank: Ember.computed({
@@ -100,21 +95,18 @@ export default Ember.Controller.extend({
   },
 
   rejectProperties() {
-    let rejectProperties = this.getProperties("rejectReason");
-    rejectProperties.rejectionComments = this.get("rejectMsg");
-    rejectProperties.rejectionReason = this.store.peekRecord(
-      "rejection_reason",
-      this.get("selectedId")
-    );
-    rejectProperties.state_event = "reject";
-    rejectProperties.id = this.get("itemId");
-
-    rejectProperties.offer = this.get("offer.model");
-    rejectProperties.packageType = this.store.peekRecord(
-      "packageType",
-      this.get("itemTypeId")
-    );
-    return rejectProperties;
+    return {
+      rejectReason: this.get("rejectReason"),
+      rejectionComments: this.get("rejectMsg"),
+      rejectionReason: this.store.peekRecord(
+        "rejection_reason",
+        this.get("selectedId")
+      ),
+      state_event: "reject",
+      id: this.get("itemId"),
+      offer: this.get("offer.model"),
+      packageType: this.store.peekRecord("packageType", this.get("itemTypeId"))
+    };
   },
 
   actions: {
