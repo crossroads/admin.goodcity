@@ -26,8 +26,9 @@
         {{#infinite-list height="82vh" loadMore=(action "loadMoreOffers") as |items| }}
           <ul class="list list-activity list-offer-items">
             {{#each items as |offer|}}
-              {{log offer}}
               {{partial 'offers/offer_details'}}
+            {{else}}
+              <div class="no-result">No result found</div>
             {{/each}}
           </ul>
         {{/infinite-list}}

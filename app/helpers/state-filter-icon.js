@@ -3,22 +3,24 @@ import Ember from "ember";
 export default Ember.Helper.helper(function(type) {
   switch (type[0]) {
     case "new":
-      return "thumbs-up";
-    case "reviewing":
-      return "thumbs-up";
+      return "shopping-basket";
+    case "under_review":
+      return "list-ol";
     case "reviewed":
-      return "thumbs-up";
+      return "hourglass-half";
     case "scheduled":
-      return "thumbs-up";
+      return "clock-o";
     case "receiving":
-      return "thumbs-up";
+      return "shopping-cart";
     case "received":
     case "shipment":
       return "thumbs-up";
     case "cancelled":
-      return "thumbs-up";
+      return "thumbs-down";
     case "inactive":
-      return "thumbs-up";
+      return "bed";
+    case "showPriority":
+      return "warning";
     default:
       return "";
   }
