@@ -14,12 +14,12 @@ export default Ember.Component.extend({
 
   rejectMessage: Ember.computed("selectedId", {
     get: function() {
-      var reasonRecord = this.get("store").peekRecord(
+      let reasonRecord = this.get("store").peekRecord(
         "rejection_reason",
         this.get("selectedId")
       );
-      var reason = reasonRecord && reasonRecord.get("name");
-      var message = "";
+      let reason = reasonRecord && reasonRecord.get("name");
+      let message = "";
 
       switch (reason) {
         case this.get("i18n").t("reject.quality").string:
@@ -54,7 +54,7 @@ export default Ember.Component.extend({
   },
 
   didInsertElement: function() {
-    var item = this.get("store").peekRecord("item", this.get("itemId"));
+    let item = this.get("store").peekRecord("item", this.get("itemId"));
     this.set("rejectMessage", item.get("rejectionComments"));
   }
 });

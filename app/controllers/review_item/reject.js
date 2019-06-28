@@ -41,7 +41,7 @@ export default Ember.Controller.extend({
   selectedId: Ember.computed("rejectionReasonId", {
     get: function() {
       this.set("isBlank", false);
-      var reasonId = this.get("rejectionReasonId");
+      let reasonId = this.get("rejectionReasonId");
       if (reasonId) {
         return reasonId;
       } else {
@@ -62,7 +62,7 @@ export default Ember.Controller.extend({
   }),
 
   cannotSave() {
-    var pkgs = this.store
+    let pkgs = this.store
       .peekRecord("item", this.get("itemId"))
       .get("packages");
     if (
@@ -122,8 +122,8 @@ export default Ember.Controller.extend({
       if (this.get("itemId") && this.cannotSave()) {
         return false;
       }
-      var selectedReason = this.get("selectedId");
-      var rejectProperties = this.rejectProperties();
+      let selectedReason = this.get("selectedId");
+      let rejectProperties = this.rejectProperties();
 
       if (!this.rejectValidation(selectedReason, rejectProperties)) {
         return false;
@@ -134,13 +134,13 @@ export default Ember.Controller.extend({
         this.set("rejectReason", null);
       }
 
-      var offer = this.get("offer.model");
+      let offer = this.get("offer.model");
 
-      var saveItem = () => {
-        var loadingView = getOwner(this)
+      let saveItem = () => {
+        let loadingView = getOwner(this)
           .lookup("component:loading")
           .append();
-        var item = this.store.peekRecord("item", this.get("itemId"));
+        let item = this.store.peekRecord("item", this.get("itemId"));
         item.setProperties(rejectProperties);
 
         // Save changes to Item
@@ -170,8 +170,8 @@ export default Ember.Controller.extend({
       };
 
       // if rejecting last accepted item but gogovan is booked display gogovan cancellation page
-      var gogovanOrder = offer.get("delivery.gogovanOrder");
-      var itemIsLastAccepted = offer
+      let gogovanOrder = offer.get("delivery.gogovanOrder");
+      let itemIsLastAccepted = offer
         .get("approvedItems")
         .every(i => i.id === this.get("itemId"));
 
