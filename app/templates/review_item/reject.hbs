@@ -41,7 +41,8 @@
             </li>
           </ul>
 
-          {{reject-message-field selectedId=selectedId itemId=itemId disabled=model.offer.isFinished}}
+          {{reject-message-field selectedId=selectedId itemId=itemId disabled=model.offer.isFinished
+            setMessage=(action "setMessage")}}
 
         </div>
 
