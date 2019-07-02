@@ -1,7 +1,7 @@
 import AuthorizeRoute from "./authorize";
 
 export default AuthorizeRoute.extend({
-  setupController(controller, model = {}) {
+  setupController(controller) {
     controller.on();
   },
 

@@ -28,12 +28,10 @@
             {{#each items as |offer|}}
               {{partial 'offers/offer_details'}}
             {{else}}
-              <div class="no-result">No result found</div>
+              <div class="no_result">{{t "search.no_results"}}</div>
             {{/each}}
           </ul>
         {{/infinite-list}}
-      {{else if hasFilter}}
-        <div class='no_result'>{{t "search.no_results"}}</div>
       {{/if}}
     </div>
   </div>

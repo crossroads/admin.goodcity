@@ -18,7 +18,6 @@ module("Search Offers", {
   beforeEach: function() {
     App = startApp({}, 2);
     TestHelper.setup();
-    Ember.run.debounce = (context, func) => func.call(context);
 
     role = FactoryGuy.make("role");
     $.mockjax({
@@ -55,6 +54,14 @@ module("Search Offers", {
 });
 
 test("searching a valid term should display results", function(assert) {
+  $.mockjax({
+    url: "/api/v1/offers/sear*",
+    type: "GET",
+    status: 200,
+    responseText: {
+      offers: [offer.toJSON({ includeId: true })]
+    }
+  });
   assert.expect(2);
   visit("/search");
 
@@ -69,6 +76,14 @@ test("searching a valid term should display results", function(assert) {
 });
 
 test("empty search results should result in a message on the page", function(assert) {
+  $.mockjax({
+    url: "/api/v1/offers/sear*",
+    type: "GET",
+    status: 200,
+    responseText: {
+      offers: []
+    }
+  });
   assert.expect(2);
   visit("/search");
 
@@ -78,7 +93,7 @@ test("empty search results should result in a message on the page", function(ass
 
     andThen(function() {
       assert.equal(
-        find(".no_result")
+        Ember.$(".no_result")
           .text()
           .trim(),
         "Sorry, No results found."

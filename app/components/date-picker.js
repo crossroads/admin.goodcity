@@ -19,7 +19,7 @@ export default Ember.TextField.extend({
   ],
 
   model: Ember.computed({
-    get(k) {
+    get() {
       return this.get("_model");
     },
     set(k, val) {

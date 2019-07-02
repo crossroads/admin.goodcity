@@ -1,11 +1,8 @@
 import Ember from "ember";
 import { translationMacro as t } from "ember-i18n";
 import backNavigator from "./../mixins/back_navigator";
-import AjaxPromise from "goodcity/utils/ajax-promise";
 import utilityMethods from "../utils/utility-methods";
 import _ from "lodash";
-
-const { getOwner } = Ember;
 
 export default Ember.Controller.extend(backNavigator, {
   filter: "",

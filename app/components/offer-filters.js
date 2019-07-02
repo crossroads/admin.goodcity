@@ -44,7 +44,6 @@ function endOfDay(date) {
 }
 
 const STATE = "state";
-const TYPE = "type";
 const TIME = "time";
 const UNKNOWN = "unknown";
 
