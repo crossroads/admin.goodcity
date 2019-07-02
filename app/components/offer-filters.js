@@ -5,7 +5,7 @@ import _ from "lodash";
 
 const STATE_FILTERS = {
   PRIORITY: "showPriority",
-  NEW: "new",
+  NEW: "submitted",
   REVIEWING: "under_review",
   REVIEWED: "reviewed",
   SCHEDULED: "scheduled",

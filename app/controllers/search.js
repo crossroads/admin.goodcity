@@ -50,6 +50,15 @@ export default Ember.Controller.extend(backNavigator, {
     }
   }),
 
+  on() {
+    this.showResults(); // Upon opening the page, we populate with results
+    this.get("filterService").on("change", this, this.reloadResults);
+  },
+
+  off() {
+    this.get("filterService").off("change", this, this.reloadResults);
+  },
+
   reloadResults() {
     this.hideResults();
     Ember.run.debounce(this, this.showResults, 500);
