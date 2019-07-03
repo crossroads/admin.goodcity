@@ -1,19 +1,20 @@
 import Ember from "ember";
 import _ from "lodash";
+import { STATE_FILTERS } from "../services/filter-service";
 
 // --- Helpers
 
-const STATE_FILTERS = {
-  PRIORITY: "showPriority",
-  NEW: "submitted",
-  REVIEWING: "under_review",
-  REVIEWED: "reviewed",
-  SCHEDULED: "scheduled",
-  RECEIVING: "receiving",
-  RECEIVED: "received",
-  CANCELLED: "cancelled",
-  INACTIVE: "inactive"
-};
+const {
+  PRIORITY,
+  NEW,
+  REVIEWING,
+  REVIEWED,
+  SCHEDULED,
+  RECEIVING,
+  RECEIVED,
+  CANCELLED,
+  INACTIVE
+} = STATE_FILTERS;
 
 function setFilter(filter, val) {
   Ember.$(`#${filter}`)[0].checked = val;

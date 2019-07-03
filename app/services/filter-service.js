@@ -27,7 +27,7 @@ const PERSISTENT_VAR = function(propName, defaultValue, deserializeMap = {}) {
 export const STATE_FILTERS = {
   PRIORITY: "showPriority",
   NEW: "submitted",
-  REVIEWING: "reviewing",
+  REVIEWING: "under_review",
   REVIEWED: "reviewed",
   SCHEDULED: "scheduled",
   RECEIVING: "receiving",

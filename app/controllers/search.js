@@ -37,12 +37,12 @@ export default Ember.Controller.extend(backNavigator, {
     return Ember.$.trim(this.get("searchText")).length;
   }),
 
-  hasFilter: Ember.computed("filter", function() {
-    return Ember.$.trim(this.get("filter")).length;
-  }),
-
   onSearchTextChange: Ember.observer("searchText", function() {
-    if (this.get("searchText").length > this.get("minSearchTextLength")) {
+    const searchTextLength = this.get("searchText").length;
+    if (
+      searchTextLength > this.get("minSearchTextLength") ||
+      searchTextLength === 0
+    ) {
       this.reloadResults();
     }
   }),
@@ -128,12 +128,8 @@ export default Ember.Controller.extend(backNavigator, {
       return this.get("store").query("offer", params);
     },
 
-    clearSearch(isCancelled) {
-      this.set("filter", "");
+    clearSearch() {
       this.set("searchText", "");
-      if (!isCancelled) {
-        Ember.$("#searchText").focus();
-      }
     },
 
     cancelSearch() {
