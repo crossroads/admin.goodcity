@@ -54,14 +54,6 @@ module("Search Offers", {
 });
 
 test("searching a valid term should display results", function(assert) {
-  $.mockjax({
-    url: "/api/v1/offers/sear*",
-    type: "GET",
-    status: 200,
-    responseText: {
-      offers: [offer.toJSON({ includeId: true })]
-    }
-  });
   assert.expect(2);
   visit("/search");
 
@@ -75,29 +67,125 @@ test("searching a valid term should display results", function(assert) {
   });
 });
 
-test("empty search results should result in a message on the page", function(assert) {
-  $.mockjax({
-    url: "/api/v1/offers/sear*",
-    type: "GET",
-    status: 200,
-    responseText: {
-      offers: []
-    }
-  });
+test("clicking State button redirects to state filters page", function(assert) {
   assert.expect(2);
   visit("/search");
 
   andThen(function() {
     assert.equal(currentURL(), "/search");
-    fillIn("#searchText", "i.dont.exist");
+    click("#state-filter-button");
+  });
 
-    andThen(function() {
-      assert.equal(
-        Ember.$(".no_result")
-          .text()
-          .trim(),
-        "Sorry, No results found."
-      );
-    });
+  andThen(function() {
+    assert.equal(currentURL(), "/offers_filters?applyStateFilter=true");
+  });
+});
+
+test("Clicking Due button redirects to time filters page", function(assert) {
+  assert.expect(2);
+  visit("/search");
+
+  andThen(function() {
+    assert.equal(currentURL(), "/search");
+    click("#time-filter-button");
+  });
+
+  andThen(function() {
+    assert.equal(currentURL(), "/offers_filters?applyTimeFilter=true");
+  });
+});
+
+test("Clicking All button applies Reviewer Filter", function(assert) {
+  assert.expect(2);
+  visit("/search");
+
+  andThen(function() {
+    assert.equal(currentURL(), "/search");
+    click("#reviewer-filter-button");
+  });
+
+  andThen(function() {
+    assert.equal(
+      Ember.$("#reviewer-filter-button")
+        .text()
+        .trim(),
+      "Mine"
+    );
+  });
+});
+
+test("Clicking Apply filter button in State filter page redirects to search page", function(assert) {
+  assert.expect(2);
+  visit("/offers_filters?applyStateFilter=true");
+  andThen(function() {
+    assert.equal(currentURL(), "/offers_filters?applyStateFilter=true");
+    click(".filter-btn.apply");
+  });
+
+  andThen(function() {
+    assert.equal(currentURL(), "/search");
+  });
+});
+
+test("Clicking Apply filter button in Due filter page redirects to search page", function(assert) {
+  assert.expect(2);
+  visit("/offers_filters?applyTimeFilter=true");
+  andThen(function() {
+    assert.equal(currentURL(), "/offers_filters?applyTimeFilter=true");
+    click(".filter-btn.apply");
+  });
+
+  andThen(function() {
+    assert.equal(currentURL(), "/search");
+  });
+});
+
+test("Select Time from list apply that time filter on search page", function(assert) {
+  assert.expect(3);
+  visit("/offers_filters?applyTimeFilter=true");
+  andThen(function() {
+    assert.equal(currentURL(), "/offers_filters?applyTimeFilter=true");
+    click(".overdue");
+  });
+
+  andThen(function() {
+    click(".filter-btn.apply");
+  });
+
+  andThen(function() {
+    assert.equal(currentURL(), "/search");
+    assert.equal(
+      Ember.$("#time-filter-button")
+        .text()
+        .trim(),
+      "Overdue"
+    );
+  });
+});
+
+test("Checking multiple states checkboxes in State filter page applies number of selected states on Offers", function(assert) {
+  let noOfSelectedStates = 0;
+  assert.expect(3);
+  visit("/offers_filters?applyStateFilter=true");
+  andThen(function() {
+    assert.equal(currentURL(), "/offers_filters?applyStateFilter=true");
+    click("#submitted");
+    noOfSelectedStates += 1;
+    click("#showPriority");
+    noOfSelectedStates += 1;
+  });
+
+  andThen(function() {
+    click(".filter-btn.apply");
+  });
+
+  andThen(function() {
+    assert.equal(currentURL(), "/search");
+    assert.equal(
+      Ember.$("#state-filter-button")
+        .text()
+        .trim(),
+      `State: ${noOfSelectedStates}`
+    );
   });
 });

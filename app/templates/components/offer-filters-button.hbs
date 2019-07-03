@@ -14,7 +14,7 @@
       {{/if}}
 
       <!-- Open btn -->
-      <div class="button-text" {{action "redirectTofilters" "applyStateFilter"}} >
+      <div class="button-text" id="state-filter-button" {{action "redirectTofilters" "applyStateFilter"}} >
         {{#if (is-equal offerStateFilters.length 0) }}
           {{t 'offer_filters.button_state'}}
         {{else if (is-equal offerStateFilters.length 1) }}
@@ -29,7 +29,7 @@
   <!-- All button -->
   <div class="small-4 columns">
     <div
-      id="off-all-filter"
+      id="offer-all-filter"
       class="button expand filter-button-css {{if selfReviewFilter 'filter-button-border'}}">
 
 
@@ -39,7 +39,7 @@
         </div>
       {{/if}}
 
-      <div class="button-text" {{action "enableReviewFilter"}}>
+      <div class="button-text" id="reviewer-filter-button" {{action "enableReviewFilter"}}>
         {{#if selfReviewFilter}}
           {{t 'offer_filters.self_review'}}
         {{else}}
@@ -52,7 +52,7 @@
   <!-- Time ranges -->
   <div class="small-4 columns">
     <div
-      id="order-time-filter"
+      id="offer-time-filter"
       class="button expand filter-button-css {{if hasTimeFilters 'filter-button-border'}}">
 
         {{#if hasTimeFilters}}
@@ -61,7 +61,7 @@
           </div>
         {{/if}}
 
-        <div class="button-text" {{action "redirectTofilters" "applyTimeFilter"}} >
+        <div class="button-text" id="time-filter-button" {{action "redirectTofilters" "applyTimeFilter"}} >
           {{#if offerTimeRange.preset }}
             {{t (concat 'offer_filters.time_presets.' offerTimeRange.preset) }}
           {{else}}
