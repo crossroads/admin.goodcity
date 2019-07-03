@@ -4,18 +4,6 @@ import { STATE_FILTERS } from "../services/filter-service";
 
 // --- Helpers
 
-const {
-  PRIORITY,
-  NEW,
-  REVIEWING,
-  REVIEWED,
-  SCHEDULED,
-  RECEIVING,
-  RECEIVED,
-  CANCELLED,
-  INACTIVE
-} = STATE_FILTERS;
-
 function setFilter(filter, val) {
   Ember.$(`#${filter}`)[0].checked = val;
 }
@@ -89,7 +77,7 @@ export default Ember.Component.extend({
       case STATE:
         return service.get("offerStateFilters").forEach(checkFilter);
       case TIME:
-        const { preset, after, before } = service.get("orderTimeRange");
+        const { preset, after, before } = service.get("offerTimeRange");
         return this.set("selectedTimeRange", {
           preset,
           after: preset ? null : after,
@@ -152,6 +140,10 @@ export default Ember.Component.extend({
     clearFilters() {
       if (this.get("applyStateFilter")) {
         return this.uncheckAll("allOfferStateFilters");
+      }
+
+      if (this.get("applyTimeFilter")) {
+        this.clearTimeFilters();
       }
     },
 

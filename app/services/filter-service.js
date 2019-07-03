@@ -23,7 +23,6 @@ const PERSISTENT_VAR = function(propName, defaultValue, deserializeMap = {}) {
   });
 };
 
-// @TODO: priority should not be a state filter
 export const STATE_FILTERS = {
   PRIORITY: "showPriority",
   NEW: "submitted",

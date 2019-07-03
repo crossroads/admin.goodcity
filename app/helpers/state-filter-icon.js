@@ -13,8 +13,8 @@ const {
   INACTIVE
 } = STATE_FILTERS;
 
-export default Ember.Helper.helper(function(type) {
-  switch (type[0]) {
+export default Ember.Helper.helper(function(state) {
+  switch (state[0]) {
     case NEW:
       return "shopping-basket";
     case REVIEWING:
