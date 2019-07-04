@@ -3,7 +3,7 @@
     <li><label>{{t "inbox.quick_links"}}</label></li>
     <li>{{#link-to 'my_list'}}{{t "inbox.my_list"}} ({{myOffersCount}}){{/link-to}}</li>
     <li>{{#link-to 'offers.submitted'}}{{t "inbox.new_offers"}} ({{newOffersCount}}){{/link-to}}</li>
-    <li><a href="#" {{action 'createOffer'}}>{{t "inbox.create_offer"}}</a></li>
+    <li><a href="#" class="create-offer-btn" {{action 'createOffer'}}>{{t "inbox.create_offer"}}</a></li>
     <li><a href="#" {{action 'logMeOut'}}>{{t "application.logout"}}</a></li>
 
     <li><label>{{t "inbox.all_offers"}}</label></li>

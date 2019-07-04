@@ -6,7 +6,10 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   i18n: Ember.inject.service(),
   application: Ember.inject.controller(),
   appVersion: Ember.computed.alias("application.appVersion"),
-  currentUserId: Ember.computed.alias("session.currentUser.id"),
+
+  currentUser: Ember.computed("session.currentUser.id", function() {
+    return this.store.peekRecord("user", this.get("session.currentUser.id"));
+  }),
 
   newOffersCount: Ember.computed("allOffers.@each.isSubmitted", function() {
     return this.get("allOffers").filterBy("isSubmitted", true).length;
@@ -47,15 +50,15 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     },
 
     createOffer() {
-      const now = Date.now();
+      const now = new Date();
       const offer = this.get("store").createRecord("offer", {
         createdAt: now,
         createdById: null,
         language: this.get("i18n.locale"),
-        reviewed_at: now,
-        reviewed_by_id: this.get("currentUserId"),
+        reviewedAt: now,
+        reviewedBy: this.get("currentUser"),
         state: "under_review",
-        submitted_at: null
+        submittedAt: null
       });
 
       this.runTask(offer.save()).then(() => {
