@@ -1,41 +1,66 @@
-import Ember from 'ember';
+import Ember from "ember";
+import AsyncTasksMixin from "../mixins/async_tasks";
 
-export default Ember.Controller.extend({
-
+export default Ember.Controller.extend(AsyncTasksMixin, {
+  store: Ember.inject.service(),
+  i18n: Ember.inject.service(),
   application: Ember.inject.controller(),
-  appVersion: Ember.computed.alias('application.appVersion'),
+  appVersion: Ember.computed.alias("application.appVersion"),
+  currentUserId: Ember.computed.alias("session.currentUser.id"),
 
-  newOffersCount: Ember.computed('allOffers.@each.isSubmitted', function(){
-    return this.get('allOffers').filterBy('isSubmitted', true).length;
+  newOffersCount: Ember.computed("allOffers.@each.isSubmitted", function() {
+    return this.get("allOffers").filterBy("isSubmitted", true).length;
   }),
 
-  receivingOffersCount: Ember.computed('allOffers.@each.isReceiving', function(){
-    return this.get('allOffers').filterBy('isReceiving', true).length;
+  receivingOffersCount: Ember.computed(
+    "allOffers.@each.isReceiving",
+    function() {
+      return this.get("allOffers").filterBy("isReceiving", true).length;
+    }
+  ),
+
+  inProgressOffersCount: Ember.computed(
+    "allOffers.@each.isReviewing",
+    function() {
+      return this.get("allOffers").filterBy("isReviewing", true).length;
+    }
+  ),
+
+  scheduledCount: Ember.computed("allOffers.@each.isScheduled", function() {
+    return this.get("allOffers").filterBy("isScheduled", true).length;
   }),
 
-  inProgressOffersCount: Ember.computed('allOffers.@each.isReviewing', function(){
-    return this.get('allOffers').filterBy('isReviewing', true).length;
-  }),
-
-  scheduledCount: Ember.computed('allOffers.@each.isScheduled', function(){
-    return this.get('allOffers').filterBy('isScheduled', true).length;
-  }),
-
-  myOffersCount: Ember.computed('allOffers.@each.isReviewing', function(){
+  myOffersCount: Ember.computed("allOffers.@each.isReviewing", function() {
     var currentUserId = this.session.get("currentUser.id");
     return this.get("allOffers")
       .filterBy("adminCurrentOffer", true)
-      .filterBy("reviewedBy.id", currentUserId)
-      .length;
+      .filterBy("reviewedBy.id", currentUserId).length;
   }),
 
-  allOffers: Ember.computed(function(){
-    return this.store.peekAll('offer');
+  allOffers: Ember.computed(function() {
+    return this.store.peekAll("offer");
   }),
 
   actions: {
     logMeOut() {
-      this.get('application').send('logMeOut');
+      this.get("application").send("logMeOut");
+    },
+
+    createOffer() {
+      const now = Date.now();
+      const offer = this.get("store").createRecord("offer", {
+        createdAt: now,
+        createdById: null,
+        language: this.get("i18n.locale"),
+        reviewed_at: now,
+        reviewed_by_id: this.get("currentUserId"),
+        state: "under_review",
+        submitted_at: null
+      });
+
+      this.runTask(offer.save()).then(() => {
+        this.transitionToRoute("review_offer.items", offer);
+      });
     }
   }
 });
