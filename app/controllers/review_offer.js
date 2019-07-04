@@ -1,7 +1,8 @@
 import Ember from "ember";
+import AsyncTasksMixin from "../mixins/async_tasks";
 const { getOwner } = Ember;
 
-export default Ember.Controller.extend({
+export default Ember.Controller.extend(AsyncTasksMixin, {
   application: Ember.inject.controller(),
   offer: Ember.computed.alias("model"),
   isStartReviewClicked: false,
@@ -92,22 +93,13 @@ export default Ember.Controller.extend({
         this.get("i18n").t("review_offer.options.yes"),
         () => {
           this.set("cancelByMe", true);
-          var loadingView = getOwner(this)
-            .lookup("component:loading")
-            .append();
-          offer
-            .destroyRecord()
-            .then(() => {
-              this.transitionToRoute(this.get("backLinkPath"));
-            })
+          this.runTask(offer.destroyRecord())
+            .then(() => this.transitionToRoute(this.get("backLinkPath")))
             .catch(error => {
               offer.rollback();
               throw error;
             })
-            .finally(() => {
-              loadingView.destroy();
-              this.set("cancelByMe", false);
-            });
+            .finally(() => this.set("cancelByMe", false));
         },
         this.get("i18n").t("review_item.not_now"),
         null

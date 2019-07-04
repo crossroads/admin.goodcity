@@ -2,6 +2,22 @@ import Ember from "ember";
 import AuthorizeRoute from "./authorize";
 import "./../computed/local-storage";
 
+const BACKLINK_CONDITIONS = {
+  isSubmitted: "offers",
+  isReceiving: "offers.receiving",
+  isReviewed: "in_progress.reviewed",
+  isUnderReview: "in_progress.reviewing",
+  isClosed: "finished.cancelled",
+  isCancelled: "finished.cancelled",
+  isReceived: "finished.received",
+  isInactive: "finished.inactive",
+  isScheduled: {
+    "delivery.isGogovan": "scheduled.gogovan",
+    "delivery.isDropOff": "scheduled.other_delivery",
+    "delivery.isAlternate": "scheduled.collection"
+  }
+};
+
 export default AuthorizeRoute.extend({
   backLinkPath: Ember.computed.localStorage(),
 
@@ -52,31 +68,16 @@ export default AuthorizeRoute.extend({
     }
   },
 
-  getBackLinkPath(offer) {
-    if (offer.get("isSubmitted")) {
-      return "offers";
-    } else if (offer.get("isReceiving")) {
-      return "offers.receiving";
-    } else if (offer.get("isReviewed")) {
-      return "in_progress.reviewed";
-    } else if (offer.get("isUnderReview")) {
-      return "in_progress.reviewing";
-    } else if (offer.get("isClosed") || offer.get("isCancelled")) {
-      return "finished.cancelled";
-    } else if (offer.get("isReceived")) {
-      return "finished.received";
-    } else if (offer.get("isInactive")) {
-      return "finished.inactive";
-    } else if (offer.get("isScheduled")) {
-      if (offer.get("delivery.isGogovan")) {
-        return "scheduled.gogovan";
-      } else if (offer.get("delivery.isDropOff")) {
-        return "scheduled.other_delivery";
-      } else if (offer.get("delivery.isAlternate")) {
-        return "scheduled.collection";
-      } else {
-        return "offers";
+  getBackLinkPath(offer, mapping = BACKLINK_CONDITIONS) {
+    for (let key in mapping) {
+      if (offer.get(key)) {
+        const res = mapping[key];
+        if (typeof res === "string") {
+          return res;
+        }
+        return this.getBackLinkPath(offer, res); // nested
       }
     }
+    return "offers";
   }
 });
