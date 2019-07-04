@@ -8,7 +8,7 @@
     >
       <!-- Close btn -->
       {{#if hasStateFilters}}
-        <div class="remove-filters-icon" {{action "clearStateFilters"}}>
+        <div class="remove-filters-icon" {{action "clearOfferStateFilters" target=filterService}}>
           <i class="fa fa-times"></i>
         </div>
       {{/if}}
@@ -34,12 +34,12 @@
 
 
       {{#if selfReviewFilter}}
-        <div class="remove-filters-icon" {{action "clearReviewFilters"}}>
+        <div class="remove-filters-icon" {{action "clearReviewFilters" target=filterService}}>
           <i class="fa fa-times"></i>
         </div>
       {{/if}}
 
-      <div class="button-text" id="reviewer-filter-button" {{action "enableReviewFilter"}}>
+      <div class="button-text" id="reviewer-filter-button" {{action "enableReviewFilter" target=filterService}}>
         {{#if selfReviewFilter}}
           {{t 'offer_filters.self_review'}}
         {{else}}
@@ -56,7 +56,7 @@
       class="button expand filter-button-css {{if hasTimeFilters 'filter-button-border'}}">
 
         {{#if hasTimeFilters}}
-          <div class="remove-filters-icon" {{action "clearTimeFilters"}}>
+          <div class="remove-filters-icon" {{action "clearOfferTimeFilters" target=filterService}}>
             <i class="fa fa-times"></i>
           </div>
         {{/if}}

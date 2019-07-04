@@ -74,6 +74,13 @@ I18nTranslationsEn =
         month: "This month",
         next_month: "Next month"
 
+      show_priority_offers: "Only Show Priority Offers"
+      offer_statuses: "Offer Statuses"
+      on_or_after: "On or after"
+      on_or_before: "On or before"
+      apply: "Apply"
+      clear: "Clear"
+      back: "Back"
       self_review: "Mine"
       all_review: "All"
       time_filter_title: "Offer Due Date"

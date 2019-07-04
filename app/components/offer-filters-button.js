@@ -29,22 +29,6 @@ export default Ember.Component.extend({
       this.get("router").transitionTo("offers_filters", {
         queryParams: offerFilter
       });
-    },
-
-    clearStateFilters() {
-      this.get("filterService").clearOfferStateFilters();
-    },
-
-    clearTimeFilters() {
-      this.get("filterService").clearOfferTimeFilters();
-    },
-
-    enableReviewFilter() {
-      this.get("filterService").enableReviewFilter();
-    },
-
-    clearReviewFilters() {
-      this.get("filterService").clearReviewFilters();
     }
   }
 });

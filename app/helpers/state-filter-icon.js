@@ -13,28 +13,18 @@ const {
   INACTIVE
 } = STATE_FILTERS;
 
+const STATE_ICONS = {
+  [NEW]: "shopping-basket",
+  [REVIEWING]: "list-ol",
+  [REVIEWED]: "hourglass-half",
+  [SCHEDULED]: "clock-o",
+  [RECEIVING]: "shopping-cart",
+  [RECEIVED]: "thumbs-up",
+  [CANCELLED]: "thumbs-down",
+  [INACTIVE]: "bed",
+  [PRIORITY]: "warning"
+};
+
 export default Ember.Helper.helper(function(state) {
-  switch (state[0]) {
-    case NEW:
-      return "shopping-basket";
-    case REVIEWING:
-      return "list-ol";
-    case REVIEWED:
-      return "hourglass-half";
-    case SCHEDULED:
-      return "clock-o";
-    case RECEIVING:
-      return "shopping-cart";
-    case RECEIVED:
-    case "shipment":
-      return "thumbs-up";
-    case CANCELLED:
-      return "thumbs-down";
-    case INACTIVE:
-      return "bed";
-    case PRIORITY:
-      return "warning";
-    default:
-      return "";
-  }
+  return STATE_ICONS[state[0]] || "";
 });
