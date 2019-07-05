@@ -1,10 +1,10 @@
-import Ember from 'ember';
+import Ember from "ember";
+import AsyncTasksMixin from "../mixins/async_tasks";
 const { getOwner } = Ember;
 
-export default Ember.Controller.extend({
-
+export default Ember.Controller.extend(AsyncTasksMixin, {
   application: Ember.inject.controller(),
-  offer: Ember.computed.alias('model'),
+  offer: Ember.computed.alias("model"),
   isStartReviewClicked: false,
   i18n: Ember.inject.service(),
   messageBox: Ember.inject.service(),
@@ -21,7 +21,7 @@ export default Ember.Controller.extend({
     }
   }),
 
-  isMyOffer: Ember.computed('offer.reviewedBy', {
+  isMyOffer: Ember.computed("offer.reviewedBy", {
     get: function() {
       var currentUserId = this.session.get("currentUser.id");
       return this.get("offer.reviewedBy.id") === currentUserId;
@@ -31,7 +31,7 @@ export default Ember.Controller.extend({
     }
   }),
 
-  cancelByMe: Ember.computed('model', {
+  cancelByMe: Ember.computed("model", {
     get() {
       return false;
     },
@@ -40,13 +40,16 @@ export default Ember.Controller.extend({
     }
   }),
 
-  isOfferVanished: Ember.computed.or('offer.isDeleted', 'offer.isDeleting'),
+  isOfferVanished: Ember.computed.or("offer.isDeleted", "offer.isDeleting"),
 
-  showDeleteError: Ember.observer('offer', 'isOfferVanished', function(){
+  showDeleteError: Ember.observer("offer", "isOfferVanished", function() {
     var currentPath = window.location.href;
 
-    if(this.get("isOfferVanished") && !this.get("cancelByMe")) {
-      if(currentPath.indexOf("review_item") < 0 && currentPath.indexOf(`offers/${this.get("offer.id")}`) >= 0) {
+    if (this.get("isOfferVanished") && !this.get("cancelByMe")) {
+      if (
+        currentPath.indexOf("review_item") < 0 &&
+        currentPath.indexOf(`offers/${this.get("offer.id")}`) >= 0
+      ) {
         this.get("messageBox").alert(this.get("i18n").t("404_error"), () => {
           this.transitionToRoute("my_list");
         });
@@ -60,47 +63,58 @@ export default Ember.Controller.extend({
     },
 
     addItem() {
-      var draftItemId = this.get("model.items").filterBy("state", "draft").get("firstObject.id") || "new";
-      this.transitionToRoute('item.edit_images', draftItemId);
+      var draftItemId =
+        this.get("model.items")
+          .filterBy("state", "draft")
+          .get("firstObject.id") || "new";
+      this.transitionToRoute("item.edit_images", draftItemId);
     },
 
     startReview() {
-      if(this.get("isStartReviewClicked")) { return; }
-      var offer = this.store.peekRecord('offer', this.get('offer.id'));
+      if (this.get("isStartReviewClicked")) {
+        return;
+      }
+      var offer = this.store.peekRecord("offer", this.get("offer.id"));
       this.set("isStartReviewClicked", true);
-      var adapter = getOwner(this).lookup('adapter:application');
-      var url = adapter.buildURL('offer', offer.get('id')) + '/review';
+      var adapter = getOwner(this).lookup("adapter:application");
+      var url = adapter.buildURL("offer", offer.get("id")) + "/review";
 
-      adapter.ajax(url, 'PUT')
+      adapter
+        .ajax(url, "PUT")
         .then(data => this.store.pushPayload(data))
         .finally(() => this.set("isStartReviewClicked", false));
     },
 
-    cancelOffer() {
+    deleteOffer() {
       this.send("toggleOfferOptions");
       var offer = this.get("model");
-      this.get("messageBox").custom(this.get("i18n").t("delete_confirm"),
+      this.get("messageBox").custom(
+        this.get("i18n").t("delete_confirm"),
         this.get("i18n").t("review_offer.options.yes"),
         () => {
           this.set("cancelByMe", true);
-          var loadingView = getOwner(this).lookup('component:loading').append();
-          offer.destroyRecord()
-            .then(() => {
-              this.transitionToRoute(this.get("backLinkPath"));
+          this.runTask(offer.destroyRecord())
+            .then(() => this.transitionToRoute(this.get("backLinkPath")))
+            .catch(error => {
+              offer.rollback();
+              throw error;
             })
-            .catch(error => { offer.rollback(); throw error; })
-            .finally(() => {loadingView.destroy(); this.set("cancelByMe", false);});
-        },this.get("i18n").t("review_item.not_now"), null);
+            .finally(() => this.set("cancelByMe", false));
+        },
+        this.get("i18n").t("review_item.not_now"),
+        null
+      );
     },
 
     submitOffer() {
       this.toggleProperty("displayOfferOptions");
-      var loadingView = getOwner(this).lookup('component:loading').append();
+      var loadingView = getOwner(this)
+        .lookup("component:loading")
+        .append();
       var offer = this.get("model");
-      offer.setProperties({ state_event: 'submit' });
+      offer.setProperties({ state_event: "submit" });
 
-      offer.save()
-        .finally(() => loadingView.destroy());
+      offer.save().finally(() => loadingView.destroy());
     }
   }
 });

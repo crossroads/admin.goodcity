@@ -86,6 +86,7 @@ I18nTranslationsEn =
     "inbox":
       "quick_links": "Quick Links"
       "all_offers": "All Offers"
+      "create_offer": "Create offer"
       "notifications": "Notifications"
       "new_offers": "New"
       "new_items" : "New Items"
@@ -133,6 +134,8 @@ I18nTranslationsEn =
       "close_offer_message": "We have finished processing your offer. Unfortunately we are unable to receive your items this time. We hope we can place items you offer in the future."
       "confirm_receiving_message": "Receiving items after an offer has been finished will change the state of the offer to 'Receiving'. Are you sure you want to receive the item(s)?"
       "close_offer_summary": "This will close the offer."
+      "add_note": "Tap to add/edit sticky note"
+      "tap_to_save": "tap to save"
 
       "donor":
         "offer_id": "Offer ID"

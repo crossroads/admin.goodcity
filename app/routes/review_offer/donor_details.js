@@ -1,19 +1,39 @@
-import AuthorizeRoute from './../authorize';
+import AuthorizeRoute from "./../authorize";
+import Ember from "ember";
 
 export default AuthorizeRoute.extend({
-
   currentDonor: null,
   currentOffer: null,
 
   model() {
-    var offerId = this.modelFor('reviewOffer').get('id');
-    var currentOffer = this.store.peekRecord('offer', offerId);
-    if(currentOffer) {
-      var donor = currentOffer.get('createdBy');
+    const offerPreload = this.modelFor("reviewOffer");
+    return Ember.RSVP.resolve(offerPreload).then(currentOffer => {
+      if (!currentOffer) {
+        return;
+      }
+      const donor = this.getDonor(currentOffer);
       this.set("currentDonor", donor);
       this.set("currentOffer", currentOffer);
-      return this.store.query('offer', { created_by_id: donor.get('id'), states: ['donor_non_draft'], summarize: 'true' });
-    }
+
+      if (donor) {
+        return this.store.query(
+          "offer",
+          {
+            created_by_id: donor.get("id"),
+            states: ["donor_non_draft"],
+            summarize: "true"
+          },
+          {
+            adapterOptions: { reload: true }
+          }
+        );
+      }
+      return Ember.A([]);
+    });
+  },
+
+  getDonor(offer) {
+    return offer.get("createdById") && offer.get("createdBy");
   },
 
   setupController(controller, model) {
@@ -23,9 +43,8 @@ export default AuthorizeRoute.extend({
   },
 
   afterModel(model) {
-    if(!model) {
-      this.transitionTo('my_list.reviewing');
+    if (!model) {
+      this.transitionTo("my_list.reviewing");
     }
   }
-
 });

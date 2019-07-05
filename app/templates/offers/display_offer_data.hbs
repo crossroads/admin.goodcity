@@ -6,7 +6,10 @@
   <div class="small-11 columns">
     <span class="info">
       <h3>
-        {{t "full_name" firstName=offer.createdBy.firstName lastName=offer.createdBy.lastName}}
+        {{ offer.id }}
+        {{#if offer.createdBy}}
+          - {{t "full_name" firstName=offer.createdBy.firstName lastName=offer.createdBy.lastName}}
+        {{/if}}
       </h3>
 
       <div class='time_indicator'>

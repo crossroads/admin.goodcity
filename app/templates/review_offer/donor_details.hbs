@@ -1,103 +1,127 @@
 <div class="tabs-content donor_details">
   <section class="main-section">
 
-    <div class="row">
-      <div class="small-2 columns">
-        <span class="no-avatar">{{donor.nameInitial}}</span>
-      </div>
-
-      <div class="small-10 columns">
-
-        <div class="row donor">
-          <div class="small-5 columns">
-            {{donor.fullName}}
-          </div>
-          <div class="small-7 columns mobile">
-            <span id="phoneNumber" class="tel_link phone_link {{if hidden 'hidden'}}">
-              <i class="fa fa-phone"></i>
-              <a href="tel:{{goodcityNumber}}">{{displayNumber}}</a>
-            </span>
-          </div>
+    <div class="sticky-note">
+      {{#if showNoteCallToAction}}
+        <div class="call-to-action">
+          <i aria-hidden="true"><i class="fa fa-sticky-note"></i></i>
+          {{t 'review_offer.add_note'}}
         </div>
-
-        <div class="row">
-          <div class="small-5 columns">
-            {{t "review_offer.donor.offer_id"}}:
-          </div>
-          <div class="small-7 columns">
-            {{currentOffer.id}}
-          </div>
+      {{/if}}
+      {{#if stickNoteChanged}}
+        <div class="save-button" {{ action 'saveStickyNote' }}>
+          <span class="fade-out "> {{t 'review_offer.tap_to_save' }} > </span>
+          <i class="fa fa-save"></i>
         </div>
-
-        <div class="row">
-          <div class="small-5 columns">
-            {{t "review_offer.donor.district"}}:
-          </div>
-          <div class="small-7 columns">
-            {{donor.address.district.name}}
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="small-5 columns">
-            {{t "review_offer.donor.registered"}}:
-          </div>
-          <div class="small-7 columns">
-            {{time-ago timeValue=donor.createdAt smallPrefix=false}}
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="small-5 columns">
-            {{t "review_offer.donor.last_seen"}}:
-          </div>
-          <div class="small-7 columns">
-            {{#if donor.onlineStatus}}
-              {{donor.onlineStatus}}
-            {{else}}
-              {{time-ago timeValue=donor.lastDisconnected smallPrefix=false}}
-            {{/if}}
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="small-5 columns">
-            {{t "review_offer.donor.total_offers"}}:
-          </div>
-          <div class="small-7 columns">
-            {{offersCount}}
-            {{#if receivedOffers}}
-              ({{receivedOffers}} {{t "finished.received"}})
-            {{/if}}
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="small-5 columns">
-            {{t "review_offer.donor.crm"}}:
-          </div>
-          <div class="small-7 columns">
-            <small>(not implemented)</small>
-          </div>
-        </div>
-
-      </div>
+      {{/if}}
+      {{auto-resize-textarea
+        data-autoresize=false
+        name="notes"
+        value=currentOffer.notes
+        clickAction=(action 'hideNoteCallToAction')
+        focusOutAction=(action 'showNoteCallToAction')
+        id="sticky-note"}}
     </div>
 
-    {{twilio-make-call mobile=donor.mobile offerId=currentOffer.id internetCallStatus=internetCallStatus donorName=donor.fullName}}
+    {{#if donor}}
+      <div class="row">
+        <div class="small-2 columns">
+          <span class="no-avatar">{{donor.nameInitial}}</span>
+        </div>
 
-    <hr>
-    <div class="row">
-      <div class="small-12 columns item-content">
-        {{t "review_offer.donor.other_offers"}}
+        <div class="small-10 columns">
 
-        <ul class="list list-activity list-offer-items">
-          {{#each donorOffers as |offer|}}
-            {{partial 'offers/offer_details'}}
-          {{/each}}
-        </ul>
+          <div class="row donor">
+            <div class="small-5 columns">
+              {{donor.fullName}}
+            </div>
+            <div class="small-7 columns mobile">
+              <span id="phoneNumber" class="tel_link phone_link {{if hidden 'hidden'}}">
+                <i class="fa fa-phone"></i>
+                <a href="tel:{{goodcityNumber}}">{{displayNumber}}</a>
+              </span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="small-5 columns">
+              {{t "review_offer.donor.offer_id"}}:
+            </div>
+            <div class="small-7 columns">
+              {{currentOffer.id}}
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="small-5 columns">
+              {{t "review_offer.donor.district"}}:
+            </div>
+            <div class="small-7 columns">
+              {{donor.address.district.name}}
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="small-5 columns">
+              {{t "review_offer.donor.registered"}}:
+            </div>
+            <div class="small-7 columns">
+              {{time-ago timeValue=donor.createdAt smallPrefix=false}}
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="small-5 columns">
+              {{t "review_offer.donor.last_seen"}}:
+            </div>
+            <div class="small-7 columns">
+              {{#if donor.onlineStatus}}
+                {{donor.onlineStatus}}
+              {{else}}
+                {{time-ago timeValue=donor.lastDisconnected smallPrefix=false}}
+              {{/if}}
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="small-5 columns">
+              {{t "review_offer.donor.total_offers"}}:
+            </div>
+            <div class="small-7 columns">
+              {{offersCount}}
+              {{#if receivedOffers}}
+                ({{receivedOffers}} {{t "finished.received"}})
+              {{/if}}
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="small-5 columns">
+              {{t "review_offer.donor.crm"}}:
+            </div>
+            <div class="small-7 columns">
+              <small>(not implemented)</small>
+            </div>
+          </div>
+
+        </div>
       </div>
-    </div>
+
+      {{twilio-make-call mobile=donor.mobile offerId=currentOffer.id internetCallStatus=internetCallStatus donorName=donor.fullName}}
+
+      <hr>
+      <div class="row">
+        <div class="small-12 columns item-content">
+          {{t "review_offer.donor.other_offers"}}
+
+          <ul class="list list-activity list-offer-items">
+            {{#each donorOffers as |offer|}}
+              {{partial 'offers/offer_details'}}
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+    {{/if}}
 
   </section>
 </div>

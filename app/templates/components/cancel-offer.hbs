@@ -1,22 +1,31 @@
-<a {{action "confirmCancelOffer"}}>
+<a {{action "openConfirmDialog"}}>
   <i class="fa fa-times"></i>
   {{t "cancel_offer.cancel"}}
 </a>
 
-{{#message-box btn1Text=(t "cancel_offer.cancel") btn1Callback=(action "cancelOffer") btn2Text=(t "receive.receiving.not_now") isVisible=displayUserPrompt classNames="popupOverlay"}}
-  <strong>{{t "cancel_offer.donor_message"}}</strong>
+{{#if displayUserPrompt}}
+  {{#message-box
+    btn1Text=(t "cancel_offer.cancel")
+    btn1Callback=(action "confirmCancelOffer")
+    btn2Text=(t "receive.receiving.not_now")
+    btn2Callback=(action "closeConfirmDialog")
+    isVisible=true
+    classNames="popupOverlay"
+  }}
+    <strong>{{t "cancel_offer.donor_message"}}</strong>
 
-  <div class="ui">
-    {{select-list
-      content=cancellationOptions
-      on-change=(action (mut selectedReason))
-      selectedValue=selectedReason
-      selectArrow=true}}
-  </div>
-
-  {{#if displayCustomReason}}
-    <div class="{{if invalidReason 'has-error'}}">
-      {{input type="text" name="cancelReason" value=offer.cancelReason maxlength="50"}}
+    <div class="ui">
+      {{select-list
+        content=cancellationOptions
+        on-change=(action (mut selectedReason))
+        selectedValue=selectedReason
+        selectArrow=true}}
     </div>
-  {{/if}}
-{{/message-box}}
+
+    {{#if displayCustomReason}}
+      <div class="{{if invalidReason 'has-error'}}">
+        {{input type="text" name="cancelReason" value=offer.cancelReason maxlength="50"}}
+      </div>
+    {{/if}}
+  {{/message-box}}
+{{/if}}

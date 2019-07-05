@@ -86,6 +86,7 @@ I18nTranslationsZhTw =
     "inbox":
       "quick_links": "快捷鍵"
       "all_offers": "所有捐贈品"
+      "create_offer": "Create offer"
       "notifications": "信息通知"
       "new_offers": "新捐獻項目"
       "new_items" : "新物資"
@@ -133,6 +134,8 @@ I18nTranslationsZhTw =
       "close_offer_message": "閣下的捐贈項目處理完畢，但我們現時無法接收閣下的物資，請見諒，還望下次有機會為閣下的物資找到合適的安置。"
       "confirm_receiving_message": "在捐贈取消後接收物資，會將捐贈項目的狀態轉成「正在接收」。確定接收物資嗎？"
       "close_offer_summary": "這項捐贈項目將列為完成。"
+      "add_note": "按下以增加/修改記事板"
+      "tap_to_save": "按下以儲存"
 
       "donor":
         "offer_id": "捐贈項目號碼"
