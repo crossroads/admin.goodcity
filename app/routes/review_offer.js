@@ -1,6 +1,22 @@
-import Ember from 'ember';
-import AuthorizeRoute from './authorize';
-import './../computed/local-storage';
+import Ember from "ember";
+import AuthorizeRoute from "./authorize";
+import "./../computed/local-storage";
+
+const BACKLINK_CONDITIONS = {
+  isSubmitted: "offers",
+  isReceiving: "offers.receiving",
+  isReviewed: "in_progress.reviewed",
+  isUnderReview: "in_progress.reviewing",
+  isClosed: "finished.cancelled",
+  isCancelled: "finished.cancelled",
+  isReceived: "finished.received",
+  isInactive: "finished.inactive",
+  isScheduled: {
+    "delivery.isGogovan": "scheduled.gogovan",
+    "delivery.isDropOff": "scheduled.other_delivery",
+    "delivery.isAlternate": "scheduled.collection"
+  }
+};
 
 export default AuthorizeRoute.extend({
   backLinkPath: Ember.computed.localStorage(),
@@ -9,21 +25,21 @@ export default AuthorizeRoute.extend({
     var previousRoutes = this.router.router.currentHandlerInfos;
     var previousRoute = previousRoutes && previousRoutes.pop();
 
-    if(previousRoute){
+    if (previousRoute) {
       var parentRoute = previousRoutes[1];
       var hasParentRoute = parentRoute && parentRoute.name === "offers";
       var isSearchRoute = previousRoute.name === "search";
 
-      if(!isSearchRoute && hasParentRoute) {
+      if (!isSearchRoute && hasParentRoute) {
         this.set("backLinkPath", previousRoute.name);
-      } else if(isSearchRoute) {
+      } else if (isSearchRoute) {
         this.set("backLinkPath", null);
       }
     }
   },
 
   hasLoadedAssociations(offer) {
-    let items = offer.get('items');
+    let items = offer.get("items");
     return items && items.length > 0;
   },
 
@@ -32,11 +48,11 @@ export default AuthorizeRoute.extend({
     if (offer && this.hasLoadedAssociations(offer)) {
       return offer;
     }
-    return this.store.findRecord('offer', offerId);
+    return this.store.findRecord("offer", offerId, { reload: true });
   },
 
   model() {
-    var offerId = this.modelFor('offer').get('id');
+    var offerId = this.modelFor("offer").get("id");
     return this.loadIfAbsent(offerId);
   },
 
@@ -45,28 +61,23 @@ export default AuthorizeRoute.extend({
     controller.set("displayOfferOptions", false);
     controller.set("displayCompleteReceivePopup", false);
 
-    if(this.get('backLinkPath') !== null) {
-      controller.set('backLinkPath', this.get('backLinkPath'));
+    if (this.get("backLinkPath") !== null) {
+      controller.set("backLinkPath", this.get("backLinkPath"));
     } else {
-      controller.set('backLinkPath', this.getBackLinkPath(model));
+      controller.set("backLinkPath", this.getBackLinkPath(model));
     }
   },
 
-  getBackLinkPath(offer) {
-    if(offer.get("isSubmitted")) { return "offers"; }
-    else if(offer.get("isReceiving")) { return "offers.receiving"; }
-    else if(offer.get("isReviewed")) { return "in_progress.reviewed"; }
-    else if(offer.get("isUnderReview")) { return "in_progress.reviewing"; }
-    else if(offer.get("isClosed") || offer.get("isCancelled")) {
-      return "finished.cancelled"; }
-    else if(offer.get("isReceived")) { return "finished.received"; }
-    else if(offer.get("isInactive")) { return "finished.inactive"; }
-    else if(offer.get("isScheduled")) {
-      if(offer.get("delivery.isGogovan")) { return "scheduled.gogovan"; }
-      else if(offer.get("delivery.isDropOff")) { return "scheduled.other_delivery"; }
-      else if(offer.get("delivery.isAlternate")) { return "scheduled.collection"; }
-    else { return "offers"; }
+  getBackLinkPath(offer, mapping = BACKLINK_CONDITIONS) {
+    for (let key in mapping) {
+      if (offer.get(key)) {
+        const res = mapping[key];
+        if (typeof res === "string") {
+          return res;
+        }
+        return this.getBackLinkPath(offer, res); // nested
+      }
     }
+    return "offers";
   }
 });
-

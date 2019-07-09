@@ -3,10 +3,12 @@
   {{t "inactive_offer.mark_inactive"}}
 </a>
 
-{{#message-box btn1Text=(t "inactive_offer.mark_inactive") btn1Callback=(action "markOfferInactive") btn2Text=(t "receive.receiving.not_now")  isVisible=displayUserPrompt classNames="popupOverlay"}}
-  <strong>{{t "inactive_offer.add_message"}}:</strong>
+{{#if displayUserPrompt}}
+  {{#message-box btn1Text=(t "inactive_offer.mark_inactive") btn1Callback=(action "markOfferInactive") btn2Text=(t "receive.receiving.not_now")  isVisible=displayUserPrompt classNames="popupOverlay"}}
+    <strong>{{t "inactive_offer.add_message"}}:</strong>
 
-  <div class="{{if invalidMessage 'has-error'}} ui">
-    {{auto-resize-textarea data-autoresize=true name="inactiveMessage" id="inactiveMessage" value=inactiveMessage maxlength=140 }}
-  </div>
-{{/message-box}}
+    <div class="{{if invalidMessage 'has-error'}} ui">
+      {{auto-resize-textarea data-autoresize=true name="inactiveMessage" id="inactiveMessage" value=inactiveMessage maxlength=140 }}
+    </div>
+  {{/message-box}}
+{{/if}}

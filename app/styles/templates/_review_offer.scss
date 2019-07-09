@@ -1,4 +1,10 @@
 .review_offer {
+  button {
+    &.centered {
+      margin: 0 auto;
+      display: block;
+    }
+  }
   .tabs-content {
     background-color: inherit;
     color: inherit;

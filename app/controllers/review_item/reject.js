@@ -1,28 +1,23 @@
-import Ember from 'ember';
+import Ember from "ember";
 import { translationMacro as t } from "ember-i18n";
 const { getOwner } = Ember;
 
 export default Ember.Controller.extend({
-
   reviewItem: Ember.inject.controller(),
-  reviewOfferController: Ember.inject.controller('review_offer'),
+  reviewOfferController: Ember.inject.controller("review_offer"),
   offer: Ember.inject.controller(),
 
-  itemTypeId: Ember.computed.alias('reviewItem.itemTypeId'),
-  itemId: Ember.computed.alias('reviewItem.model.id'),
-  rejectionReasonId: Ember.computed.alias('model.rejectionReason.id'),
+  itemTypeId: Ember.computed.alias("reviewItem.itemTypeId"),
+  itemId: Ember.computed.alias("reviewItem.model.id"),
+  rejectionReasonId: Ember.computed.alias("model.rejectionReason.id"),
   rejectReasonPlaceholder: t("reject.custom_reason"),
   messageBox: Ember.inject.service(),
   i18n: Ember.inject.service(),
   itemPackages: Ember.computed.alias("item.packages"),
+  rejectMsg: "",
 
-  rejectReason: Ember.computed('itemId', {
-    get: function() {
-      return this.get('reviewItem.model.rejectReason');
-    },
-    set: function(key, value) {
-      return value;
-    }
+  rejectReason: Ember.computed("itemId", function() {
+    return this.get("reviewItem.model.rejectReason");
   }),
 
   isBlank: Ember.computed({
@@ -46,120 +41,156 @@ export default Ember.Controller.extend({
   selectedId: Ember.computed("rejectionReasonId", {
     get: function() {
       this.set("isBlank", false);
-      var reasonId = this.get('rejectionReasonId');
-      if(reasonId) { return reasonId; }
-      else {
-        if(this.get("rejectReason") && this.get("rejectReason").length > 0) {
+      let reasonId = this.get("rejectionReasonId");
+      if (reasonId) {
+        return reasonId;
+      } else {
+        if (this.get("rejectReason") && this.get("rejectReason").length) {
           return "-1";
         }
       }
     },
     set: function(key, value) {
       this.set("isBlank", false);
-      this.set('noReasonSelected', false);
+      this.set("noReasonSelected", false);
       return value;
     }
   }),
 
-  rejectionOptions: Ember.computed(function(){
-    return this.store.peekAll('rejection_reason').sortBy('id');
+  rejectionOptions: Ember.computed(function() {
+    return this.store.peekAll("rejection_reason").sortBy("id");
   }),
 
-  cannotSave(){
-    var pkgs = this.store.peekRecord("item", this.get("itemId")).get("packages");
-    if(pkgs && pkgs.length > 0 && (pkgs.get("firstObject.hasAllPackagesDesignated") || pkgs.get("firstObject.hasAllPackagesDispatched"))){
-      this.get('messageBox').alert(this.get("i18n").t('designated_dispatched_error'));
+  cannotSave() {
+    let pkgs = this.store
+      .peekRecord("item", this.get("itemId"))
+      .get("packages");
+    if (
+      pkgs &&
+      pkgs.length &&
+      (pkgs.get("firstObject.hasAllPackagesDesignated") ||
+        pkgs.get("firstObject.hasAllPackagesDispatched"))
+    ) {
+      this.get("messageBox").alert(
+        this.get("i18n").t("designated_dispatched_error")
+      );
       return true;
     }
     return false;
   },
 
-  rejectValidation(selectedReason,rejectProperties){
-    if(selectedReason === undefined) {
-      this.set('noReasonSelected', true);
+  rejectValidation(selectedReason, rejectProperties) {
+    if (selectedReason === undefined) {
+      this.set("noReasonSelected", true);
       return false;
     }
-    if(selectedReason === "-1" && Ember.$.trim(rejectProperties.rejectReason).length === 0) {
+    if (
+      selectedReason === "-1" &&
+      Ember.$.trim(rejectProperties.rejectReason).length === 0
+    ) {
       this.set("isBlank", true);
       return false;
     }
     return true;
   },
 
-  actions: {
+  rejectProperties() {
+    return {
+      rejectReason: this.get("rejectReason"),
+      rejectionComments: this.get("rejectMsg"),
+      rejectionReason: this.store.peekRecord(
+        "rejection_reason",
+        this.get("selectedId")
+      ),
+      state_event: "reject",
+      id: this.get("itemId"),
+      offer: this.get("offer.model"),
+      packageType: this.store.peekRecord("packageType", this.get("itemTypeId"))
+    };
+  },
 
+  actions: {
     setRejectOption() {
       this.set("selectedId", "-1");
     },
 
+    setMessage(message) {
+      this.set("rejectMsg", message);
+    },
+
     rejectItem() {
-      if(this.get("itemId") && this.cannotSave()){
+      if (this.get("itemId") && this.cannotSave()) {
         return false;
       }
-      var selectedReason = this.get('selectedId');
-      var rejectProperties = this.getProperties('rejectReason');
-      if(!this.rejectValidation(selectedReason, rejectProperties)){
+      let selectedReason = this.get("selectedId");
+      let rejectProperties = this.rejectProperties();
+
+      if (!this.rejectValidation(selectedReason, rejectProperties)) {
         return false;
       }
 
-
-      if(selectedReason !== "-1") {
+      if (selectedReason !== "-1") {
         rejectProperties.rejectReason = null;
-        this.set('rejectReason', null);
+        this.set("rejectReason", null);
       }
 
-      var offer = this.get("offer.model");
+      let offer = this.get("offer.model");
 
-      var saveItem = () => {
-
-
-        var loadingView = getOwner(this).lookup('component:loading').append();
-        rejectProperties.rejectionReason = this.store.peekRecord('rejection_reason', selectedReason);
-        rejectProperties.state_event = 'reject';
-        rejectProperties.id = this.get('itemId');
-
-        rejectProperties.offer = offer;
-        rejectProperties.packageType = this.store.peekRecord('packageType', this.get('itemTypeId'));
-
-        var item = this.store.peekRecord("item", this.get("itemId"));
+      let saveItem = () => {
+        let loadingView = getOwner(this)
+          .lookup("component:loading")
+          .append();
+        let item = this.store.peekRecord("item", this.get("itemId"));
         item.setProperties(rejectProperties);
 
         // Save changes to Item
-        item.save()
+        item
+          .save()
           .then(() => {
-            this.transitionToRoute('review_offer.items');
-            this.get("reviewOfferController").set("displayCompleteReviewPopup", offer.get("allItemsReviewed") && offer.get("isUnderReview"));
+            this.transitionToRoute("review_offer.items");
+            this.get("reviewOfferController").set(
+              "displayCompleteReviewPopup",
+              offer.get("allItemsReviewed") && offer.get("isUnderReview")
+            );
           })
           .catch(error => {
-            if(item) {
+            if (item) {
               item.rollback();
             }
-            if (error.errors instanceof Array &&
-              error.errors.filter(e => !!e["requires_gogovan_cancellation"]).length > 0) {
-              return this.transitionToRoute('offer.cancel_gogovan', offer);
+            if (
+              error.errors instanceof Array &&
+              error.errors.filter(e => !!e["requires_gogovan_cancellation"])
+                .length > 0
+            ) {
+              return this.transitionToRoute("offer.cancel_gogovan", offer);
             }
-
             throw error;
           })
           .finally(() => loadingView.destroy());
       };
 
       // if rejecting last accepted item but gogovan is booked display gogovan cancellation page
-      var gogovanOrder = offer.get("delivery.gogovanOrder");
-      var itemIsLastAccepted = offer.get("approvedItems").every(i => i.id === this.get('itemId'));
+      let gogovanOrder = offer.get("delivery.gogovanOrder");
+      let itemIsLastAccepted = offer
+        .get("approvedItems")
+        .every(i => i.id === this.get("itemId"));
 
       if (itemIsLastAccepted && gogovanOrder) {
-
-        if(gogovanOrder.get("isPickedUp")) {
-          this.get("messageBox").alert(this.get("i18n").t("reject.cannot_reject_error"));
+        if (gogovanOrder.get("isPickedUp")) {
+          this.get("messageBox").alert(
+            this.get("i18n").t("reject.cannot_reject_error")
+          );
         } else {
-          this.get("messageBox").confirm(this.get("i18n").t("reject.cancel_gogovan_confirm"), () => {
-            if (gogovanOrder.get("isActive")) {
-              this.transitionToRoute('offer.cancel_gogovan', offer);
-            } else {
-              saveItem();
+          this.get("messageBox").confirm(
+            this.get("i18n").t("reject.cancel_gogovan_confirm"),
+            () => {
+              if (gogovanOrder.get("isActive")) {
+                this.transitionToRoute("offer.cancel_gogovan", offer);
+              } else {
+                saveItem();
+              }
             }
-          });
+          );
         }
       } else {
         saveItem();
