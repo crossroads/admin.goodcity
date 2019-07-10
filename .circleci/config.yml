@@ -140,7 +140,7 @@ jobs:
     steps:
       - restore-cache: *restore-repo-cache
       - restore-cache: *restore-bundler-cache
-      - run: bundle check --path=vendor/bundle || bundle install --deployment --jobs=4 --retry=3
+      - run: bundle check --path=vendor/bundle || bundle install --deployment --jobs=2 --retry=3
       - save-cache: *save-bundler-cache
       - run:
           name: Setup Environment variables
