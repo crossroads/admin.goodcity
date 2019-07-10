@@ -126,7 +126,7 @@ jobs:
           command: |
             npm rebuild node-sass
             echo "Building for staging (true/false): $STAGING"
-            yarn run ember build --environment=production --deployment --jobs=2 --retry=3
+            JOBS=2 yarn run ember build --environment=production
       - run: mv dist/ dist-www
       - persist_to_workspace:
           root: .
@@ -188,7 +188,7 @@ jobs:
           command: |
             npm rebuild node-sass
             echo "Building for staging (true/false): $STAGING"
-            yarn run ember build --environment=production --deployment --jobs=2 --retry=3
+            JOBS=2 yarn run ember build --environment=production
       - run: mv dist/ cordova/www
       - persist_to_workspace:
           root: .
