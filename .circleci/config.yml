@@ -126,7 +126,7 @@ jobs:
           command: |
             npm rebuild node-sass
             echo "Building for staging (true/false): $STAGING"
-            yarn run ember build --environment=production
+            yarn run ember build --environment=production --deployment --jobs=2 --retry=3
       - run: mv dist/ dist-www
       - persist_to_workspace:
           root: .
@@ -140,7 +140,7 @@ jobs:
     steps:
       - restore-cache: *restore-repo-cache
       - restore-cache: *restore-bundler-cache
-      - run: bundle check --path=vendor/bundle || bundle install --deployment --jobs=2 --retry=3
+      - run: bundle check --path=vendor/bundle || bundle install --deployment --jobs=4 --retry=3
       - save-cache: *save-bundler-cache
       - run:
           name: Setup Environment variables
@@ -188,7 +188,7 @@ jobs:
           command: |
             npm rebuild node-sass
             echo "Building for staging (true/false): $STAGING"
-            yarn run ember build --environment=production
+            yarn run ember build --environment=production --deployment --jobs=2 --retry=3
       - run: mv dist/ cordova/www
       - persist_to_workspace:
           root: .
