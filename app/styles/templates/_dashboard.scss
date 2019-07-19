@@ -1,0 +1,86 @@
+.offer_detail {
+  text-align: center;
+  height: 4.5rem;
+  font-size: 1.5vw;
+  color:#DFE0E7;
+
+  .offer_title {
+    padding-top: 5px;
+    font-weight: 600;
+  }
+
+  i {
+    margin-top:25px;
+    font-size: 1.1rem;
+    color: #FFFFFF;
+  }
+
+  span {
+    font-size: 1.2rem;
+    color: #FFFFFF;
+  }
+
+  @media #{$small-only} {
+    font-size: 3vw;
+  }
+
+  @media screen and (max-width: 350px) {
+    .offer_count span, i {
+      font-size: 5vw;
+    }
+  }
+}
+
+.priority_details {
+  height: 3rem;
+  padding: 5%;
+
+  i {
+    margin-top:10px !important;
+    color: #FFFFFF;
+  }
+}
+
+.recent_offers {
+  padding-left: 3%;
+  padding-right: 3%;
+  margin-bottom: 1rem;
+}
+
+.counts {
+  height:75vh;
+  overflow-x:scroll;
+}
+
+.offer_header {
+  margin-bottom: 1rem!important;
+  padding-top: 0;
+  border: 2px solid #27436C;
+  height: 5rem;
+  line-height: 4rem;
+
+  img {
+    height: -webkit-fill-available;
+  }
+
+  .offer_code, .offer_user_name {
+    color: #FFFFFF;
+  }
+}
+
+.view_all {
+  color: #FFFFFF;
+  text-decoration: underline;
+}
+.reviewing { background-color:#ED4C4E; }
+.scheduled { background-color:#6FAB4A; }
+.receiving { background-color:#438BCA; }
+.reviewed { background-color:#7EB253; }
+
+.hr-divider {
+  color: #fff;
+  margin-top: 35% !important;
+  border: none;
+  height: 1px;
+  background-color: #fff;
+}

@@ -123,6 +123,8 @@ I18nTranslationsEn =
         "info_text1": "If we have questions when reviewing this item we will chat with you here."
         "info_text2": "If you want to add a comment to this item for our reviewers, type it below."
 
+    "dashboard":
+      "title": "Dashboard"
     "inbox":
       "quick_links": "Quick Links"
       "all_offers": "All Offers"
