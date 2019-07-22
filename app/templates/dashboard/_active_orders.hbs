@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="small-3 columns" {{action 'clearAndApplyStateFilter' 'under_review' selfReview target=filterService}}>
+    <div  class="offer_detail reviewing">
+      <div class="offer_title">Reviewing</div>
+      <div class="offer_count">
+        <i class="fa fa-list-ol"></i>
+        <span>{{model.offersCount.under_review}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="small-3 columns" {{action 'clearAndApplyStateFilter' 'reviewed' selfReview target=filterService}}>
+    <div  class="offer_detail reviewed">
+      <div class="offer_title">Reviewed</div>
+      <div class="offer_count">
+        <i class="fa fa-hourglass-half"></i>
+        <span>{{model.offersCount.reviewed}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="small-3 columns" {{action 'clearAndApplyStateFilter' 'scheduled' selfReview target=filterService}}>
+    <div  class="offer_detail scheduled">
+      <div class="offer_title">Scheduled</div>
+      <div class="offer_count">
+        <i class="fa fa-clock-o"></i>
+        <span>{{model.offersCount.scheduled}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="small-3 columns" {{action 'clearAndApplyStateFilter' 'receiving' selfReview target=filterService}}>
+    <div  class="offer_detail receiving">
+      <div class="offer_title">Receiving</div>
+      <div class="offer_count">
+        <i class="fa fa-shopping-cart"></i>
+        <span>{{model.offersCount.receiving}}</span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -9,8 +9,8 @@
           {{/link-to}}
         {{/link-to}}
 
-        {{#link-to 'dashboard.my_offers' tagName="dd" classNames="small-4 columns text-center"}}
-          {{#link-to 'dashboard.my_offers'}}
+        {{#link-to 'dashboard.my_offers' (query-params selfReviewer=true) tagName="dd" classNames="small-4 columns text-center"}}
+          {{#link-to 'dashboard.my_offers' (query-params selfReviewer=true)}}
             <div>My Active Offers</div>
           {{/link-to}}
         {{/link-to}}
@@ -18,3 +18,9 @@
     </div>
   </div>
 </section>
+
+{{partial 'dashboard/offers_count'}}
+
+<hr class="hr-divider">
+
+{{partial "dashboard/recent_new_offers"}}

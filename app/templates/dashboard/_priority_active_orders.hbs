@@ -1,0 +1,55 @@
+<div class="row">
+      <div class="small-3 columns" {{action 'clearAndApplyStateFilter' 'under_review' selfReview priority target=filterService}}>
+        <div class="offer_detail priority_details reviewing">
+          {{#if model.offersCount.priority_under_review }}
+            <div class="order_count">
+              <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+              <span>{{model.offersCount.priority_under_review}}</span>
+            </div>
+          {{else}}
+            <i class="fa fa-check"></i>
+          {{/if}}
+        </div>
+      </div>
+
+      <div class="small-3 columns" {{action 'clearAndApplyStateFilter' 'reviewed' selfReview priority target=filterService}}>
+        <div class="offer_detail priority_details reviewed">
+          {{#if model.offersCount.priority_reviewed }}
+            <div class="order_count">
+              <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+              <span>{{model.offersCount.priority_reviewed}}</span>
+            </div>
+          {{else}}
+            <i class="fa fa-check"></i>
+          {{/if}}
+        </div>
+      </div>
+
+      <div class="small-3 columns" {{action 'clearAndApplyStateFilter' 'scheduled' selfReview priority target=filterService}}>
+        <div class="offer_detail priority_details scheduled">
+          {{#if model.offersCount.priority_scheduled }}
+            <div class="order_count">
+              <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+              <span>{{model.offersCount.priority_scheduled}}</span>
+            </div>
+          {{else}}
+            <i class="fa fa-check"></i>
+          {{/if}}
+        </div>
+      </div>
+
+      <div class="small-3 columns" {{action 'clearAndApplyStateFilter' 'receiving' selfReview priority target=filterService}}>
+        <div class="offer_detail priority_details receiving">
+          <div class="order_count">
+            {{#if model.offersCount.priority_receiving }}
+            <div class="order_count">
+              <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+              <span>{{model.offersCount.priority_receiving}}</span>
+            </div>
+          {{else}}
+            <i class="fa fa-check"></i>
+          {{/if}}
+          </div>
+        </div>
+      </div>
+    </div>

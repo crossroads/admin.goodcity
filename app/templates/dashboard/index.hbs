@@ -9,8 +9,8 @@
           {{/link-to}}
         {{/link-to}}
 
-        {{#link-to 'dashboard.my_offers' tagName="dd" classNames="small-4 columns text-center"}}
-          {{#link-to 'dashboard.my_offers'}}
+        {{#link-to 'dashboard.my_offers' (query-params selfReviewer=true) tagName="dd" classNames="small-4 columns text-center"}}
+          {{#link-to 'dashboard.my_offers' (query-params selfReviewer=true)}}
             <div>My Active Offers</div>
           {{/link-to}}
         {{/link-to}}
@@ -19,158 +19,8 @@
   </div>
 </section>
 
-<div class="row">
-  <div class="small-12 columns summary offer_detail">
-    <div class="row">
-      <div class="small-3 columns" {{action 'clearAndApplyStateFilter' 'under_review' target=filterService}}>
-        <div  class="offer_detail reviewing">
-          <div class="offer_title">Reviewing</div>
-          <div class="offer_count">
-            <i class="fa fa-list-ol"></i>
-            <span>{{model.under_review}}</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="small-3 columns" {{action 'clearAndApplyStateFilter' 'reviewed' target=filterService}}>
-        <div  class="offer_detail reviewed">
-          <div class="offer_title">Reviewed</div>
-          <div class="offer_count">
-            <i class="fa fa-hourglass-half"></i>
-            <span>{{model.reviewed}}</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="small-3 columns" {{action 'clearAndApplyStateFilter' 'scheduled' target=filterService}}>
-        <div  class="offer_detail scheduled">
-          <div class="offer_title">Scheduled</div>
-          <div class="offer_count">
-            <i class="fa fa-clock-o"></i>
-            <span>{{model.scheduled}}</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="small-3 columns" {{action 'clearAndApplyStateFilter' 'receiving' target=filterService}}>
-        <div  class="offer_detail receiving">
-          <div class="offer_title">Receiving</div>
-          <div class="offer_count">
-            <i class="fa fa-shopping-cart"></i>
-            <span>{{model.receiving}}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <br>
-
-    <div class="row">
-      <div class="small-3 columns" {{action 'clearAndApplyStateFilter' 'under_review' true target=filterService}}>
-        <div class="offer_detail priority_details reviewing">
-          {{#if model.priority_under_review }}
-            <div class="order_count">
-              <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
-              <span>{{model.priority_under_review}}</span>
-            </div>
-          {{else}}
-            <i class="fa fa-check"></i>
-          {{/if}}
-        </div>
-      </div>
-
-      <div class="small-3 columns" {{action 'clearAndApplyStateFilter' 'reviewed' true target=filterService}}>
-        <div class="offer_detail priority_details reviewed">
-          {{#if model.priority_reviewed }}
-            <div class="order_count">
-              <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
-              <span>{{model.priority_reviewed}}</span>
-            </div>
-          {{else}}
-            <i class="fa fa-check"></i>
-          {{/if}}
-        </div>
-      </div>
-
-      <div class="small-3 columns" {{action 'clearAndApplyStateFilter' 'scheduled' true target=filterService}}>
-        <div class="offer_detail priority_details scheduled">
-          {{#if model.priority_scheduled }}
-            <div class="order_count">
-              <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
-              <span>{{model.priority_scheduled}}</span>
-            </div>
-          {{else}}
-            <i class="fa fa-check"></i>
-          {{/if}}
-        </div>
-      </div>
-
-      <div class="small-3 columns" {{action 'clearAndApplyStateFilter' 'receiving' true target=filterService}}>
-        <div class="offer_detail priority_details receiving">
-          <div class="order_count">
-            {{#if model.priority_receiving }}
-            <div class="order_count">
-              <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
-              <span>{{model.priority_receiving}}</span>
-            </div>
-          {{else}}
-            <i class="fa fa-check"></i>
-          {{/if}}
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="small-4 columns" {{action 'clearAndApplyStateFilter' 'received' target=filterService}}>
-        Received &nbsp;&nbsp;<i class="fa fa-thumbs-up"></i>
-      </div>
-
-      <div class="small-4 columns" {{action 'clearAndApplyStateFilter' 'cancelled' target=filterService}}>
-        Cancelled &nbsp;&nbsp;<i class="fa fa-thumbs-down"></i>
-      </div>
-
-      <div class="small-4 columns" {{action 'clearAndApplyStateFilter' 'inactive' target=filterService}}>
-        Inactive &nbsp;&nbsp;<i class="fa fa-bed"></i>
-      </div>
-    </div>
-  </div>
-</div>
+{{partial 'dashboard/offers_count'}}
 
 <hr class="hr-divider">
 
-<div class="small-12 columns summary recent_offers counts" >
-  <h2 class="offer-title">
-    <i class="fa fa-shopping-basket"></i> New Offers
-  </h2>
-
-  {{!-- {{#each model.recentlyUsedDesignations as |order|}}
-    {{#link-to 'orders.items_list' order href=false}} --}}
-      <div class="row offer_header">
-        <div class="small-4 medium-4 large-4 columns">
-          <img src="https://www.myvoltas.com/pub/media/catalog/product/cache/image/600x773/e9c3970ab036de70892d86c6d221abfe/v/o/voltas-sac-183-pzy-r.png" alt="">
-        </div>
-        <div class="small-4 medium-4 large-4 columns order_user_name">
-          Janice Pillburry
-        </div>
-        <div class="small-4 medium-4 large-4 columns order_state">
-          GC-03191
-        </div>
-      </div>
-    {{!-- {{/link-to}}
-    {{#link-to 'orders.items_list' order href=false}} --}}
-      <div class="row offer_header">
-        <div class="small-4 medium-4 large-4 columns">
-          <img src="https://www.myvoltas.com/pub/media/catalog/product/cache/image/600x773/e9c3970ab036de70892d86c6d221abfe/v/o/voltas-sac-183-pzy-r.png" alt="">
-        </div>
-        <div class="small-4 medium-4 large-4 columns offer_user_name">
-          Janice Pillburry
-        </div>
-        <div class="small-4 medium-4 large-4 columns offer_code">
-          GC-03191
-        </div>
-      </div>
-    {{!-- {{/link-to}}
-  {{/each}} --}}
-  <div align="center" class="view_all" {{action 'clearAndApplyStateFilter' 'submitted' target=filterService}}>View all new offers</div>
-</div>
+{{partial "dashboard/recent_new_offers"}}

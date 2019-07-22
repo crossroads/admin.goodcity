@@ -133,7 +133,7 @@ export default Ember.Controller.extend(backNavigator, {
     },
 
     cancelSearch() {
-      this.transitionToRoute("my_list.reviewing");
+      this.transitionToRoute("dashboard");
     }
   }
 });

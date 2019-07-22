@@ -81,7 +81,7 @@ Router.map(function() {
   this.route("search");
   this.route("offers_filters");
   this.route("dashboard", function() {
-    this.route("my_offers", { path: "/my_offers" });
+    this.route("my_offers");
   });
 
   this.route("offers", function() {

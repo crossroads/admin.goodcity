@@ -66,9 +66,12 @@ export default Ember.Service.extend(Ember.Evented, {
     this.clearReviewFilters();
   },
 
-  clearAndApplyStateFilter(state, priority = false) {
+  clearAndApplyStateFilter(state, selfReview, priority = false) {
     this.clearFilters();
     let states = [];
+    if (selfReview) {
+      this.set("selfReviewFilter", true);
+    }
     if (priority) {
       states.push(STATE_FILTERS.PRIORITY);
     }
