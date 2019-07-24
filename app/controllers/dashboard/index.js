@@ -6,6 +6,7 @@ export default Ember.Controller.extend({
   priority: true,
   selfReview: false,
 
+  offersCount: Ember.computed.alias("model.offersCount"),
   pageTitle: Ember.computed(function() {
     return this.get("i18n").t("dashboard.title");
   })

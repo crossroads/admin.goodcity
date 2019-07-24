@@ -2,30 +2,17 @@ import AuthorizeRoute from "./../authorize";
 import AjaxPromise from "./../../utils/ajax-promise";
 
 export default AuthorizeRoute.extend({
-  queryParams: {
-    selfReviewer: false
-  },
-  reviewer: false,
-
-  beforeModel(transition) {
-    if (transition.queryParams.selfReviewer) {
-      this.set("reviewer", true);
-    }
-  },
-
   model() {
     const selfReviewer = this.get("reviewer");
     const recentOfferParams = {
       state: "submitted",
       slug: "search",
-      recent_offers: true
+      recent_offers: true,
+      recent_offer_per: 5
     };
-    if (selfReviewer) {
-      recentOfferParams["selfReview"] = selfReviewer;
-    }
     return Ember.RSVP.hash({
       offersCount: new AjaxPromise(
-        `/offers/summary?selfReview=${selfReviewer}`,
+        `/offers/summary`,
         "GET",
         this.session.get("authToken")
       ),

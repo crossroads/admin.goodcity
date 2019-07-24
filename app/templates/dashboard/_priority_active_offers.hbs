@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="small-3 columns" {{action 'clearAndApplyStateFilter' 'under_review' selfReview priority target=filterService}}>
+    <div class="offer_detail priority_details reviewing">
+       <div class="order_count">
+        <span>
+          {{{offers-count-display offersCount "under_review" isMyActiveOfferPage priority}}}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="small-3 columns" {{action 'clearAndApplyStateFilter' 'reviewed' selfReview priority target=filterService}}>
+    <div class="offer_detail priority_details reviewed">
+      <span>
+        {{{offers-count-display offersCount "reviewed" isMyActiveOfferPage priority}}}
+      </span>
+    </div>
+  </div>
+
+  <div class="small-3 columns" {{action 'clearAndApplyStateFilter' 'scheduled' selfReview priority target=filterService}}>
+    <div class="offer_detail priority_details scheduled">
+      {{{offers-count-display offersCount "scheduled" isMyActiveOfferPage priority}}}
+    </div>
+  </div>
+
+  <div class="small-3 columns" {{action 'clearAndApplyStateFilter' 'receiving' selfReview priority target=filterService}}>
+    <div class="offer_detail priority_details receiving">
+      {{{offers-count-display offersCount "receiving" isMyActiveOfferPage priority}}}
+    </div>
+  </div>
+</div>

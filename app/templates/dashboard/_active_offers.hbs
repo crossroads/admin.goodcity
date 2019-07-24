@@ -4,7 +4,9 @@
       <div class="offer_title">Reviewing</div>
       <div class="offer_count">
         <i class="fa fa-list-ol"></i>
-        <span>{{model.offersCount.under_review}}</span>
+        <span>
+          {{offers-count-display offersCount "under_review" isMyActiveOfferPage}}
+        </span>
       </div>
     </div>
   </div>
@@ -14,7 +16,9 @@
       <div class="offer_title">Reviewed</div>
       <div class="offer_count">
         <i class="fa fa-hourglass-half"></i>
-        <span>{{model.offersCount.reviewed}}</span>
+        <span>
+          {{offers-count-display offersCount "reviewed" isMyActiveOfferPage}}
+        </span>
       </div>
     </div>
   </div>
@@ -24,7 +28,9 @@
       <div class="offer_title">Scheduled</div>
       <div class="offer_count">
         <i class="fa fa-clock-o"></i>
-        <span>{{model.offersCount.scheduled}}</span>
+        <span>
+          {{offers-count-display offersCount "scheduled" isMyActiveOfferPage}}
+        </span>
       </div>
     </div>
   </div>
@@ -34,7 +40,9 @@
       <div class="offer_title">Receiving</div>
       <div class="offer_count">
         <i class="fa fa-shopping-cart"></i>
-        <span>{{model.offersCount.receiving}}</span>
+        <span>
+          {{offers-count-display offersCount "receiving" isMyActiveOfferPage}}
+        </span>
       </div>
     </div>
   </div>
