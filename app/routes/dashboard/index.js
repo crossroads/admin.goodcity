@@ -1,3 +1,4 @@
+import Ember from "ember";
 import AuthorizeRoute from "./../authorize";
 import AjaxPromise from "./../../utils/ajax-promise";
 
@@ -10,6 +11,7 @@ export default AuthorizeRoute.extend({
       controller: "dashboard"
     });
   },
+
   model() {
     const selfReviewer = this.get("reviewer");
     const recentOfferParams = {

@@ -124,7 +124,19 @@ I18nTranslationsEn =
         "info_text2": "If you want to add a comment to this item for our reviewers, type it below."
 
     "dashboard":
-      "title": "Dashboard"
+      "title": "Dashboard",
+      "all_active_offers": "All Active Offers"
+      "my_active_offers": "My Active Offers",
+      "under_review": "Reviewing",
+      "reviewed": "Reviewed",
+      "scheduled": "Scheduled",
+      "receiving": "Receiving",
+      "inactive": "Inactive",
+      "cancelled": "Cancelled",
+      "received": "Received",
+      "new_offers": "New Offers",
+      "view_all_offers": "View all new offers"
+
     "inbox":
       "quick_links": "Quick Links"
       "all_offers": "All Offers"

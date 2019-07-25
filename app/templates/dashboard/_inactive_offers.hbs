@@ -1,13 +1,13 @@
 <div class="row">
   <div class="small-4 columns" {{action 'clearAndApplyStateFilter' 'received' selfReview target=filterService}}>
-    Received &nbsp;&nbsp;<i class="fa fa-thumbs-up"></i>
+    {{t "dashboard.received"}} <i class="fa fa-thumbs-up"></i>
   </div>
 
   <div class="small-4 columns" {{action 'clearAndApplyStateFilter' 'cancelled' selfReview target=filterService}}>
-    Cancelled &nbsp;&nbsp;<i class="fa fa-thumbs-down"></i>
+    {{t "dashboard.cancelled"}} <i class="fa fa-thumbs-down"></i>
   </div>
 
   <div class="small-4 columns" {{action 'clearAndApplyStateFilter' 'inactive' selfReview target=filterService}}>
-    Inactive &nbsp;&nbsp;<i class="fa fa-bed"></i>
+    {{t "dashboard.inactive"}} <i class="fa fa-bed"></i>
   </div>
 </div>

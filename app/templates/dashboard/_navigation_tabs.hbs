@@ -4,13 +4,13 @@
       <dl class="tabs" data-tab>
         {{#link-to 'dashboard' tagName="dd" classNames="small-4 columns text-center"}}
           {{#link-to 'dashboard'}}
-            <div>All Active Offers({{model.offersCount.active_offers_total_count}})</div>
+            <div>{{t "dashboard.all_active_offers"}}({{offersCount.active_offers_total_count}})</div>
           {{/link-to}}
         {{/link-to}}
 
-        {{#link-to 'dashboard.my_offers' (query-params selfReviewer=true) tagName="dd" classNames="small-4 columns text-center"}}
-          {{#link-to 'dashboard.my_offers' (query-params selfReviewer=true)}}
-            <div>My Active Offers({{model.offersCount.reviewer_active_offers_total_count}})</div>
+        {{#link-to 'dashboard.my_offers' tagName="dd" classNames="small-4 columns text-center"}}
+          {{#link-to 'dashboard.my_offers'}}
+            <div>{{t "dashboard.my_active_offers"}}({{offersCount.reviewer_active_offers_total_count}})</div>
           {{/link-to}}
         {{/link-to}}
       </dl>

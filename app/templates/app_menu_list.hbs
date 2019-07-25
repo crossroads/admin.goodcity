@@ -1,6 +1,7 @@
 <aside class="left-off-canvas-menu">
   <ul class="off-canvas-list">
     <li><label>{{t "inbox.quick_links"}}</label></li>
+    <li>{{#link-to 'dashboard.index'}}{{t "dashboard.title"}}{{/link-to}}</li>
     <li>{{#link-to 'my_list'}}{{t "inbox.my_list"}} ({{myOffersCount}}){{/link-to}}</li>
     <li>{{#link-to 'offers.submitted'}}{{t "inbox.new_offers"}} ({{newOffersCount}}){{/link-to}}</li>
     <li><a href="#" class="create-offer-btn" {{action 'createOffer'}}>{{t "inbox.create_offer"}}</a></li>

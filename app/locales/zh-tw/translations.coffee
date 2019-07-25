@@ -123,6 +123,20 @@ I18nTranslationsZhTw =
         "info_text1": "假如審查過程中我們遇到任何問題，我們會在下面的對話框向您查詢。"
         "info_text2": "假如您想添加任何有關捐贈物品的資料，請於下面的對話框輸入。"
 
+    "dashboard":
+      "title": "Dashboard",
+      "all_active_offers": "All Active Offers"
+      "my_active_offers": "My Active Offers",
+      "under_review": "Reviewing",
+      "reviewed": "Reviewed",
+      "scheduled": "Scheduled",
+      "receiving": "Receiving",
+      "inactive": "Inactive",
+      "cancelled": "Cancelled",
+      "received": "Received",
+      "new_offers": "New Offers",
+      "view_all_offers": "View all new offers"
+
     "inbox":
       "quick_links": "快捷鍵"
       "all_offers": "所有捐贈品"
