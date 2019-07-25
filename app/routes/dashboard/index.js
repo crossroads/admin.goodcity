@@ -8,17 +8,16 @@ export default AuthorizeRoute.extend({
     this.render("appMenuList", {
       into: "dashboard",
       outlet: "appMenuList",
-      controller: "dashboard"
+      controller: "offers"
     });
   },
 
   model() {
-    const selfReviewer = this.get("reviewer");
     const recentOfferParams = {
       state: "submitted",
       slug: "search",
       recent_offers: true,
-      recent_offer_per: 5
+      recent_offer_count: 5
     };
     return Ember.RSVP.hash({
       offersCount: new AjaxPromise(

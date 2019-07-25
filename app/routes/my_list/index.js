@@ -8,7 +8,7 @@ export default AuthorizeRoute.extend({
     if (!this.get("isCordovaApp") && "Notification" in window) {
       this.requestDesktopNotificationPermission();
     }
-    return this.transitionTo("dashboard");
+    return this.transitionTo("my_list.reviewing");
   },
 
   requestDesktopNotificationPermission() {
