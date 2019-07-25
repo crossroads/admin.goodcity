@@ -2,6 +2,14 @@ import AuthorizeRoute from "./../authorize";
 import AjaxPromise from "./../../utils/ajax-promise";
 
 export default AuthorizeRoute.extend({
+  renderTemplate() {
+    this.render(); // default template
+    this.render("appMenuList", {
+      into: "dashboard",
+      outlet: "appMenuList",
+      controller: "dashboard"
+    });
+  },
   model() {
     const selfReviewer = this.get("reviewer");
     const recentOfferParams = {
