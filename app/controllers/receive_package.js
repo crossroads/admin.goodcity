@@ -19,7 +19,7 @@ export default Ember.Controller.extend({
       .sortBy("id");
   }),
 
-  selectedCondition: Ember.computed.alias("model.donorCondition"),
+  selectedCondition: Ember.computed.alias("model.donorConditionId"),
 
   grades: Ember.computed(function() {
     return [
