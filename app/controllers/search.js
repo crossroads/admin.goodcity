@@ -118,7 +118,7 @@ export default Ember.Controller.extend(backNavigator, {
     loadMoreOffers(pageNo) {
       const params = this.trimQuery(
         _.merge(
-          { slug: "search" },
+          { slug: "search" }, //slug: is an identifier used in offer adapter to query url `/offers/search`
           this.getFilterQuery(),
           this.getReviewerFilter(),
           this.getSearchQuery(),
@@ -133,7 +133,7 @@ export default Ember.Controller.extend(backNavigator, {
     },
 
     cancelSearch() {
-      this.transitionToRoute("my_list.reviewing");
+      this.transitionToRoute("dashboard");
     }
   }
 });

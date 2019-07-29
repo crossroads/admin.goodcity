@@ -1,0 +1,19 @@
+<section id="receive-list-menu" class="main-section review_offer">
+  <div class="row">
+    <div class="small-12 columns tab_row">
+      <dl class="tabs" data-tab>
+        {{#link-to 'dashboard.index' tagName="dd" classNames="small-4 columns text-center"}}
+          {{#link-to 'dashboard.index'}}
+            <div>{{t "dashboard.all_active_offers"}}({{offersCount.offers_total_count}})</div>
+          {{/link-to}}
+        {{/link-to}}
+
+        {{#link-to 'dashboard.my_offers' tagName="dd" classNames="small-4 columns text-center"}}
+          {{#link-to 'dashboard.my_offers'}}
+            <div>{{t "dashboard.my_active_offers"}}({{offersCount.reviewer_offers_total_count}})</div>
+          {{/link-to}}
+        {{/link-to}}
+      </dl>
+    </div>
+  </div>
+</section>

@@ -80,6 +80,9 @@ Router.map(function() {
   this.route("my_notifications");
   this.route("search");
   this.route("offers_filters");
+  this.route("dashboard", function() {
+    this.route("my_offers");
+  });
 
   this.route("offers", function() {
     this.route("submitted");

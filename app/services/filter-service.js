@@ -39,6 +39,7 @@ export const STATE_FILTERS = {
 
 export default Ember.Service.extend(Ember.Evented, {
   localStorage: Ember.inject.service(),
+  routing: Ember.inject.service("-routing"),
 
   offerStateFilters: PERSISTENT_VAR("offerStateFilters", []),
 
@@ -63,6 +64,20 @@ export default Ember.Service.extend(Ember.Evented, {
     this.clearOfferStateFilters();
     this.clearOfferTimeFilters();
     this.clearReviewFilters();
+  },
+
+  clearAndApplyStateFilter(state, selfReview, priority = false) {
+    this.clearFilters();
+    let states = [];
+    if (selfReview) {
+      this.set("selfReviewFilter", true);
+    }
+    if (priority) {
+      states.push(STATE_FILTERS.PRIORITY);
+    }
+    states.push(state);
+    this.set("offerStateFilters", states);
+    this.get("routing").transitionTo("search");
   },
 
   hasOfferFilters: Ember.computed("offerStateFilters", function() {
