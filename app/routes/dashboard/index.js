@@ -15,7 +15,7 @@ export default AuthorizeRoute.extend({
   model() {
     const recentOfferParams = {
       state: "submitted",
-      slug: "search",
+      slug: "search", //slug: is an identifier used in offer adapter to query url `/offers/search`
       recent_offers: true,
       recent_offer_count: 5
     };
