@@ -1,13 +1,19 @@
-<div class="row">
-  <div class="small-4 columns" {{action 'clearAndApplyStateFilter' 'received' selfReview target=filterService}}>
-    {{t "dashboard.received"}} <i class="fa fa-thumbs-up"></i>
+<div class="row inactive_offers_divider">
+  <div class="small-4 columns">
+    <div class="offer_counts" {{action 'clearAndApplyStateFilter' 'received' selfReview target=filterService}}>
+      {{t "dashboard.received"}} <i class="fa fa-thumbs-up"></i>
+    </div>
   </div>
 
-  <div class="small-4 columns" {{action 'clearAndApplyStateFilter' 'cancelled' selfReview target=filterService}}>
-    {{t "dashboard.cancelled"}} <i class="fa fa-thumbs-down"></i>
+  <div class="small-4 columns">
+    <div class="offer_counts" {{action 'clearAndApplyStateFilter' 'cancelled' selfReview target=filterService}}>
+      {{t "dashboard.cancelled"}} <i class="fa fa-thumbs-down"></i>
+    </div>
   </div>
 
-  <div class="small-4 columns" {{action 'clearAndApplyStateFilter' 'inactive' selfReview target=filterService}}>
-    {{t "dashboard.inactive"}} <i class="fa fa-bed"></i>
+  <div class="small-4 columns">
+    <div class="offer_counts" {{action 'clearAndApplyStateFilter' 'received' selfReview target=filterService}}>
+      {{t "dashboard.inactive"}} <i class="fa fa-bed"></i>
+    </div>
   </div>
 </div>
