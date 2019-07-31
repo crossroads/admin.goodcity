@@ -121,6 +121,27 @@
           </ul>
         </div>
       </div>
+    {{else}}
+      <div class="row">
+        <div class="small-4 columns">
+          Corporate Donor
+        </div>
+        <div class="small-8 columns underline">
+          {{#link-to "offer.search_companies" currentOffer.id (query-params prevPath="donor_details") class="change-contact" tagName='div' href=false}}
+            NA, Personal - Add company
+          {{/link-to}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="small-4 columns">
+          Donor Contact
+        </div>
+        <div class="small-8 columns underline">
+          {{#link-to "offer.search_users" currentOffer.id (query-params prevPath="donor_details") class="change-contact" tagName='div' href=false}}
+            Missing - Add contact
+          {{/link-to}}
+        </div>
+      </div>
     {{/if}}
 
   </section>
