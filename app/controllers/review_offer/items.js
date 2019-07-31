@@ -4,6 +4,7 @@ export default Ember.Controller.extend({
   sortProperties: ["latestUpdatedTime:desc"],
   sortedItems: Ember.computed.sort("offerAndItems", "sortProperties"),
   items: Ember.computed.alias("model.items"),
+  offer: Ember.computed.alias("model"),
   reviewOffer: Ember.inject.controller(),
 
   offerAndItems: Ember.computed("items.@each.state", function() {
