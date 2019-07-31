@@ -1,8 +1,7 @@
-import AuthorizeRoute from "./../authorize";
+import OfferRoute from "./../offer";
 
-export default AuthorizeRoute.extend({
-  model(params) {
-    var offerId = this.modelFor("review_offer").get("id") || params.offer_id;
-    return this.store.peekRecord("offer", offerId);
+export default OfferRoute.extend({
+  resetController(controller) {
+    controller.set("searchText", "");
   }
 });

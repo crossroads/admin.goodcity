@@ -6,11 +6,11 @@ export default Ember.Controller.extend({
   displayResults: false,
   minSearchTextLength: 3,
 
-  hasSearchText: Ember.computed("searchText", function() {
+  hasSearchText: Ember.computed("searchText", function () {
     return Ember.$.trim(this.get("searchText")).length;
   }),
 
-  onSearchTextChange: Ember.observer("searchText", function() {
+  onSearchTextChange: Ember.observer("searchText", function () {
     // wait before applying the filter
     Ember.run.debounce(this, this.reloadResults, 500);
   }),
@@ -56,7 +56,10 @@ export default Ember.Controller.extend({
     },
 
     cancelSearch() {
-      this.transitionToRoute("dashboard");
+      this.transitionToRoute(
+        "review_offer.donor_details",
+        this.get("model.id")
+      );
     },
 
     loadMoreCompanies(pageNo) {
@@ -77,8 +80,7 @@ export default Ember.Controller.extend({
       new AjaxPromise(
         "/offers/" + offerId,
         "PUT",
-        this.get("session.authToken"),
-        {
+        this.get("session.authToken"), {
           offer: offerParams
         }
       ).then(data => {

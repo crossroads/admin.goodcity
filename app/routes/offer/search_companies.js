@@ -1,9 +1,7 @@
-import AuthorizeRoute from "./../authorize";
-// import Ember from "ember";
+import OfferRoute from "./../offer";
 
-export default AuthorizeRoute.extend({
-  model() {
-    var offerId = this.modelFor("review_offer").get("id");
-    return this.store.peekRecord("offer", offerId);
+export default OfferRoute.extend({
+  resetController(controller) {
+    controller.set("searchText", "");
   }
 });
