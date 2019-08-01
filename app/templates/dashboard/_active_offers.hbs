@@ -2,7 +2,7 @@
   <div class="small-3 columns" {{action 'clearAndApplyStateFilter' 'under_review' selfReview target=filterService}}>
     <div  class="offer_detail reviewing">
       <div class="offer_title">{{t "dashboard.under_review"}}</div>
-      <div class="offer_count">
+      <div class="offer_count offer_icon">
         <i class="fa fa-list-ol"></i>
         <span>
           {{offers-count-display offersCount "under_review" isMyActiveOfferPage}}
@@ -14,7 +14,7 @@
   <div class="small-3 columns" {{action 'clearAndApplyStateFilter' 'reviewed' selfReview target=filterService}}>
     <div  class="offer_detail reviewed">
       <div class="offer_title">{{t "dashboard.reviewed"}}</div>
-      <div class="offer_count">
+      <div class="offer_count offer_icon">
         <i class="fa fa-hourglass-half"></i>
         <span>
           {{offers-count-display offersCount "reviewed" isMyActiveOfferPage}}
@@ -26,7 +26,7 @@
   <div class="small-3 columns" {{action 'clearAndApplyStateFilter' 'scheduled' selfReview target=filterService}}>
     <div  class="offer_detail scheduled">
       <div class="offer_title">{{t "dashboard.scheduled"}}</div>
-      <div class="offer_count">
+      <div class="offer_count offer_icon">
         <i class="fa fa-clock-o"></i>
         <span>
           {{offers-count-display offersCount "scheduled" isMyActiveOfferPage}}
@@ -38,7 +38,7 @@
   <div class="small-3 columns" {{action 'clearAndApplyStateFilter' 'receiving' selfReview target=filterService}}>
     <div  class="offer_detail receiving">
       <div class="offer_title">{{t "dashboard.receiving"}}</div>
-      <div class="offer_count">
+      <div class="offer_count offer_icon">
         <i class="fa fa-shopping-cart"></i>
         <span>
           {{offers-count-display offersCount "receiving" isMyActiveOfferPage}}
