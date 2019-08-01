@@ -7,10 +7,11 @@ export default AuthorizeRoute.extend({
 
   beforeModel() {
     var previousRoutes = this.router.router.currentHandlerInfos;
-    var previousRoute = previousRoutes && previousRoutes.pop();
-
-    if (previousRoute) {
-      this.set("backLinkPath", previousRoute.name);
+    var previousRoute = previousRoutes && previousRoutes.pop().name;
+    if (previousRoute === "search") {
+      this.set("backLinkPath", previousRoute);
+    } else {
+      this.set("backLinkPath", "dashboard");
     }
   },
 
