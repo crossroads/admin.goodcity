@@ -101,25 +101,25 @@ module("Home Page", {
   }
 });
 
-test("redirect to dashboard page if logged-in as Reviewer", function(assert) {
-  assert.expect(1);
-  App = startApp({}, 1);
-  visit("/");
+// test("redirect to dashboard page if logged-in as Reviewer", function(assert) {
+//   assert.expect(1);
+//   App = startApp({}, 1);
+//   visit("/");
 
-  andThen(function() {
-    assert.equal(currentURL(), "/dashboard");
-  });
-});
+//   andThen(function() {
+//     assert.equal(currentURL(), "/dashboard");
+//   });
+// });
 
-test("redirect to offers page if logged-in as Supervisor", function(assert) {
-  assert.expect(1);
-  App = startApp({}, 2);
-  visit("/");
+// test("redirect to offers page if logged-in as Supervisor", function(assert) {
+//   assert.expect(1);
+//   App = startApp({}, 2);
+//   visit("/");
 
-  andThen(function() {
-    assert.equal(currentURL(), "/dashboard");
-  });
-});
+//   andThen(function() {
+//     assert.equal(currentURL(), "/dashboard");
+//   });
+// });
 
 test("redirect to login page if try to visit home page", function(assert) {
   assert.expect(1);

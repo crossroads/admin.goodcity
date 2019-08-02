@@ -37,11 +37,6 @@ export default AuthorizeRoute.extend({
     this._super(controller, model);
     controller.set("displayOfferOptions", false);
     controller.set("displayCompleteReceivePopup", false);
-
-    if (this.get("backLinkPath") !== null) {
-      controller.set("backLinkPath", this.get("backLinkPath"));
-    } else {
-      controller.set("backLinkPath", "dashboard");
-    }
+    controller.set("backLinkPath", this.get("backLinkPath"));
   }
 });
