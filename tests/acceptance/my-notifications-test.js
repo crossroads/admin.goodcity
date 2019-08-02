@@ -150,18 +150,18 @@ test("all notifications - display threads with icons and unread message count", 
 
 test("display unread notification count on notification-bell icon", function(assert) {
   assert.expect(2);
-  visit("/offers");
+  visit("/holidays");
   andThen(function() {
-    assert.equal(currentURL(), "/offers/submitted");
+    assert.equal(currentURL(), "/holidays");
     assert.equal($("span.unread .unread_length").text(), 3);
   });
 });
 
 test("redirect to notifications page on click of notification-bell icon", function(assert) {
   assert.expect(3);
-  visit("/offers");
+  visit("/holidays");
   andThen(function() {
-    assert.equal(currentURL(), "/offers/submitted");
+    assert.equal(currentURL(), "/holidays");
     assert.equal($("span.unread .unread_length").text(), 3);
 
     click("a.all_unread_messages_count");
