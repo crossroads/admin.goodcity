@@ -1,50 +1,49 @@
-<nav class="tab-bar new-company-nav">
-  {{!-- <section class="left-small">
-    {{#link-to "review_offer.donor_details" model.id classNames="back" }}
-      <i class="back_icon" aria-hidden="true">{{fa-icon 'angle-left'}}</i>
-      <div>{{t 'back'}}</div>
-    {{/link-to}}
-  </section> --}}
-  {{!-- <section class="tab-bar-section"> --}}
+<nav class="tab-bar">
+  <section class="left-small">
+    {{#link-to "review_offer.donor_details" model.id classNames="back"}}{{t 'back'}}{{/link-to}}
+  </section>
+
+  <section class="middle tab-bar-section">
     <h1 class="title">New Company</h1>
-  {{!-- </section> --}}
+  </section>
 </nav>
+
 <section class="main-section new-company-section ui">
   {{#validatable-form onSubmit=(action 'saveComanyAndOffer') as |form|}}
-    <div class="row">
-      <div class="{{if isMobileApp 'small-7 large-8' 'small-12'}} columns">
-        Company Name
-      </div>
+  <div class="row">
+    <div class="{{if isMobileApp 'small-7 large-8' 'small-12'}} columns">
+      Company Name
     </div>
-    <div class="row">
-      <div class="{{if isMobileApp 'small-7 large-8' 'small-12'}} columns">
-        {{#form-control}}
-          {{input type='text' value=name placeholder='Company Name' required='true'}}
-          <div class='input-error'>Enter valid name</div>
-        {{/form-control}}
-      </div>
+  </div>
+  <div class="row">
+    <div class="{{if isMobileApp 'small-7 large-8' 'small-12'}} columns">
+      {{#form-control}}
+      {{input type='text' value=name required='true' class='company-input'}}
+      <div class='input-error'>Enter valid name</div>
+      {{/form-control}}
     </div>
+  </div>
 
-    <div class="row">
-      <div class="{{if isMobileApp 'small-7 large-8' 'small-12'}} columns">
-        CRM ID
-      </div>
+  <div class="row">
+    <div class="{{if isMobileApp 'small-7 large-8' 'small-12'}} columns">
+      CRM ID
     </div>
+  </div>
 
-    <div class="row">
-      <div class="{{if isMobileApp 'small-7 large-8' 'small-12'}} columns">
-        {{#form-control}}
-          {{numeric-input value=crmId name="mobilePhone" id="mobile" placeholder='CRM ID' required='true'}}
-          <div class='input-error'>Enter numeric values</div>
-        {{/form-control}}
-      </div>
+  <div class="row">
+    <div class="{{if isMobileApp 'small-7 large-8' 'small-12'}} columns">
+      {{#form-control}}
+      {{numeric-input value=crmId id="crm-id" name="crm-id" maxlength="21" required=true class='company-input' pattern="\d{1,8}"}}
+      <div class='input-error'>Enter numeric values</div>
+      {{/form-control}}
     </div>
+  </div>
 
-    <div class="row">
-      <div class="small-6 columns submit-new-company">
-        <a {{action 'submit' target=form}} class="button expand">{{t 'save'}}</a>
-      </div>
+  <div class="row">
+    <div class="small-6 small-centered large-12 columns submit-new-company">
+      <a {{action 'submit' target=form}} class="button expand">{{t 'save'}}</a>
     </div>
+  </div>
 
   {{/validatable-form}}
 </section>
