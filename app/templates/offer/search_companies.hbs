@@ -17,20 +17,33 @@
       {{/if}}
     </div>
   </div>
-  {{!-- {{offer-filters-button}} --}}
 </div>
 
 <section class="main-section review_offer search search_offer">
   <div class="row">
     <div class="small-12 columns item-content">
+      <div class="new-company">
+        Find existing company or
+        {{#link-to 'companies.new' model.id}}
+          Create new company
+        {{/link-to}}
+      </div>
       {{#if displayResults}}
-        {{#infinite-list height="82vh" loadMore=(action "loadMoreCompanies") as |items| }}
+        {{#infinite-list height="82vh" loadMore=(action "loadMoreCompanies") as |companies| }}
           <ul class="list list-activity list-offer-items">
-            {{!-- {{#each items as |offer|}}
-              {{partial 'offers/offer_details'}}
+            {{#each companies as |company|}}
+              <li {{action 'goToDetails' company.id}}>
+                {{#link-to 'review_offer.donor_details' offer.id tagName='div' href=false}}
+                  <div class="row">
+                    <div class="small-12 columns">
+                      {{company.name}}
+                    </div>
+                  </div>
+                {{/link-to}}
+              </li>
             {{else}}
               <div class="no_result">{{t "search.no_results"}}</div>
-            {{/each}} --}}
+            {{/each}}
           </ul>
         {{/infinite-list}}
       {{/if}}

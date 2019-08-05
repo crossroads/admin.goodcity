@@ -21,6 +21,16 @@ Router.map(function() {
     this.route("cancel_gogovan");
 
     this.route(
+      "companies",
+      { resetNamespace: true, path: "/offer/" },
+      function() {
+        this.route("new", {
+          path: "/:offer_id/companies/new"
+        });
+      }
+    );
+
+    this.route(
       "item",
       { resetNamespace: true, path: "/items/:item_id" },
       function() {
