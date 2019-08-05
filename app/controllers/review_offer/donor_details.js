@@ -9,6 +9,15 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   goodcityNumber: config.APP.GOODCITY_NUMBER,
   internetCallStatus: Ember.inject.controller(),
 
+  displayCompanyOptions: Ember.computed({
+    get: function() {
+      return false;
+    },
+    set: function(key, value) {
+      return value;
+    }
+  }),
+
   stickyNote: {
     showCallToAction: true
   },
@@ -46,6 +55,17 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   }),
 
   actions: {
+    toggleCompanyOptions() {
+      this.toggleProperty("displayCompanyOptions");
+    },
+
+    removeCompany() {
+      const offer = this.get("currentOffer");
+      offer.set("companyId", null);
+      offer.set("company", null);
+      return offer.save();
+    },
+
     hideNoteCallToAction() {
       this.set("stickyNote.showCallToAction", false);
     },
