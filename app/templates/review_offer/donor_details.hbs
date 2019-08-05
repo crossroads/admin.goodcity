@@ -127,9 +127,37 @@
           Corporate Donor
         </div>
         <div class="small-8 columns underline">
-          {{#link-to "offer.search_companies" currentOffer.id (query-params prevPath="donor_details") class="change-contact" tagName='div' href=false}}
+          {{#if currentOffer.companyId}}
+            <div class="small-8 columns company_name">
+              {{currentOffer.company.name}}
+              <a {{action "toggleCompanyOptions"}}>
+                <i class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+              </a>
+            </div>
+            <div class="options_menu_list {{if displayCompanyOptions '' 'hidden'}}">
+              <div class="option_menu">
+                <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+                <a {{action "removeCompany"}}>
+
+                Remove corporate donor
+                </a>
+              </div>
+              <div class="option_menu">
+                {{#link-to "offer.search_companies" currentOffer.id (query-params prevPath="donor_details") class="change-contact" tagName='div' href=false}}
+                  <i class="fa fa-search-plus" aria-hidden="true"></i>
+                  Assign different company
+                {{/link-to}}
+              </div>
+              <div class="option_menu">
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                Edit this company
+              </div>
+            </div>
+          {{else}}
+            {{#link-to "offer.search_companies" currentOffer.id (query-params prevPath="donor_details") class="change-contact" tagName='div' href=false}}
             NA, Personal - Add company
-          {{/link-to}}
+            {{/link-to}}
+          {{/if}}
         </div>
       </div>
       <div class="row">

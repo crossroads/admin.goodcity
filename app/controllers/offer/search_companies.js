@@ -1,5 +1,6 @@
 import Ember from "ember";
 import _ from "lodash";
+import AjaxPromise from "goodcity/utils/ajax-promise";
 
 export default Ember.Controller.extend({
   displayResults: false,
@@ -54,6 +55,10 @@ export default Ember.Controller.extend({
       this.set("searchText", "");
     },
 
+    cancelSearch() {
+      this.transitionToRoute("dashboard");
+    },
+
     loadMoreCompanies(pageNo) {
       const params = this.trimQuery(
         _.merge({}, this.getSearchQuery(), this.getPaginationQuery(pageNo))
@@ -62,6 +67,24 @@ export default Ember.Controller.extend({
         return this.store.query("company", params);
       }
       this.hideResults();
+    },
+
+    goToDetails(companyId) {
+      let offerId = this.get("model.id");
+      let offerParams = {
+        company_id: companyId
+      };
+      new AjaxPromise(
+        "/offers/" + offerId,
+        "PUT",
+        this.get("session.authToken"),
+        {
+          offer: offerParams
+        }
+      ).then(data => {
+        this.store.pushPayload(data);
+        this.transitionToRoute("review_offer.donor_details", offerId);
+      });
     }
   }
 });
