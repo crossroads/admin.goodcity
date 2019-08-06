@@ -2,16 +2,74 @@
   color: black;
   padding-top: 1.5rem;
 
-  &.ui textarea {
-    margin: 0rem;
-    max-width: 100%;
-    padding: 0.5rem 0.8rem;
-  }
-
   .main-section {
     @media #{$large-only} {
       padding: 0 15rem;
     }
+  }
+
+  .item-label {
+    color: #8091a9;
+    text-align: center;
+    margin-top: 2%;
+  }
+
+  select {
+    background: #002352 !important;
+    border: 1px solid #8091a9;
+    color: #fff;
+  }
+
+  .select2-container a {
+    background: #002352 !important;
+    border: 1px solid #8091a9;
+    color: white !important;
+    width: 99%;
+    margin-bottom: 2%;
+    margin-top: 3%;
+
+    span {
+      color: white;
+    }
+  }
+
+  .select2-drop {
+    background: #002352 !important;
+  }
+
+  input {
+    padding: 0 .5rem;
+    background: #002352 !important;
+    border: 1px solid #8091a9;
+    color: #fff;
+    height: 1.8rem;
+    margin-top: 2%;
+    margin-bottom: 5%;
+  }
+
+  textarea {
+    background: #002352 !important;
+    border: 1px solid #8091a9;
+    color: #fff;
+    margin-left: 0% !important;
+  }
+
+  [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+    position: absolute;
+    left: 8%;
+    visibility: visible;
+  }
+
+  .image-box {
+    width: 60% !important;
+    padding-top: 1rem;
+    background-color: #334f75;
+    text-align: center;
+    position: absolute;
+    height: 4.5rem;
+    right: 20% !important;
+    font-size: .8rem;
+    color: white;
   }
 
   .box-white {
@@ -32,7 +90,7 @@
       margin:0;
     }
     .single-row {
-      border-bottom: lightgray 1px solid;
+
       margin: 0 !important;
       padding: 0.5rem 0.7rem;
       max-width: 100%;
@@ -52,21 +110,20 @@
   }
 
   .inputs-row {
-    border-bottom: lightgray 1px solid;
 
     .columns {
       padding: 0;
     }
 
-    textarea {
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
-      resize: none;
-    }
+    // textarea {
+    //   -moz-box-sizing: border-box;
+    //   box-sizing: border-box;
+    //   resize: none;
+    // }
 
-    .has-error textarea {
-      margin-bottom: 0;
-    }
+    // .has-error textarea {
+    //   margin-bottom: 0;
+    // }
   }
 
   .select2-arrow {

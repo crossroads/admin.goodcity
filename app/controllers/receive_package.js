@@ -134,6 +134,11 @@ export default Ember.Controller.extend({
   },
 
   actions: {
+    addItems() {
+      const draftItemId = this.get("package.item.id");
+      this.transitionToRoute("item.edit_images", draftItemId);
+    },
+
     moveBack() {
       if (this.get("hasErrors")) {
         this.get("package").rollbackAttributes();

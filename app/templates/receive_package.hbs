@@ -1,64 +1,58 @@
 <div id="{{concat 'stockitAddItemModal' package.id}}" class="stockitAddItemModal ui">
 
-  <section class="main-section receive_package_modal">
+  <nav class="tab-bar new-item-nav">
+    <section class="tab-bar-section">
+      <h1 class="title">Receive-{{package.packageName}}</h1>
+    </section>
+  </nav>
 
-    {{#if displayError}}
-      <div class="row single-row form-errors">
-        {{#if isPackageInvalid}}
-          <div class="small-1 columns">
-            <i class="fa fa-exclamation-triangle"></i>
+  <div class="row">
+    <div class="row">
+      <div class="small-9 columns">
+        <div class="row">
+          <div class="small-4 columns item-label">
+            Quantity*
           </div>
-        {{/if}}
-        <div class="small-11 columns">
-          <div class={{if isInvalidInventoryNo 'show-error' 'no-error'}}>{{t "receive_package.invalid_inventory"}}</div>
-
-          <div class={{if isInvalidQuantity 'show-error' 'no-error'}}>{{t "receive_package.invalid_quantity"}}</div>
-
-          <div class={{if isInvalidDescription 'show-error' 'no-error'}}>{{t "receive_package.invalid_description"}}</div>
-
-          <div class={{if isInvalidLocation 'show-error' 'no-error'}}>{{t "receive_package.invalid_location"}}</div>
-
-          {{#each package.errors.messages as |message|}}
-            <div class='show-error'>{{message}}</div>
-          {{/each}}
+          <div class="small-8 columns">
+            {{numeric-input id=(concat 'qty' package.id) name="qty" value=packageForm.quantity placeholder=(t "placeholder.qty") maxlength="8" pattern="\d{1,8}"}}
+          </div>
         </div>
-      </div>
-    {{/if}}
 
-    <div class="row box-white">
-
-      <div class="row single-row">
-        <div class="small-12 columns">
-          <b>{{package.packageName}}</b>
+        <div class="row">
+          <div class="small-4 columns item-label">
+            Type*
+          </div>
+          <div class="small-8 columns">
+            {{input value=package.packageName disabled=true}}
+          </div>
         </div>
       </div>
 
-      <div class="row inputs-row">
-        <div class="small-12 columns {{if isInvalidDescription 'has-error'}}">
-          {{auto-resize-textarea data-autoresize=true name="notes" value=packageForm.notes placeholder=(t "placeholder.comments") maxlength="50" required="required" pattern=".*\S.*" id=(concat 'notes' package.id)}}
-        </div>
+      <div class="small-3 columns">
+        <span class="image-box" {{action 'addItems'}}>
+          {{#if package.item.displayImageUrl}}
+            <img src={{package.item.displayImageUrl}} class="thumb" />
+          {{else}}
+            <i class="fa fa-camera"></i><br />
+            Add Images
+          {{/if}}
+        </span>
       </div>
-
-      <div class="row inputs-row">
-        <div class="small-3 columns {{if isInvalidQuantity 'has-error'}}">
-          {{numeric-input id=(concat 'qty' package.id) name="qty" value=packageForm.quantity placeholder=(t "placeholder.qty") maxlength="8" pattern="\d{1,8}"}}
-          <i class="fa fa-exclamation-triangle"></i>
-        </div>
-        <div class="small-3 columns">
-          {{numeric-input name="length" id=(concat 'length' package.id) value=packageForm.length placeholder=(t "placeholder.length") maxlength="8" pattern="\d{1,8}"}}
-        </div>
-        <div class="small-3 columns">
-          {{numeric-input id=(concat 'width' package.id) name="width" value=packageForm.width placeholder=(t "placeholder.width") maxlength="5" pattern="\d{1,5}"}}
-        </div>
-        <div class="small-3 columns">
-          {{numeric-input id=(concat 'height' package.id) name="height" value=packageForm.height placeholder=(t "placeholder.height") maxlength="5"  pattern="\d{1,5}" }}
-        </div>
-      </div>
-
     </div>
 
-    <div class="row inventory-number">
-      <div class="small-6 columns">
+    <div class="row">
+      <div class="small-3 columns item-label">
+        Description*
+      </div>
+      <div class="small-9 columns">
+        {{auto-resize-textarea data-autoresize=true name="notes" value=packageForm.notes placeholder=(t "placeholder.comments") maxlength="50" required="required" pattern=".*\S.*" id=(concat 'notes' package.id)}}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="small-3 columns item-label">Quality*</div>
+
+      <div class="small-4 columns">
         {{select-list
           content=grades
           on-change=(action (mut selectedGrade))
@@ -67,7 +61,7 @@
           selectArrow=true }}
       </div>
 
-      <div class="small-6 columns">
+      <div class="small-5 columns end">
         {{select-list
           content=donorConditions
           on-change=(action (mut selectedCondition))
@@ -77,12 +71,43 @@
       </div>
     </div>
 
-    {{inventory-number-input inputId=(concat 'inventory_number' package.id) value=inventoryNumber packageId=package.id invalid=isInvalidInventoryNo name="inventoryNumber" }}
-
-    <div class="row inventory-number">
-      <div class="small-12 columns">
+    <div class="row">
+      <div class="small-3 columns item-label">Locations*</div>
+      <div class="small-9 columns">
         {{custom-select2 content=locations record=location recordId=locationId placeholder=(t "receive_package.add_location")}}
-        <i class="fa fa-map-marker {{if isAndroidDevice 'small-marker'}}"></i>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="small-3 columns item-label">Size(cm)</div>
+      <div class="small-3 columns">
+        {{numeric-input name="length" id=(concat 'length' package.id) value=packageForm.length placeholder=(t "placeholder.length") maxlength="8" pattern="\d{1,8}"}}
+      </div>
+      <div class="small-3 columns">
+        {{numeric-input id=(concat 'width' package.id) name="width" value=packageForm.width placeholder=(t "placeholder.width") maxlength="5" pattern="\d{1,5}"}}
+      </div>
+      <div class="small-3 columns end">
+        {{numeric-input id=(concat 'height' package.id) name="height" value=packageForm.height placeholder=(t "placeholder.height") maxlength="5"  pattern="\d{1,5}" }}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="small-3 columns item-label">Labels</div>
+      <div class="small-3 columns">
+        {{numeric-input id=(concat 'labels' package.id) name="labels" value=packageForm.labels placeholder="labels" maxlength="8" pattern="\d{1,8}"}}
+      </div>
+      <div class="small-2 columns item-label">
+        Inventory#
+      </div>
+      <div class="small-4 columns end">
+        {{numeric-input id=(concat 'inventoryNumber' package.id) name="inventoryNumber" value=inventoryNumber placeholder="Inventory Number" maxlength="8" pattern="\d{1,8}"}}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="small-3 columns item-label">Publish</div>
+      <div class="small-2 columns end">
+        {{input type="checkbox" id=(concat 'publishItem' package.id) checked=false}}
       </div>
     </div>
 
@@ -91,9 +116,10 @@
         <a class="button expand secondary closeLink action1" {{action 'moveBack'}}>{{t "receive_package.cancel"}}</a>
       </div>
       <div class="small-6 columns">
-        <button class="button expand action2 confirmLink" {{action 'receivePackage'}}>{{t "receive_package.receive"}}</button>
+        <button class="button expand action2 confirmLink" {{action 'receivePackage'}}>
+         Receive & Print <i class="fa fa-print"></i>
+        </button>
       </div>
     </div>
-  </section>
-
+  </div>
 </div>
