@@ -24,7 +24,122 @@
     </div>
 
     {{#if donor}}
-      <div class="row">
+      <div class="row corporate-donor donor-details">
+        <div class="small-5 columns">
+          Donor Contact:
+        </div>
+        <div class="small-7 columns underline donor-data">
+          <a {{action "toggleCompanyOptions"}}>
+            {{donor.fullName}}
+            <i class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+          </a>
+          <div class="options_menu_list {{if displayCompanyOptions '' 'hidden'}}">
+            <div class="option_menu">
+              <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+              <a {{action "removeCompany"}}>
+                Remove donor contact
+              </a>
+            </div>
+            <div class="option_menu">
+              {{#link-to "offer.search_companies" currentOffer.id (query-params prevPath="donor_details") class="change-contact" tagName='div' href=false}}
+              <i class="fa fa-search-plus" aria-hidden="true"></i>
+              Assign different donor
+              {{/link-to}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row corporate-donor donor-details">
+        <div class="small-5 columns">
+          Donor mobile:
+        </div>
+        <div class="small-7 columns underline donor-data">
+          <a {{action "toggleCompanyOptions"}}>
+            {{goodcityNumber}}
+            <i class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+          </a>
+          <div class="options_menu_list {{if displayCompanyOptions '' 'hidden'}}">
+            <div class="option_menu">
+              <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+              <a {{action "removeCompany"}}>
+                Remove donor contact
+              </a>
+            </div>
+            <div class="option_menu">
+              {{#link-to "offer.search_companies" currentOffer.id (query-params prevPath="donor_details") class="change-contact" tagName='div' href=false}}
+              <i class="fa fa-search-plus" aria-hidden="true"></i>
+              Assign different donor
+              {{/link-to}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row corporate-donor donor-details">
+        <div class="small-5 columns">
+          Donor email:
+        </div>
+        <div class="small-7 columns underline donor-data">
+          <a {{action "toggleCompanyOptions"}}>
+            {{#if donor.email}}
+              {{donor.email}}
+              <i class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+            {{/if}}
+          </a>
+          <div class="options_menu_list {{if displayCompanyOptions '' 'hidden'}}">
+            <div class="option_menu">
+              <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+              <a {{action "removeCompany"}}>
+                Remove donor contact
+              </a>
+            </div>
+            <div class="option_menu">
+              {{#link-to "offer.search_companies" currentOffer.id (query-params prevPath="donor_details") class="change-contact" tagName='div' href=false}}
+              <i class="fa fa-search-plus" aria-hidden="true"></i>
+              Assign different donor
+              {{/link-to}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row corporate-donor donor-details">
+        <div class="small-5 columns">
+          Donor alt phone:
+        </div>
+        <div class="small-7 columns underline donor-data">
+          <a {{action "toggleCompanyOptions"}}>
+            {{goodcityNumber}}
+            <i class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+          </a>
+          <div class="options_menu_list {{if displayCompanyOptions '' 'hidden'}}">
+            <div class="option_menu">
+              <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+              <a {{action "removeCompany"}}>
+                Remove donor contact
+              </a>
+            </div>
+            <div class="option_menu">
+              {{#link-to "offer.search_companies" currentOffer.id (query-params prevPath="donor_details") class="change-contact" tagName='div' href=false}}
+              <i class="fa fa-search-plus" aria-hidden="true"></i>
+              Assign different donor
+              {{/link-to}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row corporate-donor donor-details">
+        <div class="small-5 columns">
+          Donor location:
+        </div>
+        <div class="small-7 columns donor-data">
+          {{donor.address.district.name}}
+        </div>
+      </div>
+
+      {{!-- <div class="row">
         <div class="small-2 columns">
           <span class="no-avatar">{{donor.nameInitial}}</span>
         </div>
@@ -105,7 +220,7 @@
           </div>
 
         </div>
-      </div>
+      </div> --}}
 
       {{twilio-make-call mobile=donor.mobile offerId=currentOffer.id internetCallStatus=internetCallStatus donorName=donor.fullName}}
 
@@ -122,18 +237,16 @@
         </div>
       </div>
     {{else}}
-      <div class="row">
-        <div class="small-4 columns">
-          Corporate Donor
+      <div class="row corporate-donor donor-details">
+        <div class="small-5 columns">
+          Corporate Donor:
         </div>
-        <div class="small-8 columns underline">
+        <div class="small-7 columns underline donor-data">
           {{#if currentOffer.companyId}}
-            <div class="small-8 columns company_name">
-              {{currentOffer.company.name}}
               <a {{action "toggleCompanyOptions"}}>
+                {{currentOffer.company.name}}
                 <i class="fa fa-caret-square-o-down" aria-hidden="true"></i>
               </a>
-            </div>
             <div class="options_menu_list {{if displayCompanyOptions '' 'hidden'}}">
               <div class="option_menu">
                 <i class="fa fa-times-circle-o" aria-hidden="true"></i>
@@ -160,17 +273,16 @@
           {{/if}}
         </div>
       </div>
-      <div class="row">
-        <div class="small-4 columns">
-          Donor Contact
+      <div class="row donor-details">
+        <div class="small-5 columns">
+          Donor Contact:
         </div>
-        <div class="small-8 columns underline">
+        <div class="small-7 columns underline donor-data">
           {{#link-to "offer.search_users" currentOffer.id (query-params prevPath="donor_details") class="change-contact" tagName='div' href=false}}
             Missing - Add contact
           {{/link-to}}
         </div>
       </div>
     {{/if}}
-
   </section>
 </div>
