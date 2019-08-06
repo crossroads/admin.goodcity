@@ -13,6 +13,19 @@
     }
   }
 
+  .donor-details {
+    margin-bottom: 1rem;
+    .donor-data{
+      color: white;
+      i {
+        padding-left: 3%;
+      }
+    }
+    .underline{
+      text-decoration: underline;
+    }
+  }
+
   .sticky-note {
     width: 100%;
     height: 6rem;

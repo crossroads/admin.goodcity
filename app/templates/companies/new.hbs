@@ -1,5 +1,13 @@
 <nav class="tab-bar new-company-nav">
-  <h1 class="title">New Company</h1>
+  {{!-- <section class="left-small">
+    {{#link-to "review_offer.donor_details" model.id classNames="back" }}
+      <i class="back_icon" aria-hidden="true">{{fa-icon 'angle-left'}}</i>
+      <div>{{t 'back'}}</div>
+    {{/link-to}}
+  </section> --}}
+  {{!-- <section class="tab-bar-section"> --}}
+    <h1 class="title">New Company</h1>
+  {{!-- </section> --}}
 </nav>
 <section class="main-section new-company-section ui">
   {{#validatable-form onSubmit=(action 'saveComanyAndOffer') as |form|}}
