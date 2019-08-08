@@ -23,6 +23,43 @@
         id="sticky-note"}}
     </div>
 
+    <div class="row corporate-donor donor-details">
+      <div class="small-5 columns">
+        Corporate Donor:
+      </div>
+      <div class="small-7 columns underline donor-data">
+        {{#if currentOffer.companyId}}
+        <a {{action "toggleCompanyOptions"}}>
+          {{currentOffer.company.name}}
+          <i class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+        </a>
+        <div class="options_menu_list {{if displayCompanyOptions '' 'hidden'}}">
+          <div class="option_menu">
+            <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+            <a {{action "removeCompany"}}>
+
+              Remove corporate donor
+            </a>
+          </div>
+          <div class="option_menu">
+            {{#link-to "offer.search_companies" currentOffer.id (query-params prevPath="donor_details") class="change-contact" tagName='div' href=false}}
+            <i class="fa fa-search-plus" aria-hidden="true"></i>
+            Assign different company
+            {{/link-to}}
+          </div>
+          <div class="option_menu">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+            Edit this company
+          </div>
+        </div>
+        {{else}}
+          {{#link-to "offer.search_companies" currentOffer.id (query-params prevPath="donor_details") class="change-contact" tagName='div' href=false}}
+          NA, Personal - Add company
+          {{/link-to}}
+        {{/if}}
+      </div>
+    </div>
+
     {{#if donor}}
       <div class="row corporate-donor donor-details">
         <div class="small-5 columns">
@@ -42,8 +79,8 @@
             </div>
             <div class="option_menu">
               {{#link-to "offer.search_companies" currentOffer.id (query-params prevPath="donor_details") class="change-contact" tagName='div' href=false}}
-              <i class="fa fa-search-plus" aria-hidden="true"></i>
-              Assign different donor
+                <i class="fa fa-search-plus" aria-hidden="true"></i>
+                Assign different donor
               {{/link-to}}
             </div>
           </div>
@@ -55,11 +92,11 @@
           Donor mobile:
         </div>
         <div class="small-7 columns underline donor-data">
-          <a {{action "toggleCompanyOptions"}}>
+          <a {{action "toggleDonorMobileOptions"}}>
             {{goodcityNumber}}
             <i class="fa fa-caret-square-o-down" aria-hidden="true"></i>
           </a>
-          <div class="options_menu_list {{if displayCompanyOptions '' 'hidden'}}">
+          <div class="options_menu_list {{if displayDonorMobileOptions '' 'hidden'}}">
             <div class="option_menu">
               <i class="fa fa-times-circle-o" aria-hidden="true"></i>
               <a {{action "removeCompany"}}>
@@ -87,7 +124,7 @@
               <i class="fa fa-caret-square-o-down" aria-hidden="true"></i>
             {{/if}}
           </a>
-          <div class="options_menu_list {{if displayCompanyOptions '' 'hidden'}}">
+          {{!-- <div class="options_menu_list {{if displayCompanyOptions '' 'hidden'}}">
             <div class="option_menu">
               <i class="fa fa-times-circle-o" aria-hidden="true"></i>
               <a {{action "removeCompany"}}>
@@ -100,7 +137,7 @@
               Assign different donor
               {{/link-to}}
             </div>
-          </div>
+          </div> --}}
         </div>
       </div>
 
@@ -113,7 +150,7 @@
             {{goodcityNumber}}
             <i class="fa fa-caret-square-o-down" aria-hidden="true"></i>
           </a>
-          <div class="options_menu_list {{if displayCompanyOptions '' 'hidden'}}">
+          {{!-- <div class="options_menu_list {{if displayCompanyOptions '' 'hidden'}}">
             <div class="option_menu">
               <i class="fa fa-times-circle-o" aria-hidden="true"></i>
               <a {{action "removeCompany"}}>
@@ -126,108 +163,72 @@
               Assign different donor
               {{/link-to}}
             </div>
-          </div>
+          </div> --}}
         </div>
       </div>
 
       <div class="row corporate-donor donor-details">
         <div class="small-5 columns">
-          Donor location:
+          Donors location:
         </div>
         <div class="small-7 columns donor-data">
           {{donor.address.district.name}}
         </div>
       </div>
 
-      {{!-- <div class="row">
-        <div class="small-2 columns">
-          <span class="no-avatar">{{donor.nameInitial}}</span>
+      <div class="row corporate-donor donor-details">
+        <div class="small-5 columns">
+          {{t "review_offer.donor.registered"}}:
         </div>
-
-        <div class="small-10 columns">
-
-          <div class="row donor">
-            <div class="small-5 columns">
-              {{donor.fullName}}
-            </div>
-            <div class="small-7 columns mobile">
-              <span id="phoneNumber" class="tel_link phone_link {{if hidden 'hidden'}}">
-                <i class="fa fa-phone"></i>
-                <a href="tel:{{goodcityNumber}}">{{displayNumber}}</a>
-              </span>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="small-5 columns">
-              {{t "review_offer.donor.offer_id"}}:
-            </div>
-            <div class="small-7 columns">
-              {{currentOffer.id}}
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="small-5 columns">
-              {{t "review_offer.donor.district"}}:
-            </div>
-            <div class="small-7 columns">
-              {{donor.address.district.name}}
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="small-5 columns">
-              {{t "review_offer.donor.registered"}}:
-            </div>
-            <div class="small-7 columns">
-              {{time-ago timeValue=donor.createdAt smallPrefix=false}}
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="small-5 columns">
-              {{t "review_offer.donor.last_seen"}}:
-            </div>
-            <div class="small-7 columns">
-              {{#if donor.onlineStatus}}
-                {{donor.onlineStatus}}
-              {{else}}
-                {{time-ago timeValue=donor.lastDisconnected smallPrefix=false}}
-              {{/if}}
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="small-5 columns">
-              {{t "review_offer.donor.total_offers"}}:
-            </div>
-            <div class="small-7 columns">
-              {{offersCount}}
-              {{#if receivedOffers}}
-                ({{receivedOffers}} {{t "finished.received"}})
-              {{/if}}
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="small-5 columns">
-              {{t "review_offer.donor.crm"}}:
-            </div>
-            <div class="small-7 columns">
-              <small>(not implemented)</small>
-            </div>
-          </div>
-
+        <div class="small-7 columns donor-data">
+          {{time-ago timeValue=donor.createdAt smallPrefix=false}}
         </div>
-      </div> --}}
+      </div>
 
-      {{twilio-make-call mobile=donor.mobile offerId=currentOffer.id internetCallStatus=internetCallStatus donorName=donor.fullName}}
+      <div class="row corporate-donor donor-details">
+        <div class="small-5 columns">
+          {{t "review_offer.donor.last_seen"}}:
+        </div>
+        <div class="small-7 columns donor-data">
+          {{#if donor.onlineStatus}}
+            {{donor.onlineStatus}}
+          {{else}}
+            {{time-ago timeValue=donor.lastDisconnected smallPrefix=false}}
+          {{/if}}
+        </div>
+      </div>
+
+      <div class="row corporate-donor donor-details">
+        <div class="small-5 columns">
+          {{t "review_offer.donor.total_offers"}}:
+        </div>
+        <div class="small-7 columns donor-data">
+          {{offersCount}}
+          {{#if receivedOffers}}
+            ({{receivedOffers}} {{t "finished.received"}})
+          {{/if}}
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="row corporate-donor donor-details">
+        <div class="small-5 columns">
+          Sale allowed:
+        </div>
+        <div class="small-7 columns donor-data">
+          {{#if currentOffer.saleable}}
+            Yes
+          {{else}}
+            No
+          {{/if}}
+        </div>
+      </div>
 
       <hr>
       <div class="row">
         <div class="small-12 columns item-content">
-          {{t "review_offer.donor.other_offers"}}
+          All {{donor.fullName}}'s offers on GoodCity:
 
           <ul class="list list-activity list-offer-items">
             {{#each donorOffers as |offer|}}
@@ -237,42 +238,6 @@
         </div>
       </div>
     {{else}}
-      <div class="row corporate-donor donor-details">
-        <div class="small-5 columns">
-          Corporate Donor:
-        </div>
-        <div class="small-7 columns underline donor-data">
-          {{#if currentOffer.companyId}}
-              <a {{action "toggleCompanyOptions"}}>
-                {{currentOffer.company.name}}
-                <i class="fa fa-caret-square-o-down" aria-hidden="true"></i>
-              </a>
-            <div class="options_menu_list {{if displayCompanyOptions '' 'hidden'}}">
-              <div class="option_menu">
-                <i class="fa fa-times-circle-o" aria-hidden="true"></i>
-                <a {{action "removeCompany"}}>
-
-                Remove corporate donor
-                </a>
-              </div>
-              <div class="option_menu">
-                {{#link-to "offer.search_companies" currentOffer.id (query-params prevPath="donor_details") class="change-contact" tagName='div' href=false}}
-                  <i class="fa fa-search-plus" aria-hidden="true"></i>
-                  Assign different company
-                {{/link-to}}
-              </div>
-              <div class="option_menu">
-                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                Edit this company
-              </div>
-            </div>
-          {{else}}
-            {{#link-to "offer.search_companies" currentOffer.id (query-params prevPath="donor_details") class="change-contact" tagName='div' href=false}}
-            NA, Personal - Add company
-            {{/link-to}}
-          {{/if}}
-        </div>
-      </div>
       <div class="row donor-details">
         <div class="small-5 columns">
           Donor Contact:
