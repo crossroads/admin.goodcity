@@ -18,6 +18,15 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     }
   }),
 
+  displayDonorMobileOptions: Ember.computed({
+    get: function() {
+      return false;
+    },
+    set: function(key, value) {
+      return value;
+    }
+  }),
+
   stickyNote: {
     showCallToAction: true
   },
@@ -57,6 +66,10 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   actions: {
     toggleCompanyOptions() {
       this.toggleProperty("displayCompanyOptions");
+    },
+
+    toggleDonorMobileOptions() {
+      this.toggleProperty("displayDonorMobileOptions");
     },
 
     removeCompany() {
