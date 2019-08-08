@@ -32,4 +32,8 @@
 @import "templates/delivery/drop_off";
 @import "templates/delivery/book_van";
 @import "templates/delivery/confirm_van";
+@import "templates/dashboard.scss";
 @import "ember_offline";
+@import "filters";
+@import "checkbox_styles";
+@import "global_styles";

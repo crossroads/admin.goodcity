@@ -64,6 +64,46 @@ I18nTranslationsEn =
         "missing": "missing"
         "start_receiving_by": "{{firstName}} {{lastName}} began receiving"
         "inactive": "Marked as inactive"
+    offer_filters:
+      time_presets:
+        overdue: "Overdue",
+        today: "Today",
+        tomorrow: "Tomorrow",
+        week: "This week",
+        next_week: "Next week",
+        month: "This month",
+        next_month: "Next month"
+
+      show_priority_offers: "Only Show Priority Offers"
+      offer_statuses: "Offer Statuses"
+      on_or_after: "On or after"
+      on_or_before: "On or before"
+      apply: "Apply"
+      clear: "Clear"
+      back: "Back"
+      self_review: "Mine"
+      all_review: "All"
+      time_filter_title: "Offer Due Date"
+      button_state: "State"
+      button_due: "Due"
+      showPriority: "Show Priority"
+      showPriority_info: "Have remained in a state too long. Need attention."
+      submitted: "New"
+      submitted_info: "Offers that have yet to be reviewed."
+      under_review: "Reviewing"
+      under_review_info: "Offers currently being reviewed."
+      reviewed: "Reviewed"
+      reviewed_info: "Offers that need to be scheduled."
+      scheduled: "Scheduled"
+      scheduled_info: "GoodCity order being dispatctched now."
+      receiving: "Receiving"
+      receiving_info: "We are unloading truck right now"
+      received: "Received"
+      received_info: "Success"
+      cancelled: "Cancelled"
+      cancelled_info: "Failed"
+      inactive: "Inactive"
+      inactive_info: "Donor non-responsive"
 
     "items":
       "add_item":
@@ -82,6 +122,20 @@ I18nTranslationsEn =
       "messages":
         "info_text1": "If we have questions when reviewing this item we will chat with you here."
         "info_text2": "If you want to add a comment to this item for our reviewers, type it below."
+
+    "dashboard":
+      "title": "Dashboard",
+      "all_active_offers": "All Active Offers"
+      "my_active_offers": "My Active Offers",
+      "under_review": "Reviewing",
+      "reviewed": "Reviewed",
+      "scheduled": "Scheduled",
+      "receiving": "Receiving",
+      "inactive": "Inactive",
+      "cancelled": "Cancelled",
+      "received": "Received",
+      "new_offers": "New Offers",
+      "view_all_offers": "View all new offers"
 
     "inbox":
       "quick_links": "Quick Links"

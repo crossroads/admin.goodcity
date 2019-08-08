@@ -1,14 +1,17 @@
 import Ember from "ember";
 import { translationMacro as t } from "ember-i18n";
 import backNavigator from "./../mixins/back_navigator";
-import AjaxPromise from "goodcity/utils/ajax-promise";
-const { getOwner } = Ember;
+import utilityMethods from "../utils/utility-methods";
+import _ from "lodash";
 
 export default Ember.Controller.extend(backNavigator, {
   filter: "",
   searchText: "",
   searchPlaceholder: t("search.placeholder"),
+  minSearchTextLength: 1,
   i18n: Ember.inject.service(),
+  displayResults: false,
+  filterService: Ember.inject.service(),
 
   allUsers: Ember.computed(function() {
     return this.store.peekAll("user");
@@ -34,59 +37,103 @@ export default Ember.Controller.extend(backNavigator, {
     return Ember.$.trim(this.get("searchText")).length;
   }),
 
-  hasFilter: Ember.computed("filter", function() {
-    return Ember.$.trim(this.get("filter")).length;
-  }),
-
   onSearchTextChange: Ember.observer("searchText", function() {
-    // wait before applying the filter
-    Ember.run.debounce(this, this.applyFilter, 500);
+    const searchTextLength = this.get("searchText").length;
+    if (
+      searchTextLength > this.get("minSearchTextLength") ||
+      searchTextLength === 0
+    ) {
+      this.reloadResults();
+    }
   }),
 
-  applyFilter: function() {
-    this.set("filter", this.get("searchText"));
-    this.searchOnServer();
+  on() {
+    this.showResults(); // Upon opening the page, we populate with results
+    this.get("filterService").on("change", this, this.reloadResults);
   },
 
-  searchOnServer() {
-    let search = this.get("filter");
-    if (!search) {
-      this.set("filteredResults", null);
-      return;
-    }
+  off() {
+    this.get("filterService").off("change", this, this.reloadResults);
+  },
 
-    let loadingView = getOwner(this)
-      .lookup("component:loading")
-      .append();
-    let url = `/offers/search?searchText=${search}`;
-    let store = this.get("store");
+  reloadResults() {
+    this.hideResults();
+    Ember.run.debounce(this, this.showResults, 500);
+  },
 
-    new AjaxPromise(url, "GET", this.get("session.authToken"))
-      .then(data => {
-        store.pushPayload(data);
-        const results = data.offers
-          .map(o => store.peekRecord("offer", o.id))
-          .filter(Boolean);
-        this.set("filteredResults", results);
-      })
-      .finally(() => {
-        loadingView.destroy();
-      });
+  hideResults() {
+    Ember.run(() => {
+      this.set("displayResults", false);
+    });
+  },
+
+  showResults() {
+    Ember.run(() => {
+      this.set("displayResults", true);
+    });
+  },
+
+  getFilterQuery() {
+    const filterService = this.get("filterService");
+    const isPriority = filterService.isPriority();
+    const { after, before } = filterService.get("offerTimeRange");
+    let stateFilters = _.without(
+      filterService.get("offerStateFilters"),
+      "showPriority"
+    );
+
+    return {
+      state: utilityMethods.stringifyArray(stateFilters),
+      priority: isPriority,
+      after: after && after.getTime(),
+      before: before && before.getTime()
+    };
+  },
+
+  getSearchQuery() {
+    return {
+      searchText: this.get("searchText")
+    };
+  },
+
+  getPaginationQuery(pageNo) {
+    return {
+      per_page: 25,
+      page: pageNo
+    };
+  },
+
+  getReviewerFilter() {
+    return {
+      selfReview: this.get("filterService.selfReviewFilter")
+    };
+  },
+
+  trimQuery(query) {
+    // Remove any undefined values
+    return _.pickBy(query, _.identity);
   },
 
   actions: {
-    clearSearch(isCancelled) {
-      this.set("filter", "");
+    loadMoreOffers(pageNo) {
+      const params = this.trimQuery(
+        _.merge(
+          { slug: "search" }, //slug: is an identifier used in offer adapter to query url `/offers/search`
+          this.getFilterQuery(),
+          this.getReviewerFilter(),
+          this.getSearchQuery(),
+          this.getPaginationQuery(pageNo)
+        )
+      );
+      return this.get("store").query("offer", params);
+    },
+
+    clearSearch() {
       this.set("searchText", "");
-      if (!isCancelled) {
-        Ember.$("#searchText").focus();
-      }
     },
 
     cancelSearch() {
-      Ember.$("#searchText").blur();
-      this.send("clearSearch", true);
-      this.send("togglePath", "search");
+      this.transitionToRoute("dashboard");
     }
   }
 });

@@ -65,6 +65,46 @@ I18nTranslationsZhTw =
         "start_receiving_by": "{{lastName}} {{firstName}} 正在接收"
         "inactive": "列作暫停"
 
+    offer_filters:
+      time_presets:
+        overdue: "Overdue",
+        today: "Today",
+        tomorrow: "Tomorrow",
+        week: "This week",
+        next_week: "Next week",
+        month: "This month",
+        next_month: "Next month"
+
+      show_priority_offers: "Only Show Priority Offers"
+      offer_statuses: "Offer Statuses"
+      on_or_after: "On or after"
+      on_or_before: "On or before"
+      apply: "Apply"
+      clear: "Clear"
+      back: "Back"
+      self_review: "Mine"
+      all_review: "All"
+      time_filter_title: "Offer Due Date"
+      button_state: "State"
+      showPriority: "Show Priority"
+      showPriority_info: "Have remained in a state too long. Need attention."
+      submitted: "New"
+      submitted_info: "Offers that have yet to be reviewed."
+      under_review: "Reviewing"
+      under_review_info: "Offers currently being reviewed."
+      reviewed: "Reviewed"
+      reviewed_info: "Offers that need to be scheduled."
+      scheduled: "Scheduled"
+      scheduled_info: "GoodCity order being dispatctched now."
+      receiving: "Receiving"
+      receiving_info: "We are unloading truck right now"
+      received: "Received"
+      received_info: "Success"
+      cancelled: "Cancelled"
+      cancelled_info: "Failed"
+      inactive: "Inactive"
+      inactive_info: "Donor non-responsive"
+
     "items":
       "add_item":
         "description_placeholder" : "這是甚麼？有多少件物資？物資大小？"
@@ -82,6 +122,20 @@ I18nTranslationsZhTw =
       "messages":
         "info_text1": "假如審查過程中我們遇到任何問題，我們會在下面的對話框向您查詢。"
         "info_text2": "假如您想添加任何有關捐贈物品的資料，請於下面的對話框輸入。"
+
+    "dashboard":
+      "title": "Dashboard",
+      "all_active_offers": "All Active Offers"
+      "my_active_offers": "My Active Offers",
+      "under_review": "Reviewing",
+      "reviewed": "Reviewed",
+      "scheduled": "Scheduled",
+      "receiving": "Receiving",
+      "inactive": "Inactive",
+      "cancelled": "Cancelled",
+      "received": "Received",
+      "new_offers": "New Offers",
+      "view_all_offers": "View all new offers"
 
     "inbox":
       "quick_links": "快捷鍵"
