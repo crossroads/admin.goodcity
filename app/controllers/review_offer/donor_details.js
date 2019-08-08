@@ -18,6 +18,15 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     }
   }),
 
+  displayAltPhoneOptions: Ember.computed({
+    get: function() {
+      return false;
+    },
+    set: function(key, value) {
+      return value;
+    }
+  }),
+
   displayDonorMobileOptions: Ember.computed({
     get: function() {
       return false;
@@ -64,12 +73,18 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   }),
 
   actions: {
-    toggleCompanyOptions() {
-      this.toggleProperty("displayCompanyOptions");
-    },
-
-    toggleDonorMobileOptions() {
-      this.toggleProperty("displayDonorMobileOptions");
+    toggleOptions(optionName) {
+      let optionNames = [
+        "displayCompanyOptions",
+        "displayDonorMobileOptions",
+        "displayAltPhoneOptions"
+      ];
+      optionNames.forEach(item => {
+        if (item != optionName && this.get(item)) {
+          this.toggleProperty(item);
+        }
+      });
+      this.toggleProperty(optionName);
     },
 
     removeCompany() {
