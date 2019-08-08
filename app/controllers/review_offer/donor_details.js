@@ -14,15 +14,6 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   displayDonorMobileOptions: false,
   displayDonorOptions: false,
 
-  displayDonorMobileOptions: Ember.computed({
-    get: function() {
-      return false;
-    },
-    set: function(key, value) {
-      return value;
-    }
-  }),
-
   stickyNote: {
     showCallToAction: true
   },
@@ -73,10 +64,6 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
         }
       });
       this.toggleProperty(optionName);
-    },
-
-    toggleDonorMobileOptions() {
-      this.toggleProperty("displayDonorMobileOptions");
     },
 
     removeCompany() {
