@@ -80,7 +80,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
         "displayAltPhoneOptions"
       ];
       optionNames.forEach(item => {
-        if (item != optionName && this.get(item)) {
+        if (item !== optionName && this.get(item)) {
           this.toggleProperty(item);
         }
       });
