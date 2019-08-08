@@ -97,15 +97,15 @@
           </a>
           <div class="options_menu_list {{if displayDonorMobileOptions '' 'hidden'}}">
             <div class="option_menu">
-              <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+              <i class="fa fa-headphones" aria-hidden="true"></i>
               <a {{action "removeCompany"}}>
-                Remove donor contact
+                Call donor over internet
               </a>
             </div>
             <div class="option_menu">
               {{#link-to "offer.search_companies" currentOffer.id (query-params prevPath="donor_details") class="change-contact" tagName='div' href=false}}
-              <i class="fa fa-search-plus" aria-hidden="true"></i>
-              Assign different donor
+                <i class="fa fa-phone" aria-hidden="true"></i>
+                call donor using phone
               {{/link-to}}
             </div>
           </div>
