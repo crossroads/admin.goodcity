@@ -29,7 +29,7 @@
       </div>
       <div class="small-7 columns underline donor-data">
         {{#if currentOffer.companyId}}
-        <a {{action "toggleCompanyOptions"}}>
+        <a {{action "toggleOptions" "displayCompanyOptions"}}>
           {{currentOffer.company.name}}
           <i class="fa fa-caret-square-o-down" aria-hidden="true"></i>
         </a>
@@ -37,7 +37,6 @@
           <div class="option_menu">
             <i class="fa fa-times-circle-o" aria-hidden="true"></i>
             <a {{action "removeCompany"}}>
-
               Remove corporate donor
             </a>
           </div>
@@ -66,7 +65,7 @@
           Donor Contact:
         </div>
         <div class="small-7 columns underline donor-data">
-          <a {{action "toggleCompanyOptions"}}>
+          <a {{action "toggleOptions" "displayCompanyOptions"}}>
             {{donor.fullName}}
             <i class="fa fa-caret-square-o-down" aria-hidden="true"></i>
           </a>
@@ -92,7 +91,7 @@
           Donor mobile:
         </div>
         <div class="small-7 columns underline donor-data">
-          <a {{action "toggleDonorMobileOptions"}}>
+          <a {{action "toggleOptions" "displayDonorMobileOptions"}}>
             {{goodcityNumber}}
             <i class="fa fa-caret-square-o-down" aria-hidden="true"></i>
           </a>
@@ -118,7 +117,7 @@
           Donor email:
         </div>
         <div class="small-7 columns underline donor-data">
-          <a {{action "toggleCompanyOptions"}}>
+          <a {{action "toggleOptions" "displayCompanyOptions"}}>
             {{#if donor.email}}
               {{donor.email}}
               <i class="fa fa-caret-square-o-down" aria-hidden="true"></i>
@@ -146,11 +145,11 @@
           Donor alt phone:
         </div>
         <div class="small-7 columns underline donor-data">
-          <a {{action "toggleCompanyOptions"}}>
+          <a {{action "toggleOptions" "displayAltPhoneOptions"}}>
             {{goodcityNumber}}
             <i class="fa fa-caret-square-o-down" aria-hidden="true"></i>
           </a>
-          {{!-- <div class="options_menu_list {{if displayCompanyOptions '' 'hidden'}}">
+          <div class="options_menu_list {{if displayAltPhoneOptions '' 'hidden'}}">
             <div class="option_menu">
               <i class="fa fa-times-circle-o" aria-hidden="true"></i>
               <a {{action "removeCompany"}}>
@@ -163,7 +162,7 @@
               Assign different donor
               {{/link-to}}
             </div>
-          </div> --}}
+          </div>
         </div>
       </div>
 
