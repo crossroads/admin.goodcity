@@ -5,6 +5,8 @@ import AjaxPromise from "goodcity/utils/ajax-promise";
 export default Ember.Controller.extend({
   messageBox: Ember.inject.service(),
   cordova: Ember.inject.service(),
+  queryParams: ["isUnplannedPackage"],
+  isUnplannedPackage: false,
 
   package: Ember.computed.alias("model"),
   watchErrors: true,

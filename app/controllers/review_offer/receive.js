@@ -18,7 +18,9 @@ export default Ember.Controller.extend({
         state: "accepted"
       });
       item.save().then(item => {
-        this.transitionToRoute("search_label", item.id);
+        this.transitionToRoute("search_label", item.id, {
+          queryParams: { isUnplannedPackage: true }
+        });
       });
     }
   }
