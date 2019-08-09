@@ -135,40 +135,66 @@ export default Ember.Controller.extend({
     return pkg;
   },
 
+  showLoadingSpinner() {
+    if (Ember.testing) {
+      return;
+    }
+    if (!this.loadingView) {
+      this.loadingView = Ember.getOwner(this)
+        .lookup("component:loading")
+        .append();
+    }
+  },
+
+  hideLoadingSpinner() {
+    if (Ember.testing) {
+      return;
+    }
+    if (this.loadingView) {
+      this.loadingView.destroy();
+      this.loadingView = null;
+    }
+  },
+
+  removeInventoryNumber() {
+    let pkg = this.get("package");
+    pkg.set("inventoryNumber", null);
+    pkg.save().then(() => this.transitionToRoute("review_offer.receive"));
+  },
+
+  deleteItem() {
+    const item = this.get("package.item");
+    item
+      .destroyRecord()
+      .then(() => this.transitionToRoute("review_offer.receive"));
+  },
+
   actions: {
-    addItems() {
-      const draftItemId = this.get("package.item.id");
-      this.transitionToRoute("item.edit_images", draftItemId);
+    assignImageToPackage() {
+      const itemId = this.get("package.item.id");
+      this.transitionToRoute("item.edit_images", itemId);
+      //implementation of Image assing remaining.
     },
 
     moveBack() {
-      if (this.get("hasErrors")) {
-        this.get("package").rollbackAttributes();
-      }
-      var _this = this;
-      var loadingView = getOwner(this)
-        .lookup("component:loading")
-        .append();
-      var pkg = this.get("package");
-      var inventoryNumber = pkg.get("inventoryNumber");
-      pkg.set("inventoryNumber", null);
-      pkg
-        .save()
+      this.showLoadingSpinner();
+      new AjaxPromise(
+        "/inventory_numbers/remove_number",
+        "PUT",
+        this.get("session.authToken"),
+        { code: this.get("package.inventoryNumber") }
+      )
         .then(() => {
-          new AjaxPromise(
-            "/inventory_numbers/remove_number",
-            "PUT",
-            _this.get("session.authToken"),
-            { code: inventoryNumber }
-          )
-            .then(() => {})
-            .catch(() => {})
-            .finally(() => _this.transitionToRoute("review_offer.receive"));
+          if (this.get("isUnplannedPackage")) {
+            this.deleteItem();
+          } else {
+            this.removeInventoryNumber();
+          }
         })
         .catch(() => {
-          _this.send("pkgUpdateError", pkg);
+          this.send("pkgUpdateError", pkg);
         })
-        .finally(() => loadingView.destroy());
+        .finally(() => this.hideLoadingSpinner());
     },
 
     receivePackage() {
