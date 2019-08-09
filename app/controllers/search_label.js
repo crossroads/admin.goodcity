@@ -5,6 +5,8 @@ export default Ember.Controller.extend({
   filter: "",
   searchText: "",
   fetchMoreResult: true,
+  queryParams: ["isUnplannedPackage"],
+  isUnplannedPackage: false,
   searchPlaceholder: t("search.placeholder"),
   i18n: Ember.inject.service(),
   previousRoute: "",
@@ -105,7 +107,9 @@ export default Ember.Controller.extend({
   addPackage() {
     let pkgRecord = this.store.createRecord("package", this.packageParams());
     pkgRecord.save().then(pkg => {
-      this.transitionToRoute("receive_package", pkg.id);
+      this.transitionToRoute("receive_package", pkg.id, {
+        queryParams: { isUnplannedPackage: true }
+      });
     });
   },
 
@@ -123,10 +127,12 @@ export default Ember.Controller.extend({
       Ember.$("#searchText").blur();
       this.send("clearSearch", true);
       var item = this.get("model");
-      if (this.get("previousRoute") == "review_item.accept") {
-        this.transitionToRoute("review_item.accept", item);
+      if (this.get("isUnplannedPackage")) {
+        item.destroyRecord().then(() => {
+          this.transitionToRoute("review_offer.receive");
+        });
       } else {
-        this.transitionToRoute("review_offer.receive");
+        this.transitionToRoute("review_item.accept", item);
       }
     },
 
@@ -134,10 +140,12 @@ export default Ember.Controller.extend({
       var item = this.get("model");
       item.set("packageType", type);
       this.send("clearSearch", true);
-      if (this.get("previousRoute") == "review_item.accept") {
-        this.transitionToRoute("review_item.accept", item);
+      if (this.get("isUnplannedPackage")) {
+        item.save().then(() => {
+          this.addPackage();
+        });
       } else {
-        this.addPackage();
+        this.transitionToRoute("review_item.accept", item);
       }
     }
   }
