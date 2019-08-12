@@ -10,7 +10,8 @@
   "scripts": {
     "start": "EMBER_CLI_CORDOVA=0 ember serve --port 4201 --live-reload-port 35730",
     "build": "EMBER_CLI_CORDOVA=0 ember build",
-    "test": "EMBER_CLI_CORDOVA=0 ember test --server --test-port 7358"
+    "test": "EMBER_CLI_CORDOVA=0 ember test --server --test-port 7358",
+    "test:ci": "EMBER_CLI_CORDOVA=0 ember-pretty-test"
   },
   "husky": {
     "hooks": {
@@ -88,6 +89,7 @@
     "deep-extend": "^0.5.1",
     "ember-cli-test-loader": "^1.1.0",
     "ember-infinite-list": "1.0.4",
+    "ember-pretty-test": "^1.0.4",
     "ember-resolver": "^4.5.5",
     "extend": "2.0.2",
     "hoek": "4.2.1",
