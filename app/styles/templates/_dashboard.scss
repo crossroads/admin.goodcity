@@ -1,6 +1,14 @@
 .offer_detail {
   text-align: center;
   height: 4.5rem;
+  @media #{$xlarge-only} {
+    height: 5.5rem;
+  }
+
+  @media #{$xxlarge-only} {
+    height: 5.5rem;
+  }
+
   font-size: 1.5vw;
   color:#DFE0E7;
 
@@ -69,6 +77,14 @@
   }
   @media #{$medium-only} {
     margin-top: 25%;
+  }
+
+  @media #{$xlarge-only} {
+    margin-top: 26%;
+  }
+
+  @media #{$xxlarge-only} {
+    margin-top: 27%;
   }
 
   .offer_header {
