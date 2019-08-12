@@ -108,13 +108,10 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
 
     submitOffer() {
       this.toggleProperty("displayOfferOptions");
-      var loadingView = getOwner(this)
-        .lookup("component:loading")
-        .append();
       var offer = this.get("model");
       offer.setProperties({ state_event: "submit" });
 
-      offer.save().finally(() => loadingView.destroy());
+      this.runTask(offer.save());
     }
   }
 });

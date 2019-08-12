@@ -1,7 +1,6 @@
 import Ember from "ember";
 import AsyncTasksMixin from "../mixins/async_tasks";
 import { translationMacro as t } from "ember-i18n";
-const { getOwner } = Ember;
 
 export default Ember.Controller.extend(AsyncTasksMixin, {
   searchText: "",
@@ -44,7 +43,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   },
 
   actions: {
-    clearSearch(isCancelled) {
+    clearSearch() {
       this.set("searchText", "");
       this.set("filteredResults", []);
     },
