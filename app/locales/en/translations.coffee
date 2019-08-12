@@ -108,6 +108,22 @@ I18nTranslationsEn =
     "items":
       "add_item":
         "description_placeholder" : "What is it? How many items? What's the size?"
+        "quantity": "Quantity"
+        "type": "Type"
+        "add_images": "Add Images"
+        "description": "Description"
+        "quality": "Quality"
+        "location": "Locations"
+        "size": "Size(cm)"
+        "labels": "Labels"
+        "inventory": "Inventory"
+        "publish": "Publish"
+        "receive_and_print": "Receive & Print"
+      "validation":
+        "quantity": "Quantity cannot be blank."
+        "description": "Description cannot be blank."
+        "inventory_number": "Inventory Number cannot be blank."
+
 
     "item":
       "accepted": "Accepted"

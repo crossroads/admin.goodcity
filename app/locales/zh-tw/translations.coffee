@@ -108,6 +108,21 @@ I18nTranslationsZhTw =
     "items":
       "add_item":
         "description_placeholder" : "這是甚麼？有多少件物資？物資大小？"
+        "quantity": "Quantity"
+        "type": "Type"
+        "add_images": "Add Images"
+        "description": "Description"
+        "quality": "Quality"
+        "location": "Locations"
+        "size": "Size(cm)"
+        "labels": "Labels"
+        "inventory": "Inventory"
+        "publish": "Publish"
+        "receive_and_print": "Receive & Print"
+      "validation":
+        "quantity": "Quantity cannot be blank."
+        "description": "Description cannot be blank."
+        "inventory_number": "Inventory Number cannot be blank."
 
     "item":
       "accepted": "已接受"

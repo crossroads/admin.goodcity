@@ -172,8 +172,9 @@ export default Ember.Controller.extend({
   actions: {
     assignImageToPackage() {
       const itemId = this.get("package.item.id");
-      this.transitionToRoute("item.edit_images", itemId);
-      //implementation of Image assing remaining.
+      this.transitionToRoute("item.edit_images", itemId, {
+        queryParams: { isUnplannedPackage: true }
+      });
     },
 
     moveBack() {
@@ -192,7 +193,7 @@ export default Ember.Controller.extend({
           }
         })
         .catch(() => {
-          this.send("pkgUpdateError", pkg);
+          this.send("pkgUpdateError", this.get("package"));
         })
         .finally(() => this.hideLoadingSpinner());
     },
