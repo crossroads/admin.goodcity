@@ -1,4 +1,5 @@
 import AuthorizeRoute from "./authorize";
+import Ember from "ember";
 
 export default AuthorizeRoute.extend({
   backLinkPath: Ember.computed.localStorage(),
@@ -18,7 +19,7 @@ export default AuthorizeRoute.extend({
     }
   },
 
-  beforeModel(transition) {
+  beforeModel() {
     var previousRoutes = this.router.router.currentHandlerInfos;
     var previousRoute = previousRoutes && previousRoutes.pop().name;
     this.set("backLinkPath", previousRoute);

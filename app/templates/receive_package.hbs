@@ -6,21 +6,29 @@
     </section>
   </nav>
 
-  <div class="row">
+  <div class="row new-item-attrs">
+
+    {{validate-inputs
+      elementCssIdentifiersArrayJson='["#quantity", "#description", "#inventoryNumber"]'
+      errorClass='form__control--error'
+      buttonId='#receive-button'
+    }}
+
     <div class="row">
       <div class="small-9 columns">
         <div class="row">
           <div class="small-4 columns item-label">
-            Quantity*
+            {{t 'items.add_item.quantity'}}*
           </div>
           <div class="small-8 columns">
-            {{numeric-input id=(concat 'qty' package.id) name="qty" value=packageForm.quantity placeholder=(t "placeholder.qty") maxlength="8" pattern="\d{1,8}"}}
+            {{numeric-input id='quantity' name="qty" value=packageForm.quantity placeholder=(t "placeholder.qty") maxlength="8" pattern="\d{1,8}"}}
+            <div class='input-error-msg'>{{t 'items.validation.quantity'}}</div>
           </div>
         </div>
 
         <div class="row">
           <div class="small-4 columns item-label">
-            Type*
+            {{t 'items.add_item.type'}}*
           </div>
           <div class="small-8 columns">
             {{input value=package.packageName disabled=true}}
@@ -34,23 +42,24 @@
             <img src={{package.item.displayImageUrl}} class="thumb" />
           {{else}}
             <i class="fa fa-camera"></i><br />
-            Add Images
+            {{t 'items.add_item.add_images'}}
           {{/if}}
         </span>
       </div>
     </div>
 
-    <div class="row">
+    <div class="row description-block">
       <div class="small-3 columns item-label">
-        Description*
+        {{t 'items.add_item.description'}}*
       </div>
       <div class="small-9 columns">
-        {{auto-resize-textarea data-autoresize=true name="notes" value=packageForm.notes placeholder=(t "placeholder.comments") maxlength="50" required="required" pattern=".*\S.*" id=(concat 'notes' package.id)}}
+        {{auto-resize-textarea data-autoresize=true name="notes" value=packageForm.notes placeholder=(t "placeholder.comments") maxlength="50" required="required" pattern=".*\S.*" id='description'}}
+        <div class='input-error-msg'>{{t 'items.validation.description'}}</div>
       </div>
     </div>
 
     <div class="row">
-      <div class="small-3 columns item-label">Quality*</div>
+      <div class="small-3 columns item-label">{{t 'items.add_item.quality'}}*</div>
 
       <div class="small-4 columns">
         {{select-list
@@ -71,15 +80,15 @@
       </div>
     </div>
 
-    <div class="row">
-      <div class="small-3 columns item-label">Locations*</div>
+    <div class="row location-block">
+      <div class="small-3 columns item-label">{{t 'items.add_item.location'}}*</div>
       <div class="small-9 columns">
-        {{custom-select2 content=locations record=location recordId=locationId placeholder=(t "receive_package.add_location")}}
+        {{custom-select2 id="location-select" content=locations record=location recordId=locationId placeholder=(t "receive_package.add_location")}}
       </div>
     </div>
 
     <div class="row">
-      <div class="small-3 columns item-label">Size(cm)</div>
+      <div class="small-3 columns item-label">{{t 'items.add_item.size'}}</div>
       <div class="small-3 columns">
         {{numeric-input name="length" id=(concat 'length' package.id) value=packageForm.length placeholder=(t "placeholder.length") maxlength="8" pattern="\d{1,8}"}}
       </div>
@@ -92,32 +101,33 @@
     </div>
 
     <div class="row">
-      <div class="small-3 columns item-label">Labels</div>
+      <div class="small-3 columns item-label">{{t 'items.add_item.labels'}}</div>
       <div class="small-3 columns">
         {{numeric-input id=(concat 'labels' package.id) name="labels" value=packageForm.labels placeholder="labels" maxlength="8" pattern="\d{1,8}"}}
       </div>
       <div class="small-2 columns item-label">
-        Inventory#
+        {{t 'items.add_item.inventory'}}#
       </div>
       <div class="small-4 columns end">
-        {{numeric-input id=(concat 'inventoryNumber' package.id) name="inventoryNumber" value=inventoryNumber placeholder="Inventory Number" maxlength="8" pattern="\d{1,8}"}}
+        {{numeric-input id='inventoryNumber' name="inventoryNumber" value=inventoryNumber placeholder="Inventory Number" maxlength="8" pattern="\d{1,8}"}}
+        <div class='input-error-msg'>{{t 'items.validation.inventory_number'}}</div>
       </div>
     </div>
 
     <div class="row">
-      <div class="small-3 columns item-label">Publish</div>
+      <div class="small-3 columns item-label">{{t 'items.add_item.publish'}}</div>
       <div class="small-2 columns end">
         {{input type="checkbox" id=(concat 'publishItem' package.id) checked=false}}
       </div>
     </div>
 
-    <div class="row">
+    <div class="row receive-buttons">
       <div class="small-6 columns">
         <a class="button expand secondary closeLink action1" {{action 'moveBack'}}>{{t "receive_package.cancel"}}</a>
       </div>
       <div class="small-6 columns">
-        <button class="button expand action2 confirmLink" {{action 'receivePackage'}}>
-         Receive & Print <i class="fa fa-print"></i>
+        <button id='receive-button' class="button expand action2 confirmLink" {{action 'receivePackage'}}>
+         {{t 'items.add_item.receive_and_print'}} <i class="fa fa-print"></i>
         </button>
       </div>
     </div>
