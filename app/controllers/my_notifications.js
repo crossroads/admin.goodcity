@@ -1,92 +1,168 @@
+import { AjaxBuilder } from "goodcity/utils/ajax-promise";
 import Ember from "ember";
 import offers from "./offers";
+import _ from "lodash";
+
+const { computed } = Ember;
+
+const MSG_KEY = msg => {
+  return [
+    msg.get("isPrivate") ? "private" : "public",
+    msg.get("offerId") || "-",
+    msg.get("itemId") || "-"
+  ].join("/");
+};
 
 export default offers.extend({
   sortProperties: ["createdAt:desc"],
   sortedModel: Ember.computed.sort("model", "sortProperties"),
   messagesUtil: Ember.inject.service("messages"),
+  subscriptions: Ember.inject.controller(),
   store: Ember.inject.service(),
-
-  allMessages: Ember.computed(function() {
-    return this.store.peekAll("message");
-  }),
-
-  model: Ember.computed(
-    "allMessages.@each.state",
-    "session.currentUser.id",
-    "allMessages.@each.offer.createdBy",
-    function() {
-      var currentUserId = this.get("session.currentUser.id");
-
-      return this.get("allMessages")
-        .rejectBy("state", "never-subscribed")
-        .rejectBy("offer.createdBy.id", currentUserId);
-    }
-  ),
+  logger: Ember.inject.service(),
 
   hasLoadedReadMessages: false,
-  showUnread: Ember.computed({
-    get: function() {
-      return true;
-    },
-    set: function(key, value) {
-      return value;
-    }
-  }),
+  displayMessages: true,
+  showUnread: true,
+  notifications: [],
 
-  myNotifications: Ember.computed("showUnread", "allNotifications", function() {
-    if (this.get("showUnread")) {
-      return this.get("unreadNotifications");
-    }
-    return this.get("allNotifications");
-  }),
+  init() {
+    // When a new message arrives, we move it to the top
+    this.get("subscriptions").on("create:message", ({ id }) => {
+      const store = this.get("store");
+      const msg = store.peekRecord("message", id);
+      const offerId = msg && msg.get("offerId");
+      const notifications = this.get("notifications");
 
-  unreadNotifications: Ember.computed("allNotifications.[]", function() {
-    return this.get("allNotifications").rejectBy("unreadCount", 0);
-  }),
-
-  readNotifications: Ember.computed("allNotifications.[]", function() {
-    return this.get("allNotifications").filterBy("unreadCount", 0);
-  }),
-
-  allNotifications: Ember.computed("model.@each.state", function() {
-    var keys = {};
-    var res = [];
-    this.get("sortedModel").forEach(message => {
-      var isPrivate = message.get("isPrivate");
-      var key =
-        isPrivate + message.get("offer.id") + (message.get("itemId") || "");
-      if (!keys[key]) {
-        let notification = this.buildNotification(message);
-        keys[key] = notification;
-        res.push(notification);
-      } else if (message.get("state") === "unread") {
-        var unreadCount = keys[key].get("unreadCount");
-        keys[key].set("unreadCount", unreadCount + 1);
-        keys[key].set("isSingleMessage", false);
-        keys[key].set("isThread", true);
+      if (!offerId) {
+        return;
       }
+
+      this.loadIfAbsent("offer", offerId).then(() => {
+        let notif = notifications.findBy("key", MSG_KEY(msg));
+        if (notif) {
+          // Update existing one
+          notifications.removeObject(notif);
+          notif.get("messages").addObject(msg);
+        } else {
+          // Create new one
+          notif = this.messagesToNotification([msg]);
+        }
+        notifications.insertAt(0, notif);
+      });
     });
-    return res;
-  }),
+  },
 
-  buildNotification(message) {
+  /**
+   * Creates a single notification out of multiple messages
+   *
+   * @param {*} messages
+   * @returns
+   */
+  messagesToNotification(messages) {
     const props = ["id", "itemId", "offer", "sender", "createdAt", "isPrivate"];
+    const lastMessage = messages.sortBy("createdAt").get("lastObject");
+    const item =
+      lastMessage.get("itemId") &&
+      this.get("store").peekRecord("item", lastMessage.get("itemId"));
 
-    let notification = Ember.Object.create(message.getProperties(props));
-    notification.set("unreadCount", message.get("state") === "unread" ? 1 : 0);
-    notification.set("text", message.get("body"));
-    notification.set("isSingleMessage", message.get("state") === "unread");
-    if (notification.get("itemId")) {
-      notification.set(
-        "item",
-        this.get("store").peekRecord("item", notification.get("itemId"))
-      );
-    }
+    let notification = Ember.Object.create(lastMessage.getProperties(props));
+    notification.setProperties({
+      key: MSG_KEY(lastMessage),
+      item: item,
+      messages: messages,
+      isSingleMessage: computed.equal("messages.length", 1),
+      isThread: computed.not("isSingleMessage"),
+      offerId: computed.alias("messages.firstObject.offerId"),
+      text: computed("messages.[]", function() {
+        return this.get("messages")
+          .sortBy("createdAt")
+          .get("lastObject.body");
+      }),
+      unreadCount: computed("messages.@each.state", function() {
+        return this.get("messages")
+          .filterBy("isUnread")
+          .get("length");
+      })
+    });
     return notification;
   },
 
+  /**
+   * Transform offers into "notifications" object with more UI-friendly properties
+   *
+   * @param {Offer} offer
+   * @returns {Object}
+   */
+  buildNotifications(offer) {
+    const offerMessages = offer.get("messages").filter(msg => {
+      return this.get("showUnread") ? msg.get("isUnread") : true;
+    });
+
+    return _.chain(offerMessages)
+      .groupBy(MSG_KEY)
+      .map(msgs => this.messagesToNotification(msgs))
+      .value();
+  },
+
+  /**
+   * Injects API JSON into the store and returns a list of models
+   *
+   * @param {Object} data
+   * @returns {Offer[]}
+   */
+  toOfferModels(data) {
+    this.get("store").pushPayload(data);
+    return data["offers"].map(({ id }) => {
+      return this.get("store").peekRecord("offer", id);
+    });
+  },
+
+  /**
+   * Loads a record from either the store or the api
+   *
+   * @param {String} model
+   * @param {String} id
+   * @returns {Model}
+   */
+  loadIfAbsent(model, id) {
+    const store = this.get("store");
+    return Ember.RSVP.resolve(
+      store.peekRecord(model, id) || store.findRecord(model, id)
+    );
+  },
+
   actions: {
+    /**
+     * Loads a page of offers
+     * Used by the infinite list
+     *
+     * @param {*} pageNo
+     * @returns
+     */
+    loadMoreMessages(pageNo) {
+      const state = this.get("showUnread") ? "unread" : "all";
+
+      return new AjaxBuilder("/offers/search")
+        .withAuth(this.get("session.authToken"))
+        .withQuery({
+          with_notifications: state,
+          include_messages: true,
+          recent_offers: true
+        })
+        .getPage(pageNo, 10)
+        .then(data => this.toOfferModels(data))
+        .then(offers => {
+          const notifications = _.chain(offers)
+            .map(o => this.buildNotifications(o))
+            .flatten()
+            .value();
+
+          this.get("notifications").addObjects(notifications);
+          return notifications;
+        });
+    },
+
     view(messageId) {
       var message = this.store.peekRecord("message", messageId);
       var route = this.get("messagesUtil").getRoute(message);
@@ -97,34 +173,33 @@ export default offers.extend({
       if (notification.unreadCount === 1) {
         var message = this.store.peekRecord("message", notification.id);
         this.get("messagesUtil").markRead(message);
+        notification.set("unreadCount", 0);
       } else {
         this.send("view", notification.id);
       }
     },
 
     toggleShowUnread() {
-      let showUnread = !this.get("showUnread");
-
-      if (!showUnread && !this.get("hasLoadedReadMessages")) {
-        // We want to show all messages, we load them if they haven't been loaded yet
-        let loadingView = Ember.getOwner(this)
-          .lookup("component:loading")
-          .append();
-        return this.get("messagesUtil")
-          .fetchReadMessages()
-          .then(() => {
-            this.set("hasLoadedReadMessages", true);
-            this.set("showUnread", showUnread);
-          })
-          .finally(() => loadingView.destroy());
-      }
-
-      this.set("showUnread", showUnread);
+      this.set("displayMessages", false);
+      this.get("notifications").clear();
+      Ember.run.later(this, function() {
+        let showUnread = !this.get("showUnread");
+        this.set("showUnread", showUnread);
+        this.set("displayMessages", true);
+      });
     },
 
     markAllRead() {
-      var allUnreadMessages = this.get("model").filterBy("state", "unread");
-      allUnreadMessages.forEach(m => this.get("messagesUtil").markRead(m));
+      this.get("messagesUtil")
+        .markAllRead()
+        .then(() => {
+          this.get("notifications").forEach(n => {
+            n.set("unreadCount", 0);
+          });
+        })
+        .catch(e => {
+          this.get("logger").error(e);
+        });
     }
   }
 });
