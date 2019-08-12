@@ -24,16 +24,17 @@ export default Ember.Controller.extend({
   selectedCondition: Ember.computed.alias("model.donorConditionId"),
 
   grades: Ember.computed(function() {
+    const i18n = this.get("i18n");
     return [
-      { name: this.get("i18n").t("receive_package.grade_a"), id: "A" },
-      { name: this.get("i18n").t("receive_package.grade_b"), id: "B" },
-      { name: this.get("i18n").t("receive_package.grade_c"), id: "C" },
-      { name: this.get("i18n").t("receive_package.grade_d"), id: "D" }
+      { name: i18n.t("receive_package.grade_a"), id: "A" },
+      { name: i18n.t("receive_package.grade_b"), id: "B" },
+      { name: i18n.t("receive_package.grade_c"), id: "C" },
+      { name: i18n.t("receive_package.grade_d"), id: "D" }
     ];
   }),
 
   selectedGrade: Ember.computed("model", function() {
-    var grade = this.get("model.grade");
+    const grade = this.get("model.grade");
     return this.get("grades")
       .filterBy("id", grade)
       .get("firstObject");
@@ -44,7 +45,7 @@ export default Ember.Controller.extend({
   }),
 
   identifyDevice: Ember.on("init", function() {
-    var isAndroidDevice = this.get("cordova").isAndroid();
+    const isAndroidDevice = this.get("cordova").isAndroid();
     this.set("isAndroidDevice", isAndroidDevice);
   }),
 
