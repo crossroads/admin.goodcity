@@ -1,20 +1,10 @@
 import Ember from "ember";
-<<<<<<< HEAD
-import { translationMacro as t } from "ember-i18n";
-const { getOwner } = Ember;
-
-export default Ember.Controller.extend({
-  filter: "",
-  searchText: "",
-  fetchMoreResult: true,
-=======
 import AsyncTasksMixin from "../mixins/async_tasks";
 import { translationMacro as t } from "ember-i18n";
 const { getOwner } = Ember;
 
 export default Ember.Controller.extend(AsyncTasksMixin, {
   searchText: "",
->>>>>>> paginated messages
   searchPlaceholder: t("search.placeholder"),
   store: Ember.inject.service(),
   i18n: Ember.inject.service(),
