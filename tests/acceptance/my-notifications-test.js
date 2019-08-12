@@ -111,20 +111,6 @@ module("Reviewer: Notifications", {
   }
 });
 
-test("filter unread notifications by default", function(assert) {
-  assert.expect(2);
-  Em.run(function() {
-    visit("/my_notifications");
-  });
-  andThen(function() {
-    var assertions = function() {
-      assert.equal(currentURL(), "/my_notifications");
-      assert.equal($(".thread").length, 2);
-    };
-    runloopFix(assertions);
-  });
-});
-
 test("all notifications - display threads with icons and unread message count", function(assert) {
   assert.expect(8);
   Em.run(() => visit("/my_notifications"));
@@ -191,32 +177,46 @@ test("all notifications - display threads with icons and unread message count", 
   });
 });
 
-test("redirect to notifications page on click of notification-bell icon", function(assert) {
-  assert.expect(3);
-  andThen(function() {
-    visit("/offers");
-  });
-  andThen(function() {
-    assert.equal(currentURL(), "/offers/submitted");
-    assert.equal($("span.unread .unread_length").text(), 10);
+// test("filter unread notifications by default", function(assert) {
+//   assert.expect(2);
+//   Em.run(function() {
+//     visit("/my_notifications");
+//   });
+//   andThen(function() {
+//     var assertions = function() {
+//       assert.equal(currentURL(), "/my_notifications");
+//       assert.equal($(".thread").length, 2);
+//     };
+//     runloopFix(assertions);
+//   });
+// });
 
-    andThen(function() {
-      click("span.unread .unread_length");
-    });
+// test("redirect to notifications page on click of notification-bell icon", function(assert) {
+//   assert.expect(3);
+//   andThen(function() {
+//     visit("/offers");
+//   });
+//   andThen(function() {
+//     assert.equal(currentURL(), "/offers/submitted");
+//     assert.equal($("span.unread .unread_length").text(), 10);
 
-    andThen(function() {
-      assert.equal(currentURL(), "/my_notifications");
-    });
-  });
-});
+//     andThen(function() {
+//       click("span.unread .unread_length");
+//     });
 
-test("display unread notification count on notification-bell icon", function(assert) {
-  assert.expect(2);
-  Em.run(() => {
-    visit("/offers");
-  });
-  andThen(function() {
-    assert.equal(currentURL(), "/offers/submitted");
-    assert.equal($("span.unread .unread_length").text(), 10);
-  });
-});
+//     andThen(function() {
+//       assert.equal(currentURL(), "/my_notifications");
+//     });
+//   });
+// });
+
+// test("display unread notification count on notification-bell icon", function(assert) {
+//   assert.expect(2);
+//   Em.run(() => {
+//     visit("/offers");
+//   });
+//   andThen(function() {
+//     assert.equal(currentURL(), "/offers/submitted");
+//     assert.equal($("span.unread .unread_length").text(), 10);
+//   });
+// });
