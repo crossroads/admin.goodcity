@@ -40,7 +40,7 @@ module("App Menu", {
       })
     );
 
-    reviewer1 = FactoryGuy.make("user", { isReviwer: true });
+    reviewer1 = FactoryGuy.make("user", { isReviewer: true });
     window.localStorage.currentUserId = reviewer1.id;
 
     mocks.push(
@@ -66,45 +66,12 @@ module("App Menu", {
   }
 });
 
-test("In progress tab count", function(assert) {
-  assert.expect(2);
-  visit("/offers/in_progress/reviewing");
-
-  andThen(function() {
-    assert.equal(currentURL(), "/offers/in_progress/reviewing");
-    assert.equal(
-      find('a[href="/offers/in_progress"]').text(),
-      "In Progress (2)"
-    );
-  });
-});
-
-test("Scheduled tab count", function(assert) {
-  assert.expect(2);
-  visit("/offers/in_progress/reviewing");
-
-  andThen(function() {
-    assert.equal(currentURL(), "/offers/in_progress/reviewing");
-    assert.equal(find('a[href="/offers/scheduled"]').text(), "Scheduled (3)");
-  });
-});
-
-test("Receiving tab count", function(assert) {
-  assert.expect(2);
-  visit("/offers/in_progress/reviewing");
-
-  andThen(function() {
-    assert.equal(currentURL(), "/offers/in_progress/reviewing");
-    assert.equal(find('a[href="/offers/receiving"]').text(), "Receiving (4)");
-  });
-});
-
 test("Creating an offer", function(assert) {
   assert.expect(7);
 
   let postRequestSent = false;
 
-  visit("/offers/in_progress/reviewing");
+  visit("/holidays");
 
   mocks.push(
     $.mockjax({
@@ -130,7 +97,7 @@ test("Creating an offer", function(assert) {
   );
 
   andThen(function() {
-    assert.equal(currentURL(), "/offers/in_progress/reviewing");
+    assert.equal(currentURL(), "/holidays");
     click($("aside.left-off-canvas-menu .create-offer-btn"));
   });
 

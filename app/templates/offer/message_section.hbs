@@ -18,6 +18,6 @@
   </ul>
 
   <div>
-    <button class="button centered" {{action "addItem"}}>{{t 'review_offer.options.add_item'}}</button>
+    <button class="button centered add-item" disabled={{offer.isFinished}} {{action "addItem"}}>{{t 'review_offer.options.add_item'}}</button>
   </div>
 </div>

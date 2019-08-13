@@ -1,8 +1,20 @@
 .offer_detail {
   text-align: center;
   height: 4.5rem;
+  @media #{$xlarge-only} {
+    height: 5.5rem;
+  }
+
+  @media #{$xxlarge-only} {
+    height: 5.5rem;
+  }
+
   font-size: 1.5vw;
   color:#DFE0E7;
+
+  .offer_counts {
+    display: inline-block;
+  }
 
   .offer_title {
     padding-top: 5px;
@@ -11,6 +23,7 @@
 
   i {
     margin-top:25px;
+    margin-left: 5px;
     font-size: 1.1rem;
     color: #FFFFFF;
   }
@@ -20,6 +33,11 @@
     color: #FFFFFF;
   }
 
+  .inactive_offers_divider {
+    border-bottom: 1px solid #8091A9;
+    padding-bottom: 5%;
+  }
+
   @media #{$small-only} {
     font-size: 3vw;
   }
@@ -27,6 +45,12 @@
   @media screen and (max-width: 350px) {
     .offer_count span, i {
       font-size: 5vw;
+    }
+  }
+
+  @media #{$large-only} {
+    .offer_icon {
+      margin-top: -5%;
     }
   }
 }
@@ -47,13 +71,21 @@
   margin-bottom: 1rem;
 
   @media #{$small-only} {
-    margin-top: 32%;
+    margin-top: 38%;
   }
   @media #{$large-only} {
-    margin-top: 22%;
+    margin-top: 25%;
   }
   @media #{$medium-only} {
-    margin-top: 17%;
+    margin-top: 25%;
+  }
+
+  @media #{$xlarge-only} {
+    margin-top: 26%;
+  }
+
+  @media #{$xxlarge-only} {
+    margin-top: 27%;
   }
 
   .offer_header {
@@ -89,8 +121,11 @@
   }
 
   .view_all {
-    color: #FFFFFF;
-    text-decoration: underline;
+    >div {
+      display: inline-block;
+      color: #FFFFFF;
+      text-decoration: underline;
+    }
   }
 }
 .reviewing { background-color:#ED4C4E; }
