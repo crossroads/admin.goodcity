@@ -1,7 +1,6 @@
 {{#if hasTwilioSupport}}
 
   <div class="row internet-call-button {{if hidden 'hidden'}}">
-    <div class="small-8 small-offset-2 columns">
       {{#if activeCall}}
         <button class="button expand secondary" {{action "hangupCall" on='click'}}>
           <span id="hangup" class="fa-stack fa hangup-call no-avatar">
@@ -10,12 +9,11 @@
           {{t "review_offer.donor.end_call"}}
         </button>
       {{else}}
-        {{#online-button action="makeCall" classNames="button expand secondary"}}
+        {{#online-button action="makeCall" classNames="expand secondary" tagName="a"}}
           <i class="fa fa-headphones"></i>
           {{t "review_offer.donor.internet_call"}}
         {{/online-button}}
       {{/if}}
-    </div>
   </div>
 
 {{/if}}
