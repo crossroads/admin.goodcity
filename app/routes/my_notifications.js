@@ -5,6 +5,7 @@ export default AuthorizeRoute.extend({
     this._super.apply(this, arguments);
 
     if (isExiting) {
+      controller.set("notifications", []);
       controller.set("hasLoadedReadMessages", false);
     }
   }

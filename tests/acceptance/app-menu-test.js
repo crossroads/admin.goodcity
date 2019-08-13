@@ -40,7 +40,7 @@ module("App Menu", {
       })
     );
 
-    reviewer1 = FactoryGuy.make("user", { isReviwer: true });
+    reviewer1 = FactoryGuy.make("user", { isReviewer: true });
     window.localStorage.currentUserId = reviewer1.id;
 
     mocks.push(

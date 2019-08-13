@@ -19,6 +19,8 @@ module("Search Offers", {
     App = startApp({}, 2);
     TestHelper.setup();
 
+    lookup("service:filter-service").clearFilters();
+
     role = FactoryGuy.make("role");
     $.mockjax({
       url: "/api/v1/role*",
