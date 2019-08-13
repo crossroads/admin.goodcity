@@ -5,6 +5,17 @@
     display: block;
   }
 
+  .invenory-number {
+    margin-top: 6%;
+    display: flex;
+    color: white;
+    justify-content: center;
+
+    @media #{$small-only} {
+      margin-top: 10%;
+    }
+  }
+
   .input-error-msg {
     background: #f46769;
     color: white;
@@ -67,7 +78,10 @@
   }
 
   .description-block .input-error-msg {
-    margin-top: -7% !important;
+    @media #{$small-only} {
+      margin-top: -7% !important;
+    }
+    margin-top: -5% !important;
     margin-bottom: 2%;
   }
 
