@@ -97,15 +97,12 @@
           </a>
           <div class="options_menu_list {{if displayDonorMobileOptions '' 'hidden'}}">
             <div class="option_menu">
-              <i class="fa fa-headphones" aria-hidden="true"></i>
-              <a {{action "removeCompany"}}>
-                Call donor over internet
-              </a>
+              {{twilio-make-call mobile=donor.mobile offerId=currentOffer.id internetCallStatus=internetCallStatus donorName=donor.fullName}}
             </div>
             <div class="option_menu">
               <span id="phoneNumber" class="tel_link phone_link {{if hidden 'hidden'}}">
                 <i class="fa fa-phone"></i>
-                <a href="tel:{{goodcityNumber}}">call donor using phone</a>
+                <a href="tel:{{goodcityNumber}}">Call donor using phone</a>
               </span>
             </div>
           </div>
@@ -134,15 +131,14 @@
           </a>
           <div class="options_menu_list {{if displayAltPhoneOptions '' 'hidden'}}">
             <div class="option_menu">
-              <i class="fa fa-headphones" aria-hidden="true"></i>
-              <a {{action "removeCompany"}}>
-                Call donor over internet
-              </a>
+              <span id="phoneNumber" class="{{if hidden 'hidden'}}">
+                {{twilio-make-call mobile=donor.mobile offerId=currentOffer.id internetCallStatus=internetCallStatus donorName=donor.fullName}}
+              </span>
             </div>
             <div class="option_menu">
               <span id="phoneNumber" class="tel_link phone_link {{if hidden 'hidden'}}">
                 <i class="fa fa-phone"></i>
-                <a href="tel:{{goodcityNumber}}">call donor using phone</a>
+                <a href="tel:{{goodcityNumber}}">Call donor using phone</a>
               </span>
             </div>
           </div>
