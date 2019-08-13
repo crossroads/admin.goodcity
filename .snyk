@@ -1,0 +1,40 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.13.5
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-LODASH-450202:
+    - ember-pretty-test > ember-cli > broccoli-babel-transpiler > workerpool > @babel/core > @babel/template > @babel/types > lodash:
+        patched: '2019-08-13T03:38:25.217Z'
+    - ember-pretty-test > ember-cli > broccoli-babel-transpiler > @babel/core > lodash:
+        patched: '2019-08-13T03:38:25.217Z'
+    - ember-pretty-test > ember-cli > broccoli-babel-transpiler > @babel/core > @babel/types > lodash:
+        patched: '2019-08-13T03:38:25.217Z'
+    - ember-pretty-test > ember-cli > @babel/core > @babel/template > @babel/types > lodash:
+        patched: '2019-08-13T03:38:25.217Z'
+    - ember-pretty-test > ember-cli > broccoli-babel-transpiler > workerpool > @babel/core > lodash:
+        patched: '2019-08-13T03:38:25.217Z'
+    - ember-pretty-test > ember-cli > broccoli-babel-transpiler > workerpool > @babel/core > @babel/traverse > lodash:
+        patched: '2019-08-13T03:38:25.217Z'
+    - ember-pretty-test > ember-cli > broccoli-babel-transpiler > @babel/core > @babel/traverse > @babel/generator > lodash:
+        patched: '2019-08-13T03:38:25.217Z'
+    - ember-pretty-test > ember-cli > @babel/core > @babel/helpers > @babel/template > @babel/types > lodash:
+        patched: '2019-08-13T03:38:25.217Z'
+    - ember-pretty-test > ember-cli > @babel/plugin-transform-modules-amd > @babel/helper-module-transforms > lodash:
+        patched: '2019-08-13T03:38:25.217Z'
+    - ember-pretty-test > ember-cli > broccoli-babel-transpiler > @babel/core > @babel/helpers > @babel/template > @babel/types > lodash:
+        patched: '2019-08-13T03:38:25.217Z'
+    - ember-pretty-test > ember-cli > @babel/core > @babel/traverse > @babel/helper-function-name > @babel/template > @babel/types > lodash:
+        patched: '2019-08-13T03:38:25.217Z'
+    - ember-pretty-test > ember-cli > @babel/core > @babel/helpers > @babel/traverse > @babel/helper-function-name > @babel/helper-get-function-arity > @babel/types > lodash:
+        patched: '2019-08-13T03:38:25.217Z'
+    - ember-pretty-test > ember-cli > broccoli-babel-transpiler > @babel/core > @babel/helpers > @babel/traverse > @babel/generator > @babel/types > lodash:
+        patched: '2019-08-13T03:38:25.217Z'
+    - ember-pretty-test > ember-cli > broccoli-babel-transpiler > workerpool > @babel/core > @babel/helpers > @babel/traverse > @babel/types > lodash:
+        patched: '2019-08-13T03:38:25.217Z'
+    - ember-pretty-test > ember-cli > broccoli-babel-transpiler > @babel/core > @babel/helpers > @babel/traverse > @babel/helper-function-name > @babel/template > @babel/types > lodash:
+        patched: '2019-08-13T03:38:25.217Z'
+    - ember-pretty-test > ember-cli > broccoli-babel-transpiler > workerpool > @babel/core > @babel/helpers > @babel/traverse > @babel/helper-split-export-declaration > @babel/types > lodash:
+        patched: '2019-08-13T03:38:25.217Z'
+    - ember-pretty-test > ember-cli > broccoli-babel-transpiler > workerpool > @babel/core > @babel/helpers > @babel/traverse > @babel/helper-function-name > @babel/helper-get-function-arity > @babel/types > lodash:
+        patched: '2019-08-13T03:38:25.217Z'
