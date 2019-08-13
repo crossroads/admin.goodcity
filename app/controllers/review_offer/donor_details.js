@@ -36,6 +36,15 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     }
   }),
 
+  displayDonorOptions: Ember.computed({
+    get: function() {
+      return false;
+    },
+    set: function(key, value) {
+      return value;
+    }
+  }),
+
   stickyNote: {
     showCallToAction: true
   },
@@ -77,7 +86,8 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
       let optionNames = [
         "displayCompanyOptions",
         "displayDonorMobileOptions",
-        "displayAltPhoneOptions"
+        "displayAltPhoneOptions",
+        "displayDonorOptions"
       ];
       optionNames.forEach(item => {
         if (item !== optionName && this.get(item)) {
@@ -91,6 +101,13 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
       const offer = this.get("currentOffer");
       offer.set("companyId", null);
       offer.set("company", null);
+      return offer.save();
+    },
+
+    removeContact() {
+      const offer = this.get("currentOffer");
+      offer.set("createdById", null);
+      offer.set("createdBy", null);
       return offer.save();
     },
 
