@@ -1,0 +1,13 @@
+.new-donor{
+  input[type="checkbox"]{
+    margin-top: 5px;
+    position: absolute;
+    left: unset !important;
+    visibility: unset !important;
+  }
+  .consent_text{
+    margin-top: 50px;
+    margin-left: 1.5em;
+    font-size: 0.7em;
+  }
+}

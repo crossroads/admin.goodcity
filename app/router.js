@@ -38,6 +38,12 @@ Router.map(function() {
       }
     );
 
+    this.route("donors", { resetNamespace: true, path: "/offer/" }, function() {
+      this.route("new", {
+        path: "/:offer_id/donors/new"
+      });
+    });
+
     this.route("review_offer", { resetNamespace: true }, function() {
       this.route("items");
       this.route("logistics");
