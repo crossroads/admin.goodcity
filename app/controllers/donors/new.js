@@ -64,9 +64,9 @@ export default Ember.Controller.extend({
       let firstName = this.get("firstName");
       let lastName = this.get("lastName");
       let email = this.get("email");
-      let mobile = this.get("mobilePhone");
+      let mobile = `+852${this.get("mobilePhone")}`;
       let receiveEmail = this.get("receiveEmail");
-      let otherPhone = this.get("otherPhone");
+      let otherPhone = `+852${this.get("otherPhone")}`;
       let title = this.get("selectedTitle").id;
 
       let self = this;
