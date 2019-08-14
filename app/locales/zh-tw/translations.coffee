@@ -17,6 +17,11 @@ I18nTranslationsZhTw =
       "server_search": "於服務器上尋找更多資訊"
       "placeholder": "搜索"
 
+    "inventory_options":
+      "auto": "Auto Id"
+      "input": "Input Id"
+      "scan": "Scan Id"
+
     "users":
       "search": "搜尋使用者"
 
