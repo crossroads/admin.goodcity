@@ -59,20 +59,20 @@
       </div>
     </div>
 
-    {{#if donor}}
+    {{#if currentOffer.donor}}
       <div class="row corporate-donor donor-details">
         <div class="small-5 columns">
           Donor Contact:
         </div>
         <div class="small-7 columns underline donor-data">
-          <a {{action "toggleOptions" "displayCompanyOptions"}}>
-            {{donor.fullName}}
+          <a {{action "toggleOptions" "displayDonorOptions"}}>
+            {{currentOffer.donor.fullName}}
             <i class="fa fa-caret-square-o-down" aria-hidden="true"></i>
           </a>
-          <div class="options_menu_list {{if displayCompanyOptions '' 'hidden'}}">
+          <div class="options_menu_list {{if displayDonorOptions '' 'hidden'}}">
             <div class="option_menu">
               <i class="fa fa-times-circle-o" aria-hidden="true"></i>
-              <a {{action "removeCompany"}}>
+              <a {{action "removeContact"}}>
                 Remove donor contact
               </a>
             </div>
@@ -97,16 +97,13 @@
           </a>
           <div class="options_menu_list {{if displayDonorMobileOptions '' 'hidden'}}">
             <div class="option_menu">
-              <i class="fa fa-headphones" aria-hidden="true"></i>
-              <a {{action "removeCompany"}}>
-                Call donor over internet
-              </a>
+              {{twilio-make-call mobile=donor.mobile offerId=currentOffer.id internetCallStatus=internetCallStatus donorName=donor.fullName}}
             </div>
             <div class="option_menu">
-              {{#link-to "offer.search_companies" currentOffer.id (query-params prevPath="donor_details") class="change-contact" tagName='div' href=false}}
-                <i class="fa fa-phone" aria-hidden="true"></i>
-                call donor using phone
-              {{/link-to}}
+              <span id="phoneNumber" class="tel_link phone_link {{if hidden 'hidden'}}">
+                <i class="fa fa-phone"></i>
+                <a href="tel:{{goodcityNumber}}">Call donor using phone</a>
+              </span>
             </div>
           </div>
         </div>
@@ -117,26 +114,9 @@
           Donor email:
         </div>
         <div class="small-7 columns underline donor-data">
-          <a {{action "toggleOptions" "displayCompanyOptions"}}>
-            {{#if donor.email}}
-              {{donor.email}}
-              <i class="fa fa-caret-square-o-down" aria-hidden="true"></i>
-            {{/if}}
-          </a>
-          {{!-- <div class="options_menu_list {{if displayCompanyOptions '' 'hidden'}}">
-            <div class="option_menu">
-              <i class="fa fa-times-circle-o" aria-hidden="true"></i>
-              <a {{action "removeCompany"}}>
-                Remove donor contact
-              </a>
-            </div>
-            <div class="option_menu">
-              {{#link-to "offer.search_companies" currentOffer.id (query-params prevPath="donor_details") class="change-contact" tagName='div' href=false}}
-              <i class="fa fa-search-plus" aria-hidden="true"></i>
-              Assign different donor
-              {{/link-to}}
-            </div>
-          </div> --}}
+          {{#if currentOffer.donor.email}}
+            {{currentOffer.donor.email}}
+          {{/if}}
         </div>
       </div>
 
@@ -151,16 +131,15 @@
           </a>
           <div class="options_menu_list {{if displayAltPhoneOptions '' 'hidden'}}">
             <div class="option_menu">
-              <i class="fa fa-times-circle-o" aria-hidden="true"></i>
-              <a {{action "removeCompany"}}>
-                Remove donor contact
-              </a>
+              <span id="phoneNumber" class="{{if hidden 'hidden'}}">
+                {{twilio-make-call mobile=donor.mobile offerId=currentOffer.id internetCallStatus=internetCallStatus donorName=donor.fullName}}
+              </span>
             </div>
             <div class="option_menu">
-              {{#link-to "offer.search_companies" currentOffer.id (query-params prevPath="donor_details") class="change-contact" tagName='div' href=false}}
-              <i class="fa fa-search-plus" aria-hidden="true"></i>
-              Assign different donor
-              {{/link-to}}
+              <span id="phoneNumber" class="tel_link phone_link {{if hidden 'hidden'}}">
+                <i class="fa fa-phone"></i>
+                <a href="tel:{{goodcityNumber}}">Call donor using phone</a>
+              </span>
             </div>
           </div>
         </div>

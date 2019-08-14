@@ -11,7 +11,7 @@ export default AuthorizeRoute.extend({
       if (!currentOffer) {
         return;
       }
-      const donor = this.getDonor(currentOffer);
+      const donor = currentOffer.get("donor");
       this.set("currentDonor", donor);
       this.set("currentOffer", currentOffer);
 
@@ -30,10 +30,6 @@ export default AuthorizeRoute.extend({
       }
       return Ember.A([]);
     });
-  },
-
-  getDonor(offer) {
-    return offer.get("createdById") && offer.get("createdBy");
   },
 
   setupController(controller, model) {
