@@ -12,7 +12,7 @@
         value=searchText }}
 
       {{#if hasSearchText}}
-      <i class="fa fa-times-circle clear-search" {{action "clearSearch"}}></i>
+        <i class="fa fa-times-circle clear-search" {{action "clearSearch"}}></i>
       {{/if}}
     </div>
   </div>
@@ -21,33 +21,33 @@
 <section class="main-section review_offer search search_offer">
   <div class="row">
     <div class="small-12 columns item-content">
-      <div class="new-company">
+      <div class="new-user">
         Find existing donor or
-        {{#link-to 'companies.new' model.id}}
-        Create A New Donor
+        {{#link-to "donors.new" model.id}}
+          Create A New Donor
         {{/link-to}}
       </div>
       {{#if displayResults}}
-      {{#infinite-list height="82vh" loadMore=(action "loadMoreUsers") as |users| }}
-      <ul class="list list-activity list-offer-items">
-        {{#each users as |user|}}
-        <li {{action 'goToDetails' user.id}}>
-          {{#link-to 'review_offer.donor_details' offer.id tagName='div' href=false}}
-            <div class="row">
-              <div class="small-10 columns user_name">
-                {{user.fullName}}
-              </div>
-              <div class="small-2 columns">
-                <span class="user-mobile">{{user.mobile}}</span>
-              </div>
-            </div>
-          {{/link-to}}
-        </li>
-        {{else}}
-        <div class="no_result">{{t "search.no_results"}}</div>
-        {{/each}}
-      </ul>
-      {{/infinite-list}}
+        {{#infinite-list height="82vh" loadMore=(action "loadMoreUsers") as |users| }}
+          <ul class="list list-activity list-offer-items">
+            {{#each users as |user|}}
+              <li {{action 'goToDetails' user.id}}>
+                {{#link-to 'review_offer.donor_details' offer.id tagName='div' href=false}}
+                  <div class="row">
+                    <div class="small-10 columns user_name">
+                      {{user.fullName}}
+                    </div>
+                    <div class="small-2 columns">
+                      <span class="user-mobile">{{user.mobile}}</span>
+                    </div>
+                  </div>
+                {{/link-to}}
+              </li>
+            {{else}}
+            <div class="no_result">{{t "search.no_results"}}</div>
+            {{/each}}
+          </ul>
+        {{/infinite-list}}
       {{/if}}
     </div>
   </div>

@@ -1,0 +1,119 @@
+<nav class="tab-bar new-company-nav">
+  <h1 class="title">New Donor</h1>
+</nav>
+<section class="main-section new-company-section ui">
+  <div class="row new-donor">
+    <div class="small-12 columns">
+      {{#validatable-form onSubmit=(action 'saveDonorAndOffer') as |form|}}
+        <div class="row">
+          <div class="donor_title small-2 columns">
+            Title
+          </div>
+          <div class="small-5 columns">
+            First Name
+          </div>
+          <div class="small-5 columns">
+            Family Name
+          </div>
+        </div>
+        <div class="row">
+          <div class="small-2 columns">
+            {{#form-control}}
+              {{select-list
+                content=titles
+                on-change=(action (mut selectedTitle))
+                selectedValue=selectedTitle
+                value= selectedTitle
+                selectArrow=true
+                classNames='condition'
+                idNames='title' }}
+
+              <div class='input-error'>Title can't be blank</div>
+            {{/form-control}}
+          </div>
+          <div class="small-5 columns">
+            {{#form-control}}
+              {{input type='text' value=firstName required='true'}}
+              <div class='input-error'>First name can't be blank</div>
+            {{/form-control}}
+          </div>
+          <div class="small-5 columns">
+            {{#form-control}}
+              {{input type='text' value=lastName required='true'}}
+              <div class='input-error'>Family name can't be blank</div>
+            {{/form-control}}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="small-12 columns">
+            Cell Phone
+          </div>
+          <div class="small-12 columns">
+            {{#form-control}}
+              {{numeric-input value=mobilePhone name="mobilePhone" id="mobile" maxlength="8" pattern="\d{1,8}" required='true'}}
+            {{/form-control}}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="small-12 columns">
+            Email Address
+          </div>
+          <div class="small-12 columns">
+            {{#form-control}}
+              {{input type='email' value=email}}
+            {{/form-control}}
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="small-12 columns">
+            <span>
+              {{input type="checkbox" checked=receiveEmail name="consent" id="given_consent"}}
+            </span>
+            <span class="consent_text">Has given consent to receive emails from us.</span>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="small-12 columns">
+            Other Phone
+          </div>
+          <div class="small-12 columns">
+            {{#form-control}}
+              {{numeric-input value=otherPhone name="otherPhone" id="otherPhone" maxlength="8" pattern="\d{1,8}"}}
+            {{/form-control}}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="small-12 columns">
+            Donor's Default Location
+          </div>
+          <div class="small-12 columns">
+            {{#form-control}}
+              {{select-list
+                  content=districts
+                  on-change=(action (mut selectedDistrict))
+                  selectedValue=selectedDistrict
+                  prompt="Select a district"
+                  value= selectedDistrict
+                  selectArrow=true
+                  required=true
+                  classNames='district-selector'
+                  idNames='district-select-dropdown'}}
+            {{/form-control}}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="small-12 columns">
+            <a {{action 'submit' target=form}} class="button expand">{{t 'save'}}</a>
+          </div>
+        </div>
+      {{/validatable-form}}
+    </div>
+  </div>
+</section>
