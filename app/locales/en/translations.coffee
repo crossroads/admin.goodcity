@@ -17,6 +17,11 @@ I18nTranslationsEn =
       "server_search": "Find more on server"
       "placeholder": "Search"
 
+    "inventory_options":
+      "auto": "Auto Id"
+      "input": "Input Id"
+      "scan": "Scan Id"
+
     "users":
       "search": "Search User"
 

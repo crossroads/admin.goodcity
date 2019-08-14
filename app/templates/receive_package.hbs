@@ -108,18 +108,30 @@
       <div class="small-2 columns item-label">
         {{t 'items.add_item.inventory'}}#
       </div>
-      <div class="small-4 columns end">
-        {{numeric-input id='inventoryNumber' name="inventoryNumber" value=inventoryNumber placeholder="Inventory Number" maxlength="8" pattern="\d{1,8}"}}
+      <div class="small-3 columns end">
+        {{#if inputInventory}}
+          {{numeric-input id='inventoryNumber' name="inventoryNumber" value=inventoryNumber placeholder="Inventory Number" maxlength="8" pattern="\d{1,8}"}}
+        {{else}}
+          <span class="invenory-number">
+            {{inventoryNumber}}
+          </span>
+        {{/if}}
+
         <div class='input-error-msg'>{{t 'items.validation.inventory_number'}}</div>
+      </div>
+      <div class="small-1 columns">
+        {{partial "inventory_options"}}
       </div>
     </div>
 
-    <div class="row">
-      <div class="small-3 columns item-label">{{t 'items.add_item.publish'}}</div>
-      <div class="small-2 columns end">
-        {{input type="checkbox" id=(concat 'publishItem' package.id) checked=false}}
+    {{#if showPublishItemCheckBox}}
+      <div class="row">
+        <div class="small-3 columns item-label">{{t 'items.add_item.publish'}}</div>
+        <div class="small-2 columns end">
+          {{input type="checkbox" id=(concat 'publishItem' package.id) checked=false}}
+        </div>
       </div>
-    </div>
+    {{/if}}
 
     <div class="row receive-buttons">
       <div class="small-6 columns">
