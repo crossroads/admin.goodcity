@@ -84,35 +84,6 @@ Router.map(function() {
     this.route("my_offers");
   });
 
-  this.route("offers", function() {
-    this.route("submitted");
-    this.route("receiving");
-
-    this.route("my_list", { resetNamespace: true }, function() {
-      this.route("reviewing");
-      this.route("reviewed");
-      this.route("scheduled");
-      this.route("finished");
-    });
-
-    this.route("in_progress", { resetNamespace: true }, function() {
-      this.route("reviewing");
-      this.route("reviewed");
-    });
-
-    this.route("finished", { resetNamespace: true }, function() {
-      this.route("received");
-      this.route("cancelled");
-      this.route("inactive");
-    });
-
-    this.route("scheduled", { resetNamespace: true }, function() {
-      this.route("collection");
-      this.route("gogovan");
-      this.route("other_delivery");
-    });
-  });
-
   this.route("users");
   this.route("user", { path: "/users/:user_id" });
   this.route("holidays");

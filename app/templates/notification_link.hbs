@@ -1,9 +1,9 @@
 {{#if session.isLoggedIn}}
   <a href="#" {{action "displayNotification"}} class='all_unread_messages_count'>
     <i class="fa fa-bell-o"></i>
-    {{#if model.length }}
+    {{#if hasMessages }}
       <span class="unread">
-        <div class="unread_length">{{model.length}}</div>
+        <div class="unread_length">{{unreadMessageCount}}</div>
       </span>
     {{/if}}
   </a>
