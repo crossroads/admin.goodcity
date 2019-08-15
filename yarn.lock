@@ -12656,7 +12656,7 @@ sha@~2.0.1:
 
 "shared-goodcity@git://github.com/crossroads/shared.goodcity.git#master":
   version "0.0.0"
-  resolved "git://github.com/crossroads/shared.goodcity.git#ca5c1f18d602385c6d45421419a2ae49ae0eece5"
+  resolved "git://github.com/crossroads/shared.goodcity.git#2a2bac9313b5358b49d7b7fc6f67ba41f1b84bdd"
   dependencies:
     cryptiles "^4.1.2"
     ember-cli-babel "^5.1.6"
