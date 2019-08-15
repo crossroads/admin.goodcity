@@ -51,7 +51,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     cancelSearch() {
       Ember.$("#searchText").blur();
       this.send("clearSearch");
-      this.transitionToRoute("my_list");
+      this.transitionToRoute("dashboard");
     }
   }
 });
