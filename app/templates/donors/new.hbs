@@ -1,5 +1,5 @@
 <nav class="tab-bar new-company-nav">
-  <h1 class="title">New Donor</h1>
+  <h1 class="title">{{t "offer_creation.create_donor.page_title"}}</h1>
 </nav>
 <section class="main-section new-company-section ui">
   <div class="row new-donor">
@@ -7,13 +7,13 @@
       {{#validatable-form onSubmit=(action 'saveDonorAndOffer') as |form|}}
         <div class="row">
           <div class="donor_title small-2 columns">
-            Title
+            {{t "offer_creation.create_donor.title"}}
           </div>
           <div class="small-5 columns">
-            First Name
+            {{t "offer_creation.create_donor.first"}}
           </div>
           <div class="small-5 columns">
-            Family Name
+            {{t "offer_creation.create_donor.last"}}
           </div>
         </div>
         <div class="row">
@@ -28,37 +28,38 @@
                 classNames='condition'
                 idNames='title' }}
 
-              <div class='input-error'>Title can't be blank</div>
+              <div class='input-error'>{{t "offer_creation.create_donor.errors.title"}}</div>
             {{/form-control}}
           </div>
           <div class="small-5 columns">
             {{#form-control}}
               {{input type='text' value=firstName required='true'}}
-              <div class='input-error'>First name can't be blank</div>
+              <div class='input-error'>{{t "offer_creation.create_donor.errors.first_name"}}</div>
             {{/form-control}}
           </div>
           <div class="small-5 columns">
             {{#form-control}}
               {{input type='text' value=lastName required='true'}}
-              <div class='input-error'>Family name can't be blank</div>
+              <div class='input-error'>{{t "offer_creation.create_donor.errors.last_name"}}</div>
             {{/form-control}}
           </div>
         </div>
 
         <div class="row">
           <div class="small-12 columns">
-            Cell Phone
+            {{t "offer_creation.create_donor.mobile"}}
           </div>
           <div class="small-12 columns">
             {{#form-control}}
               {{numeric-input value=mobilePhone name="mobilePhone" id="mobile" maxlength="8" pattern="\d{1,8}" required='true'}}
+              <div class='input-error'>{{t "offer_creation.create_donor.errors.cell_phone"}}</div>
             {{/form-control}}
           </div>
         </div>
 
         <div class="row">
           <div class="small-12 columns">
-            Email Address
+            {{t "offer_creation.create_donor.email"}}
           </div>
           <div class="small-12 columns">
             {{#form-control}}
@@ -73,13 +74,13 @@
             <span>
               {{input type="checkbox" checked=receiveEmail name="consent" id="given_consent"}}
             </span>
-            <span class="consent_text">Has given consent to receive emails from us.</span>
+            <span class="consent_text">{{t "offer_creation.create_donor.consent"}}</span>
           </div>
         </div>
 
         <div class="row">
           <div class="small-12 columns">
-            Other Phone
+            {{t "offer_creation.create_donor.other_phone"}}
           </div>
           <div class="small-12 columns">
             {{#form-control}}
@@ -90,7 +91,7 @@
 
         <div class="row">
           <div class="small-12 columns">
-            Donor's Default Location
+            {{t "offer_creation.create_donor.default_location"}}
           </div>
           <div class="small-12 columns">
             {{#form-control}}
@@ -98,7 +99,7 @@
                   content=districts
                   on-change=(action (mut selectedDistrict))
                   selectedValue=selectedDistrict
-                  prompt="Select a district"
+                  prompt=(t "offer_creation.create_donor.select_district")
                   value= selectedDistrict
                   selectArrow=true
                   required=true
