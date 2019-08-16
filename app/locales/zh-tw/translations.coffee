@@ -347,7 +347,41 @@ I18nTranslationsZhTw =
     "customized_variables":
       "click_here": "點擊這裏"
 
+    "donor_details":
+      "all_offers": "'s all offers on GoodCity:"
+      "company":
+        "title": "Corporate Donor:"
+        "remove": "Remove corporate donor"
+        "assign": "Assign different company"
+        "edit": "Edit this company"
+        "add": "NA, Personal - Add company"
+      "contact":
+        "title": "Donor Contact:"
+        "remove": "Remove donor contact"
+        "assign": "Assign different donor"
+        "add": "Missing - Add contact"
+      "mobile":
+        "title": "Donor mobile:"
+        "call_using_phone": "Call donor using phone"
+      "email":
+        "title": "Donor email:"
+      "alt_phone":
+        "title": "Donor alt phone:"
+        "call_using_phone": "Call donor using phone"
+      "location":
+        "title": "Donors location:"
+      "sale_allowed":
+        "title": "Sale allowed"
+        "yes": "Yes"
+        "no": "No"
+
     "offer_creation":
+      "search_users":
+        "find_donor": "Find existing donor or"
+        "create_donor": "Create A New Donor"
+      "search_companies":
+        "find_company": "Find existing company or"
+        "create_company": "Create new company"
       "create_donor":
         "page_title": "New Donor"
         "title": "Title"

@@ -22,9 +22,9 @@
   <div class="row">
     <div class="small-12 columns item-content">
       <div class="new-user">
-        Find existing donor or
+        {{t "offer_creation.search_users.find_donor"}}
         {{#link-to "donors.new" model.id}}
-          Create A New Donor
+          {{t "offer_creation.search_users.create_donor"}}
         {{/link-to}}
       </div>
       {{#if displayResults}}
