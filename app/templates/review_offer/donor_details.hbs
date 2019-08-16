@@ -25,7 +25,7 @@
 
     <div class="row corporate-donor donor-details">
       <div class="small-5 columns">
-        Corporate Donor:
+        {{t "donor_details.company.title"}}
       </div>
       <div class="small-7 columns underline donor-data">
         {{#if currentOffer.companyId}}
@@ -37,23 +37,23 @@
           <div class="option_menu">
             <i class="fa fa-times-circle-o" aria-hidden="true"></i>
             <a {{action "removeCompany"}}>
-              Remove corporate donor
+              {{t "donor_details.company.remove"}}
             </a>
           </div>
           <div class="option_menu">
             {{#link-to "offer.search_companies" currentOffer.id (query-params prevPath="donor_details") class="change-contact" tagName='div' href=false}}
             <i class="fa fa-search-plus" aria-hidden="true"></i>
-            Assign different company
+              {{t "donor_details.company.assign"}}
             {{/link-to}}
           </div>
           <div class="option_menu">
             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-            Edit this company
+              {{t "donor_details.company.edit"}}
           </div>
         </div>
         {{else}}
           {{#link-to "offer.search_companies" currentOffer.id (query-params prevPath="donor_details") class="change-contact" tagName='div' href=false}}
-          NA, Personal - Add company
+            {{t "donor_details.company.add"}}
           {{/link-to}}
         {{/if}}
       </div>
@@ -62,7 +62,7 @@
     {{#if currentOffer.donor}}
       <div class="row corporate-donor donor-details">
         <div class="small-5 columns">
-          Donor Contact:
+            {{t "donor_details.contact.title"}}
         </div>
         <div class="small-7 columns underline donor-data">
           <a {{action "toggleOptions" "displayDonorOptions"}}>
@@ -73,13 +73,13 @@
             <div class="option_menu">
               <i class="fa fa-times-circle-o" aria-hidden="true"></i>
               <a {{action "removeContact"}}>
-                Remove donor contact
+                {{t "donor_details.contact.remove"}}
               </a>
             </div>
             <div class="option_menu">
               {{#link-to "offer.search_users" currentOffer.id (query-params prevPath="donor_details") class="change-contact" tagName='div' href=false}}
                 <i class="fa fa-search-plus" aria-hidden="true"></i>
-                Assign different donor
+                {{t "donor_details.contact.assign"}}
               {{/link-to}}
             </div>
           </div>
@@ -88,7 +88,7 @@
 
       <div class="row corporate-donor donor-details">
         <div class="small-5 columns">
-          Donor mobile:
+          {{t "donor_details.mobile.title"}}
         </div>
         <div class="small-7 columns underline donor-data">
           <a {{action "toggleOptions" "displayDonorMobileOptions"}}>
@@ -102,7 +102,9 @@
             <div class="option_menu">
               <span id="phoneNumber" class="tel_link phone_link {{if hidden 'hidden'}}">
                 <i class="fa fa-phone"></i>
-                <a href="tel:{{goodcityNumber}}">Call donor using phone</a>
+                <a href="tel:{{goodcityNumber}}">
+                  {{t "donor_details.mobile.call_using_phone"}}
+                </a>
               </span>
             </div>
           </div>
@@ -111,7 +113,7 @@
 
       <div class="row corporate-donor donor-details">
         <div class="small-5 columns">
-          Donor email:
+          {{t "donor_details.email.title"}}
         </div>
         <div class="small-7 columns underline donor-data">
           {{#if currentOffer.donor.email}}
@@ -122,13 +124,15 @@
 
       <div class="row corporate-donor donor-details">
         <div class="small-5 columns">
-          Donor alt phone:
+          {{t "donor_details.alt_phone.title"}}
         </div>
         <div class="small-7 columns underline donor-data">
-          <a {{action "toggleOptions" "displayAltPhoneOptions"}}>
-            {{goodcityNumber}}
-            <i class="fa fa-caret-square-o-down" aria-hidden="true"></i>
-          </a>
+          {{#if currentOffer.donor.otherPhone}}
+            <a {{action "toggleOptions" "displayAltPhoneOptions"}}>
+              {{currentOffer.donor.otherPhone}}
+              <i class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+            </a>
+          {{/if}}
           <div class="options_menu_list {{if displayAltPhoneOptions '' 'hidden'}}">
             <div class="option_menu">
               <span id="phoneNumber" class="{{if hidden 'hidden'}}">
@@ -138,7 +142,9 @@
             <div class="option_menu">
               <span id="phoneNumber" class="tel_link phone_link {{if hidden 'hidden'}}">
                 <i class="fa fa-phone"></i>
-                <a href="tel:{{goodcityNumber}}">Call donor using phone</a>
+                <a href="tel:{{goodcityNumber}}">
+                  {{t "donor_details.alt_phone.call_using_phone"}}
+                </a>
               </span>
             </div>
           </div>
@@ -147,7 +153,7 @@
 
       <div class="row corporate-donor donor-details">
         <div class="small-5 columns">
-          Donors location:
+          {{t "donor_details.location.title"}}
         </div>
         <div class="small-7 columns donor-data">
           {{donor.address.district.name}}
@@ -192,13 +198,13 @@
 
       <div class="row corporate-donor donor-details">
         <div class="small-5 columns">
-          Sale allowed:
+          {{t "donor_details.sale_allowed.title"}}
         </div>
         <div class="small-7 columns donor-data">
           {{#if currentOffer.saleable}}
-            Yes
+            {{t "donor_details.sale_allowed.yes"}}
           {{else}}
-            No
+            {{t "donor_details.sale_allowed.no"}}
           {{/if}}
         </div>
       </div>
@@ -206,8 +212,7 @@
       <hr>
       <div class="row">
         <div class="small-12 columns item-content">
-          All {{donor.fullName}}'s offers on GoodCity:
-
+          {{donor.fullName}}{{t "donor_details.all_offers"}}
           <ul class="list list-activity list-offer-items">
             {{#each donorOffers as |offer|}}
               {{partial 'offers/offer_details'}}
@@ -218,11 +223,11 @@
     {{else}}
       <div class="row donor-details">
         <div class="small-5 columns">
-          Donor Contact:
+          {{t "donor_details.contact.title"}}
         </div>
         <div class="small-7 columns underline donor-data">
           {{#link-to "offer.search_users" currentOffer.id (query-params prevPath="donor_details") class="change-contact" tagName='div' href=false}}
-            Missing - Add contact
+            {{t "donor_details.contact.add"}}
           {{/link-to}}
         </div>
       </div>
