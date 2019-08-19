@@ -8,6 +8,17 @@
     width: 15rem;
     .option_menu {
       font-size: 0.94rem;
+      @media #{$small-only} {
+        font-size: 0.68rem;
+        padding: 0 0.4rem;
+        line-height: 2.5rem;
+      }
+      a {
+        font-size: unset;
+      }
+    }
+    @media #{$small-only} {
+      width: 10.5rem;
     }
   }
 
