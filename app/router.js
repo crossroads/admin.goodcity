@@ -20,15 +20,13 @@ Router.map(function() {
     this.route("gogovan_charges");
     this.route("cancel_gogovan");
 
-    this.route(
-      "companies",
-      { resetNamespace: true, path: "/offer/" },
-      function() {
-        this.route("new", {
-          path: "/:offer_id/companies/new"
-        });
-      }
-    );
+    this.route("companies", { resetNamespace: true }, function() {
+      this.route("new");
+    });
+
+    this.route("donors", { resetNamespace: true }, function() {
+      this.route("new");
+    });
 
     this.route(
       "item",
@@ -37,12 +35,6 @@ Router.map(function() {
         this.route("edit_images");
       }
     );
-
-    this.route("donors", { resetNamespace: true, path: "/offer/" }, function() {
-      this.route("new", {
-        path: "/:offer_id/donors/new"
-      });
-    });
 
     this.route("review_offer", { resetNamespace: true }, function() {
       this.route("items");

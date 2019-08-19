@@ -10,8 +10,8 @@ export default Ember.Controller.extend({
       let crmId = this.get("crmId");
       let self = this;
       let company = this.store.createRecord("company", {
-        name: this.get("name"),
-        crmId: this.get("crmId")
+        name: name,
+        crmId: crmId
       });
       company.get("offers").pushObject(offer);
       company.save().then(function() {
