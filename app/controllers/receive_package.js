@@ -11,6 +11,7 @@ export default Ember.Controller.extend({
   inventoryNumber: Ember.computed.alias("package.inventoryNumber"),
   autoGenerateInventory: true,
   displayInventoryOptions: false,
+  isAllowedToPublish: false,
 
   package: Ember.computed.alias("model"),
   watchErrors: true,
@@ -48,6 +49,7 @@ export default Ember.Controller.extend({
     "packageForm.quantity",
     "package.quantity",
     function() {
+      this.set("isAllowedToPublish", false);
       return +this.get("packageForm.quantity") === 1;
     }
   ),
@@ -142,6 +144,7 @@ export default Ember.Controller.extend({
     pkg.set("notes", pkgData.notes);
     pkg.set("inventoryNumber", inventoryNumber);
     pkg.set("grade", this.get("selectedGrade.id"));
+    pkg.set("allowWebPublish", this.get("isAllowedToPublish"));
     pkg.set("donorCondition", this.get("selectedCondition"));
     return pkg;
   },
