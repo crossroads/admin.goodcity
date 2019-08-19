@@ -128,7 +128,7 @@
       <div class="row">
         <div class="small-3 columns item-label">{{t 'items.add_item.publish'}}</div>
         <div class="small-2 columns end">
-          {{input type="checkbox" id=(concat 'publishItem' package.id) checked=false}}
+          {{input type="checkbox" id=(concat 'publishItem' package.id) checked=isAllowedToPublish}}
         </div>
       </div>
     {{/if}}
