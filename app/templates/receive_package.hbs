@@ -22,7 +22,9 @@
           </div>
           <div class="small-8 columns">
             {{numeric-input id='quantity' name="qty" value=packageForm.quantity placeholder=(t "placeholder.qty") maxlength="8" pattern="\d{1,8}"}}
-            <div class='input-error-msg'>{{t 'items.validation.quantity'}}</div>
+            {{#if isInvalidQuantity}}
+              <div class='input-error-msg' style="display: block;">{{t 'items.validation.quantity'}}</div>
+            {{/if}}
           </div>
         </div>
 
@@ -53,7 +55,8 @@
         {{t 'items.add_item.description'}}*
       </div>
       <div class="small-9 columns">
-        {{auto-resize-textarea data-autoresize=true name="notes" value=packageForm.notes placeholder=(t "placeholder.comments") maxlength="50" required="required" pattern=".*\S.*" id='description'}}
+        <i class="remove-text fa fa-times-circle" aria-hidden="true" {{action "clearDescription"}}></i>
+        {{auto-resize-textarea data-autoresize=true name="notes" value=description placeholder=(t "placeholder.comments") maxlength="50" required="required" pattern=".*\S.*" id='description'}}
         <div class='input-error-msg'>{{t 'items.validation.description'}}</div>
       </div>
     </div>
@@ -90,7 +93,7 @@
     <div class="row">
       <div class="small-3 columns item-label">{{t 'items.add_item.size'}}</div>
       <div class="small-3 columns">
-        {{numeric-input name="length" id=(concat 'length' package.id) value=packageForm.length placeholder=(t "placeholder.length") maxlength="8" pattern="\d{1,8}"}}
+        {{numeric-input id=(concat 'length' package.id) value=packageForm.length placeholder=(t "placeholder.length") maxlength="8" pattern="\d{1,8}"}}
       </div>
       <div class="small-3 columns">
         {{numeric-input id=(concat 'width' package.id) name="width" value=packageForm.width placeholder=(t "placeholder.width") maxlength="5" pattern="\d{1,5}"}}
@@ -99,11 +102,23 @@
         {{numeric-input id=(concat 'height' package.id) name="height" value=packageForm.height placeholder=(t "placeholder.height") maxlength="5"  pattern="\d{1,5}" }}
       </div>
     </div>
+    {{#if isInvalidDimension}}
+      <div class="row">
+        <div class="small-3 columns item-label"></div>
+        <div class='small-8 columns input-error-msg dimension-block' style="display:block;">Provide all three dimensions(or none)</div>
+      </div>
+    {{/if}}
 
     <div class="row">
       <div class="small-3 columns item-label">{{t 'items.add_item.labels'}}</div>
       <div class="small-3 columns">
-        {{numeric-input id=(concat 'labels' package.id) name="labels" value=packageForm.labels placeholder="labels" maxlength="8" pattern="\d{1,8}"}}
+        {{numeric-input id="labels" name="labels" value=packageForm.labels placeholder="labels" maxlength="3" pattern="\d{1,8}"}}
+        {{#if isInvalidaLabelCount}}
+          <div class='input-error-msg dimension-block'>{{t 'items.validation.labels'}}</div>
+        {{/if}}
+        {{#unless isInvalidPrintCount}}
+          <div class='input-error-msg dimension-block'>{{t 'items.validation.max_lable_count'}}</div>
+        {{/unless}}
       </div>
       <div class="small-2 columns item-label">
         {{t 'items.add_item.inventory'}}#
@@ -138,8 +153,11 @@
         <a class="button expand secondary closeLink action1" {{action 'moveBack'}}>{{t "receive_package.cancel"}}</a>
       </div>
       <div class="small-6 columns">
-        <button id='receive-button' class="button expand action2 confirmLink" {{action 'receivePackage'}}>
-         {{t 'items.add_item.receive_and_print'}} <i class="fa fa-print"></i>
+        <button id='receive-button' disabled={{disableReceiveButton}} class="button expand action2 confirmLink" {{action 'receivePackage'}}>
+          Receive
+          {{#if isMultipleCountPrint}}
+            & Print {{packageForm.labels}} <i class="fa fa-print"></i>
+          {{/if}}
         </button>
       </div>
     </div>
