@@ -203,7 +203,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   },
 
   // ----- Ajax Request Methods -----
-  removeInventoryNumber() {
+  unassignInventoryNumber() {
     let pkg = this.get("package");
     pkg.set("inventoryNumber", null);
     pkg.save().then(() => this.transitionToRoute("review_offer.receive"));
@@ -276,53 +276,44 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     },
 
     moveBack() {
-      this.showLoadingSpinner();
-      new AjaxPromise(
-        "/inventory_numbers/remove_number",
-        "PUT",
-        this.get("session.authToken"),
-        { code: this.get("package.inventoryNumber") }
-      )
-        .then(() => {
-          if (this.get("isUnplannedPackage")) {
-            this.deleteItem();
-          } else {
-            this.removeInventoryNumber();
-          }
-        })
-        .catch(() => {
-          this.send("pkgUpdateError", this.get("package"));
-        })
-        .finally(() => this.hideLoadingSpinner());
+      this.runTask(
+        this.get("packageService")
+          .removeInventoryNumber({ code: this.get("inventoryNumber") })
+          .then(() => {
+            if (this.get("isUnplannedPackage")) {
+              this.deleteItem();
+            } else {
+              this.unassignInventoryNumber();
+            }
+          })
+          .catch(() => this.send("pkgUpdateError", this.get("package")))
+      );
     },
 
     receivePackage() {
-      this.showLoadingSpinner();
       const pkg = this.receivePackageParams();
-      pkg
-        .save()
-        .then(() => {
-          if (this.get("isMultipleCountPrint")) {
-            this.printBarcode();
-          }
-          pkg.set("packagesLocationsAttributes", {});
-          this.transitionToRoute("review_offer.receive");
-          Ember.run.scheduleOnce("afterRender", this, () =>
-            this.get("reviewOfferController").set(
-              "displayCompleteReceivePopup",
-              this.get("offer.readyForClosure")
-            )
-          );
-        })
-        .catch(error => {
-          console.log("errors:", error);
-          this.send("pkgUpdateError", pkg);
-        })
-        .finally(() => this.hideLoadingSpinner());
+      this.runTask(
+        pkg
+          .save()
+          .then(() => {
+            if (this.get("isMultipleCountPrint")) {
+              this.printBarcode();
+            }
+            pkg.set("packagesLocationsAttributes", {});
+            this.transitionToRoute("review_offer.receive");
+            Ember.run.scheduleOnce("afterRender", this, () =>
+              this.get("reviewOfferController").set(
+                "displayCompleteReceivePopup",
+                this.get("offer.readyForClosure")
+              )
+            );
+          })
+          .catch(() => this.send("pkgUpdateError", pkg))
+      );
     },
 
     pkgUpdateError(pkg) {
-      var errorMessage =
+      const errorMessage =
         pkg.get("errors.firstObject.message") ||
         pkg.get("adapterError.errors.firstObject.title");
       if (
