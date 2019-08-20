@@ -111,6 +111,10 @@ I18nTranslationsZhTw =
       inactive_info: "Donor non-responsive"
 
     "items":
+      "remove_item":
+        "confirmation_message": "Are you sure you want to cancel this item?"
+        "yes": "Yes"
+        "no": "No"
       "add_item":
         "description_placeholder" : "這是甚麼？有多少件物資？物資大小？"
         "quantity": "Quantity"
