@@ -131,9 +131,11 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
       this.send("clearSearch", true);
       var item = this.get("model");
       if (this.get("isUnplannedPackage")) {
-        item.destroyRecord().then(() => {
-          this.transitionToRoute("review_offer.receive");
-        });
+        this.runTask(
+          item.destroyRecord().then(() => {
+            this.transitionToRoute("review_offer.receive");
+          })
+        );
       } else {
         this.transitionToRoute("review_item.accept", item);
       }
