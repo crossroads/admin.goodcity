@@ -41,16 +41,15 @@
     padding-top: 3%;
     a {
       padding-top: 3%;
-      margin-left: 50%;
     }
   }
 
-  input {
+  input.company-input {
     padding: 0 0.5rem;
-    background: #002352 !important;
-    border: 1px solid $tabbar-menu-icon-color !important;
+    background: #002352 ;
+    border: 1px solid $tabbar-menu-icon-color;
     color: white;
-    height: 1.8rem !important;
+    height: 2.75rem;
   }
 }
 

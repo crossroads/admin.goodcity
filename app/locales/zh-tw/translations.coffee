@@ -33,7 +33,7 @@ I18nTranslationsZhTw =
 
     "offer":
       "title": "捐贈細節"
-      "donor": "捐贈者"
+      "donor": "Details"
       "transport": "運輸"
       "details" : "捐贈詳情"
       "donor_messages" : "捐贈者信息"
