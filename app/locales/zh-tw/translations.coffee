@@ -387,7 +387,7 @@ I18nTranslationsZhTw =
         "title": "Title"
         "first": "First Name"
         "last": "Last Name"
-        "mobile": "Cell Phone"
+        "mobile": "Mobile number"
         "email": "Email Address"
         "other_phone": "Other Phone"
         "consent": "Has given consent to receive emails from us."
@@ -397,6 +397,6 @@ I18nTranslationsZhTw =
           "title": "Title can't be blank"
           "first_name": "First name can't be blank"
           "last_name": "Last name can't be blank"
-          "cell_phone": "Cell Phone can't be blank"
+          "cell_phone": "Mobile number can't be blank"
 
 `export default I18nTranslationsZhTw`
