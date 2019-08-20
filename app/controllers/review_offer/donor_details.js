@@ -14,15 +14,6 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   displayDonorMobileOptions: false,
   displayDonorOptions: false,
 
-  displayDonorOptions: Ember.computed({
-    get: function() {
-      return false;
-    },
-    set: function(key, value) {
-      return value;
-    }
-  }),
-
   stickyNote: {
     showCallToAction: true
   },
@@ -109,3 +100,4 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     }
   }
 });
+
