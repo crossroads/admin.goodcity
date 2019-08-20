@@ -1,32 +1,38 @@
 import Ember from "ember";
 const { getOwner } = Ember;
+import _ from "lodash";
 import AjaxPromise from "goodcity/utils/ajax-promise";
 
 export default Ember.Controller.extend({
+  // ----- Services -----
   messageBox: Ember.inject.service(),
   cordova: Ember.inject.service(),
+  i18n: Ember.inject.service(),
+
+  // ----- Arguments -----
   queryParams: ["isUnplannedPackage"],
   isUnplannedPackage: false,
   inputInventory: false,
-  inventoryNumber: Ember.computed.alias("package.inventoryNumber"),
   autoGenerateInventory: true,
   displayInventoryOptions: false,
   isAllowedToPublish: false,
-
-  package: Ember.computed.alias("model"),
   watchErrors: true,
   isAndroidDevice: false,
-  i18n: Ember.inject.service(),
-  reviewOfferController: Ember.inject.controller("review_offer"),
   displayError: false,
 
+  // ----- Aliases -----
+  inventoryNumber: Ember.computed.alias("package.inventoryNumber"),
+  package: Ember.computed.alias("model"),
+  description: Ember.computed.alias("package.notes"),
+  reviewOfferController: Ember.inject.controller("review_offer"),
+  selectedCondition: Ember.computed.alias("model.donorConditionId"),
+
+  // ----- Computed Properties -----
   donorConditions: Ember.computed(function() {
     return this.get("store")
       .peekAll("donor_condition")
       .sortBy("id");
   }),
-
-  selectedCondition: Ember.computed.alias("model.donorConditionId"),
 
   grades: Ember.computed(function() {
     const i18n = this.get("i18n");
@@ -86,46 +92,66 @@ export default Ember.Controller.extend({
         length: pkg.get("length"),
         width: pkg.get("width"),
         height: pkg.get("height"),
-        notes: pkg.get("notes")
+        labels: pkg.get("quantity")
       };
     }
   }),
 
-  enableDisplayError() {
-    this.set("displayError", true);
-  },
-
   isInvalidQuantity: Ember.computed("packageForm.quantity", function() {
-    return this.get("packageForm.quantity") < 1;
+    return this.get("packageForm.quantity") <= 0;
   }),
 
-  isInvalidLocation: Ember.computed("locationId", function() {
-    return !this.get("locationId");
+  isInvalidaLabelCount: Ember.computed("packageForm.labels", function() {
+    const labelCount = this.get("packageForm.labels");
+    return !labelCount || Number(labelCount) < 0;
   }),
 
-  isInvalidDescription: Ember.computed("packageForm.notes", function() {
-    return this.get("package.notes").length === 0;
+  isMultipleCountPrint: Ember.computed("packageForm.labels", function() {
+    const labelCount = Number(this.get("packageForm.labels"));
+    return _.inRange(labelCount, 1, 301);
   }),
 
-  isInvalidInventoryNo: Ember.computed("inventoryNumber", function() {
-    return !this.verifyInventoryNumber(this.get("inventoryNumber"));
+  isInvalidPrintCount: Ember.computed("packageForm.labels", function() {
+    const labelCount = Number(this.get("packageForm.labels"));
+    return _.inRange(labelCount, 0, 301);
   }),
 
-  isPackageInvalid: Ember.computed(
+  isInvalidDimension: Ember.computed(
+    "packageForm.length",
+    "packageForm.width",
+    "packageForm.height",
+    function() {
+      const { length, width, height } = this.get("packageForm");
+      const dimensionsCount = _.filter(
+        [length, width, height],
+        item => Number(item) <= 0
+      ).length;
+      return _.inRange(dimensionsCount, 1, 3);
+    }
+  ),
+
+  disableReceiveButton: Ember.computed(
+    "isInvalidPrintCount",
+    "isInvalidaLabelCount",
+    "locationId",
     "isInvalidQuantity",
-    "isInvalidInventoryNo",
-    "isInvalidDescription",
-    "isInvalidLocation",
+    "inventoryNumber",
+    "isInvalidDimension",
+    "packageForm.labels",
     function() {
       return (
         this.get("isInvalidQuantity") ||
-        this.get("isInvalidInventoryNo") ||
-        this.get("isInvalidDescription") ||
-        this.get("isInvalidLocation")
+        !this.get("isInvalidPrintCount") ||
+        this.get("isInvalidaLabelCount") ||
+        this.get("isInvalidDimension") ||
+        !this.get("inventoryNumber") ||
+        !this.get("packageForm.labels") ||
+        !this.get("locationId")
       );
     }
   ),
 
+  // ----- Helpers -----
   receivePackageParams() {
     const pkgData = this.get("packageForm");
     const inventoryNumber = this.get("inventoryNumber");
@@ -141,7 +167,7 @@ export default Ember.Controller.extend({
     pkg.set("length", pkgData.length);
     pkg.set("width", pkgData.width);
     pkg.set("height", pkgData.height);
-    pkg.set("notes", pkgData.notes);
+    pkg.set("notes", this.get("description"));
     pkg.set("inventoryNumber", inventoryNumber);
     pkg.set("grade", this.get("selectedGrade.id"));
     pkg.set("allowWebPublish", this.get("isAllowedToPublish"));
@@ -170,10 +196,19 @@ export default Ember.Controller.extend({
     }
   },
 
+  // ----- Ajax Request Methods -----
   removeInventoryNumber() {
     let pkg = this.get("package");
     pkg.set("inventoryNumber", null);
     pkg.save().then(() => this.transitionToRoute("review_offer.receive"));
+  },
+
+  generateInventoryNumber() {
+    new AjaxPromise(
+      "/inventory_numbers",
+      "POST",
+      this.get("session.authToken")
+    ).then(data => this.set("inventoryNumber", data.inventory_number));
   },
 
   deleteItem() {
@@ -183,25 +218,37 @@ export default Ember.Controller.extend({
       .then(() => this.transitionToRoute("review_offer.receive"));
   },
 
+  printBarcode() {
+    const packageId = this.get("package.id");
+    const labels = this.get("packageForm.labels");
+    new AjaxPromise(
+      "/packages/print_barcode",
+      "POST",
+      this.get("session.authToken"),
+      { package_id: packageId, labels }
+    );
+  },
+
+  verifyInventoryNumber: function(value) {
+    return /^[A-Z]{0,1}[0-9]{5,6}(Q[0-9]*){0,1}$/i.test(value);
+  },
+
+  // ----- Actions -----
   actions: {
+    clearDescription() {
+      this.set("description", "");
+    },
+
     toggleInventoryOptions() {
       this.toggleProperty("displayInventoryOptions");
     },
 
     autoGenerateInventoryNumber() {
-      var _this = this;
       this.set("inventoryNumber", "");
       this.set("inputInventory", false);
       this.set("autoGenerateInventory", true);
       this.set("displayInventoryOptions", false);
-
-      new AjaxPromise(
-        "/inventory_numbers",
-        "POST",
-        this.get("session.authToken")
-      ).then(function(data) {
-        _this.set("inventoryNumber", data.inventory_number);
-      });
+      this.generateInventoryNumber();
     },
 
     deleteAutoGeneratedNumber() {
@@ -252,18 +299,14 @@ export default Ember.Controller.extend({
     },
 
     receivePackage() {
-      if (this.get("isPackageInvalid")) {
-        this.enableDisplayError();
-        return false;
-      }
-      const loadingView = getOwner(this)
-        .lookup("component:loading")
-        .append();
+      this.showLoadingSpinner();
       const pkg = this.receivePackageParams();
       pkg
         .save()
         .then(() => {
-          loadingView.destroy();
+          if (this.get("isMultipleCountPrint")) {
+            this.printBarcode();
+          }
           pkg.set("packagesLocationsAttributes", {});
           this.transitionToRoute("review_offer.receive");
           Ember.run.scheduleOnce("afterRender", this, () =>
@@ -273,10 +316,11 @@ export default Ember.Controller.extend({
             )
           );
         })
-        .catch(() => {
-          loadingView.destroy();
+        .catch(error => {
+          console.log("errors:", error);
           this.send("pkgUpdateError", pkg);
-        });
+        })
+        .finally(() => this.hideLoadingSpinner());
     },
 
     pkgUpdateError(pkg) {
@@ -292,7 +336,12 @@ export default Ember.Controller.extend({
           () => pkg.rollbackAttributes()
         );
       } else {
-        this.enableDisplayError();
+        this.get("messageBox").alert(
+          pkg
+            .get("errors")
+            .getEach("message")
+            .join("\n")
+        );
       }
     },
 
@@ -302,9 +351,5 @@ export default Ember.Controller.extend({
       this.set("invalidDescription", false);
       this.set("hasErrors", false);
     }
-  },
-
-  verifyInventoryNumber: function(value) {
-    return /^[A-Z]{0,1}[0-9]{5,6}(Q[0-9]*){0,1}$/i.test(value);
   }
 });

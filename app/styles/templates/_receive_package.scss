@@ -16,12 +16,21 @@
     }
   }
 
+  .remove-text {
+    position: absolute;
+    right: 2%;
+    font-size: 0.9rem;
+    padding: 0.4rem 0.3rem;
+    cursor: pointer;
+  }
+
   .input-error-msg {
     background: #f46769;
     color: white;
     padding: 0.2rem;
     display: none;
     margin-top: -5%;
+    margin-bottom: 2%;
 
     @media #{$small-only} {
       font-size: 0.65rem;
@@ -78,16 +87,18 @@
   }
 
   .description-block .input-error-msg {
-    @media #{$small-only} {
-      margin-top: -7% !important;
-    }
-    margin-top: -5% !important;
-    margin-bottom: 2%;
+    margin-top: -2% !important;
   }
 
   .location-block .input-error-msg {
     margin-top: -3% !important;
-    margin-bottom: 2%;
+  }
+
+  .dimension-block {
+    margin-top: 0%;
+    margin-right: 0.4rem;
+    width: 72%;
+    display: block;
   }
 
   textarea {
