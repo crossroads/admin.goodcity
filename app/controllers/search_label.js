@@ -1,7 +1,8 @@
 import Ember from "ember";
 import { translationMacro as t } from "ember-i18n";
+import AsyncTasksMixin from "../mixins/async_tasks";
 
-export default Ember.Controller.extend({
+export default Ember.Controller.extend(AsyncTasksMixin, {
   filter: "",
   searchText: "",
   fetchMoreResult: true,
@@ -106,11 +107,13 @@ export default Ember.Controller.extend({
 
   addPackage() {
     let pkgRecord = this.store.createRecord("package", this.packageParams());
-    pkgRecord.save().then(pkg => {
-      this.transitionToRoute("receive_package", pkg.id, {
-        queryParams: { isUnplannedPackage: true }
-      });
-    });
+    this.runTask(
+      pkgRecord.save().then(pkg => {
+        this.transitionToRoute("receive_package", pkg.id, {
+          queryParams: { isUnplannedPackage: true }
+        });
+      })
+    );
   },
 
   actions: {
@@ -141,9 +144,11 @@ export default Ember.Controller.extend({
       item.set("packageType", type);
       this.send("clearSearch", true);
       if (this.get("isUnplannedPackage")) {
-        item.save().then(() => {
-          this.addPackage();
-        });
+        this.runTask(
+          item.save().then(() => {
+            this.addPackage();
+          })
+        );
       } else {
         this.transitionToRoute("review_item.accept", item);
       }
