@@ -1,6 +1,7 @@
 import Ember from "ember";
+import AsyncTasksMixin from "../../mixins/async_tasks";
 
-export default Ember.Controller.extend({
+export default Ember.Controller.extend(AsyncTasksMixin, {
   queryParams: ["state"],
   state: "expecting",
   items: Ember.computed.filterBy("model.items", "state", "accepted"),
@@ -17,11 +18,13 @@ export default Ember.Controller.extend({
         donorCondition: defaultDonorCondition,
         state: "accepted"
       });
-      item.save().then(item => {
-        this.transitionToRoute("search_label", item.id, {
-          queryParams: { isUnplannedPackage: true }
-        });
-      });
+      this.runTask(
+        item.save().then(item => {
+          this.transitionToRoute("search_label", item.id, {
+            queryParams: { isUnplannedPackage: true }
+          });
+        })
+      );
     }
   }
 });
