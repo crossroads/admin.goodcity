@@ -111,6 +111,10 @@ I18nTranslationsEn =
       inactive_info: "Donor non-responsive"
 
     "items":
+      "remove_item":
+        "confirmation_message": "Are you sure you want to cancel this item?"
+        "yes": "Yes"
+        "no": "No"
       "add_item":
         "description_placeholder" : "What is it? How many items? What's the size?"
         "quantity": "Quantity"
