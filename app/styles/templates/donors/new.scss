@@ -1,14 +1,9 @@
 .new-donor{
+  line-height: 2em;
   input[type="checkbox"]{
-    margin-top: 5px;
-    position: absolute;
     left: unset !important;
     visibility: unset !important;
-  }
-  .consent_text{
-    margin-top: 50px;
-    margin-left: 1.5em;
-    font-size: 0.7em;
+    margin-right: -10%;
   }
   select {
     background-color: unset;
@@ -20,5 +15,24 @@
   }
   .button{
     margin-top: 2%;
+  }
+  .consent-text{
+    font-size: 0.7em;
+    @media #{$xlarge-only} {
+      left: -5%;
+    }
+    @media #{$xxlarge-only} {
+      left: -5%;
+    }
+    @media #{$large-only} {
+      left: -5%;
+    }
+    @media #{$small-only} {
+      margin-top: 4px;
+      left: -2%;
+    }
+  }
+  .donor-label{
+    margin-bottom: 0.5em;
   }
 }

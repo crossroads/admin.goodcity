@@ -46,7 +46,7 @@
         </div>
 
         <div class="row">
-          <div class="small-12 columns">
+          <div class="small-12 columns donor-label">
             {{t "offer_creation.create_donor.mobile"}}
           </div>
           <div class="small-12 columns">
@@ -58,7 +58,7 @@
         </div>
 
         <div class="row">
-          <div class="small-12 columns">
+          <div class="small-12 columns donor-label">
             {{t "offer_creation.create_donor.email"}}
           </div>
           <div class="small-12 columns">
@@ -70,16 +70,16 @@
 
 
         <div class="row">
-          <div class="small-12 columns">
-            <span>
-              {{input type="checkbox" checked=receiveEmail name="consent" id="given_consent"}}
-            </span>
-            <span class="consent_text">{{t "offer_creation.create_donor.consent"}}</span>
+          <div class="small-1 columns donor-label">
+            {{input type="checkbox" checked=receiveEmail name="consent" id="given_consent"}}
+          </div>
+          <div class="small-11 columns donor-label consent-text">
+            {{t "offer_creation.create_donor.consent"}}
           </div>
         </div>
 
         <div class="row">
-          <div class="small-12 columns">
+          <div class="small-12 columns donor-label">
             {{t "offer_creation.create_donor.other_phone"}}
           </div>
           <div class="small-12 columns">
@@ -90,7 +90,7 @@
         </div>
 
         <div class="row">
-          <div class="small-12 columns">
+          <div class="small-12 columns donor-label">
             {{t "offer_creation.create_donor.default_location"}}
           </div>
           <div class="small-12 columns">
@@ -109,7 +109,7 @@
         </div>
 
         <div class="row">
-          <div class="small-12 columns">
+          <div class="small-12 columns donor-label">
             <a {{action 'submit' target=form}} class="button expand">{{t 'save'}}</a>
           </div>
         </div>
