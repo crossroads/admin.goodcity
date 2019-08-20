@@ -24,6 +24,14 @@ Router.map(function() {
       this.route("new");
     });
 
+    this.route(
+      "companies",
+      { resetNamespace: true, path: "/companies/:company_id" },
+      function() {
+        this.route("edit");
+      }
+    );
+
     this.route("donors", { resetNamespace: true }, function() {
       this.route("new");
     });

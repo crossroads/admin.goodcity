@@ -9,41 +9,10 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   goodcityNumber: config.APP.GOODCITY_NUMBER,
   internetCallStatus: Ember.inject.controller(),
 
-  displayCompanyOptions: Ember.computed({
-    get: function() {
-      return false;
-    },
-    set: function(key, value) {
-      return value;
-    }
-  }),
-
-  displayAltPhoneOptions: Ember.computed({
-    get: function() {
-      return false;
-    },
-    set: function(key, value) {
-      return value;
-    }
-  }),
-
-  displayDonorMobileOptions: Ember.computed({
-    get: function() {
-      return false;
-    },
-    set: function(key, value) {
-      return value;
-    }
-  }),
-
-  displayDonorOptions: Ember.computed({
-    get: function() {
-      return false;
-    },
-    set: function(key, value) {
-      return value;
-    }
-  }),
+  displayCompanyOptions: false,
+  displayAltPhoneOptions: false,
+  displayDonorMobileOptions: false,
+  displayDonorOptions: false,
 
   stickyNote: {
     showCallToAction: true

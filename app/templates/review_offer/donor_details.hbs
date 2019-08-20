@@ -47,8 +47,10 @@
             {{/link-to}}
           </div>
           <div class="option_menu">
-            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+            {{#link-to "companies.edit" currentOffer.company (query-params prevPath="donor_details") class="change-contact" tagName='div' href=false}}
+              <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
               {{t "donor_details.company.edit"}}
+            {{/link-to}}
           </div>
         </div>
         {{else}}
@@ -72,8 +74,8 @@
           <div class="options_menu_list {{if displayDonorOptions '' 'hidden'}}">
             <div class="option_menu">
               <a {{action "removeContact"}}>
-                {{t "donor_details.contact.remove"}}
                 <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+                {{t "donor_details.contact.remove"}}
               </a>
             </div>
             <div class="option_menu">
