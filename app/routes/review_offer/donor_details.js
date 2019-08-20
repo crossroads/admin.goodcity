@@ -36,6 +36,14 @@ export default AuthorizeRoute.extend({
     this._super(controller, model);
     controller.set("donor", this.get("currentDonor"));
     controller.set("currentOffer", this.get("currentOffer"));
+    [
+      "displayCompanyOptions",
+      "displayAltPhoneOptions",
+      "displayDonorMobileOptions",
+      "displayDonorOptions"
+    ].forEach(item => {
+      controller.set(item, false);
+    });
   },
 
   afterModel(model) {
