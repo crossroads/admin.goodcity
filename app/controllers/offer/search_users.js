@@ -56,7 +56,10 @@ export default Ember.Controller.extend({
     },
 
     cancelSearch() {
-      this.transitionToRoute("dashboard");
+      this.transitionToRoute(
+        "review_offer.donor_details",
+        this.get("model.id")
+      );
     },
 
     loadMoreUsers(pageNo) {
