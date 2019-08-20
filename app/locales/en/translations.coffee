@@ -33,7 +33,7 @@ I18nTranslationsEn =
 
     "offer":
       "title": "Offer"
-      "donor": "Donor"
+      "donor": "Details"
       "transport": "Transport"
       "details" : "Offer details"
       "donor_messages" : "Donor Messages"

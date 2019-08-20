@@ -1,3 +1,3 @@
-import AuthorizeRoute from "./../authorize";
+import OfferRoute from "./../offer";
 
-export default AuthorizeRoute.extend({});
+export default OfferRoute.extend({});

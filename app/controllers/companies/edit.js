@@ -3,19 +3,17 @@ import Ember from "ember";
 export default Ember.Controller.extend({
   actions: {
     saveComanyAndOffer() {
-      let name = this.get("model.name");
-      let crmId = this.get("model.crmId");
       let self = this;
-      let company = this.get("model");
-      company.set("name", name);
-      company.set("crmId", crmId);
-      company.save();
-      // company.get("offers").pushObject(offer);
-      // company.save().then(function () {
-      //   offer.save().then(() => {
-      //     self.transitionToRoute("review_offer.donor_details", offer.get("id"));
-      //   });
-      // });
+      let company = this.get("model.company");
+      let offer = this.get("model");
+      let createdById = this.get("session.currentUser.id");
+      company.set("name", this.get("model.company.name"));
+      company.set("crmId", this.get("model.company.crmId"));
+      company.set("updatedById", this.get("session.currentUser.id"));
+
+      company.save().then(function() {
+        self.transitionToRoute("review_offer.donor_details", offer.get("id"));
+      });
     }
   }
 });
