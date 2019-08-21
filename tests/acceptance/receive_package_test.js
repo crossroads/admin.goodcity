@@ -39,7 +39,7 @@ module("Receive package", {
   }
 });
 
-test("If location not selected button is disabled", function(assert) {
+test("If location not selected Receive button is disabled", function(assert) {
   visit("/offers/" + offer1.id + "/receive_package/" + package1.id);
 
   $.mockjax({

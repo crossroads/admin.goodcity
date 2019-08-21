@@ -305,6 +305,7 @@ I18nTranslationsZhTw =
       "notify_donor": "聯絡捐贈者，告知預約已被取消"
 
     "receive":
+      "unplanned_inventory": "Add unplanned item to inventory"
       "missing": "遺失"
       "receive": "接收"
       "inventory": "存貨"

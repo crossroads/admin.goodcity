@@ -306,6 +306,7 @@ I18nTranslationsEn =
       "notify_donor": "Message the donor to let them know their GoGoVan booking is being cancelled"
 
     "receive":
+      "unplanned_inventory": "Add unplanned item to inventory"
       "missing": "Missing"
       "receive": "Receive"
       "inventory": "Inventory"
