@@ -11,7 +11,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
       const offer = this.get("model");
       const defaultDonorCondition = this.get("store")
         .peekAll("donorCondition")
-        .sortBy("id")
+        .filterBy("name", "Lightly Used")
         .get("firstObject");
       let item = this.get("store").createRecord("item", {
         offer: offer,

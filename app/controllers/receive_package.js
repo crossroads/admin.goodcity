@@ -25,7 +25,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   package: Ember.computed.alias("model"),
   description: Ember.computed.alias("package.notes"),
   reviewOfferController: Ember.inject.controller("review_offer"),
-  selectedCondition: Ember.computed.alias("model.donorConditionId"),
+  selectedCondition: Ember.computed.alias("model.donorCondition"),
 
   // ----- Computed Properties -----
   donorConditions: Ember.computed(function() {
