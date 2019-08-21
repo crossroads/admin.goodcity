@@ -130,7 +130,7 @@ I18nTranslationsZhTw =
         "receive_and_print": "Receive & Print"
       "validation":
         "quantity": "Quantity cannot be blank or 0."
-        "labels": "Labels can't be blank or 0."
+        "labels": "Can't be blank."
         "max_lable_count": "Max 300"
         "description": "Description cannot be blank."
         "inventory_number": "Inventory Number cannot be blank."

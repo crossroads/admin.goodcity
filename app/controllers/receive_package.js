@@ -1,7 +1,5 @@
 import Ember from "ember";
-const { getOwner } = Ember;
 import _ from "lodash";
-import AjaxPromise from "goodcity/utils/ajax-promise";
 import AsyncTasksMixin from "../mixins/async_tasks";
 
 export default Ember.Controller.extend(AsyncTasksMixin, {
