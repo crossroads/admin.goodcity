@@ -39,7 +39,7 @@ module("Receive package", {
   }
 });
 
-test("expecting, Location can't be blank when location not selected", function(assert) {
+test("If location not selected button is disabled", function(assert) {
   visit("/offers/" + offer1.id + "/receive_package/" + package1.id);
 
   $.mockjax({
@@ -51,15 +51,16 @@ test("expecting, Location can't be blank when location not selected", function(a
     }
   });
 
+  $.mockjax({
+    url: "api/v1/inventory_num*",
+    type: "POST",
+    status: 200,
+    responseText: {
+      inventory_number: "002843"
+    }
+  });
+
   andThen(function() {
-    Ember.$(".confirmLink").click();
-    andThen(function() {
-      assert.equal(
-        $(".show-error")
-          .text()
-          .trim(),
-        "Inventory number is invalid.Location can not be blank."
-      );
-    });
+    assert.equal($("#receive-button").prop("disabled"), true);
   });
 });
