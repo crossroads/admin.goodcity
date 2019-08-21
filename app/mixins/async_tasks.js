@@ -1,4 +1,5 @@
 import Ember from "ember";
+const { getOwner } = Ember;
 
 export default Ember.Mixin.create({
   messageBox: Ember.inject.service(),
@@ -43,8 +44,9 @@ export default Ember.Mixin.create({
       return;
     }
     if (!this.__loadingView) {
-      this.__loadingView = Ember.getOwner(this)
-        .lookup("component:loading")
+      this.__loadingView = getOwner(this)
+        .factoryFor("component:loading")
+        .create()
         .append();
     }
   },
