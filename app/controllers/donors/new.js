@@ -59,6 +59,10 @@ export default Ember.Controller.extend({
   }),
 
   actions: {
+    toggleReceiveEmail() {
+      this.toggleProperty("receiveEmail");
+    },
+
     saveDonorAndOffer() {
       let offer = this.get("model");
       let firstName = this.get("firstName");

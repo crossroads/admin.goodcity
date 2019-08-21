@@ -1,7 +1,7 @@
-<nav class="tab-bar new-company-nav">
+<nav class="tab-bar new-donor-nav">
   <h1 class="title">{{t "offer_creation.create_donor.page_title"}}</h1>
 </nav>
-<section class="main-section new-company-section ui">
+<section class="main-section new-donor-section ui">
   <div class="row new-donor">
     <div class="small-12 columns">
       {{#validatable-form onSubmit=(action 'saveDonorAndOffer') as |form|}}
@@ -25,7 +25,6 @@
                 selectedValue=selectedTitle
                 value= selectedTitle
                 selectArrow=true
-                classNames='condition'
                 idNames='title' }}
 
               <div class='input-error'>{{t "offer_creation.create_donor.errors.title"}}</div>
@@ -70,10 +69,10 @@
 
 
         <div class="row">
-          <div class="small-1 columns donor-label">
-            {{input type="checkbox" checked=receiveEmail name="consent" id="given_consent"}}
+          <div class="small-1 columns">
+            {{input type='checkbox' checked=receiveEmail id="given_consent"}}
           </div>
-          <div class="small-11 columns donor-label consent-text">
+          <div class="small-11 columns donor-label consent-text" {{action 'toggleReceiveEmail'}}>
             {{t "offer_creation.create_donor.consent"}}
           </div>
         </div>
