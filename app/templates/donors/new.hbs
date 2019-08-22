@@ -1,5 +1,10 @@
 <nav class="tab-bar new-donor-nav">
-  <h1 class="title">{{t "offer_creation.create_donor.page_title"}}</h1>
+  <section class="left-small">
+    {{#link-to "offer.search_users" model.id classNames="back"}}{{t 'back'}}{{/link-to}}
+  </section>
+  <section class="middle tab-bar-section">
+    <h1 class="title">{{t "offer_creation.create_donor.page_title"}}</h1>
+  </section>
 </nav>
 <section class="main-section new-donor-section ui">
   <div class="row new-donor">
