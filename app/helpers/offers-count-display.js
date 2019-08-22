@@ -14,7 +14,10 @@ function applyCheckIconOrCountZero(isPriority) {
 
 export default Ember.Helper.helper(function(states) {
   const [statesObject, state, isSelfReviewer, isPriority] = states;
-  let searchState = isSelfReviewer ? `reviewer_${state}` : state;
+  let priorityOrNormalState = isPriority ? `priority_${state}` : state;
+  let searchState = isSelfReviewer
+    ? `reviewer_${priorityOrNormalState}`
+    : priorityOrNormalState;
   return (
     applyIcon(statesObject[searchState], isPriority) ||
     applyCheckIconOrCountZero(isPriority)
