@@ -70,18 +70,18 @@
           <div class="row accept_buttons">
             {{#if isItemAccepted}}
               <div class="small-11 small-offset-1  columns">
-                {{#online-button disabledOverride=offer.isFinished id="acceptItem" classNames="button expand accept_item"}}
+                {{#online-button disabledOverride=offer.isFinished id="acceptItem" classNames="button expand accept_item" tagName="button"}}
                   {{t "save"}}
                 {{/online-button}}
               </div>
             {{else}}
               <div class="small-6 columns">
-                {{#online-button id="saveItem" classNames="button expand save_item" disabled=offer.isFinished didInsertElement=(action "setupAcceptClick" "saveItem")}}
+                {{#online-button id="saveItem" classNames="button expand save_item" tagName="button" disabled=offer.isFinished didInsertElement=(action "setupAcceptClick" "saveItem")}}
                   {{t "review_item.save_item"}}
                 {{/online-button}}
               </div>
               <div class="small-6 columns">
-                {{#online-button id="acceptItem" classNames="button expand accept_item" disabled=offer.isFinished didInsertElement=(action "setupAcceptClick" "acceptItem" true)}}
+                {{#online-button id="acceptItem" classNames="button expand accept_item" tagName="button" disabled=offer.isFinished didInsertElement=(action "setupAcceptClick" "acceptItem" true)}}
                   {{t "review_item.accept_item"}}
                 {{/online-button}}
               </div>
