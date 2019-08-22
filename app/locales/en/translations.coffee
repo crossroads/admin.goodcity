@@ -354,6 +354,12 @@ I18nTranslationsEn =
         "assign": "Assign different company"
         "edit": "Edit this company"
         "add": "NA, Personal - Add company"
+        "new_company": "New Company"
+        "edit_company": "Edit Company"
+        "company_name": "Company Name"
+        "company_name_validation": "Enter valid name"
+        "crm_id": "CRM ID"
+        "crm_id_validation": "Enter numeric values"
       "contact":
         "title": "Donor Contact:"
         "remove": "Remove donor contact"

@@ -4,7 +4,9 @@
   </section>
 
   <section class="middle tab-bar-section">
-    <h1 class="title">New Company</h1>
+    <h1 class="title">
+      {{t 'donor_details.company.new_company'}}
+    </h1>
   </section>
 </nav>
 
@@ -12,29 +14,33 @@
   {{#validatable-form onSubmit=(action 'saveComanyAndOffer') as |form|}}
   <div class="row">
     <div class="{{if isMobileApp 'small-7 large-8' 'small-12'}} columns">
-      Company Name
+      {{t 'donor_details.company.company_name'}}
     </div>
   </div>
   <div class="row">
     <div class="{{if isMobileApp 'small-7 large-8' 'small-12'}} columns">
       {{#form-control}}
-      {{input type='text' value=name required='true' class='company-input'}}
-      <div class='input-error'>Enter valid name</div>
+        {{input type='text' value=name required='true' class='company-input'}}
+        <div class='input-error'>
+          {{t 'donor_details.company.company_name_validation'}}
+        </div>
       {{/form-control}}
     </div>
   </div>
 
   <div class="row">
     <div class="{{if isMobileApp 'small-7 large-8' 'small-12'}} columns">
-      CRM ID
+      {{t 'donor_details.company.crm_id'}}
     </div>
   </div>
 
   <div class="row">
     <div class="{{if isMobileApp 'small-7 large-8' 'small-12'}} columns">
       {{#form-control}}
-      {{numeric-input value=crmId id="crm-id" name="crm-id" maxlength="21" required=true class='company-input' pattern="\d{1,8}"}}
-      <div class='input-error'>Enter numeric values</div>
+        {{numeric-input value=crmId id="crm-id" name="crm-id" maxlength="21" required=true class='company-input' pattern="\d{1,8}"}}
+        <div class='input-error'>
+          {{t 'donor_details.company.crm_id_validation'}}
+        </div>
       {{/form-control}}
     </div>
   </div>

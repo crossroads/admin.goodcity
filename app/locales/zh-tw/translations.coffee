@@ -355,6 +355,12 @@ I18nTranslationsZhTw =
         "assign": "指定另一間公司"
         "edit": "編輯這間公司"
         "add": "不適用，個人資料-補加公司資料"
+        "new_company": "New Company"
+        "edit_company": "Edit Company"
+        "company_name": "Company Name"
+        "company_name_validation": "Enter valid name"
+        "crm_id": "CRM ID"
+        "crm_id_validation": "Enter numeric values"
       "contact":
         "title": "捐助者聯絡資料"
         "remove": "去除捐助者聯絡資料"
