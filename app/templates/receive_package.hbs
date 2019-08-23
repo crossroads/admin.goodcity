@@ -2,7 +2,7 @@
 
   <nav class="tab-bar new-item-nav">
     <section class="tab-bar-section">
-      <h1 class="title">Receive-{{package.packageName}}</h1>
+      <h1 class="title">{{t "items.title" packageName=package.packageName}}</h1>
     </section>
   </nav>
 
@@ -23,7 +23,7 @@
           <div class="small-8 columns">
             {{numeric-input id='quantity' name="qty" value=packageForm.quantity placeholder=(t "placeholder.qty") maxlength="8" pattern="\d{1,8}"}}
             {{#if isInvalidQuantity}}
-              <div class='input-error-msg' style="display: block;">{{t 'items.validation.quantity'}}</div>
+              <div class='input-error-msg dimension-block validation-err'>{{t 'items.validation.quantity'}}</div>
             {{/if}}
           </div>
         </div>
@@ -105,7 +105,7 @@
     {{#if isInvalidDimension}}
       <div class="row">
         <div class="small-3 columns item-label"></div>
-        <div class='small-8 columns input-error-msg dimension-block' style="display:block;">Provide all three dimensions(or none)</div>
+        <div class='small-8 columns input-error-msg dimension-block'>{{t 'items.validation.dimensions'}}</div>
       </div>
     {{/if}}
 
@@ -114,10 +114,10 @@
       <div class="small-3 columns">
         {{numeric-input id="labels" name="labels" value=packageForm.labels placeholder="labels" maxlength="3" pattern="\d{1,8}"}}
         {{#if isInvalidaLabelCount}}
-          <div class='input-error-msg dimension-block' style="width: 100%;">{{t 'items.validation.labels'}}</div>
+          <div class='input-error-msg dimension-block validation-err'>{{t 'items.validation.labels'}}</div>
         {{/if}}
         {{#unless isInvalidPrintCount}}
-          <div class='input-error-msg dimension-block' style="width: 100%;">{{t 'items.validation.max_lable_count'}}</div>
+          <div class='input-error-msg dimension-block validation-err'>{{t 'items.validation.max_lable_count'}}</div>
         {{/unless}}
       </div>
       <div class="small-2 columns item-label">
@@ -154,9 +154,9 @@
       </div>
       <div class="small-6 columns">
         <button id='receive-button' disabled={{disableReceiveButton}} class="button expand action2 confirmLink" {{action 'receivePackage'}}>
-          Receive
+          {{t "items.add_item.receive"}}
           {{#if isMultipleCountPrint}}
-            & Print {{packageForm.labels}} <i class="fa fa-print"></i>
+            {{t "items.add_item.print" labels=packageForm.labels}} <i class='fa fa-print'></i>
           {{/if}}
         </button>
       </div>

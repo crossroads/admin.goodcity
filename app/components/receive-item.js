@@ -18,7 +18,7 @@ export default Ember.Component.extend({
     "item",
     "item.packages.@each.state",
     function() {
-      let itemPackages = this.get("item.packages");
+      const itemPackages = this.get("item.packages");
       return itemPackages && itemPackages.filterBy("state", this.get("pState"));
     }
   )

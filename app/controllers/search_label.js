@@ -116,6 +116,15 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     );
   },
 
+  deleteItem() {
+    const item = this.get("model");
+    this.runTask(
+      item
+        .destroyRecord()
+        .then(() => this.transitionToRoute("review_offer.receive"))
+    );
+  },
+
   actions: {
     clearSearch(isCancelled) {
       this.set("filter", "");
@@ -126,16 +135,12 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
       }
     },
 
-    cancelSearch() {
+    cancelSearchAndDeleteItem() {
       Ember.$("#searchText").blur();
       this.send("clearSearch", true);
-      var item = this.get("model");
+      const item = this.get("model");
       if (this.get("isUnplannedPackage")) {
-        this.runTask(
-          item.destroyRecord().then(() => {
-            this.transitionToRoute("review_offer.receive");
-          })
-        );
+        this.deleteItem();
       } else {
         this.transitionToRoute("review_item.accept", item);
       }

@@ -111,6 +111,7 @@ I18nTranslationsEn =
       inactive_info: "Donor non-responsive"
 
     "items":
+      "title": "Receive-{{packageName}}"
       "remove_item":
         "confirmation_message": "Are you sure you want to cancel this item?"
         "yes": "Yes"
@@ -127,8 +128,10 @@ I18nTranslationsEn =
         "labels": "Labels"
         "inventory": "Inventory"
         "publish": "Publish"
-        "receive_and_print": "Receive & Print"
+        "receive": "Receive"
+        "print": "& Print {{labels}}"
       "validation":
+        "dimensions": "Provide all three dimensions(or none)"
         "quantity": "Quantity cannot be blank or 0."
         "labels": "Can't be blank."
         "max_lable_count": "Max 300"
