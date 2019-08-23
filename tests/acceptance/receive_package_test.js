@@ -5,13 +5,14 @@ import "../factories/offer";
 import FactoryGuy from "ember-data-factory-guy";
 import TestHelper from "ember-data-factory-guy/factory-guy-test-helper";
 
-var App, offer1, item1, package1, role;
+var App, offer1, item1, package1, role, location;
 
 module("Receive package", {
   beforeEach: function() {
     App = startApp({}, 2);
     TestHelper.setup();
 
+    location = FactoryGuy.make("location");
     item1 = FactoryGuy.make("item", { state: "accepted" });
     offer1 = FactoryGuy.make("offer", { state: "received", items: [item1] });
     package1 = FactoryGuy.make("package", {
@@ -30,6 +31,24 @@ module("Receive package", {
         roles: [role.toJSON({ includeId: true })]
       }
     });
+
+    $.mockjax({
+      url: "/api/v1/package*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        packages: [package1.toJSON({ includeId: true })]
+      }
+    });
+
+    $.mockjax({
+      url: "api/v1/inventory_num*",
+      type: "POST",
+      status: 200,
+      responseText: {
+        inventory_number: "002843"
+      }
+    });
   },
   afterEach: function() {
     Ember.run(function() {
@@ -41,26 +60,120 @@ module("Receive package", {
 
 test("If location not selected Receive button is disabled", function(assert) {
   visit("/offers/" + offer1.id + "/receive_package/" + package1.id);
+  Ember.run(function() {
+    package1.set("location", null);
+  });
+  andThen(function() {
+    assert.equal($("#receive-button").prop("disabled"), true);
+  });
+});
 
+test("If quantity is zero or below Receive button is disabled and it gives validation error", function(assert) {
+  Ember.run(function() {
+    package1.set("quantity", 0);
+  });
+  visit("/offers/" + offer1.id + "/receive_package/" + package1.id);
+  andThen(function() {
+    assert.equal(
+      $("#quantity-err")
+        .text()
+        .trim(),
+      "Quantity cannot be blank or 0."
+    );
+    assert.equal($("#receive-button").prop("disabled"), true);
+  });
+});
+
+test("If labels is empty Receive button is disabled and it gives validation error", function(assert) {
+  visit("/offers/" + offer1.id + "/receive_package/" + package1.id);
+  andThen(function() {
+    Ember.run(function() {
+      lookup("controller:receive_package").set("packageForm.labels", "");
+    });
+    assert.equal(
+      $("#label-empty-err")
+        .text()
+        .trim(),
+      "Can't be blank."
+    );
+    assert.equal($("#receive-button").prop("disabled"), true);
+  });
+});
+
+test("If labels is above 300 Receive button is disabled and it gives max value error", function(assert) {
+  visit("/offers/" + offer1.id + "/receive_package/" + package1.id);
+  andThen(function() {
+    Ember.run(function() {
+      lookup("controller:receive_package").set("packageForm.labels", 301);
+    });
+    assert.equal(
+      $("#max-val-err")
+        .text()
+        .trim(),
+      "Max 300"
+    );
+    assert.equal($("#receive-button").prop("disabled"), true);
+  });
+});
+
+test("Receive button displays print value according to labels count", function(assert) {
+  const labelValue = 10;
+  visit("/offers/" + offer1.id + "/receive_package/" + package1.id);
+  andThen(function() {
+    Ember.run(function() {
+      lookup("controller:receive_package").set(
+        "packageForm.labels",
+        labelValue
+      );
+    });
+    const isValueExist =
+      $("#receive-button")
+        .text()
+        .trim()
+        .indexOf(labelValue) > 1;
+    assert.equal(isValueExist, true);
+  });
+});
+
+test("Receive button enables on selecting location", function(assert) {
+  Ember.run(function() {
+    package1.set("location", location);
+  });
+  visit("/offers/" + offer1.id + "/receive_package/" + package1.id);
+  andThen(function() {
+    assert.equal($("#receive-button").prop("disabled"), false);
+  });
+});
+
+test("On receiving package redirects to recieve list pages", function(assert) {
+  Ember.run(function() {
+    package1.set("location", location);
+  });
+  visit("/offers/" + offer1.id + "/receive_package/" + package1.id);
   $.mockjax({
-    url: "/api/v1/package*",
-    type: "GET",
+    url: "api/v1/packa*",
+    type: "PUT",
     status: 200,
     responseText: {
       packages: [package1.toJSON({ includeId: true })]
     }
   });
-
   $.mockjax({
-    url: "api/v1/inventory_num*",
+    url: "api/v1/packages/print_bar*",
     type: "POST",
     status: 200,
     responseText: {
       inventory_number: "002843"
     }
   });
+  andThen(function() {
+    click("#receive-button");
+  });
 
   andThen(function() {
-    assert.equal($("#receive-button").prop("disabled"), true);
+    assert.equal(
+      currentURL(),
+      "/offers/" + offer1.id + "/review_offer/receive"
+    );
   });
 });

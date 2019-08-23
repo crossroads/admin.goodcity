@@ -23,7 +23,7 @@
           <div class="small-8 columns">
             {{numeric-input id='quantity' name="qty" value=packageForm.quantity placeholder=(t "placeholder.qty") maxlength="8" pattern="\d{1,8}"}}
             {{#if isInvalidQuantity}}
-              <div class='input-error-msg dimension-block validation-err'>{{t 'items.validation.quantity'}}</div>
+              <div id="quantity-err" class='input-error-msg dimension-block validation-err'>{{t 'items.validation.quantity'}}</div>
             {{/if}}
           </div>
         </div>
@@ -114,10 +114,10 @@
       <div class="small-3 columns">
         {{numeric-input id="labels" name="labels" value=packageForm.labels placeholder="labels" maxlength="3" pattern="\d{1,8}"}}
         {{#if isInvalidaLabelCount}}
-          <div class='input-error-msg dimension-block validation-err'>{{t 'items.validation.labels'}}</div>
+          <div id="label-empty-err" class='input-error-msg dimension-block validation-err'>{{t 'items.validation.labels'}}</div>
         {{/if}}
         {{#unless isInvalidPrintCount}}
-          <div class='input-error-msg dimension-block validation-err'>{{t 'items.validation.max_lable_count'}}</div>
+          <div id="max-val-err" class='input-error-msg dimension-block validation-err'>{{t 'items.validation.max_lable_count'}}</div>
         {{/unless}}
       </div>
       <div class="small-2 columns item-label">
