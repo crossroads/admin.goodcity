@@ -246,7 +246,11 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   printBarcode() {
     const packageId = this.get("package.id");
     const labels = this.get("packageForm.labels");
-    this.get("packageService").printBarcode({ package_id: packageId, labels });
+    this.get("packageService")
+      .printBarcode({ package_id: packageId, labels })
+      .catch(error => {
+        this.get("messageBox").alert(error.responseJSON.errors);
+      });
   },
 
   // ----- Actions -----
