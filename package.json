@@ -11,7 +11,9 @@
     "start": "EMBER_CLI_CORDOVA=0 ember serve --port 4201 --live-reload-port 35730",
     "build": "EMBER_CLI_CORDOVA=0 ember build",
     "test": "EMBER_CLI_CORDOVA=0 ember test --server --test-port 7358",
-    "test:ci": "EMBER_CLI_CORDOVA=0 ember-pretty-test"
+    "test:ci": "EMBER_CLI_CORDOVA=0 ember-pretty-test",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "husky": {
     "hooks": {
@@ -100,6 +102,8 @@
     "npm": "^3.8.3",
     "phantomjs-prebuilt": "^2.1.14",
     "shared-goodcity": "git://github.com/crossroads/shared.goodcity.git#master",
-    "slick-carousel": "^1.5.8"
-  }
+    "slick-carousel": "^1.5.8",
+    "snyk": "^1.220.0"
+  },
+  "snyk": true
 }
