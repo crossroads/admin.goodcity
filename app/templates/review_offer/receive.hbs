@@ -28,6 +28,7 @@
     </div>
   </section>
 
+  <button class="button expand" {{action 'addItem'}}>{{t "receive.unplanned_inventory"}}</button>
   <ul class="receive-list">
   {{#each items as |item|}}
     {{receive-item pState=state itemId=item.id}}

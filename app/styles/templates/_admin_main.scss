@@ -8,15 +8,15 @@
 
 .options_menu_list {
   width: 12rem;
-  margin-left: -6rem;
+  margin-left: -10rem;
   background-color: #002136;
   margin-top: 2.5rem;
   position: absolute;
   z-index: 200;
 
   @media #{$small-only} {
-    width: 10.5rem;
-    margin-left: -5rem;
+    width: 9.5rem;
+    margin-left: -8rem;
   }
 
   /* box-shadow style */

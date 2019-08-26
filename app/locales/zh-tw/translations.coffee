@@ -17,6 +17,11 @@ I18nTranslationsZhTw =
       "server_search": "於服務器上尋找更多資訊"
       "placeholder": "搜索"
 
+    "inventory_options":
+      "auto": "Auto Id"
+      "input": "Input Id"
+      "scan": "Scan Id"
+
     "users":
       "search": "搜尋使用者"
 
@@ -106,8 +111,32 @@ I18nTranslationsZhTw =
       inactive_info: "Donor non-responsive"
 
     "items":
+      "title": "Receive-{{packageName}}"
+      "remove_item":
+        "confirmation_message": "Are you sure you want to cancel this item?"
+        "yes": "Yes"
+        "no": "No"
       "add_item":
         "description_placeholder" : "這是甚麼？有多少件物資？物資大小？"
+        "quantity": "Quantity"
+        "type": "Type"
+        "add_images": "Add Images"
+        "description": "Description"
+        "quality": "Quality"
+        "location": "Locations"
+        "size": "Size(cm)"
+        "labels": "Labels"
+        "inventory": "Inventory"
+        "publish": "Publish"
+        "receive": "Receive"
+        "print": "& Print {{labels}}"
+      "validation":
+        "dimensions": "Provide all three dimensions(or none)"
+        "quantity": "Quantity cannot be blank or 0."
+        "labels": "Can't be blank."
+        "max_lable_count": "Max 300"
+        "description": "Description cannot be blank."
+        "inventory_number": "Inventory Number cannot be blank."
 
     "item":
       "accepted": "已接受"
@@ -279,6 +308,7 @@ I18nTranslationsZhTw =
       "notify_donor": "聯絡捐贈者，告知預約已被取消"
 
     "receive":
+      "unplanned_inventory": "Add unplanned item to inventory"
       "missing": "遺失"
       "receive": "接收"
       "inventory": "存貨"

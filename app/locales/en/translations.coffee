@@ -17,6 +17,11 @@ I18nTranslationsEn =
       "server_search": "Find more on server"
       "placeholder": "Search"
 
+    "inventory_options":
+      "auto": "Auto Id"
+      "input": "Input Id"
+      "scan": "Scan Id"
+
     "users":
       "search": "Search User"
 
@@ -106,8 +111,33 @@ I18nTranslationsEn =
       inactive_info: "Donor non-responsive"
 
     "items":
+      "title": "Receive-{{packageName}}"
+      "remove_item":
+        "confirmation_message": "Are you sure you want to cancel this item?"
+        "yes": "Yes"
+        "no": "No"
       "add_item":
         "description_placeholder" : "What is it? How many items? What's the size?"
+        "quantity": "Quantity"
+        "type": "Type"
+        "add_images": "Add Images"
+        "description": "Description"
+        "quality": "Quality"
+        "location": "Locations"
+        "size": "Size(cm)"
+        "labels": "Labels"
+        "inventory": "Inventory"
+        "publish": "Publish"
+        "receive": "Receive"
+        "print": "& Print {{labels}}"
+      "validation":
+        "dimensions": "Provide all three dimensions(or none)"
+        "quantity": "Quantity cannot be blank or 0."
+        "labels": "Can't be blank."
+        "max_lable_count": "Max 300"
+        "description": "Description cannot be blank."
+        "inventory_number": "Inventory Number cannot be blank."
+
 
     "item":
       "accepted": "Accepted"
@@ -279,6 +309,7 @@ I18nTranslationsEn =
       "notify_donor": "Message the donor to let them know their GoGoVan booking is being cancelled"
 
     "receive":
+      "unplanned_inventory": "Add unplanned item to inventory"
       "missing": "Missing"
       "receive": "Receive"
       "inventory": "Inventory"
