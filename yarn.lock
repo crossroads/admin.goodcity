@@ -12299,9 +12299,9 @@ sha@~2.0.1:
     graceful-fs "^4.1.2"
     readable-stream "^2.0.2"
 
-"shared-goodcity@git://github.com/crossroads/shared.goodcity.git#GCW-2691-coprporate-donor":
+"shared-goodcity@git://github.com/crossroads/shared.goodcity.git#master":
   version "0.0.0"
-  resolved "git://github.com/crossroads/shared.goodcity.git#5b3b17d131949939f5cc12fc9d5a9d208046d4c3"
+  resolved "git://github.com/crossroads/shared.goodcity.git#3f2cc8015f387b1c8fa4b909ff6c03f72e830cfb"
   dependencies:
     cryptiles "^4.1.2"
     ember-cli-babel "^5.1.6"
