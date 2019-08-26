@@ -9,6 +9,11 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   goodcityNumber: config.APP.GOODCITY_NUMBER,
   internetCallStatus: Ember.inject.controller(),
 
+  displayCompanyOptions: false,
+  displayAltPhoneOptions: false,
+  displayDonorMobileOptions: false,
+  displayDonorOptions: false,
+
   stickyNote: {
     showCallToAction: true
   },
@@ -16,18 +21,18 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   showNoteCallToAction: Ember.computed(
     "currentOffer.notes",
     "stickyNote.showCallToAction",
-    function() {
+    function () {
       const note = this.get("currentOffer.notes");
       return !note && this.get("stickyNote.showCallToAction");
     }
   ),
 
-  stickNoteChanged: Ember.computed("currentOffer.notes", function() {
+  stickNoteChanged: Ember.computed("currentOffer.notes", function () {
     const changes = this.get("currentOffer").changedAttributes().notes;
     return changes && changes.some(it => it);
   }),
 
-  displayNumber: Ember.computed("donor.mobile", function() {
+  displayNumber: Ember.computed("donor.mobile", function () {
     const donor = this.get("donor");
     if (!donor) {
       return "";
@@ -37,15 +42,44 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     return num.length > 4 ? num.substr(0, 4) + " " + num.substr(4) : num;
   }),
 
-  donorOffers: Ember.computed("model", function() {
+  donorOffers: Ember.computed("model", function () {
     return this.get("model").rejectBy("id", this.get("currentOffer.id"));
   }),
 
-  receivedOffers: Ember.computed("model", function() {
+  receivedOffers: Ember.computed("model", function () {
     return this.get("model").filterBy("isReceived", true).length;
   }),
 
   actions: {
+    toggleOptions(optionName) {
+      let optionNames = [
+        "displayCompanyOptions",
+        "displayDonorMobileOptions",
+        "displayAltPhoneOptions",
+        "displayDonorOptions"
+      ];
+      optionNames.forEach(item => {
+        if (item !== optionName && this.get(item)) {
+          this.toggleProperty(item);
+        }
+      });
+      this.toggleProperty(optionName);
+    },
+
+    removeCompany() {
+      const offer = this.get("currentOffer");
+      offer.set("companyId", null);
+      offer.set("company", null);
+      return offer.save();
+    },
+
+    removeContact() {
+      const offer = this.get("currentOffer");
+      offer.set("createdById", null);
+      offer.set("createdBy", null);
+      return offer.save();
+    },
+
     hideNoteCallToAction() {
       this.set("stickyNote.showCallToAction", false);
     },
@@ -66,3 +100,4 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     }
   }
 });
+

@@ -33,7 +33,7 @@ I18nTranslationsEn =
 
     "offer":
       "title": "Offer"
-      "donor": "Donor"
+      "donor": "Details"
       "transport": "Transport"
       "details" : "Offer details"
       "donor_messages" : "Donor Messages"
@@ -345,5 +345,63 @@ I18nTranslationsEn =
 
     "customized_variables":
       "click_here": "click here"
+
+    "donor_details":
+      "all_offers": "'s all offers on GoodCity:"
+      "company":
+        "title": "Corporate Donor:"
+        "remove": "Remove corporate donor"
+        "assign": "Assign different company"
+        "edit": "Edit this company"
+        "add": "NA, Personal - Add company"
+        "new_company": "New Company"
+        "edit_company": "Edit Company"
+        "company_name": "Company Name"
+        "company_name_validation": "Enter valid name"
+        "crm_id": "CRM ID"
+        "crm_id_validation": "Enter numeric values"
+      "contact":
+        "title": "Donor Contact:"
+        "remove": "Remove donor contact"
+        "assign": "Assign different donor"
+        "add": "Missing - Add contact"
+      "mobile":
+        "title": "Donor mobile:"
+        "call_using_phone": "Call donor using phone"
+      "email":
+        "title": "Donor email:"
+      "alt_phone":
+        "title": "Donor alt phone:"
+        "call_using_phone": "Call donor using phone"
+      "location":
+        "title": "Donors location:"
+      "sale_allowed":
+        "title": "Sale allowed"
+        "yes": "Yes"
+        "no": "No"
+
+    "offer_creation":
+      "search_users":
+        "find_donor": "Find existing donor or"
+        "create_donor": "Create A New Donor"
+      "search_companies":
+        "find_company": "Find existing company or"
+        "create_company": "Create new company"
+      "create_donor":
+        "page_title": "New Donor"
+        "title": "Title"
+        "first": "First Name"
+        "last": "Last Name"
+        "mobile": "Mobile Number"
+        "email": "Email Address"
+        "other_phone": "Other Phone"
+        "consent": "Has given consent to receive emails from us."
+        "default_location": "Donor's Default Location"
+        "select_district": "Select a District"
+        "errors":
+          "title": "Title can't be blank"
+          "first_name": "First name can't be blank"
+          "last_name": "Last name can't be blank"
+          "cell_phone": "Mobile number can't be blank"
 
 `export default I18nTranslationsEn`

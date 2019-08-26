@@ -11,7 +11,7 @@ export default AuthorizeRoute.extend({
       if (!currentOffer) {
         return;
       }
-      const donor = this.getDonor(currentOffer);
+      const donor = currentOffer.get("donor");
       this.set("currentDonor", donor);
       this.set("currentOffer", currentOffer);
 
@@ -32,14 +32,18 @@ export default AuthorizeRoute.extend({
     });
   },
 
-  getDonor(offer) {
-    return offer.get("createdById") && offer.get("createdBy");
-  },
-
   setupController(controller, model) {
     this._super(controller, model);
     controller.set("donor", this.get("currentDonor"));
     controller.set("currentOffer", this.get("currentOffer"));
+    [
+      "displayCompanyOptions",
+      "displayAltPhoneOptions",
+      "displayDonorMobileOptions",
+      "displayDonorOptions"
+    ].forEach(item => {
+      controller.set(item, false);
+    });
   },
 
   afterModel(model) {

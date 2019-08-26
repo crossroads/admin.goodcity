@@ -15,6 +15,7 @@
 @import "templates/offers";
 @import "templates/offers/index";
 @import "templates/offer/index";
+@import "templates/offer/search_company";
 @import "templates/offer/cancel";
 @import "templates/offer/merge";
 @import "templates/offer/plan_delivery";
@@ -37,3 +38,6 @@
 @import "filters";
 @import "checkbox_styles";
 @import "global_styles";
+@import "templates/companies/new.scss";
+@import "templates/donors/new.scss";
+
