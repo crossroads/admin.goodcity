@@ -63,6 +63,15 @@ export default Ember.Controller.extend({
       this.toggleProperty("receiveEmail");
     },
 
+    resetInputs() {
+      this.set("firstName", null);
+      this.set("lastName", null);
+      this.set("email", null);
+      this.set("mobilePhone", null);
+      this.set("receiveEmail", null);
+      this.set("otherPhone", null);
+    },
+
     saveDonorAndOffer() {
       let offer = this.get("model");
       let firstName = this.get("firstName");
