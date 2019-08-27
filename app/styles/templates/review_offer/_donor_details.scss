@@ -45,6 +45,9 @@
 
       i {
         padding-left: 3%;
+        @media #{$small-only} {
+          font-size: 1.3em;
+        }
       }
     }
 
