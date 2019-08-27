@@ -113,7 +113,12 @@
         </div>
 
         <div class="row">
-          <div class="small-12 columns donor-label">
+          <div class="small-6 columns donor-label">
+            {{#link-to "review_offer.donor_details" model.id classNames="button expand cancel"}}
+              {{t 'cancel'}}
+            {{/link-to}}
+          </div>
+          <div class="small-6 columns donor-label">
             <a {{action 'submit' target=form}} class="button expand">{{t 'save'}}</a>
           </div>
         </div>

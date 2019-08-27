@@ -360,6 +360,8 @@ I18nTranslationsEn =
         "company_name_validation": "Enter valid name"
         "crm_id": "CRM ID"
         "crm_id_validation": "Enter numeric values"
+        "optional": "(Optional)"
+        "enter_name": "Enter Company Name"
       "contact":
         "title": "Donor Contact:"
         "remove": "Remove donor contact"
