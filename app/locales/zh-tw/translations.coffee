@@ -9,6 +9,7 @@ I18nTranslationsZhTw =
     "submitted": "已提交"
     "messages_title" : "訊息"
     "select": "選擇"
+    "cancel": "取消"
     "QuotaExceededError": "抱歉，此網站未能支援Safari <b> 私人瀏覽模式 </b> 請嘗試</br><ul><li><a href='https://itunes.apple.com/in/app/goodcityadmin.hk/id1013288708?mt=8' style='color: black!important; background-color: #dee4eb !important;'> iOS App 下載中 </a></li><li>正在使用Safari 正常(非無痕) 模式 </li><li> 正在使用Chrome 的私人瀏覽模式 </li></ul>"
     "search_item_label": "搜尋物資標籤"
     "designated_dispatched_error": "抱歉，您無法編輯已分配的項目！"

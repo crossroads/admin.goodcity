@@ -2,7 +2,7 @@
   <div class="row">
     <div class="small-2 columns back-icon" {{action "cancelSearch"}}>
       <i class="fa fa-angle-left"></i>
-      <span>{{t 'offer_filters.back'}}</span>
+      <span>{{t 'cancel'}}</span>
     </div>
     <div class="small-10 columns">
       {{focus-textfield
@@ -18,7 +18,7 @@
   </div>
 </div>
 
-<section class="main-section review_offer search search_offer">
+<section class="main-section review_offer search search_company">
   <div class="row">
     <div class="small-12 columns item-content">
       <div class="new-company">
@@ -31,7 +31,7 @@
       {{#infinite-list height="82vh" loadMore=(action "loadMoreCompanies") as |companies| }}
       <ul class="list list-activity list-offer-items">
         {{#each companies as |company|}}
-        <li {{action 'goToDetails' company.id}}>
+        <li class="company-list" {{action 'goToDetails' company.id}}>
           {{#link-to 'review_offer.donor_details' offer.id tagName='div' href=false}}
           <div class="row">
             <div class="small-12 columns">
