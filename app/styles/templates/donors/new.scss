@@ -63,6 +63,11 @@
     margin-top: 2%;
   }
 
+  .button.cancel{
+    background-color: #002352;
+    border: 1px #a3aab6 solid;
+  }
+
   #given_consent {
     @media #{$small-only} {
       margin-top: -0.5em;
