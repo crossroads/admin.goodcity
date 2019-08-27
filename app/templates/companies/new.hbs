@@ -22,7 +22,7 @@
       {{#form-control}}
         {{input type='text' value=name required='true' class='company-input' placeholder=(t 'donor_details.company.enter_name')}}
         <div class='input-error'>
-          {{t 'donor_details.company.enter_crm_id'}}
+          {{t 'donor_details.company.company_name_validation'}}
         </div>
       {{/form-control}}
     </div>
@@ -37,7 +37,7 @@
   <div class="row">
     <div class="{{if isMobileApp 'small-7 large-8' 'small-12'}} columns">
       {{#form-control}}
-        {{numeric-input value=crmId id="crm-id" name="crm-id" maxlength="21" class='company-input' pattern="\d{1,8}" placeholder=(t 'donor_details.company.crm_id_validation')}}
+        {{numeric-input value=crmId id="crm-id" name="crm-id" maxlength="21" class='company-input' pattern="\d{1,8}" placeholder=(t 'donor_details.company.enter_crm_id')}}
       {{/form-control}}
     </div>
   </div>
