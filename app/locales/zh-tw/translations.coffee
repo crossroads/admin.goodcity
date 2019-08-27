@@ -390,7 +390,7 @@ I18nTranslationsZhTw =
         "company_name": "Company Name"
         "company_name_validation": "Enter valid name"
         "crm_id": "CRM ID"
-        "crm_id_validation": "Enter numeric values"
+        "enter_crm_id": "Enter numeric values"
         "optional": "(Optional)"
         "enter_name": "Enter Company Name"
       "contact":
