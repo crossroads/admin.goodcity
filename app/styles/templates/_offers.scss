@@ -9,6 +9,12 @@ ul.off-canvas-list li a {
   }
 }
 
+.offer-title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 // offers list styles
 .inbox_page {
   span.info {
