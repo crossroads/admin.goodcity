@@ -15,8 +15,18 @@ ul.off-canvas-list li a {
   text-overflow: ellipsis;
 }
 
+.offer-title-padding {
+  padding-right: 5%;
+  padding-left: 5%;
+}
+
 // offers list styles
 .inbox_page {
+  .offer_description {
+    table-layout: fixed;
+    width: 100%;
+    display: table;
+  }
   span.info {
     .time_indicator {
       color: $white;
