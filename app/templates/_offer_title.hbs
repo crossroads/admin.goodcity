@@ -1,0 +1,12 @@
+<div class="offer-title">
+  {{ offer.id }}
+  {{#if offer.createdBy}}
+    - {{t "full_name" firstName=offer.createdBy.firstName lastName=offer.createdBy.lastName}}
+  {{/if}}
+  {{#if offer.company}}
+    ({{offer.company.name}})
+  {{/if}}
+  {{#if offer.notes}}
+    - {{offer.notes}}
+  {{/if}}
+</div>

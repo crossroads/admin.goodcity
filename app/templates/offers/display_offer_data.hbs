@@ -4,12 +4,9 @@
 
 <div class="row offer">
   <div class="small-11 columns">
-    <span class="info">
+    <span class="info offer_description">
       <h3>
-        {{ offer.id }}
-        {{#if offer.createdBy}}
-          - {{t "full_name" firstName=offer.createdBy.firstName lastName=offer.createdBy.lastName}}
-        {{/if}}
+        {{partial 'offer_title'}}
       </h3>
 
       <div class='time_indicator'>
