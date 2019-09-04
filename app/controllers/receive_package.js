@@ -179,6 +179,16 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     return pkg;
   },
 
+  clearForm() {
+    this.set("packageForm.height", "");
+    this.set("packageForm.quantity", "");
+    this.set("packageForm.length", "");
+    this.set("packageForm.width", "");
+    this.set("packageForm.labels", "");
+    this.set("description", "");
+    this.set("inventoryNumber", "");
+  },
+
   cancelPackageOptions() {
     const i18n = this.get("i18n");
     this.get("messageBox").custom(
@@ -237,9 +247,10 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   deleteItem() {
     const item = this.get("package.item");
     this.runTask(
-      item
-        .destroyRecord()
-        .then(() => this.transitionToRoute("review_offer.receive"))
+      item.destroyRecord().then(() => {
+        this.clearForm();
+        this.transitionToRoute("review_offer.receive");
+      })
     );
   },
 
@@ -313,6 +324,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
             }
             pkg.set("packagesLocationsAttributes", {});
             this.transitionToRoute("review_offer.receive");
+            this.clearForm();
             Ember.run.scheduleOnce("afterRender", this, () =>
               this.get("reviewOfferController").set(
                 "displayCompleteReceivePopup",
