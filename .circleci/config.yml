@@ -182,7 +182,7 @@ jobs:
             echo 'export APP_SHA=$(echo $CIRCLE_SHA1 | cut -c1-7)' >> $BASH_ENV
             echo 'if [ -z "$APP_SHARED_SHA" ]; then export APP_SHARED_SHA=$( git ls-remote --heads https://github.com/crossroads/shared.goodcity.git $CIRCLE_BRANCH | cut -c1-7); fi' >> $BASH_ENV
             echo 'if [ -z "$APP_SHARED_SHA" ]; then export APP_SHARED_SHA=$( git ls-remote --heads https://github.com/crossroads/shared.goodcity.git master | cut -c1-7); fi' >> $BASH_ENV
-            echo 'export STAGING=$(if [ "$CIRCLE_BRANCH" == "live" ]; then echo false; else echo true; fi)' >> $BASH_ENV
+            echo 'export STAGING=false' >> $BASH_ENV
             echo 'export APP_VERSION=$(jq -r ".version" package.json)' >> $BASH_ENV
       - run:
           command: |
