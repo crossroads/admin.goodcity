@@ -339,9 +339,9 @@ workflows:
         - package_dependencies:
             requires:
               - checkout_code
-        - tests:
-            requires:
-              - package_dependencies
+        # - tests:
+        #     requires:
+        #       - package_dependencies
         # - upload-coverage:
         #     requires:
         #       - package_dependencies
@@ -364,7 +364,6 @@ workflows:
         #         only: /^(master|live)$/
         - ember_cordova_build:
             requires:
-              - tests
               - package_dependencies
             filters:
               branches:
