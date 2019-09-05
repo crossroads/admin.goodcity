@@ -24,6 +24,10 @@
     @media #{$small-only} {
       width: 10.5rem;
     }
+
+    .change-contact{
+      cursor: pointer;
+    }
   }
 
   .donor {
