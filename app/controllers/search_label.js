@@ -1,7 +1,6 @@
 import Ember from "ember";
 import { translationMacro as t } from "ember-i18n";
 import AsyncTasksMixin from "../mixins/async_tasks";
-import _ from "lodash";
 
 export default Ember.Controller.extend(AsyncTasksMixin, {
   filter: "",
