@@ -19,15 +19,6 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
       .filterBy("visibleInSelects", true);
   }),
 
-  init() {
-    $(window).on("popstate", () => {
-      const endPoint = _.last(window.location.pathname.split("/"));
-      if (endPoint === "receive") {
-        this.deleteItem();
-      }
-    });
-  },
-
   hasSearchText: Ember.computed("searchText", function() {
     return Ember.$.trim(this.get("searchText")).length;
   }),

@@ -93,13 +93,13 @@
     <div class="row">
       <div class="small-3 columns item-label">{{t 'items.add_item.size'}}</div>
       <div class="small-3 columns">
-        {{numeric-input id=(concat 'length' package.id) value=packageForm.length placeholder=(t "placeholder.length") maxlength="8" pattern="\d{1,8}"}}
+        {{numeric-input id=(concat 'length' package.id) value=packageForm.length placeholder=(t "placeholder.length") maxlength="3" pattern="\d{1,8}"}}
       </div>
       <div class="small-3 columns">
-        {{numeric-input id=(concat 'width' package.id) name="width" value=packageForm.width placeholder=(t "placeholder.width") maxlength="5" pattern="\d{1,5}"}}
+        {{numeric-input id=(concat 'width' package.id) name="width" value=packageForm.width placeholder=(t "placeholder.width") maxlength="3" pattern="\d{1,8}"}}
       </div>
       <div class="small-3 columns end">
-        {{numeric-input id=(concat 'height' package.id) name="height" value=packageForm.height placeholder=(t "placeholder.height") maxlength="5"  pattern="\d{1,5}" }}
+        {{numeric-input id=(concat 'height' package.id) name="height" value=packageForm.height placeholder=(t "placeholder.height") maxlength="3" pattern="\d{1,8}"}}
       </div>
     </div>
     {{#if isInvalidDimension}}
@@ -156,7 +156,7 @@
         <button id='receive-button' disabled={{disableReceiveButton}} class="button expand action2 confirmLink" {{action 'receivePackage'}}>
           {{t "items.add_item.receive"}}
           {{#if isMultipleCountPrint}}
-            {{t "items.add_item.print" labels=packageForm.labels}} <i class='fa fa-print'></i>
+            {{t "items.add_item.print" labels=printLabelCount}} <i class='fa fa-print'></i>
           {{/if}}
         </button>
       </div>
