@@ -99,7 +99,7 @@
     "minimatch": "^3.0.2",
     "npm": "^3.8.3",
     "phantomjs-prebuilt": "^2.1.14",
-    "shared-goodcity": "git://github.com/crossroads/shared.goodcity.git#master",
+    "shared-goodcity": "git://github.com/crossroads/shared.goodcity.git#GCW-2782-handle-huge-socket-jobs",
     "slick-carousel": "^1.5.8"
   }
 }

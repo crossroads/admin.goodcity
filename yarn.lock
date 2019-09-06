@@ -12261,9 +12261,9 @@ sha@~2.0.1:
     graceful-fs "^4.1.2"
     readable-stream "^2.0.2"
 
-"shared-goodcity@git://github.com/crossroads/shared.goodcity.git#master":
+"shared-goodcity@git://github.com/crossroads/shared.goodcity.git#GCW-2782-handle-huge-socket-jobs":
   version "0.0.0"
-  resolved "git://github.com/crossroads/shared.goodcity.git#eae1aafd3e9bec761e41e2feeff34c307e9d1597"
+  resolved "git://github.com/crossroads/shared.goodcity.git#8d1cd5c86aa7194220eac5566f57bcaec03bb602"
   dependencies:
     cryptiles "^4.1.2"
     ember-cli-babel "^5.1.6"
