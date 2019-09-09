@@ -116,6 +116,10 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     return _.inRange(labelCount, 0, 301);
   }),
 
+  printLabelCount: Ember.computed("packageForm.labels", function() {
+    return (this.get("packageForm.labels") * 1).toString();
+  }),
+
   isInvalidDimension: Ember.computed(
     "packageForm.length",
     "packageForm.width",
