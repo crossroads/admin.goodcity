@@ -1,5 +1,4 @@
 import AuthorizeRoute from "./authorize";
-import AjaxPromise from "../utils/ajax-promise";
 
 export default AuthorizeRoute.extend({
   model(params) {
@@ -16,6 +15,15 @@ export default AuthorizeRoute.extend({
     model.get("inventoryNumber");
     if (!model.get("inventoryNumber")) {
       controller.generateInventoryNumber();
+    }
+  },
+
+  resetController(controller, isExiting, transition) {
+    if (
+      controller.get("package.item") &&
+      transition.targetName === "offer.search_label"
+    ) {
+      controller.deleteItem();
     }
   }
 });

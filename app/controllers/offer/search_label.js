@@ -1,12 +1,33 @@
-import Ember from "ember";
-import _ from "lodash";
-import AjaxPromise from "goodcity/utils/ajax-promise";
 import searchLabelController from "../search_label";
 
 export default searchLabelController.extend({
+  // ----- Arguments -----
   packageType: null,
   item: null,
 
+  //--Ajax Methods
+  createItem() {
+    const item = this.get("store").createRecord("item", this.itemParams());
+    this.runTask(
+      item.save().then(itemResponse => {
+        this.set("item", itemResponse);
+        this.addPackage();
+      })
+    );
+  },
+
+  addPackage() {
+    let pkgRecord = this.store.createRecord("package", this.packageParams());
+    this.runTask(
+      pkgRecord.save().then(pkg => {
+        this.transitionToRoute("receive_package", pkg.id, {
+          queryParams: { isUnplannedPackage: true }
+        });
+      })
+    );
+  },
+
+  //--Params helpers
   itemParams() {
     const packageType = this.get("packageType");
     const offer = this.get("model");
@@ -37,17 +58,7 @@ export default searchLabelController.extend({
     };
   },
 
-  addPackage() {
-    let pkgRecord = this.store.createRecord("package", this.packageParams());
-    this.runTask(
-      pkgRecord.save().then(pkg => {
-        this.transitionToRoute("receive_package", pkg.id, {
-          queryParams: { isUnplannedPackage: true }
-        });
-      })
-    );
-  },
-
+  // ----- Actions -----
   actions: {
     cancelSearch() {
       window.history.back();
@@ -55,11 +66,7 @@ export default searchLabelController.extend({
 
     assignItemLabel(type) {
       this.set("packageType", type);
-      const item = this.get("store").createRecord("item", this.itemParams());
-      item.save().then(itemResponse => {
-        this.set("item", itemResponse);
-        this.addPackage();
-      });
+      this.createItem();
     }
   }
 });

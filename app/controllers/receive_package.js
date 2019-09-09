@@ -23,6 +23,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   // ----- Aliases -----
   inventoryNumber: Ember.computed.alias("package.inventoryNumber"),
   package: Ember.computed.alias("model"),
+  item: Ember.computed.alias("model.item"),
   description: Ember.computed.alias("package.notes"),
   reviewOfferController: Ember.inject.controller("review_offer"),
   selectedCondition: Ember.computed.alias("model.donorCondition"),
