@@ -14,6 +14,7 @@ Router.map(function() {
     this.route("merge");
     this.route("search_companies");
     this.route("search_users");
+    this.route("search_label");
 
     this.route("plan_delivery");
     this.route("collection_charges");
