@@ -1,0 +1,51 @@
+<div class="row search-box ui">
+  <div class="row">
+    <div class="small-2 columns back-icon" {{action "cancelSearch"}}>
+      <i class="fa fa-angle-left"></i>
+      <span>{{t 'offer_filters.back'}}</span>
+    </div>
+    <div class="small-10 columns">
+      {{focus-textfield
+        name="searchText"
+        id="searchText"
+        placeholder=(t 'search.placeholder')
+        value=searchText }}
+
+      {{#if hasSearchText}}
+      <i class="fa fa-times-circle clear-search" {{action "clearSearch"}}></i>
+      {{/if}}
+    </div>
+  </div>
+</div>
+
+<section class="main-section review_offer search search_offer">
+  <div class="row">
+    <div class="small-12 columns item-content">
+      <div class="new-company">
+        {{t "offer_creation.search_companies.find_company"}}
+        {{#link-to 'companies.new'}}
+        {{t "offer_creation.search_companies.create_company"}}
+        {{/link-to}}
+      </div>
+      {{#if displayResults}}
+      {{#infinite-list height="82vh" loadMore=(action "loadMoreCompanies") as |companies| }}
+      <ul class="list list-activity list-offer-items">
+        {{#each companies as |company|}}
+        <li {{action 'goToDetails' company.id}}>
+          {{#link-to 'review_offer.donor_details' offer.id tagName='div' href=false}}
+          <div class="row">
+            <div class="small-12 columns">
+              {{company.name}}
+            </div>
+          </div>
+          {{/link-to}}
+        </li>
+        {{else}}
+        <div class="no_result">{{t "search.no_results"}}</div>
+        {{/each}}
+      </ul>
+      {{/infinite-list}}
+      {{/if}}
+    </div>
+  </div>
+</section>

@@ -12,11 +12,29 @@ Router.map(function() {
     this.route("donor_messages");
     this.route("supervisor_messages");
     this.route("merge");
+    this.route("search_companies");
+    this.route("search_users");
 
     this.route("plan_delivery");
     this.route("collection_charges");
     this.route("gogovan_charges");
     this.route("cancel_gogovan");
+
+    this.route("companies", { resetNamespace: true }, function() {
+      this.route("new");
+    });
+
+    this.route(
+      "companies",
+      { resetNamespace: true, path: "/companies/:company_id" },
+      function() {
+        this.route("edit");
+      }
+    );
+
+    this.route("donors", { resetNamespace: true }, function() {
+      this.route("new");
+    });
 
     this.route(
       "item",

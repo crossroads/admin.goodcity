@@ -1,0 +1,56 @@
+<nav class="tab-bar">
+  <section class="left-small">
+    {{#link-to "review_offer.donor_details" model.id classNames="back"}}{{t 'back'}}{{/link-to}}
+  </section>
+
+  <section class="middle tab-bar-section">
+    <h1 class="title">
+      {{t 'donor_details.company.new_company'}}
+    </h1>
+  </section>
+</nav>
+
+<section class="main-section new-company-section ui">
+  {{#validatable-form onSubmit=(action 'saveComanyAndOffer') as |form|}}
+  <div class="row">
+    <div class="{{if isMobileApp 'small-7 large-8' 'small-12'}} columns">
+      {{t 'donor_details.company.company_name'}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="{{if isMobileApp 'small-7 large-8' 'small-12'}} columns">
+      {{#form-control}}
+        {{input type='text' value=name required='true' class='company-input'}}
+        <div class='input-error'>
+          {{t 'donor_details.company.company_name_validation'}}
+        </div>
+      {{/form-control}}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="{{if isMobileApp 'small-7 large-8' 'small-12'}} columns">
+      {{t 'donor_details.company.crm_id'}}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="{{if isMobileApp 'small-7 large-8' 'small-12'}} columns">
+      {{#form-control}}
+        {{numeric-input value=crmId id="crm-id" name="crm-id" maxlength="21" required=true class='company-input' pattern="\d{1,8}"}}
+        <div class='input-error'>
+          {{t 'donor_details.company.crm_id_validation'}}
+        </div>
+      {{/form-control}}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="small-6 small-centered large-12 columns submit-new-company">
+      <a {{action 'submit' target=form}} class="button expand">{{t 'save'}}</a>
+    </div>
+  </div>
+
+  {{/validatable-form}}
+</section>
+
