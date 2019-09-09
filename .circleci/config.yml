@@ -181,7 +181,7 @@ jobs:
           command: |
             echo 'export APP_SHA=$(echo $CIRCLE_SHA1 | cut -c1-7)' >> $BASH_ENV
             echo 'if [ -z "$APP_SHARED_SHA" ]; then export APP_SHARED_SHA=$( git ls-remote --heads https://github.com/crossroads/shared.goodcity.git $CIRCLE_BRANCH | cut -c1-7); fi' >> $BASH_ENV
-            echo 'if [ -z "$APP_SHARED_SHA" ]; then export APP_SHARED_SHA=$( git ls-remote --heads https://github.com/crossroads/shared.goodcity.git master | cut -c1-7); fi' >> $BASH_ENV
+            echo 'if [ -z "$APP_SHARED_SHA" ]; then export APP_SHARED_SHA=$( git ls-remote --heads https://github.com/crossroads/shared.goodcity.git GCW-2691-coprporate-donor-feature | cut -c1-7); fi' >> $BASH_ENV
             echo 'export STAGING=$(if [ "$CIRCLE_BRANCH" == "live" ]; then echo false; else echo true; fi)' >> $BASH_ENV
             echo 'export APP_VERSION=$(jq -r ".version" package.json)' >> $BASH_ENV
       - run:
@@ -348,36 +348,36 @@ workflows:
               - tests
             filters:
               branches:
-                only: /^(master|live)$/
+                only: /^(GCW-2691-coprporate-donor-feature|live)$/
         - www_build:
             requires:
               - tests
               - package_dependencies
             filters:
               branches:
-                only: /^(master|live)$/
+                only: /^(GCW-2691-coprporate-donor-feature|live)$/
         - www_deploy:
             requires:
               - www_build
             filters:
               branches:
-                only: /^(master|live)$/
+                only: /^(GCW-2691-coprporate-donor-feature|live)$/
         - ember_cordova_build:
             requires:
               - tests
               - package_dependencies
             filters:
               branches:
-                only: /^(master|live)$/
+                only: /^(GCW-2691-coprporate-donor-feature|live)$/
         - android_build_and_deploy:
             requires:
               - ember_cordova_build
             filters:
               branches:
-                only: /^(master|live)$/
+                only: /^(GCW-2691-coprporate-donor-feature|live)$/
         - ios_build_and_deploy:
             requires:
               - tests
             filters:
               branches:
-                only: /^(master|live)$/
+                only: /^(GCW-2691-coprporate-donor-feature|live)$/
