@@ -13,6 +13,9 @@ export default AuthorizeRoute.extend({
     controller.set("autoGenerateInventory", true);
     controller.set("inputInventory", false);
     model.get("inventoryNumber");
+    if (model.get("isReceived")) {
+      window.history.back();
+    }
     if (!model.get("inventoryNumber")) {
       controller.generateInventoryNumber();
     }

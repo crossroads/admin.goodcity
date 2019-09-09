@@ -161,6 +161,10 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     return /^[A-Z]{0,1}[0-9]{5,6}(Q[0-9]*){0,1}$/i.test(value);
   },
 
+  redirectToReceiveOffer() {
+    this.transitionToRoute("review_offer.receive");
+  },
+
   receivePackageParams() {
     const pkgData = this.get("packageForm");
     const inventoryNumber = this.get("inventoryNumber");
@@ -219,7 +223,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
       this.removeInventoryNumber()
         .then(() => {
           pkg.set("inventoryNumber", null);
-          pkg.save().then(() => this.transitionToRoute("review_offer.receive"));
+          pkg.save().then(() => this.redirectToReceiveOffer());
         })
         .catch(() => this.send("pkgUpdateError", pkg))
     );
@@ -242,9 +246,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   deleteItem() {
     const item = this.get("package.item");
     this.runTask(
-      item
-        .destroyRecord()
-        .then(() => this.transitionToRoute("review_offer.receive"))
+      item.destroyRecord().then(() => this.redirectToReceiveOffer())
     );
   },
 
@@ -317,7 +319,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
               this.printBarcode();
             }
             pkg.set("packagesLocationsAttributes", {});
-            this.transitionToRoute("review_offer.receive");
+            this.redirectToReceiveOffer();
             Ember.run.scheduleOnce("afterRender", this, () =>
               this.get("reviewOfferController").set(
                 "displayCompleteReceivePopup",
