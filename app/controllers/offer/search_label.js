@@ -27,19 +27,21 @@ export default searchLabelController.extend({
     );
   },
 
+  donorConditions: Ember.computed(function() {
+    return this.get("store").peekAll("donorCondition");
+  }),
+
   //--Params helpers
   itemParams() {
-    const packageType = this.get("packageType");
-    const offer = this.get("model");
-    const defaultDonorCondition = this.get("store")
-      .peekAll("donorCondition")
-      .filterBy("name", "Lightly Used")
-      .get("firstObject");
+    const conditions = this.get("donorConditions");
+    const defaultDonorCondition =
+      conditions.filterBy("name", "Lightly Used").get("firstObject") ||
+      conditions.get("firstObject");
     return {
-      offer: offer,
+      offer: this.get("model"),
       donorCondition: defaultDonorCondition,
       state: "accepted",
-      packageType
+      packageType: this.get("packageType")
     };
   },
 
