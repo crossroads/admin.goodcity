@@ -108,17 +108,15 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   }),
 
   isMultipleCountPrint: Ember.computed("packageForm.labels", function() {
-    const labelCount = Number(this.get("packageForm.labels"));
-    return _.inRange(labelCount, 1, 301);
+    return this.isValidLabelRange({ startRange: 1 });
   }),
 
   isInvalidPrintCount: Ember.computed("packageForm.labels", function() {
-    const labelCount = Number(this.get("packageForm.labels"));
-    return _.inRange(labelCount, 0, 301);
+    return this.isValidLabelRange({ startRange: 0 });
   }),
 
   printLabelCount: Ember.computed("packageForm.labels", function() {
-    return (this.get("packageForm.labels") * 1).toString();
+    return Number(this.get("packageForm.labels"));
   }),
 
   isInvalidDimension: Ember.computed(
@@ -159,6 +157,11 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   // ----- Helpers -----
   verifyInventoryNumber: function(value) {
     return /^[A-Z]{0,1}[0-9]{5,6}(Q[0-9]*){0,1}$/i.test(value);
+  },
+
+  isValidLabelRange({ startRange }) {
+    const labelCount = Number(this.get("packageForm.labels"));
+    return _.inRange(labelCount, startRange, 301);
   },
 
   redirectToReceiveOffer() {
