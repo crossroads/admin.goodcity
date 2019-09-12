@@ -9,6 +9,7 @@ I18nTranslationsZhTw =
     "submitted": "已提交"
     "messages_title" : "訊息"
     "select": "選擇"
+    "cancel": "取消"
     "QuotaExceededError": "抱歉，此網站未能支援Safari <b> 私人瀏覽模式 </b> 請嘗試</br><ul><li><a href='https://itunes.apple.com/in/app/goodcityadmin.hk/id1013288708?mt=8' style='color: black!important; background-color: #dee4eb !important;'> iOS App 下載中 </a></li><li>正在使用Safari 正常(非無痕) 模式 </li><li> 正在使用Chrome 的私人瀏覽模式 </li></ul>"
     "search_item_label": "搜尋物資標籤"
     "designated_dispatched_error": "抱歉，您無法編輯已分配的項目！"
@@ -16,6 +17,11 @@ I18nTranslationsZhTw =
       "no_results": "抱歉，未能找到結果！"
       "server_search": "於服務器上尋找更多資訊"
       "placeholder": "搜索"
+
+    "inventory_options":
+      "auto": "Auto Id"
+      "input": "Input Id"
+      "scan": "Scan Id"
 
     "users":
       "search": "搜尋使用者"
@@ -33,7 +39,7 @@ I18nTranslationsZhTw =
 
     "offer":
       "title": "捐贈細節"
-      "donor": "捐贈者"
+      "donor": "Details"
       "transport": "運輸"
       "details" : "捐贈詳情"
       "donor_messages" : "捐贈者信息"
@@ -106,8 +112,32 @@ I18nTranslationsZhTw =
       inactive_info: "Donor non-responsive"
 
     "items":
+      "title": "Receive-{{packageName}}"
+      "remove_item":
+        "confirmation_message": "Are you sure you want to cancel this item?"
+        "yes": "Yes"
+        "no": "No"
       "add_item":
         "description_placeholder" : "這是甚麼？有多少件物資？物資大小？"
+        "quantity": "Quantity"
+        "type": "Type"
+        "add_images": "Add Images"
+        "description": "Description"
+        "quality": "Quality"
+        "location": "Locations"
+        "size": "Size(cm)"
+        "labels": "Labels"
+        "inventory": "Inventory"
+        "publish": "Publish"
+        "receive": "Receive"
+        "print": "& Print {{labels}}"
+      "validation":
+        "dimensions": "Provide all three dimensions(or none)"
+        "quantity": "Quantity cannot be blank or 0."
+        "labels": "Can't be blank."
+        "max_lable_count": "Max 300"
+        "description": "Description cannot be blank."
+        "inventory_number": "Inventory Number cannot be blank."
 
     "item":
       "accepted": "已接受"
@@ -279,6 +309,7 @@ I18nTranslationsZhTw =
       "notify_donor": "聯絡捐贈者，告知預約已被取消"
 
     "receive":
+      "unplanned_inventory": "Add unplanned item to inventory"
       "missing": "遺失"
       "receive": "接收"
       "inventory": "存貨"
@@ -346,5 +377,65 @@ I18nTranslationsZhTw =
 
     "customized_variables":
       "click_here": "點擊這裏"
+
+    "donor_details":
+      "all_offers": "好人好市上的所有選擇"
+      "company":
+        "title": "企業捐助者"
+        "remove": "去除企業捐助者"
+        "assign": "指定另一間公司"
+        "edit": "編輯這間公司"
+        "add": "不適用，個人資料-補加公司資料"
+        "new_company": "New Company"
+        "edit_company": "Edit Company"
+        "company_name": "Company Name"
+        "company_name_validation": "Enter valid name"
+        "crm_id": "CRM ID"
+        "enter_crm_id": "Enter numeric values"
+        "optional": "(Optional)"
+        "enter_name": "Enter Company Name"
+      "contact":
+        "title": "捐助者聯絡資料"
+        "remove": "去除捐助者聯絡資料"
+        "assign": "指定另一個捐助者"
+        "add": "遺漏-補加聯絡資料"
+      "mobile":
+        "title": "捐助者電話號碼"
+        "call_using_phone": "致電捐助者"
+      "email":
+        "title": "捐助者電郵地址"
+      "alt_phone":
+        "title": "捐助者其他電話號碼"
+        "call_using_phone": "致電捐助者"
+      "location":
+        "title": "捐助者位置"
+      "sale_allowed":
+        "title": "可供銷售"
+        "yes": "是"
+        "no": "否"
+
+    "offer_creation":
+      "search_users":
+        "find_donor": "找已有捐助者或"
+        "create_donor": "建立新捐助者"
+      "search_companies":
+        "find_company": "找已有公司"
+        "create_company": "建立新公司"
+      "create_donor":
+        "page_title": "新捐助者"
+        "title": "標題"
+        "first": "名字"
+        "last": "姓氏"
+        "mobile": "電話號碼"
+        "email": "電郵地址"
+        "other_phone": "其他電話號碼"
+        "consent": "同意接收本會寄出的電子郵件"
+        "default_location": "捐助者的設定位置"
+        "select_district": "選擇區域"
+        "errors":
+          "title": "標題不能漏空"
+          "first_name": "名字不能漏空"
+          "last_name": "姓氏不能漏空"
+          "cell_phone": "電話號碼不能漏空"
 
 `export default I18nTranslationsZhTw`

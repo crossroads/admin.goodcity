@@ -4,7 +4,7 @@
   </section>
 
   <section class="middle tab-bar-section">
-    <h1 class="title">{{t "review_offer.title"}}</h1>
+    <h1 class="title offer-title-padding">{{partial 'offer_title'}}</h1>
   </section>
 
   <section class="right-small review_offer_options">
@@ -34,7 +34,7 @@
 
         {{#link-to 'review_offer.donor_details' tagName="dd" classNames="small-3 columns text-center"}}
           {{#link-to 'review_offer.donor_details'}}
-            <i class="fa fa-user fa-2x"></i>
+            <i class="fa fa-id-card-o fa-2x"></i>
             <div>{{t "offer.donor"}}</div>
           {{/link-to}}
         {{/link-to}}

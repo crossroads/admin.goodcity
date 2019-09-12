@@ -1,6 +1,31 @@
 .donor_details {
   padding-left: 0;
   padding-right: 0;
+  cursor: pointer;
+
+  .options_menu_list {
+    margin-left: unset;
+    margin-top: unset;
+    width: 15rem;
+
+    .option_menu {
+      font-size: 0.94rem;
+
+      @media #{$small-only} {
+        font-size: 0.68rem;
+        padding: 0 0.4rem;
+        line-height: 2.5rem;
+      }
+
+      a {
+        font-size: unset;
+      }
+    }
+
+    @media #{$small-only} {
+      width: 10.5rem;
+    }
+  }
 
   .donor {
     font-weight: bolder;
@@ -10,6 +35,25 @@
       a {
         border-bottom: $white 1px solid;
       }
+    }
+  }
+
+  .donor-details {
+    margin-bottom: 1rem;
+
+    .donor-data {
+      color: white;
+
+      i {
+        padding-left: 3%;
+        @media #{$small-only} {
+          font-size: 1.3em;
+        }
+      }
+    }
+
+    .underline {
+      text-decoration: underline;
     }
   }
 
@@ -41,6 +85,7 @@
       height: 2.5rem;
       line-height: 2.5rem;
       text-align: center;
+
       i {
         font-size: 1.3rem;
       }
@@ -48,11 +93,23 @@
 
     .fade-out {
       @-webkit-keyframes fadeOut {
-        0%   {opacity: 0;}
-        15%  {opacity: 1;}
-        50%  {opacity: 1;}
-        100% {opacity: 0;}
+        0% {
+          opacity: 0;
+        }
+
+        15% {
+          opacity: 1;
+        }
+
+        50% {
+          opacity: 1;
+        }
+
+        100% {
+          opacity: 0;
+        }
       }
+
       animation: fadeOut 3s ease;
       opacity: 0;
     }
@@ -69,3 +126,5 @@
     }
   }
 }
+
+

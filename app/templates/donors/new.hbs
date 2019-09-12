@@ -1,0 +1,128 @@
+<nav class="tab-bar new-donor-nav">
+  <section class="left-small">
+    {{#link-to "offer.search_users" model.id classNames="back"}}{{t 'back'}}{{/link-to}}
+  </section>
+  <section class="middle tab-bar-section">
+    <h1 class="title">{{t "offer_creation.create_donor.page_title"}}</h1>
+  </section>
+</nav>
+<section class="main-section new-donor-section ui">
+  <div class="row new-donor">
+    <div class="small-12 columns">
+      {{#validatable-form onSubmit=(action 'saveDonorAndOffer') as |form|}}
+        <div class="row">
+          <div class="donor_title small-2 columns">
+            {{t "offer_creation.create_donor.title"}}
+          </div>
+          <div class="small-5 columns">
+            {{t "offer_creation.create_donor.first"}}
+          </div>
+          <div class="small-5 columns">
+            {{t "offer_creation.create_donor.last"}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="small-2 columns">
+            {{#form-control}}
+              {{select-list
+                content=titles
+                on-change=(action (mut selectedTitle))
+                selectedValue=selectedTitle
+                value= selectedTitle
+                selectArrow=true
+                idNames='title' }}
+
+              <div class='input-error'>{{t "offer_creation.create_donor.errors.title"}}</div>
+            {{/form-control}}
+          </div>
+          <div class="small-5 columns">
+            {{#form-control}}
+              {{input type='text' value=firstName required='true'}}
+              <div class='input-error'>{{t "offer_creation.create_donor.errors.first_name"}}</div>
+            {{/form-control}}
+          </div>
+          <div class="small-5 columns">
+            {{#form-control}}
+              {{input type='text' value=lastName required='true'}}
+              <div class='input-error'>{{t "offer_creation.create_donor.errors.last_name"}}</div>
+            {{/form-control}}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="small-12 columns donor-label">
+            {{t "offer_creation.create_donor.mobile"}}
+          </div>
+          <div class="small-12 columns">
+            {{#form-control}}
+              {{numeric-input value=mobilePhone name="mobilePhone" id="mobile" maxlength="8" pattern="\d{1,8}" required='true'}}
+              <div class='input-error'>{{t "offer_creation.create_donor.errors.cell_phone"}}</div>
+            {{/form-control}}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="small-12 columns donor-label">
+            {{t "offer_creation.create_donor.email"}}
+          </div>
+          <div class="small-12 columns">
+            {{#form-control}}
+              {{input type='email' value=email}}
+            {{/form-control}}
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="small-1 columns">
+            {{input type='checkbox' checked=receiveEmail id="given_consent"}}
+          </div>
+          <div class="small-11 columns donor-label consent-text" {{action 'toggleReceiveEmail'}}>
+            {{t "offer_creation.create_donor.consent"}}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="small-12 columns donor-label">
+            {{t "offer_creation.create_donor.other_phone"}}
+          </div>
+          <div class="small-12 columns">
+            {{#form-control}}
+              {{numeric-input value=otherPhone name="otherPhone" id="otherPhone" maxlength="8" pattern="\d{1,8}"}}
+            {{/form-control}}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="small-12 columns donor-label">
+            {{t "offer_creation.create_donor.default_location"}}
+          </div>
+          <div class="small-12 columns">
+            {{#form-control}}
+              {{select-list
+                  content=districts
+                  on-change=(action (mut selectedDistrict))
+                  selectedValue=selectedDistrict
+                  prompt=(t "offer_creation.create_donor.select_district")
+                  value= selectedDistrict
+                  selectArrow=true
+                  classNames='district-selector'
+                  idNames='district-select-dropdown'}}
+            {{/form-control}}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="small-6 columns donor-label">
+            {{#link-to "review_offer.donor_details" model.id classNames="button expand cancel"}}
+              {{t 'cancel'}}
+            {{/link-to}}
+          </div>
+          <div class="small-6 columns donor-label">
+            <a {{action 'submit' target=form}} class="button expand">{{t 'save'}}</a>
+          </div>
+        </div>
+      {{/validatable-form}}
+    </div>
+  </div>
+</section>

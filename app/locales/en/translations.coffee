@@ -9,6 +9,7 @@ I18nTranslationsEn =
     "submitted": "Submitted"
     "messages_title" : "Messages"
     "select": "Select"
+    "cancel": "Cancel"
     "QuotaExceededError": "Site may not work in Safari's <b>private mode.</b> Please try</br><ul><li><a href='https://itunes.apple.com/in/app/goodcityadmin.hk/id1013288708?mt=8' style='color: black!important; background-color: #dee4eb !important;'>Downloading the iOS App</a></li><li>Using regular (not private) mode in Safari</li><li>Using Chrome's private browsing mode</li></ul>"
     "search_item_label": "Search item label"
     "designated_dispatched_error": "You cannot edit designated/dispatched items."
@@ -16,6 +17,11 @@ I18nTranslationsEn =
       "no_results": "Sorry, No results found."
       "server_search": "Find more on server"
       "placeholder": "Search"
+
+    "inventory_options":
+      "auto": "Auto Id"
+      "input": "Input Id"
+      "scan": "Scan Id"
 
     "users":
       "search": "Search User"
@@ -33,7 +39,7 @@ I18nTranslationsEn =
 
     "offer":
       "title": "Offer"
-      "donor": "Donor"
+      "donor": "Details"
       "transport": "Transport"
       "details" : "Offer details"
       "donor_messages" : "Donor Messages"
@@ -106,8 +112,33 @@ I18nTranslationsEn =
       inactive_info: "Donor non-responsive"
 
     "items":
+      "title": "Receive-{{packageName}}"
+      "remove_item":
+        "confirmation_message": "Are you sure you want to cancel this item?"
+        "yes": "Yes"
+        "no": "No"
       "add_item":
         "description_placeholder" : "What is it? How many items? What's the size?"
+        "quantity": "Quantity"
+        "type": "Type"
+        "add_images": "Add Images"
+        "description": "Description"
+        "quality": "Quality"
+        "location": "Locations"
+        "size": "Size(cm)"
+        "labels": "Labels"
+        "inventory": "Inventory"
+        "publish": "Publish"
+        "receive": "Receive"
+        "print": "& Print {{labels}}"
+      "validation":
+        "dimensions": "Provide all three dimensions(or none)"
+        "quantity": "Quantity cannot be blank or 0."
+        "labels": "Can't be blank."
+        "max_lable_count": "Max 300"
+        "description": "Description cannot be blank."
+        "inventory_number": "Inventory Number cannot be blank."
+
 
     "item":
       "accepted": "Accepted"
@@ -279,6 +310,7 @@ I18nTranslationsEn =
       "notify_donor": "Message the donor to let them know their GoGoVan booking is being cancelled"
 
     "receive":
+      "unplanned_inventory": "Add unplanned item to inventory"
       "missing": "Missing"
       "receive": "Receive"
       "inventory": "Inventory"
@@ -345,5 +377,65 @@ I18nTranslationsEn =
 
     "customized_variables":
       "click_here": "click here"
+
+    "donor_details":
+      "all_offers": "'s all offers on GoodCity:"
+      "company":
+        "title": "Corporate Donor:"
+        "remove": "Remove corporate donor"
+        "assign": "Assign different company"
+        "edit": "Edit this company"
+        "add": "NA, Personal - Add company"
+        "new_company": "New Company"
+        "edit_company": "Edit Company"
+        "company_name": "Company Name"
+        "company_name_validation": "Enter valid name"
+        "crm_id": "CRM ID"
+        "enter_crm_id": "Enter numeric values"
+        "optional": "(Optional)"
+        "enter_name": "Enter Company Name"
+      "contact":
+        "title": "Donor Contact:"
+        "remove": "Remove donor contact"
+        "assign": "Assign different donor"
+        "add": "Missing - Add contact"
+      "mobile":
+        "title": "Donor mobile:"
+        "call_using_phone": "Call donor using phone"
+      "email":
+        "title": "Donor email:"
+      "alt_phone":
+        "title": "Donor alt phone:"
+        "call_using_phone": "Call donor using phone"
+      "location":
+        "title": "Donors location:"
+      "sale_allowed":
+        "title": "Sale allowed"
+        "yes": "Yes"
+        "no": "No"
+
+    "offer_creation":
+      "search_users":
+        "find_donor": "Find existing donor or"
+        "create_donor": "Create A New Donor"
+      "search_companies":
+        "find_company": "Find existing company or"
+        "create_company": "Create new company"
+      "create_donor":
+        "page_title": "New Donor"
+        "title": "Title"
+        "first": "First Name"
+        "last": "Last Name"
+        "mobile": "Mobile Number"
+        "email": "Email Address"
+        "other_phone": "Other Phone"
+        "consent": "Has given consent to receive emails from us."
+        "default_location": "Donor's Default Location"
+        "select_district": "Select a District"
+        "errors":
+          "title": "Title can't be blank"
+          "first_name": "First name can't be blank"
+          "last_name": "Last name can't be blank"
+          "cell_phone": "Mobile number can't be blank"
 
 `export default I18nTranslationsEn`

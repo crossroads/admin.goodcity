@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import Ember from "ember";
 
 export default Ember.Component.extend({
   tagName: "li",
@@ -9,11 +9,17 @@ export default Ember.Component.extend({
   hidden: Ember.computed.empty("packages"),
   hasMultiplePackages: Ember.computed.gte("packages.length", 2),
 
-  item: Ember.computed("itemId", function(){
+  item: Ember.computed("itemId", function() {
     return this.get("store").peekRecord("item", this.get("itemId"));
   }),
 
-  packages: Ember.computed("pState", "item", "item.packages.@each.state", function(){
-    return this.get("item.packages").filterBy("state", this.get("pState"));
-  })
+  packages: Ember.computed(
+    "pState",
+    "item",
+    "item.packages.@each.state",
+    function() {
+      const itemPackages = this.get("item.packages");
+      return itemPackages && itemPackages.filterBy("state", this.get("pState"));
+    }
+  )
 });

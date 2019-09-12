@@ -1,0 +1,24 @@
+<a {{action "toggleInventoryOptions"}} class="options-link">
+  <i class="fa fa-ellipsis-v options"></i>
+</a>
+
+<div class="options_menu_list {{if displayInventoryOptions '' 'hidden'}}">
+
+  {{#unless autoGenerateInventory}}
+    <div class="option_menu">
+      <a {{action "autoGenerateInventoryNumber"}} >
+        <i aria-hidden="true" class="fa fa-refresh"></i>
+        {{t 'inventory_options.auto'}}
+      </a>
+    </div>
+  {{/unless}}
+
+  {{#unless inputInventory}}
+    <div class="option_menu">
+      <a {{action "editInventoryNumber"}} >
+        <i aria-hidden="true" class="fa fa-keyboard-o"></i>
+        {{t 'inventory_options.input'}}
+      </a>
+    </div>
+  {{/unless}}
+</div>

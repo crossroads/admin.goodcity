@@ -1,0 +1,51 @@
+.new-company-nav {
+  margin-bottom: 0;
+  h1 {
+    text-align: center;
+  }
+}
+.new-company-section {
+
+  .input-error {
+    background: #f46769;
+    color: white;
+    padding: 0.2rem;
+    display: none;
+
+    @media #{$small-only} {
+      font-size: 0.65rem;
+    }
+  }
+
+  .form__control.form__control--error .input-error {
+    display: block;
+  }
+
+  .description-block .form__control.form__control--error .input-error {
+    margin-top: -2%;
+  }
+
+  .row {
+    margin-top: 0.5rem !important;
+
+    @media #{$small-only} {
+      margin-right: 0rem !important;
+    }
+  }
+
+  form .submit-new-company {
+    padding-top: 3%;
+    a {
+      padding-top: 3%;
+    }
+  }
+
+  input.company-input {
+    padding: 0 0.5rem;
+    background: #002352 ;
+    border: 1px solid $tabbar-menu-icon-color;
+    color: white;
+    height: 2.75rem;
+  }
+}
+

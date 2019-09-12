@@ -1,48 +1,71 @@
 import Ember from "ember";
-const { getOwner } = Ember;
-import AjaxPromise from "goodcity/utils/ajax-promise";
+import _ from "lodash";
+import AsyncTasksMixin from "../mixins/async_tasks";
 
-export default Ember.Controller.extend({
+export default Ember.Controller.extend(AsyncTasksMixin, {
+  // ----- Services -----
   messageBox: Ember.inject.service(),
   cordova: Ember.inject.service(),
+  i18n: Ember.inject.service(),
+  packageService: Ember.inject.service(),
 
-  package: Ember.computed.alias("model"),
+  // ----- Arguments -----
+  queryParams: ["isUnplannedPackage"],
+  isUnplannedPackage: false,
+  inputInventory: false,
+  autoGenerateInventory: true,
+  displayInventoryOptions: false,
+  isAllowedToPublish: false,
   watchErrors: true,
   isAndroidDevice: false,
-  i18n: Ember.inject.service(),
-  reviewOfferController: Ember.inject.controller("review_offer"),
   displayError: false,
 
+  // ----- Aliases -----
+  inventoryNumber: Ember.computed.alias("package.inventoryNumber"),
+  package: Ember.computed.alias("model"),
+  description: Ember.computed.alias("package.notes"),
+  reviewOfferController: Ember.inject.controller("review_offer"),
+  selectedCondition: Ember.computed.alias("model.donorCondition"),
+
+  // ----- Computed Properties -----
   donorConditions: Ember.computed(function() {
     return this.get("store")
       .peekAll("donor_condition")
       .sortBy("id");
   }),
 
-  selectedCondition: Ember.computed.alias("model.donorConditionId"),
-
   grades: Ember.computed(function() {
+    const i18n = this.get("i18n");
     return [
-      { name: this.get("i18n").t("receive_package.grade_a"), id: "A" },
-      { name: this.get("i18n").t("receive_package.grade_b"), id: "B" },
-      { name: this.get("i18n").t("receive_package.grade_c"), id: "C" },
-      { name: this.get("i18n").t("receive_package.grade_d"), id: "D" }
+      { name: i18n.t("receive_package.grade_a"), id: "A" },
+      { name: i18n.t("receive_package.grade_b"), id: "B" },
+      { name: i18n.t("receive_package.grade_c"), id: "C" },
+      { name: i18n.t("receive_package.grade_d"), id: "D" }
     ];
   }),
 
   selectedGrade: Ember.computed("model", function() {
-    var grade = this.get("model.grade");
+    const grade = this.get("model.grade");
     return this.get("grades")
       .filterBy("id", grade)
       .get("firstObject");
   }),
+
+  showPublishItemCheckBox: Ember.computed(
+    "packageForm.quantity",
+    "package.quantity",
+    function() {
+      this.set("isAllowedToPublish", false);
+      return +this.get("packageForm.quantity") === 1;
+    }
+  ),
 
   offer: Ember.computed("model", function() {
     return this.get("store").peekRecord("offer", this.get("package.offerId"));
   }),
 
   identifyDevice: Ember.on("init", function() {
-    var isAndroidDevice = this.get("cordova").isAndroid();
+    const isAndroidDevice = this.get("cordova").isAndroid();
     this.set("isAndroidDevice", isAndroidDevice);
   }),
 
@@ -61,8 +84,6 @@ export default Ember.Controller.extend({
     return this.store.peekAll("location");
   }),
 
-  inventoryNumber: Ember.computed.alias("package.inventoryNumber"),
-
   packageForm: Ember.computed("package", {
     get: function() {
       const pkg = this.get("package");
@@ -71,45 +92,73 @@ export default Ember.Controller.extend({
         length: pkg.get("length"),
         width: pkg.get("width"),
         height: pkg.get("height"),
-        notes: pkg.get("notes")
+        labels: pkg.get("quantity")
       };
     }
   }),
 
-  enableDisplayError() {
-    this.set("displayError", true);
-  },
-
   isInvalidQuantity: Ember.computed("packageForm.quantity", function() {
-    return this.get("packageForm.quantity") < 1;
+    return this.get("packageForm.quantity") <= 0;
   }),
 
-  isInvalidLocation: Ember.computed("locationId", function() {
-    return !this.get("locationId");
+  isInvalidaLabelCount: Ember.computed("packageForm.labels", function() {
+    const labelCount = this.get("packageForm.labels");
+    return !labelCount || Number(labelCount) < 0;
   }),
 
-  isInvalidDescription: Ember.computed("packageForm.notes", function() {
-    return this.get("package.notes").length === 0;
+  isMultipleCountPrint: Ember.computed("packageForm.labels", function() {
+    const labelCount = Number(this.get("packageForm.labels"));
+    return _.inRange(labelCount, 1, 301);
   }),
 
-  isInvalidInventoryNo: Ember.computed("inventoryNumber", function() {
-    return !this.verifyInventoryNumber(this.get("inventoryNumber"));
+  isInvalidPrintCount: Ember.computed("packageForm.labels", function() {
+    const labelCount = Number(this.get("packageForm.labels"));
+    return _.inRange(labelCount, 0, 301);
   }),
 
-  isPackageInvalid: Ember.computed(
+  printLabelCount: Ember.computed("packageForm.labels", function() {
+    return (this.get("packageForm.labels") * 1).toString();
+  }),
+
+  isInvalidDimension: Ember.computed(
+    "packageForm.length",
+    "packageForm.width",
+    "packageForm.height",
+    function() {
+      const { length, width, height } = this.get("packageForm");
+      const dimensionsCount = _.filter(
+        [length, width, height],
+        item => Number(item) <= 0
+      ).length;
+      return _.inRange(dimensionsCount, 1, 3);
+    }
+  ),
+
+  disableReceiveButton: Ember.computed(
+    "isInvalidPrintCount",
+    "isInvalidaLabelCount",
+    "locationId",
     "isInvalidQuantity",
-    "isInvalidInventoryNo",
-    "isInvalidDescription",
-    "isInvalidLocation",
+    "inventoryNumber",
+    "isInvalidDimension",
+    "packageForm.labels",
     function() {
       return (
         this.get("isInvalidQuantity") ||
-        this.get("isInvalidInventoryNo") ||
-        this.get("isInvalidDescription") ||
-        this.get("isInvalidLocation")
+        !this.get("isInvalidPrintCount") ||
+        this.get("isInvalidaLabelCount") ||
+        this.get("isInvalidDimension") ||
+        !this.get("inventoryNumber") ||
+        !this.get("packageForm.labels") ||
+        !this.get("locationId")
       );
     }
   ),
+
+  // ----- Helpers -----
+  verifyInventoryNumber: function(value) {
+    return /^[A-Z]{0,1}[0-9]{5,6}(Q[0-9]*){0,1}$/i.test(value);
+  },
 
   receivePackageParams() {
     const pkgData = this.get("packageForm");
@@ -126,74 +175,161 @@ export default Ember.Controller.extend({
     pkg.set("length", pkgData.length);
     pkg.set("width", pkgData.width);
     pkg.set("height", pkgData.height);
-    pkg.set("notes", pkgData.notes);
+    pkg.set("notes", this.get("description"));
     pkg.set("inventoryNumber", inventoryNumber);
     pkg.set("grade", this.get("selectedGrade.id"));
+    pkg.set("allowWebPublish", this.get("isAllowedToPublish"));
     pkg.set("donorCondition", this.get("selectedCondition"));
     return pkg;
   },
 
-  actions: {
-    moveBack() {
-      if (this.get("hasErrors")) {
-        this.get("package").rollbackAttributes();
-      }
-      var _this = this;
-      var loadingView = getOwner(this)
-        .lookup("component:loading")
-        .append();
-      var pkg = this.get("package");
-      var inventoryNumber = pkg.get("inventoryNumber");
-      pkg.set("inventoryNumber", null);
-      pkg
-        .save()
+  cancelPackageOptions() {
+    const i18n = this.get("i18n");
+    this.get("messageBox").custom(
+      i18n.t("items.remove_item.confirmation_message"),
+      i18n.t("items.remove_item.yes"),
+      () => {
+        const pkg = this.get("package");
+        const item = pkg.get("item");
+        this.runTask(
+          this.removeInventoryNumber()
+            .then(() => {
+              const image = item.get("images.firstObject");
+              if (image) {
+                image.destroyRecord().then(() => {
+                  this.deleteItem();
+                });
+              } else {
+                this.deleteItem();
+              }
+            })
+            .catch(() => this.send("pkgUpdateError", pkg))
+        );
+      },
+      i18n.t("items.remove_item.no"),
+      null
+    );
+  },
+
+  // ----- Ajax Request Methods -----
+  removeAndUnassignInventoryNumber() {
+    let pkg = this.get("package");
+    this.runTask(
+      this.removeInventoryNumber()
         .then(() => {
-          new AjaxPromise(
-            "/inventory_numbers/remove_number",
-            "PUT",
-            _this.get("session.authToken"),
-            { code: inventoryNumber }
-          )
-            .then(() => {})
-            .catch(() => {})
-            .finally(() => _this.transitionToRoute("review_offer.receive"));
+          pkg.set("inventoryNumber", null);
+          pkg.save().then(() => this.transitionToRoute("review_offer.receive"));
         })
-        .catch(() => {
-          _this.send("pkgUpdateError", pkg);
+        .catch(() => this.send("pkgUpdateError", pkg))
+    );
+  },
+
+  removeInventoryNumber() {
+    return this.get("packageService").removeInventoryNumber({
+      code: this.get("inventoryNumber")
+    });
+  },
+
+  generateInventoryNumber() {
+    this.runTask(
+      this.get("packageService")
+        .generateInventoryNumber()
+        .then(data => this.set("inventoryNumber", data.inventory_number))
+    );
+  },
+
+  deleteItem() {
+    const item = this.get("package.item");
+    this.runTask(
+      item
+        .destroyRecord()
+        .then(() => this.transitionToRoute("review_offer.receive"))
+    );
+  },
+
+  printBarcode() {
+    const packageId = this.get("package.id");
+    const labels = this.get("packageForm.labels");
+    this.get("packageService")
+      .printBarcode({ package_id: packageId, labels })
+      .catch(error => {
+        this.get("messageBox").alert(error.responseJSON.errors);
+      });
+  },
+
+  // ----- Actions -----
+  actions: {
+    clearDescription() {
+      this.set("description", "");
+    },
+
+    toggleInventoryOptions() {
+      this.toggleProperty("displayInventoryOptions");
+    },
+
+    autoGenerateInventoryNumber() {
+      this.set("inventoryNumber", "");
+      this.set("inputInventory", false);
+      this.set("autoGenerateInventory", true);
+      this.set("displayInventoryOptions", false);
+      this.generateInventoryNumber();
+    },
+
+    deleteAutoGeneratedNumber() {
+      this.runTask(
+        this.removeInventoryNumber().then(() => {
+          this.set("inventoryNumber", "");
         })
-        .finally(() => loadingView.destroy());
+      );
+    },
+
+    editInventoryNumber() {
+      this.send("deleteAutoGeneratedNumber");
+      this.set("inventoryNumber", "");
+      this.set("inputInventory", true);
+      this.set("autoGenerateInventory", false);
+      this.set("displayInventoryOptions", false);
+    },
+
+    assignImageToPackage() {
+      const itemId = this.get("package.item.id");
+      this.transitionToRoute("item.edit_images", itemId, {
+        queryParams: { isUnplannedPackage: true }
+      });
+    },
+
+    moveBack() {
+      if (this.get("isUnplannedPackage")) {
+        this.cancelPackageOptions();
+      } else {
+        this.removeAndUnassignInventoryNumber();
+      }
     },
 
     receivePackage() {
-      if (this.get("isPackageInvalid")) {
-        this.enableDisplayError();
-        return false;
-      }
-      const loadingView = getOwner(this)
-        .lookup("component:loading")
-        .append();
       const pkg = this.receivePackageParams();
-      pkg
-        .save()
-        .then(() => {
-          loadingView.destroy();
-          pkg.set("packagesLocationsAttributes", {});
-          this.transitionToRoute("review_offer.receive");
-          Ember.run.scheduleOnce("afterRender", this, () =>
-            this.get("reviewOfferController").set(
-              "displayCompleteReceivePopup",
-              this.get("offer.readyForClosure")
-            )
-          );
-        })
-        .catch(() => {
-          loadingView.destroy();
-          this.send("pkgUpdateError", pkg);
-        });
+      this.runTask(
+        pkg
+          .save()
+          .then(() => {
+            if (this.get("isMultipleCountPrint")) {
+              this.printBarcode();
+            }
+            pkg.set("packagesLocationsAttributes", {});
+            this.transitionToRoute("review_offer.receive");
+            Ember.run.scheduleOnce("afterRender", this, () =>
+              this.get("reviewOfferController").set(
+                "displayCompleteReceivePopup",
+                this.get("offer.readyForClosure")
+              )
+            );
+          })
+          .catch(() => this.send("pkgUpdateError", pkg))
+      );
     },
 
     pkgUpdateError(pkg) {
-      var errorMessage =
+      const errorMessage =
         pkg.get("errors.firstObject.message") ||
         pkg.get("adapterError.errors.firstObject.title");
       if (
@@ -205,7 +341,12 @@ export default Ember.Controller.extend({
           () => pkg.rollbackAttributes()
         );
       } else {
-        this.enableDisplayError();
+        this.get("messageBox").alert(
+          pkg
+            .get("errors")
+            .getEach("message")
+            .join("\n")
+        );
       }
     },
 
@@ -215,9 +356,5 @@ export default Ember.Controller.extend({
       this.set("invalidDescription", false);
       this.set("hasErrors", false);
     }
-  },
-
-  verifyInventoryNumber: function(value) {
-    return /^[A-Z]{0,1}[0-9]{5,6}(Q[0-9]*){0,1}$/i.test(value);
   }
 });
