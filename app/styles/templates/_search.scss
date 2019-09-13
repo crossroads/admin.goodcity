@@ -25,6 +25,10 @@
       left: 1.5%;
       font-size: 0.7rem;
     }
+
+    @media only screen and (max-width : 320px) {
+      font-size: 0.6rem;
+    }
   }
 
   .clear-search {
