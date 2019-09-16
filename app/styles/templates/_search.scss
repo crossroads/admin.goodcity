@@ -17,17 +17,17 @@
 
   .back-icon {
     top: 0.9rem;
-    right: -8%;
+    left: 1%;
     font-size: 1rem;
     cursor: pointer;
 
     @media #{$small-only} {
-      right: -4%;
+      left: 1.5%;
       font-size: 0.7rem;
     }
 
-    @media #{$medium-only} {
-      right: -4%;
+    @media only screen and (max-width : 320px) {
+      font-size: 0.6rem;
     }
   }
 
@@ -72,6 +72,7 @@
   font-weight: bold;
   color: white;
   margin-top: 2rem;
+
   @media #{$small-only} {
     font-size: 0.9rem;
   }
@@ -83,9 +84,11 @@
   .infinite-list-container::-webkit-scrollbar {
     width: 0 !important
   }
+
   .infinite-list-container::-webkit-scrollbar {
     display: none;
   }
+
   .infinite-list-container {
     -ms-overflow-style: none; // IE 10+
     scrollbar-width: none;
@@ -107,6 +110,7 @@
     display: inline;
     margin-right: 0.2rem;
     padding: 1rem 0.4rem;
+
     @media #{$small-only} {
       font-size: 1rem;
     }
@@ -120,6 +124,7 @@
 
   a {
     text-decoration: underline;
+
     @media #{$small-only} {
       font-size: 0.8rem;
     }
