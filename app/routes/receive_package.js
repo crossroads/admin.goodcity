@@ -14,8 +14,7 @@ export default AuthorizeRoute.extend({
     controller.set("inputInventory", false);
     model.get("inventoryNumber");
     if (model.get("isReceived")) {
-      window.history.back();
-      return;
+      return controller.redirectToReceiveOffer();
     }
     if (!model.get("inventoryNumber")) {
       controller.generateInventoryNumber();
