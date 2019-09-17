@@ -42,6 +42,10 @@ export default Ember.Component.extend({
       this.set("displayUserPrompt", true);
     },
 
+    hideClosePopup(){
+      this.set("displayUserPrompt", false);
+    },
+
     completeReview() {
       var completeReviewMessage = this.get("closeMessage").string || this.get("closeMessage") || "";
       if(completeReviewMessage.trim().length === 0) {
