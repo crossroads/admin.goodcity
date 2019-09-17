@@ -10,6 +10,10 @@
     margin: 0.5rem;
     border-radius: 0.25rem;
 
+    &::-ms-clear {
+      display: none;
+    }
+
     @media #{$small-only} {
       width: 97%;
     }
