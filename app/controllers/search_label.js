@@ -6,8 +6,6 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   filter: "",
   searchText: "",
   fetchMoreResult: true,
-  queryParams: ["isUnplannedPackage"],
-  isUnplannedPackage: false,
   searchPlaceholder: t("search.placeholder"),
   i18n: Ember.inject.service(),
   previousRoute: "",
@@ -91,40 +89,6 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     });
   },
 
-  packageParams() {
-    const item = this.get("model");
-    const packageTypeId = item.get("packageType.id");
-    const pkgType = this.get("store").peekRecord("packageType", packageTypeId);
-    return {
-      notes: item.get("packageType.name"),
-      quantity: 1,
-      packageTypeId,
-      packageType: pkgType,
-      offerId: item.get("offer.id"),
-      item: item
-    };
-  },
-
-  addPackage() {
-    let pkgRecord = this.store.createRecord("package", this.packageParams());
-    this.runTask(
-      pkgRecord.save().then(pkg => {
-        this.transitionToRoute("receive_package", pkg.id, {
-          queryParams: { isUnplannedPackage: true }
-        });
-      })
-    );
-  },
-
-  deleteItem() {
-    const item = this.get("model");
-    this.runTask(
-      item
-        .destroyRecord()
-        .then(() => this.transitionToRoute("review_offer.receive"))
-    );
-  },
-
   actions: {
     clearSearch(isCancelled) {
       this.set("filter", "");
@@ -135,30 +99,18 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
       }
     },
 
-    cancelSearchAndDeleteItem() {
+    cancelSearch() {
       Ember.$("#searchText").blur();
       this.send("clearSearch", true);
       const item = this.get("model");
-      if (this.get("isUnplannedPackage")) {
-        this.deleteItem();
-      } else {
-        this.transitionToRoute("review_item.accept", item);
-      }
+      this.transitionToRoute("review_item.accept", item);
     },
 
     assignItemLabel(type) {
       var item = this.get("model");
       item.set("packageType", type);
       this.send("clearSearch", true);
-      if (this.get("isUnplannedPackage")) {
-        this.runTask(
-          item.save().then(() => {
-            this.addPackage();
-          })
-        );
-      } else {
-        this.transitionToRoute("review_item.accept", item);
-      }
+      this.transitionToRoute("review_item.accept", item);
     }
   }
 });
