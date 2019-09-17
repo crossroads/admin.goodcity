@@ -30,6 +30,24 @@ module("Receive package", {
     packages_location = FactoryGuy.make("packages_location");
 
     $.mockjax({
+      url: "/api/v1/packages_location*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        packages_locations: [packages_location.toJSON({ includeId: true })]
+      }
+    });
+
+    $.mockjax({
+      url: "/api/v1/orders_package*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        orders_packages: [order_pkg.toJSON({ includeId: true })]
+      }
+    });
+
+    $.mockjax({
       url: "/api/v1/role*",
       type: "GET",
       status: 200,
@@ -43,7 +61,7 @@ module("Receive package", {
       type: "GET",
       status: 200,
       responseText: {
-        packages: [package1.toJSON({ includeId: true })]
+        package: package1.toJSON({ includeId: true })
       }
     });
 
@@ -151,52 +169,36 @@ test("Receive button enables on selecting location", function(assert) {
   });
 });
 
-// test("On receiving package redirects to recieve list pages", function(assert) {
-//   Ember.run(function() {
-//     package1.set("location", location);
-//   });
-//   visit("/offers/" + offer1.id + "/receive_package/" + package1.id);
-//   $.mockjax({
-//     url: "api/v1/packa*",
-//     type: "PUT",
-//     status: 200,
-//     responseText: {
-//       packages: [package1.toJSON({ includeId: true })]
-//     }
-//   });
-//   $.mockjax({
-//     url: "api/v1/packages/print_bar*",
-//     type: "POST",
-//     status: 200,
-//     responseText: {
-//       inventory_number: "002843"
-//     }
-//   });
-//   $.mockjax({
-//     url: "/api/v1/packages_location*",
-//     type: "GET",
-//     status: 200,
-//     responseText: {
-//       packages_locations: [packages_location.toJSON({ includeId: true })]
-//     }
-//   });
-//   $.mockjax({
-//     url: "/api/v1/orders_package*",
-//     type: "GET",
-//     status: 200,
-//     responseText: {
-//       orders_packages: [order_pkg.toJSON({ includeId: true })]
-//     }
-//   });
+test("On receiving package redirects to recieve list pages", function(assert) {
+  Ember.run(function() {
+    package1.set("location", location);
+  });
+  visit("/offers/" + offer1.id + "/receive_package/" + package1.id);
+  $.mockjax({
+    url: "api/v1/packa*",
+    type: "PUT",
+    status: 200,
+    responseText: {
+      package: package1.toJSON({ includeId: true })
+    }
+  });
+  $.mockjax({
+    url: "api/v1/packages/print_bar*",
+    type: "POST",
+    status: 200,
+    responseText: {
+      inventory_number: "002843"
+    }
+  });
 
-//   andThen(function() {
-//     click("#receive-button");
-//   });
+  andThen(function() {
+    click("#receive-button");
+  });
 
-//   andThen(function() {
-//     assert.equal(
-//       currentURL(),
-//       "/offers/" + offer1.id + "/review_offer/receive"
-//     );
-//   });
-// });
+  andThen(function() {
+    assert.equal(
+      currentURL(),
+      "/offers/" + offer1.id + "/review_offer/receive"
+    );
+  });
+});
