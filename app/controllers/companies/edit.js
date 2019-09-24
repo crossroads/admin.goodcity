@@ -2,7 +2,7 @@ import Ember from "ember";
 
 export default Ember.Controller.extend({
   actions: {
-    saveComanyAndOffer() {
+    saveCompanyAndOffer() {
       let self = this;
       let company = this.get("model.company");
       let offer = this.get("model");
