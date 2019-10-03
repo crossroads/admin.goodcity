@@ -31,7 +31,9 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
       let searchText = this.get("searchText");
       this.runTask(
         this.get("store")
-          .query("user", { searchText })
+          .query("user", {
+            searchText
+          })
           .then(users => {
             // Check the input has changed since the promise started
             if (searchText === this.get("searchText")) {
@@ -45,7 +47,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   actions: {
     clearSearch() {
       this.set("searchText", "");
-      this.set("filteredResults", []);
+      this.set("results", []);
     },
 
     cancelSearch() {

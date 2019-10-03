@@ -1,5 +1,4 @@
 import AuthorizeRoute from "./authorize";
-import AjaxPromise from "../utils/ajax-promise";
 
 export default AuthorizeRoute.extend({
   model(params) {
@@ -14,8 +13,20 @@ export default AuthorizeRoute.extend({
     controller.set("autoGenerateInventory", true);
     controller.set("inputInventory", false);
     model.get("inventoryNumber");
+    if (model.get("isReceived")) {
+      return controller.redirectToReceiveOffer();
+    }
     if (!model.get("inventoryNumber")) {
       controller.generateInventoryNumber();
+    }
+  },
+
+  resetController(controller, isExiting, transition) {
+    if (
+      controller.get("package.item") &&
+      transition.targetName === "offer.search_label"
+    ) {
+      controller.deleteItem();
     }
   }
 });

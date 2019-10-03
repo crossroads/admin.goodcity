@@ -6,12 +6,14 @@
     }
   }
 
-  .message-textbar{
+  .message-textbar {
     position: relative;
   }
+
   .row-grey {
     height: 100%;
     background: $light-grey;
+
     .tabs {
       background: $dark-blue;
     }
@@ -38,16 +40,18 @@
     }
   }
 
-  .edit-item-link{
+  .edit-item-link {
     float: right;
     color: $white;
     cursor: pointer;
     padding: 0.25rem 0.6rem;
+
     @media #{$small-only} {
       font-size: 1rem;
     }
   }
-  .disable-canceloffer-review{
+
+  .disable-canceloffer-review {
     pointer-events: none;
     opacity: 0.9;
     filter: alpha(opacity=90);
@@ -73,12 +77,16 @@
 }
 
 .accept_widget {
-  i, .add_package_link {
+
+  i,
+  .add_package_link {
     cursor: pointer;
   }
 
   .icon-center {
-    .fa-plus-circle, .fa-minus-circle {
+
+    .fa-plus-circle,
+    .fa-minus-circle {
       @media #{$small-only} {
         font-size: 1.35rem;
         padding: 0;
@@ -99,10 +107,14 @@
 }
 
 .fixed_item_type_search {
-    -webkit-transform: translate(-50%,0);
-    position: fixed;
-    z-index: 1000;
-    left: 50%;
+  position: fixed;
+  z-index: 1000;
+  left: 50%;
+  -webkit-transform: translate(-50%, 0);
+  -moz-transform: translate(-50%, 0);
+  -ms-transform: translate(-50%, 0);
+  -o-transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
 }
 
 .item_types_result {
@@ -119,4 +131,3 @@
     color: black;
   }
 }
-

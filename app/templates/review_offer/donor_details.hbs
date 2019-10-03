@@ -30,7 +30,7 @@
       <div class="small-7 columns underline donor-data">
         {{#if currentOffer.companyId}}
         <a {{action "toggleOptions" "displayCompanyOptions"}}>
-          {{currentOffer.company.name}}
+          {{currentOffer.companyName}}
           <i class="fa fa-caret-square-o-down" aria-hidden="true"></i>
         </a>
         <div class="options_menu_list {{if displayCompanyOptions '' 'hidden'}}">
@@ -217,7 +217,7 @@
         {{donor.fullName}}{{t "donor_details.all_offers"}}
         <ul class="list list-activity list-offer-items">
           {{#each donorOffers as |offer|}}
-          {{partial 'offers/offer_details'}}
+            {{partial 'offers/offer_details'}}
           {{/each}}
         </ul>
       </div>
