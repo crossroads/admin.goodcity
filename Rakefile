@@ -82,13 +82,13 @@ namespace :cordova do
     sh %{ cd #{CORDOVA_PATH}; cordova-update-config --appname "#{app_name}" --appid #{app_id} --appversion #{app_version} }
 
     log("Preparing app for #{platform}")
-    Dir.chdir(CORDOVA_PATH) do
-      system({"ENVIRONMENT" => environment}, "cordova prepare #{platform}")
-      unless platform == "ios"
-        sh %{ cordova plugin add #{SPLUNKMINT_PLUGIN_URL} --variable MINT_APIKEY="#{splunk_mint_key}" }
-        sh %{ cordova plugin add cordova-android-support-gradle-release --variable ANDROID_SUPPORT_VERSION=27 }
-      end
-    end
+    # Dir.chdir(CORDOVA_PATH) do
+    #   system({"ENVIRONMENT" => environment}, "cordova prepare #{platform}")
+    #   unless platform == "ios"
+    #     sh %{ cordova plugin add #{SPLUNKMINT_PLUGIN_URL} --variable MINT_APIKEY="#{splunk_mint_key}" }
+    #     sh %{ cordova plugin add cordova-android-support-gradle-release --variable ANDROID_SUPPORT_VERSION=27 }
+    #   end
+    # end
     if platform == "ios"
       Dir.chdir(CORDOVA_PATH) do
         sh %{ cordova plugin add #{TESTFAIRY_PLUGIN_URL} } if environment == "staging"
@@ -153,6 +153,7 @@ def splunk_mint_key
   key = "SPLUNK_MINT_KEY_ADMIN_#{platform}_#{environment}".upcase
   ENV[key]
 end
+
 
 def app_sha
   Dir.chdir(ROOT_PATH) do
