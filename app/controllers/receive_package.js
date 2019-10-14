@@ -225,7 +225,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     this.runTask(
       this.removeInventoryNumber()
         .then(() => {
-          pkg.set("inventoryNumber", null);
+          pkg.rollbackAttributes();
           pkg.save().then(() => this.redirectToReceiveOffer());
         })
         .catch(() => this.send("pkgUpdateError", pkg))
