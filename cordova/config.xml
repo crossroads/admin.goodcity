@@ -102,5 +102,6 @@
     <variable name="INCOMING_CALL_APP_NAME" value="Crossroads" />
     <variable name="MASK_INCOMING_PHONE_NUMBER" value="true" />
   </plugin>
+  <plugin name="phonegap-plugin-media-stream" spec="^1.2.1" />
 </widget>
 

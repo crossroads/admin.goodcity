@@ -13,6 +13,8 @@ export default Ember.Component.extend({
   currentUserId: Ember.computed.alias("session.currentUser.id"),
   internetCallStatus: {},
 
+  outputSources: {},
+
   hasTwilioSupport: Ember.computed(
     "hasTwilioBrowserSupport",
     "isCordovaApp",
@@ -41,8 +43,21 @@ export default Ember.Component.extend({
     var twilio_device = this.get("twilio_device");
 
     twilio_device.setup(twilio_token, {
-      debug: true
+      debug: true,
+      audioConstraints: {
+        optional: [{ googAutoGainControl: false }]
+      }
     });
+
+    navigator.mediaDevices
+      .getUserMedia({
+        audio: true
+      })
+      .then(function(mediaStream) {
+        this.get("outputSources").set("optional", [
+          { sourceId: mediaStream.id }
+        ]);
+      });
 
     twilio_device.error(() => {
       if (!this.get("isDestroying")) {
@@ -64,9 +79,13 @@ export default Ember.Component.extend({
       var params = {
         phone_number: this.get("offerId") + "#" + this.get("currentUserId")
       };
+      const outputSources = this.get("outputSources");
       this.set("activeCall", true);
       this.get("internetCallStatus").set("activeCall", true);
-      return this.get("twilio_device").connect(params);
+      return this.get("twilio_device").connect(
+        params,
+        outputSources
+      );
     },
 
     hangupCall() {
