@@ -159,6 +159,13 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     return /^[A-Z]{0,1}[0-9]{5,6}(Q[0-9]*){0,1}$/i.test(value);
   },
 
+  resetInputs() {
+    this.set("packageForm.length", "");
+    this.set("packageForm.width", "");
+    this.set("packageForm.height", "");
+    this.set("isAllowedToPublish", false);
+  },
+
   isValidLabelRange({ startRange }) {
     const labelCount = Number(this.get("packageForm.labels"));
     return _.inRange(labelCount, startRange, 301);
@@ -226,7 +233,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
       this.removeInventoryNumber()
         .then(() => {
           pkg.rollbackAttributes();
-          pkg.save().then(() => this.redirectToReceiveOffer());
+          this.redirectToReceiveOffer();
         })
         .catch(() => this.send("pkgUpdateError", pkg))
     );
@@ -354,13 +361,6 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
             .join("\n")
         );
       }
-    },
-
-    resetInputs() {
-      this.set("invalidQuantity", false);
-      this.set("invalidInventoryNo", false);
-      this.set("invalidDescription", false);
-      this.set("hasErrors", false);
     }
   }
 });
