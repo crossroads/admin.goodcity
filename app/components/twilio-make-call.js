@@ -35,19 +35,12 @@ export default Ember.Component.extend({
   }),
 
   twilio_device: Ember.computed(function() {
-    return Twilio.Device;
+    return this.get("isCordovaApp") ? Twilio.TwilioVoiceClient : Twilio.Device;
   }),
 
   initTwilioDeviceBindings: function() {
     var twilio_token = this.get("twilioToken");
     var twilio_device = this.get("twilio_device");
-
-    twilio_device.setup(twilio_token, {
-      debug: true,
-      audioConstraints: {
-        optional: [{ googAutoGainControl: false }]
-      }
-    });
 
     navigator.mediaDevices
       .getUserMedia({
@@ -59,19 +52,23 @@ export default Ember.Component.extend({
         ]);
       });
 
-    twilio_device.error(() => {
-      if (!this.get("isDestroying")) {
-        this.set("activeCall", false);
-      }
-      this.get("twilio_device").disconnectAll();
-    });
+    // twilio_device.setup(twilio_token, {
+    //   debug: true
+    // });
 
-    twilio_device.disconnect(() => {
-      if (!this.isDestroying && !this.isDestroyed) {
-        this.set("activeCall", false);
-        this.get("internetCallStatus").set("activeCall", false);
-      }
-    });
+    // twilio_device.error(() => {
+    //   if (!this.get("isDestroying")) {
+    //     this.set("activeCall", false);
+    //   }
+    //   this.get("twilio_device").disconnectAll();
+    // });
+
+    // twilio_device.disconnect(() => {
+    //   if (!this.isDestroying && !this.isDestroyed) {
+    //     this.set("activeCall", false);
+    //     this.get("internetCallStatus").set("activeCall", false);
+    //   }
+    // });
   },
 
   actions: {
@@ -79,13 +76,10 @@ export default Ember.Component.extend({
       var params = {
         phone_number: this.get("offerId") + "#" + this.get("currentUserId")
       };
-      const outputSources = this.get("outputSources");
+      const accessToken = this.get("twilioToken");
       this.set("activeCall", true);
       this.get("internetCallStatus").set("activeCall", true);
-      return this.get("twilio_device").connect(
-        params,
-        outputSources
-      );
+      this.get("twilio_device").call(accessToken, params);
     },
 
     hangupCall() {
