@@ -348,36 +348,36 @@ workflows:
               - tests
             filters:
               branches:
-                only: /^(master|live)$/
+                only: /^(GCW-2854-upgrade-android-28|live)$/
         - www_build:
             requires:
               - tests
               - package_dependencies
             filters:
               branches:
-                only: /^(master|live)$/
+                only: /^(GCW-2854-upgrade-android-28|live)$/
         - www_deploy:
             requires:
               - www_build
             filters:
               branches:
-                only: /^(master|live)$/
+                only: /^(GCW-2854-upgrade-android-28|live)$/
         - ember_cordova_build:
             requires:
               - tests
               - package_dependencies
             filters:
               branches:
-                only: /^(master|live)$/
+                only: /^(GCW-2854-upgrade-android-28|live)$/
         - android_build_and_deploy:
             requires:
               - ember_cordova_build
             filters:
               branches:
-                only: /^(master|live)$/
+                only: /^(GCW-2854-upgrade-android-28|live)$/
         - ios_build_and_deploy:
             requires:
               - tests
             filters:
               branches:
-                only: /^(master|live)$/
+                only: /^(GCW-2854-upgrade-android-28|live)$/
