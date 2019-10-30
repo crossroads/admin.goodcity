@@ -160,10 +160,12 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   },
 
   resetInputs() {
-    this.set("packageForm.length", "");
-    this.set("packageForm.width", "");
-    this.set("packageForm.height", "");
-    this.set("isAllowedToPublish", false);
+    this.setProperties({
+      "packageForm.length": "",
+      "packageForm.width": "",
+      "packageForm.height": "",
+      isAllowedToPublish: ""
+    });
   },
 
   isValidLabelRange({ startRange }) {
@@ -227,7 +229,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   },
 
   // ----- Ajax Request Methods -----
-  removeAndUnassignInventoryNumber() {
+  removeInventoryAndRollbackAttr() {
     let pkg = this.get("package");
     this.runTask(
       this.removeInventoryNumber()
@@ -315,7 +317,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
       if (this.get("isUnplannedPackage")) {
         this.cancelPackageOptions();
       } else {
-        this.removeAndUnassignInventoryNumber();
+        this.removeInventoryAndRollbackAttr();
       }
     },
 
