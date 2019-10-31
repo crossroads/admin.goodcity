@@ -39,9 +39,29 @@ export default Ember.Component.extend({
   }),
 
   initTwilioDeviceBindings: function() {
-    var twilio_token = this.get("twilioToken");
-    var twilio_device = this.get("twilio_device");
+    const twilio_token = this.get("twilioToken");
+    const twilio_device = this.get("twilio_device");
 
+    twilio_device.setup(twilio_token, {
+      debug: true
+    });
+
+    twilio_device.error(() => {
+      if (!this.get("isDestroying")) {
+        this.set("activeCall", false);
+      }
+      this.get("twilio_device").disconnectAll();
+    });
+
+    twilio_device.disconnect(() => {
+      if (!this.isDestroying && !this.isDestroyed) {
+        this.set("activeCall", false);
+        this.get("internetCallStatus").set("activeCall", false);
+      }
+    });
+  },
+
+  audioDeviceAccessPrompt() {
     navigator.mediaDevices
       .getUserMedia({
         audio: true
@@ -51,35 +71,18 @@ export default Ember.Component.extend({
           { sourceId: mediaStream.id }
         ]);
       });
-
-    // twilio_device.setup(twilio_token, {
-    //   debug: true
-    // });
-
-    // twilio_device.error(() => {
-    //   if (!this.get("isDestroying")) {
-    //     this.set("activeCall", false);
-    //   }
-    //   this.get("twilio_device").disconnectAll();
-    // });
-
-    // twilio_device.disconnect(() => {
-    //   if (!this.isDestroying && !this.isDestroyed) {
-    //     this.set("activeCall", false);
-    //     this.get("internetCallStatus").set("activeCall", false);
-    //   }
-    // });
   },
 
   actions: {
     makeCall() {
-      var params = {
-        phone_number: this.get("offerId") + "#" + this.get("currentUserId")
-      };
+      const params = this.get("offerId") + "#" + this.get("currentUserId");
       const accessToken = this.get("twilioToken");
+      const twilioDevice = this.get("twilio_device");
       this.set("activeCall", true);
       this.get("internetCallStatus").set("activeCall", true);
-      this.get("twilio_device").call(accessToken, params);
+      this.get("isCordovaApp")
+        ? twilioDevice.call(accessToken, params)
+        : twilioDevice.connect({ phone_number: params });
     },
 
     hangupCall() {
@@ -92,21 +95,20 @@ export default Ember.Component.extend({
   didInsertElement() {
     if (this.get("hasTwilioSupport")) {
       this._super();
-      var _this = this;
-
       new AjaxPromise(
         "/twilio_outbound/generate_call_token",
         "GET",
         this.get("session.authToken")
       ).then(data => {
-        _this.set("twilioToken", data["token"]);
-        _this.initTwilioDeviceBindings();
-        _this
-          .get("internetCallStatus")
-          .set("twilio_device", _this.get("twilio_device"));
-        _this
-          .get("internetCallStatus")
-          .set("donorName", _this.get("donorName"));
+        this.set("twilioToken", data["token"]);
+        this.get("isCordovaApp")
+          ? this.audioDeviceAccessPrompt()
+          : this.initTwilioDeviceBindings();
+        this.get("internetCallStatus").set(
+          "twilio_device",
+          this.get("twilio_device")
+        );
+        this.get("internetCallStatus").set("donorName", this.get("donorName"));
       });
     }
   }
