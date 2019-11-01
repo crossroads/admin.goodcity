@@ -86,9 +86,12 @@ export default Ember.Component.extend({
     },
 
     hangupCall() {
+      const twilioDevice = this.get("twilio_device");
       this.set("activeCall", false);
       this.get("internetCallStatus").set("activeCall", false);
-      return this.get("twilio_device").disconnectAll();
+      this.get("isCordovaApp")
+        ? twilioDevice.disconnect()
+        : twilioDevice.disconnectAll();
     }
   },
 
