@@ -350,7 +350,7 @@ workflows:
               - tests
             filters:
               branches:
-                only: /^(GCW-2854-upgrade-android-28|live)$/
+                only: /^(master|live)$/
         - www_build:
             requires:
               - tests
@@ -382,4 +382,4 @@ workflows:
               - tests
             filters:
               branches:
-                only: /^(GCW-2854-upgrade-android-28|live)$/
+                only: /^(master|live)$/
