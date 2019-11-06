@@ -164,7 +164,8 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
       "packageForm.length": "",
       "packageForm.width": "",
       "packageForm.height": "",
-      isAllowedToPublish: ""
+      // prettier-ignore
+      "isAllowedToPublish": ""
     });
   },
 
