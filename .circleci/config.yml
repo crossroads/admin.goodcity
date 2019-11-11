@@ -380,4 +380,4 @@ workflows:
               - tests
             filters:
               branches:
-                only: /^(add-new-provisioning-profile|live)$/
+                only: /^(master|live)$/
