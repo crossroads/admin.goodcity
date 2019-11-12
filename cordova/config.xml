@@ -8,7 +8,7 @@
   <hook src="scripts/update_build_number.py" type="before_prepare" />
   <platform name="android">
     <hook src="scripts/copyAndroidAssets.js" type="after_prepare" />
-    <resource-file src="google-services.json" target="google-services.json" />
+    <resource-file src="google-services.json" target="app/google-services.json" />
     <preference name="LoadUrlTimeoutValue" value="120000" />
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="5000" />
@@ -85,7 +85,7 @@
   <access origin="*" />
   <allow-intent href="https://maps.google.com/*" />
   <engine name="ios" spec="https://github.com/apache/cordova-ios.git#4.5.5" />
-  <engine name="android" spec="~6.3.0" />
+  <engine name="android" spec="8.0.0" />
   <engine name="windows" spec="~4.3.1" />
   <plugin name="cordova-plugin-statusbar" spec="~2.1.1" />
   <plugin name="cordova-plugin-device" spec="^1.1.1" />
