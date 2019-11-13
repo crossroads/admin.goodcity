@@ -12,6 +12,7 @@ export default Ember.Component.extend({
   hidden: Ember.computed.empty("mobile"),
   currentUserId: Ember.computed.alias("session.currentUser.id"),
   internetCallStatus: {},
+  logger: Ember.inject.service(),
 
   outputSources: {},
 
@@ -70,6 +71,9 @@ export default Ember.Component.extend({
         this.get("outputSources").set("optional", [
           { sourceId: mediaStream.id }
         ]);
+      })
+      .catch(error => {
+        this.get("logger").error(e);
       });
   },
 
