@@ -159,6 +159,16 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     return /^[A-Z]{0,1}[0-9]{5,6}(Q[0-9]*){0,1}$/i.test(value);
   },
 
+  resetInputs() {
+    this.setProperties({
+      "packageForm.length": "",
+      "packageForm.width": "",
+      "packageForm.height": "",
+      // prettier-ignore
+      "isAllowedToPublish": ""
+    });
+  },
+
   isValidLabelRange({ startRange }) {
     const labelCount = Number(this.get("packageForm.labels"));
     return _.inRange(labelCount, startRange, 301);
@@ -220,13 +230,13 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   },
 
   // ----- Ajax Request Methods -----
-  removeAndUnassignInventoryNumber() {
+  removeInventoryAndRollbackAttr() {
     let pkg = this.get("package");
     this.runTask(
       this.removeInventoryNumber()
         .then(() => {
-          pkg.set("inventoryNumber", null);
-          pkg.save().then(() => this.redirectToReceiveOffer());
+          pkg.rollbackAttributes();
+          this.redirectToReceiveOffer();
         })
         .catch(() => this.send("pkgUpdateError", pkg))
     );
@@ -308,7 +318,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
       if (this.get("isUnplannedPackage")) {
         this.cancelPackageOptions();
       } else {
-        this.removeAndUnassignInventoryNumber();
+        this.removeInventoryAndRollbackAttr();
       }
     },
 
@@ -354,13 +364,6 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
             .join("\n")
         );
       }
-    },
-
-    resetInputs() {
-      this.set("invalidQuantity", false);
-      this.set("invalidInventoryNo", false);
-      this.set("invalidDescription", false);
-      this.set("hasErrors", false);
     }
   }
 });
