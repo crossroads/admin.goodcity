@@ -86,7 +86,7 @@ export default Ember.Component.extend({
       this.get("internetCallStatus").set("activeCall", true);
       this.get("isCordovaApp")
         ? twilioDevice.call(accessToken, params)
-        : twilioDevice.connect({ phone_number: params });
+        : twilioDevice.connect({ To: params });
     },
 
     hangupCall() {
