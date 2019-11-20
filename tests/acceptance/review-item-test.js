@@ -124,7 +124,13 @@ test("Back button redirects to review offer page", function(assert) {
 
 test("Assign description same as the assigned Package Name for the first time", function(assert) {
   assert.expect(4);
-  visit("/offers/" + offer.id + "/review_item/" + item.id + "/accept");
+  visit(
+    "/offers/" +
+      offer.id +
+      "/review_item/" +
+      item.id +
+      "/accept?packageTypeUpdated=true"
+  );
 
   andThen(function() {
     Ember.$(".search_label_input").click();
