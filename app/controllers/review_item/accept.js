@@ -52,6 +52,39 @@ export default Ember.Controller.extend({
       .sortBy("name");
   }),
 
+  returnPackageTypes(itemType) {
+    return (
+      itemType &&
+      itemType
+        .get("allChildPackagesList")
+        .apply(itemType)
+        .sortBy("name")
+    );
+  },
+
+  returnPackageProperties(p) {
+    return p.getProperties(
+      "id",
+      "quantity",
+      "length",
+      "width",
+      "height",
+      "notes",
+      "item",
+      "packageTypeId",
+      "displayImageUrl",
+      "packageType",
+      "favouriteImage"
+    );
+  },
+
+  loadDefaultPackages(itemType) {
+    itemType
+      .get("defaultChildPackagesList")
+      .apply(itemType)
+      .forEach(t => this.send("addPackage", t.get("id")));
+  },
+
   onItemTypeChange: Ember.observer("itemTypeId", function() {
     // remove focus to hide soft-keyboard
     Ember.$("input").blur();
@@ -62,30 +95,13 @@ export default Ember.Controller.extend({
 
     var itemType = this.get("itemType");
     var packages = this.get("packages");
-    let packageTypes =
-      itemType &&
-      itemType
-        .get("allChildPackagesList")
-        .apply(itemType)
-        .sortBy("name");
+    let packageTypes = this.returnPackageTypes(itemType);
     packages.clear();
 
     // load existing packages
     if (itemType && itemType.get("id") === this.get("item.packageType.id")) {
       this.get("item.packages").forEach((p, index) => {
-        var obj = p.getProperties(
-          "id",
-          "quantity",
-          "length",
-          "width",
-          "height",
-          "notes",
-          "item",
-          "packageTypeId",
-          "displayImageUrl",
-          "packageType",
-          "favouriteImage"
-        );
+        var obj = this.returnPackageProperties(p);
         if (this.get("packageTypeUpdated")) {
           obj.packageType = packageTypes[index] || packageTypes[0];
         }
@@ -97,10 +113,7 @@ export default Ember.Controller.extend({
 
     // load default packages
     if (itemType && packages.length === 0) {
-      itemType
-        .get("defaultChildPackagesList")
-        .apply(itemType)
-        .forEach(t => this.send("addPackage", t.get("id")));
+      this.loadDefaultPackages(itemType);
     }
   }),
 
