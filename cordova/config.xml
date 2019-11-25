@@ -98,6 +98,10 @@
   <plugin name="cordova-plugin-splashscreen" spec="~3.1.0" />
   <plugin name="phonegap-plugin-barcodescanner" spec="https://github.com/wildabeast/BarcodeScanner.git" />
   <plugin name="cordova-plugin-ios-no-export-compliance" spec="https://github.com/mikaoelitiana/cordova-plugin-ios-no-export-compliance.git" />
-  <plugin name="com.phonegap.plugins.twilioclient" spec="https://github.com/crossroads/twilio_client_phonegap.git" />
+  <plugin name="cordova-plugin-twiliovoicesdk" spec="https://github.com/abulsayyad123/cordova-plugin-twiliovoicesdk#c33116b722521fbaec5c0b2c43837fbac95bb1b5">
+    <variable name="INCOMING_CALL_APP_NAME" value="Crossroads" />
+    <variable name="MASK_INCOMING_PHONE_NUMBER" value="true" />
+  </plugin>
+  <plugin name="phonegap-plugin-media-stream" spec="^1.2.1" />
 </widget>
 

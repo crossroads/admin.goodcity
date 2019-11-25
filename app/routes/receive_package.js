@@ -8,7 +8,7 @@ export default AuthorizeRoute.extend({
   setupController(controller, model) {
     this._super(controller, model);
     controller.set("package", model);
-    controller.send("resetInputs");
+    controller.resetInputs();
     controller.set("displayInventoryOptions", false);
     controller.set("autoGenerateInventory", true);
     controller.set("inputInventory", false);
