@@ -1,27 +1,31 @@
-import FactoryGuy from 'ember-data-factory-guy';
-import './image';
-import mobile from './mobile';
+import FactoryGuy from "ember-data-factory-guy";
+import "./image";
+import mobile from "./mobile";
 
-FactoryGuy.define('user', {
+FactoryGuy.define("user", {
   sequences: {
     id: function(num) {
       return num + 100;
     },
     collectionFirstName: function(num) {
-      return 'Daniel' + num;
+      return "Daniel" + num;
     },
     collectionLastName: function(num) {
-      return 'Stepp' + num;
+      return "Stepp" + num;
+    },
+    printer_id: function(num) {
+      return num + 100;
     }
   },
   default: {
-    id:        FactoryGuy.generate('id'),
-    firstName: FactoryGuy.generate('collectionFirstName'),
-    lastName:  FactoryGuy.generate('collectionLastName'),
+    id: FactoryGuy.generate("id"),
+    firstName: FactoryGuy.generate("collectionFirstName"),
+    lastName: FactoryGuy.generate("collectionLastName"),
     mobile: FactoryGuy.generate(mobile.hongKong),
+    printerId: FactoryGuy.generate("printer_id")
   },
   user_with_image: {
-    image: FactoryGuy.belongsTo('image')
+    image: FactoryGuy.belongsTo("image")
   }
 });
 export default {};

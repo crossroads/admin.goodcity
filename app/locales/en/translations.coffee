@@ -131,6 +131,7 @@ I18nTranslationsEn =
         "publish": "Publish"
         "receive": "Receive"
         "print": "& Print {{labels}}"
+        "printer": "Printer"
       "validation":
         "dimensions": "Provide all three dimensions(or none)"
         "quantity": "Quantity cannot be blank or 0."

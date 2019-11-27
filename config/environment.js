@@ -66,7 +66,7 @@ module.exports = function(environment) {
       // RESTAdapter Settings
       NAMESPACE: "api/v1",
 
-      PRELOAD_TYPES: ["territory"],
+      PRELOAD_TYPES: ["territory", "printer"],
       PRELOAD_AUTHORIZED_TYPES: [
         "package_type",
         "donor_condition",
