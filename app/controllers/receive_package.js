@@ -19,6 +19,20 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   watchErrors: true,
   isAndroidDevice: false,
   displayError: false,
+  printers: [
+    {
+      id: 1,
+      tag: "B31-A12"
+    },
+    {
+      id: 2,
+      tag: "A31-K12"
+    }
+  ],
+  selectedPrinter: {
+    id: 1,
+    tag: "B31-A12"
+  },
 
   // ----- Aliases -----
   inventoryNumber: Ember.computed.alias("package.inventoryNumber"),
