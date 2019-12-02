@@ -156,13 +156,14 @@
         <div class="small-3 columns printer-dropdown">
           <div class="dropdown-wrap">
             {{searchable-select
-                    content=printers
-                    selected=selectedPrinter
-                    sortBy="name"
-                    prompt="Select"
-                    optionLabelKey="tag"
-                    isClearable=false
-                  }}
+              content=printerData
+              on-change=(action "setPrinterValue")
+              selected=selectedPrinter
+              sortBy="name"
+              prompt="Select"
+              optionLabelKey="tag"
+              isClearable=false
+            }}
           </div>
         </div>
       </div>

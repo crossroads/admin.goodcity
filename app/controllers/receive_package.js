@@ -19,20 +19,8 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   watchErrors: true,
   isAndroidDevice: false,
   displayError: false,
-  printers: [
-    {
-      id: 1,
-      tag: "B31-A12"
-    },
-    {
-      id: 2,
-      tag: "A31-K12"
-    }
-  ],
-  selectedPrinter: {
-    id: 1,
-    tag: "B31-A12"
-  },
+  printerValue: null,
+  selectedPrinter: [],
 
   // ----- Aliases -----
   inventoryNumber: Ember.computed.alias("package.inventoryNumber"),
@@ -57,6 +45,17 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
       { name: i18n.t("receive_package.grade_c"), id: "C" },
       { name: i18n.t("receive_package.grade_d"), id: "D" }
     ];
+  }),
+
+  printerData: Ember.computed("avaibalePrinter", function() {
+    let printerArr = [];
+    this.get("avaibalePrinter").map(printer => {
+      let tag = printer.get("location").get("name");
+      printerArr.push({ id: printer.get("id"), tag: tag });
+    });
+    this.set("selectedPrinter", printerArr[0]);
+    this.set("printerValue", printerArr[0].id);
+    return printerArr;
   }),
 
   selectedGrade: Ember.computed("model", function() {
@@ -277,11 +276,15 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     );
   },
 
-  printBarcode() {
+  printBarcode(printerValue) {
     const packageId = this.get("package.id");
     const labels = this.get("packageForm.labels");
     this.get("packageService")
-      .printBarcode({ package_id: packageId, labels })
+      .printBarcode({
+        package_id: packageId,
+        labels,
+        printer_id: printerValue
+      })
       .catch(error => {
         this.get("messageBox").alert(error.responseJSON.errors);
       });
@@ -295,6 +298,10 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
 
     toggleInventoryOptions() {
       this.toggleProperty("displayInventoryOptions");
+    },
+
+    setPrinterValue(value) {
+      this.set("printerValue", value.id);
     },
 
     autoGenerateInventoryNumber() {
@@ -343,7 +350,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
           .save()
           .then(() => {
             if (this.get("isMultipleCountPrint")) {
-              this.printBarcode();
+              this.printBarcode(this.get("printerValue"));
             }
             pkg.set("packagesLocationsAttributes", {});
             this.redirectToReceiveOffer();
