@@ -156,9 +156,9 @@
         <div class="small-3 columns printer-dropdown">
           <div class="dropdown-wrap">
             {{searchable-select
-              content=printerData
+              content=allAvailablePrinter
               on-change=(action "setPrinterValue")
-              selected=selectedPrinter
+              selected=selectedPrinterDisplay
               sortBy="name"
               prompt="Select"
               optionLabelKey="tag"

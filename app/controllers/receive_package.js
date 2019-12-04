@@ -19,9 +19,8 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   watchErrors: true,
   isAndroidDevice: false,
   displayError: false,
-  printerValue: null,
-  selectedPrinter: [],
-
+  printerService: Ember.inject.service(),
+  session: Ember.inject.service(),
   // ----- Aliases -----
   inventoryNumber: Ember.computed.alias("package.inventoryNumber"),
   package: Ember.computed.alias("model"),
@@ -47,15 +46,21 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     ];
   }),
 
-  printerData: Ember.computed("avaibalePrinter", function() {
-    let printerArr = [];
-    this.get("avaibalePrinter").map(printer => {
-      let tag = printer.get("name");
-      printerArr.push({ id: printer.get("id"), tag: tag });
-    });
-    this.set("selectedPrinter", printerArr[0]);
-    this.set("printerValue", printerArr[0].id);
-    return printerArr;
+  allAvailablePrinter: Ember.computed(function() {
+    return this.get("printerService").allAvailablePrinter();
+  }),
+
+  selectedPrinterDisplay: Ember.computed({
+    get(key) {
+      let userPrinter = this.get("session").userDefaultPrinter();
+      if (!userPrinter) {
+        return [];
+      }
+      return { id: userPrinter.id, tag: userPrinter.get("name") };
+    },
+    set(key, value) {
+      return value;
+    }
   }),
 
   selectedGrade: Ember.computed("model", function() {
@@ -301,7 +306,12 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     },
 
     setPrinterValue(value) {
-      this.set("printerValue", value.id);
+      this.set("selectedPrinterDisplay", {
+        id: value.id,
+        tag: this.get("store")
+          .peekRecord("printer", value.id)
+          .get("name")
+      });
     },
 
     autoGenerateInventoryNumber() {
