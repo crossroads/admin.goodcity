@@ -62,8 +62,8 @@ export default Ember.Controller.extend({
     );
   },
 
-  returnPackageProperties(p) {
-    return p.getProperties(
+  returnPackageProperties(pkg) {
+    return pkg.getProperties(
       "id",
       "quantity",
       "length",
@@ -100,8 +100,8 @@ export default Ember.Controller.extend({
 
     // load existing packages
     if (itemType && itemType.get("id") === this.get("item.packageType.id")) {
-      this.get("item.packages").forEach((p, index) => {
-        var obj = this.returnPackageProperties(p);
+      this.get("item.packages").forEach((pkg, index) => {
+        var obj = this.returnPackageProperties(pkg);
         if (this.get("packageTypeUpdated")) {
           obj.packageType = packageTypes[index] || packageTypes[0];
         }
@@ -117,14 +117,18 @@ export default Ember.Controller.extend({
     }
   }),
 
-  cannotSave() {
+  showDesignatedDispatchError() {
     var pkgs = this.get("itemPackages");
-    if (
+    return (
       pkgs &&
       pkgs.length > 0 &&
       (pkgs.get("firstObject.hasAllPackagesDesignated") ||
         pkgs.get("firstObject.hasAllPackagesDispatched"))
-    ) {
+    );
+  },
+
+  cannotSave() {
+    if (this.showDesignatedDispatchError()) {
       this.get("messageBox").alert(
         this.get("i18n").t("designated_dispatched_error")
       );
@@ -141,7 +145,6 @@ export default Ember.Controller.extend({
     },
 
     addPackage(packageTypeId) {
-      var _this = this;
       var note_text = "";
 
       this.get("packages").pushObject({
@@ -150,9 +153,7 @@ export default Ember.Controller.extend({
         notes: note_text,
         quantity: 1,
         packageTypeId,
-        packageType: _this
-          .get("store")
-          .peekRecord("packageType", packageTypeId),
+        packageType: this.get("store").peekRecord("packageType", packageTypeId),
         offerId: this.get("item.offer.id"),
         item: this.get("item"),
         favouriteImage: this.get("item.displayImage"),
