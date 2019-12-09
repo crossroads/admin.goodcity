@@ -230,7 +230,7 @@ export default Ember.Controller.extend({
         } else {
           item.set("state_event", null);
         }
-        item.save().finally(() => {
+        return item.save().finally(() => {
           this.set("itemSaving", false);
           loadingView.destroy();
           this.transitionToRoute("review_offer.items");
