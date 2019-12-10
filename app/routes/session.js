@@ -16,5 +16,11 @@ export default Ember.Route.extend({
     } else {
       this.transitionTo("login");
     }
+  },
+
+  userDefaultPrinter: function() {
+    return this.get("store")
+      .peekRecord("user", this.get("currentUser.id"))
+      .get("printer");
   }
 });
