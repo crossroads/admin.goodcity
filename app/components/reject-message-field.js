@@ -1,18 +1,20 @@
-import Ember from "ember";
+import { observer, computed } from "@ember/object";
+import { inject as service } from "@ember/service";
+import Component from "@ember/component";
 import { translationMacro as t } from "ember-i18n";
 
-export default Ember.Component.extend({
+export default Component.extend({
   disabled: false,
   placeholderText: t("reject.message_placeholder"),
-  i18n: Ember.inject.service(),
-  store: Ember.inject.service(),
+  i18n: service(),
+  store: service(),
   attributeBindings: ["value"],
 
-  valueChanged: Ember.observer("rejectMessage", function() {
+  valueChanged: observer("rejectMessage", function() {
     this.get("setMessage")(this.get("rejectMessage"));
   }),
 
-  rejectMessage: Ember.computed("selectedId", {
+  rejectMessage: computed("selectedId", {
     get: function() {
       let reasonRecord = this.get("store").peekRecord(
         "rejection_reason",

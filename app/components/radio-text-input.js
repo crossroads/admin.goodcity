@@ -1,12 +1,16 @@
-import Ember from "ember";
+import $ from "jquery";
+import TextField from "@ember/component/text-field";
 
-export default Ember.TextField.extend({
+export default TextField.extend({
   tagName: "input",
-  type:    "text",
-  attributeBindings: [ "name", "id", "value", 'disabled', 'placeholder'],
+  type: "text",
+  attributeBindings: ["name", "id", "value", "disabled", "placeholder"],
   disabled: false,
 
   click() {
-    Ember.$(this.element).closest("li").find("input[type='radio']").prop('checked', true);
+    $(this.element)
+      .closest("li")
+      .find("input[type='radio']")
+      .prop("checked", true);
   }
 });

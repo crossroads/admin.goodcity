@@ -1,4 +1,4 @@
-import Ember from "ember";
+import { run } from "@ember/runloop";
 import { module, test } from "qunit";
 import "../factories/offer";
 import "../factories/role";
@@ -62,7 +62,7 @@ module("App Menu", {
     Em.run(function() {
       TestHelper.teardown();
     });
-    Ember.run(App, "destroy");
+    run(App, "destroy");
   }
 });
 

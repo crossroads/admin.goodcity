@@ -1,4 +1,5 @@
-import Ember from "ember";
+import $ from "jquery";
+import { run } from "@ember/runloop";
 import startApp from "../helpers/start-app";
 import FactoryGuy from "ember-data-factory-guy";
 import TestHelper from "ember-data-factory-guy/factory-guy-test-helper";
@@ -51,7 +52,7 @@ module("Search Offers", {
     Em.run(function() {
       TestHelper.teardown();
     });
-    Ember.run(App, "destroy");
+    run(App, "destroy");
   }
 });
 
@@ -108,7 +109,7 @@ test("Clicking All button applies Reviewer Filter", function(assert) {
 
   andThen(function() {
     assert.equal(
-      Ember.$("#reviewer-filter-button")
+      $("#reviewer-filter-button")
         .text()
         .trim(),
       "Mine"
@@ -157,7 +158,7 @@ test("Select Time from list apply that time filter on search page", function(ass
   andThen(function() {
     assert.equal(currentURL(), "/search");
     assert.equal(
-      Ember.$("#time-filter-button")
+      $("#time-filter-button")
         .text()
         .trim(),
       "Overdue"
@@ -184,7 +185,7 @@ test("Checking multiple states checkboxes in State filter page applies number of
   andThen(function() {
     assert.equal(currentURL(), "/search");
     assert.equal(
-      Ember.$("#state-filter-button")
+      $("#state-filter-button")
         .text()
         .trim(),
       `State: ${noOfSelectedStates}`

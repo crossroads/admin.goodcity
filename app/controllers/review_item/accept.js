@@ -1,42 +1,63 @@
-import Ember from 'ember';
-const { getOwner } = Ember;
+import { all } from "rsvp";
+import $ from "jquery";
+import { observer, computed, set } from "@ember/object";
+import { alias, equal } from "@ember/object/computed";
+import { inject as service } from "@ember/service";
+import Controller, { inject as controller } from "@ember/controller";
+import { getOwner } from "@ember/application";
 
-export default Ember.Controller.extend({
-
-  applicationController: Ember.inject.controller('application'),
-  reviewOfferController: Ember.inject.controller('review_offer'),
-  reviewItem: Ember.inject.controller(),
-  store: Ember.inject.service(),
-  messageBox: Ember.inject.service(),
-  i18n: Ember.inject.service(),
-  review_item: Ember.inject.controller(),
-  item: Ember.computed.alias("reviewItem.item"),
-  offer: Ember.computed.alias("item.offer"),
-  itemTypeId: Ember.computed.alias("reviewItem.itemTypeId"),
-  isItemAccepted: Ember.computed.equal("item.state", "accepted"),
+export default Controller.extend({
+  applicationController: controller("application"),
+  reviewOfferController: controller("review_offer"),
+  reviewItem: controller(),
+  store: service(),
+  messageBox: service(),
+  i18n: service(),
+  review_item: controller(),
+  item: alias("reviewItem.item"),
+  offer: alias("item.offer"),
+  itemTypeId: alias("reviewItem.itemTypeId"),
+  isItemAccepted: equal("item.state", "accepted"),
   packages: [],
   isAccepting: false,
   itemSaving: false,
 
-  itemPackages: Ember.computed.alias("item.packages"),
+  itemPackages: alias("item.packages"),
 
-  onItemPackagesChange: Ember.observer('itemPackages.[]', "itemPackages.@each.quantity", "itemPackages.@each.length", "itemPackages.@each.width", "itemPackages.@each.height", "itemPackages.@each.notes", "itemPackages.@each.packageTypeId", "itemPackages.@each.displayImageUrl", "itemPackages.@each.packageType", function () {
+  onItemPackagesChange: observer(
+    "itemPackages.[]",
+    "itemPackages.@each.quantity",
+    "itemPackages.@each.length",
+    "itemPackages.@each.width",
+    "itemPackages.@each.height",
+    "itemPackages.@each.notes",
+    "itemPackages.@each.packageTypeId",
+    "itemPackages.@each.displayImageUrl",
+    "itemPackages.@each.packageType",
+    function() {
       this.onItemTypeChange();
       return false;
+    }
+  ),
+
+  itemType: computed("itemTypeId", function() {
+    return this.get("store").peekRecord(
+      "packageType",
+      this.get("itemTypeId.id") || this.get("itemTypeId")
+    );
   }),
 
-  itemType: Ember.computed('itemTypeId', function(){
-    return this.get("store").peekRecord("packageType", (this.get("itemTypeId.id") || this.get("itemTypeId")));
-  }),
-
-  subPackageTypes: Ember.computed('itemType', function(){
+  subPackageTypes: computed("itemType", function() {
     var itemType = this.get("itemType");
-    return itemType.get("allChildPackagesList").apply(itemType).sortBy('name');
+    return itemType
+      .get("allChildPackagesList")
+      .apply(itemType)
+      .sortBy("name");
   }),
 
-  onItemTypeChange: Ember.observer('itemTypeId', function () {
+  onItemTypeChange: observer("itemTypeId", function() {
     // remove focus to hide soft-keyboard
-    Ember.$("input").blur();
+    $("input").blur();
 
     if (this.get("itemSaving")) {
       return;
@@ -49,9 +70,19 @@ export default Ember.Controller.extend({
     // load existing packages
     if (itemType && itemType.get("id") === this.get("item.packageType.id")) {
       this.get("item.packages").forEach(p => {
-        var obj = p.getProperties("id", "quantity", "length", "width",
-          "height", "notes", "item", "packageTypeId", "displayImageUrl",
-          "packageType", "favouriteImage");
+        var obj = p.getProperties(
+          "id",
+          "quantity",
+          "length",
+          "width",
+          "height",
+          "notes",
+          "item",
+          "packageTypeId",
+          "displayImageUrl",
+          "packageType",
+          "favouriteImage"
+        );
         obj.hideComment = false;
         obj.quantity = obj.quantity || 1;
         packages.pushObject(obj);
@@ -60,15 +91,24 @@ export default Ember.Controller.extend({
 
     // load default packages
     if (itemType && packages.length === 0) {
-      itemType.get("defaultChildPackagesList").apply(itemType)
+      itemType
+        .get("defaultChildPackagesList")
+        .apply(itemType)
         .forEach(t => this.send("addPackage", t.get("id")));
     }
   }),
 
-  cannotSave(){
-    var pkgs = this.get('itemPackages');
-    if(pkgs && pkgs.length > 0 && (pkgs.get("firstObject.hasAllPackagesDesignated") || pkgs.get("firstObject.hasAllPackagesDispatched"))){
-      this.get('messageBox').alert(this.get("i18n").t('designated_dispatched_error'));
+  cannotSave() {
+    var pkgs = this.get("itemPackages");
+    if (
+      pkgs &&
+      pkgs.length > 0 &&
+      (pkgs.get("firstObject.hasAllPackagesDesignated") ||
+        pkgs.get("firstObject.hasAllPackagesDispatched"))
+    ) {
+      this.get("messageBox").alert(
+        this.get("i18n").t("designated_dispatched_error")
+      );
       return true;
     }
     return false;
@@ -76,14 +116,14 @@ export default Ember.Controller.extend({
 
   actions: {
     clearText(index) {
-      if(index !== null){
-        Ember.$("#"+index).val("");
+      if (index !== null) {
+        $("#" + index).val("");
       }
     },
 
     addPackage(packageTypeId) {
       var _this = this;
-      var note_text ="";
+      var note_text = "";
 
       this.get("packages").pushObject({
         hideComment: false,
@@ -91,7 +131,9 @@ export default Ember.Controller.extend({
         notes: note_text,
         quantity: 1,
         packageTypeId,
-        packageType: _this.get("store").peekRecord("packageType", packageTypeId),
+        packageType: _this
+          .get("store")
+          .peekRecord("packageType", packageTypeId),
         offerId: this.get("item.offer.id"),
         item: this.get("item"),
         favouriteImage: this.get("item.displayImage"),
@@ -101,8 +143,8 @@ export default Ember.Controller.extend({
 
     setPackageImage(index, image) {
       var currentPackage = this.get("packages")[index];
-      Ember.set(currentPackage, "favouriteImageId", image.get("id"));
-      Ember.set(currentPackage, "displayImageUrl", image.get("thumbImageUrl"));
+      set(currentPackage, "favouriteImageId", image.get("id"));
+      set(currentPackage, "displayImageUrl", image.get("thumbImageUrl"));
       this.get("packages")[index] = currentPackage;
     },
 
@@ -110,9 +152,8 @@ export default Ember.Controller.extend({
       this.get("packages").removeAt(index);
     },
 
-
     save() {
-      if(this.get('itemPackages') && this.cannotSave()){
+      if (this.get("itemPackages") && this.cannotSave()) {
         return false;
       }
 
@@ -120,19 +161,21 @@ export default Ember.Controller.extend({
       // getting "Attempted to handle event *event* on *record* while in state root.deleted.saved" if try
       // to save item same time as a package is being deleted
       this.set("itemSaving", true);
-      this.get('review_item').set('isEditing', false);
+      this.get("review_item").set("isEditing", false);
 
-      var loadingView = getOwner(this).lookup('component:loading').append();
+      var loadingView = getOwner(this)
+        .lookup("component:loading")
+        .append();
 
       // save packages
       var promises = [];
       var existing = {};
       var packages = this.get("packages");
-      this.get("item.packages").forEach(pkg => existing[pkg.get("id")] = pkg);
+      this.get("item.packages").forEach(pkg => (existing[pkg.get("id")] = pkg));
 
       this.get("packages").forEach(data => {
         var pkg;
-        data.notes = Ember.$("#comment"+packages.indexOf(data)).val();
+        data.notes = $("#comment" + packages.indexOf(data)).val();
         if (existing[data.id]) {
           pkg = existing[data.id];
           pkg.setProperties(data);
@@ -148,27 +191,36 @@ export default Ember.Controller.extend({
         promises.push(existing[id].destroyRecord());
       }
 
-      Ember.RSVP.all(promises)
-        .then(() => {
-          // save item
-          var item = this.get("item");
-          item.set("packageType", this.get("itemType")); // this throws error in onItemTypeChange so using itemSaving as workaround
-          item.set("donorDescription", this.get("reviewItem.formData.donorDescription"));
-          item.set("donorConditionId", this.get("reviewItem.formData.donorConditionId"));
-          if (this.get("isAccepting")) {
-            item.set("state_event", "accept");
-          } else if (item.get("isDrafted")) {
-            item.set("state_event", "submit");
-          } else  {
-            item.set("state_event", null);
-          }
-          item.save().finally(() => {
-            this.set("itemSaving", false);
-            loadingView.destroy();
-            this.transitionToRoute("review_offer.items");
-            this.get("reviewOfferController").set("displayCompleteReviewPopup", this.get("offer.allItemsReviewed") && this.get("offer.isUnderReview"));
-          });
+      all(promises).then(() => {
+        // save item
+        var item = this.get("item");
+        item.set("packageType", this.get("itemType")); // this throws error in onItemTypeChange so using itemSaving as workaround
+        item.set(
+          "donorDescription",
+          this.get("reviewItem.formData.donorDescription")
+        );
+        item.set(
+          "donorConditionId",
+          this.get("reviewItem.formData.donorConditionId")
+        );
+        if (this.get("isAccepting")) {
+          item.set("state_event", "accept");
+        } else if (item.get("isDrafted")) {
+          item.set("state_event", "submit");
+        } else {
+          item.set("state_event", null);
+        }
+        item.save().finally(() => {
+          this.set("itemSaving", false);
+          loadingView.destroy();
+          this.transitionToRoute("review_offer.items");
+          this.get("reviewOfferController").set(
+            "displayCompleteReviewPopup",
+            this.get("offer.allItemsReviewed") &&
+              this.get("offer.isUnderReview")
+          );
         });
+      });
     },
 
     setupAcceptClick(btnId, accept) {

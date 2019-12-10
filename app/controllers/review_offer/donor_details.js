@@ -1,13 +1,15 @@
-import Ember from "ember";
+import { computed } from "@ember/object";
+import { alias } from "@ember/object/computed";
+import Controller, { inject as controller } from "@ember/controller";
 import config from "../../config/environment";
 import AsyncTasksMixin from "../../mixins/async_tasks";
 
-export default Ember.Controller.extend(AsyncTasksMixin, {
+export default Controller.extend(AsyncTasksMixin, {
   donor: null,
   currentOffer: null,
-  offersCount: Ember.computed.alias("model.length"),
+  offersCount: alias("model.length"),
   goodcityNumber: config.APP.GOODCITY_NUMBER,
-  internetCallStatus: Ember.inject.controller(),
+  internetCallStatus: controller(),
 
   displayCompanyOptions: false,
   displayAltPhoneOptions: false,
@@ -18,21 +20,21 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     showCallToAction: true
   },
 
-  showNoteCallToAction: Ember.computed(
+  showNoteCallToAction: computed(
     "currentOffer.notes",
     "stickyNote.showCallToAction",
-    function () {
+    function() {
       const note = this.get("currentOffer.notes");
       return !note && this.get("stickyNote.showCallToAction");
     }
   ),
 
-  stickNoteChanged: Ember.computed("currentOffer.notes", function () {
+  stickNoteChanged: computed("currentOffer.notes", function() {
     const changes = this.get("currentOffer").changedAttributes().notes;
     return changes && changes.some(it => it);
   }),
 
-  displayNumber: Ember.computed("donor.mobile", function () {
+  displayNumber: computed("donor.mobile", function() {
     const donor = this.get("donor");
     if (!donor) {
       return "";
@@ -42,11 +44,11 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     return num.length > 4 ? num.substr(0, 4) + " " + num.substr(4) : num;
   }),
 
-  donorOffers: Ember.computed("model", function () {
+  donorOffers: computed("model", function() {
     return this.get("model").rejectBy("id", this.get("currentOffer.id"));
   }),
 
-  receivedOffers: Ember.computed("model", function () {
+  receivedOffers: computed("model", function() {
     return this.get("model").filterBy("isReceived", true).length;
   }),
 
@@ -100,4 +102,3 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     }
   }
 });
-

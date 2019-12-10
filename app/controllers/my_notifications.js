@@ -1,9 +1,12 @@
+import { later } from "@ember/runloop";
+import { resolve } from "rsvp";
+import { inject as controller } from "@ember/controller";
+import { inject as service } from "@ember/service";
+import { sort, equal, not, alias } from "@ember/object/computed";
+import EmberObject, { computed } from "@ember/object";
 import { AjaxBuilder } from "goodcity/utils/ajax-promise";
-import Ember from "ember";
 import offers from "./offers";
 import _ from "lodash";
-
-const { computed } = Ember;
 
 const MSG_KEY = msg => {
   return [
@@ -15,11 +18,11 @@ const MSG_KEY = msg => {
 
 export default offers.extend({
   sortProperties: ["createdAt:desc"],
-  sortedModel: Ember.computed.sort("model", "sortProperties"),
-  messagesUtil: Ember.inject.service("messages"),
-  subscriptions: Ember.inject.controller(),
-  store: Ember.inject.service(),
-  logger: Ember.inject.service(),
+  sortedModel: sort("model", "sortProperties"),
+  messagesUtil: service("messages"),
+  subscriptions: controller(),
+  store: service(),
+  logger: service(),
 
   hasLoadedReadMessages: false,
   displayMessages: true,
@@ -66,14 +69,14 @@ export default offers.extend({
       lastMessage.get("itemId") &&
       this.get("store").peekRecord("item", lastMessage.get("itemId"));
 
-    let notification = Ember.Object.create(lastMessage.getProperties(props));
+    let notification = EmberObject.create(lastMessage.getProperties(props));
     notification.setProperties({
       key: MSG_KEY(lastMessage),
       item: item,
       messages: messages,
-      isSingleMessage: computed.equal("messages.length", 1),
-      isThread: computed.not("isSingleMessage"),
-      offerId: computed.alias("messages.firstObject.offerId"),
+      isSingleMessage: equal("messages.length", 1),
+      isThread: not("isSingleMessage"),
+      offerId: alias("messages.firstObject.offerId"),
       text: computed("messages.[]", function() {
         return this.get("messages")
           .sortBy("createdAt")
@@ -127,9 +130,7 @@ export default offers.extend({
    */
   loadIfAbsent(model, id) {
     const store = this.get("store");
-    return Ember.RSVP.resolve(
-      store.peekRecord(model, id) || store.findRecord(model, id)
-    );
+    return resolve(store.peekRecord(model, id) || store.findRecord(model, id));
   },
 
   actions: {
@@ -182,7 +183,7 @@ export default offers.extend({
     toggleShowUnread() {
       this.set("displayMessages", false);
       this.get("notifications").clear();
-      Ember.run.later(this, function() {
+      later(this, function() {
         let showUnread = !this.get("showUnread");
         this.set("showUnread", showUnread);
         this.set("displayMessages", true);

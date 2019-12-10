@@ -1,4 +1,4 @@
-import Ember from "ember";
+import { run } from "@ember/runloop";
 import { module, test } from "qunit";
 import startApp from "../helpers/start-app";
 import "../factories/offer";
@@ -119,7 +119,7 @@ module("Reviewer: Reject Item Tab", {
     Em.run(function() {
       TestHelper.teardown();
     });
-    Ember.run(App, "destroy");
+    run(App, "destroy");
   }
 });
 
@@ -134,7 +134,7 @@ test("visit reject item tab without item_type", function(assert) {
         $("#rejectMessage").val(),
         t("reject.reject_message") + t("reject.quality_message")
       );
-      Ember.run(function() {
+      run(function() {
         click($("button.rejectOffer"));
       });
       andThen(function() {

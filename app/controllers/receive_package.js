@@ -1,13 +1,18 @@
-import Ember from "ember";
+import { scheduleOnce } from "@ember/runloop";
+import { on } from "@ember/object/evented";
+import { computed } from "@ember/object";
+import { alias } from "@ember/object/computed";
+import { inject as service } from "@ember/service";
+import Controller, { inject as controller } from "@ember/controller";
 import _ from "lodash";
 import AsyncTasksMixin from "../mixins/async_tasks";
 
-export default Ember.Controller.extend(AsyncTasksMixin, {
+export default Controller.extend(AsyncTasksMixin, {
   // ----- Services -----
-  messageBox: Ember.inject.service(),
-  cordova: Ember.inject.service(),
-  i18n: Ember.inject.service(),
-  packageService: Ember.inject.service(),
+  messageBox: service(),
+  cordova: service(),
+  i18n: service(),
+  packageService: service(),
 
   // ----- Arguments -----
   queryParams: ["isUnplannedPackage"],
@@ -21,21 +26,21 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   displayError: false,
 
   // ----- Aliases -----
-  inventoryNumber: Ember.computed.alias("package.inventoryNumber"),
-  package: Ember.computed.alias("model"),
-  item: Ember.computed.alias("model.item"),
-  description: Ember.computed.alias("package.notes"),
-  reviewOfferController: Ember.inject.controller("review_offer"),
-  selectedCondition: Ember.computed.alias("model.donorCondition"),
+  inventoryNumber: alias("package.inventoryNumber"),
+  package: alias("model"),
+  item: alias("model.item"),
+  description: alias("package.notes"),
+  reviewOfferController: controller("review_offer"),
+  selectedCondition: alias("model.donorCondition"),
 
   // ----- Computed Properties -----
-  donorConditions: Ember.computed(function() {
+  donorConditions: computed(function() {
     return this.get("store")
       .peekAll("donor_condition")
       .sortBy("id");
   }),
 
-  grades: Ember.computed(function() {
+  grades: computed(function() {
     const i18n = this.get("i18n");
     return [
       { name: i18n.t("receive_package.grade_a"), id: "A" },
@@ -45,14 +50,14 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     ];
   }),
 
-  selectedGrade: Ember.computed("model", function() {
+  selectedGrade: computed("model", function() {
     const grade = this.get("model.grade");
     return this.get("grades")
       .filterBy("id", grade)
       .get("firstObject");
   }),
 
-  showPublishItemCheckBox: Ember.computed(
+  showPublishItemCheckBox: computed(
     "packageForm.quantity",
     "package.quantity",
     function() {
@@ -61,31 +66,31 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     }
   ),
 
-  offer: Ember.computed("model", function() {
+  offer: computed("model", function() {
     return this.get("store").peekRecord("offer", this.get("package.offerId"));
   }),
 
-  identifyDevice: Ember.on("init", function() {
+  identifyDevice: on("init", function() {
     const isAndroidDevice = this.get("cordova").isAndroid();
     this.set("isAndroidDevice", isAndroidDevice);
   }),
 
-  location: Ember.computed("locationId", function() {
+  location: computed("locationId", function() {
     return this.store.peekRecord("location", this.get("locationId"));
   }),
 
-  locationId: Ember.computed("package", function() {
+  locationId: computed("package", function() {
     return (
       this.get("package.location.id") ||
       this.get("package.packageType.location.id")
     );
   }),
 
-  locations: Ember.computed(function() {
+  locations: computed(function() {
     return this.store.peekAll("location");
   }),
 
-  packageForm: Ember.computed("package", {
+  packageForm: computed("package", {
     get: function() {
       const pkg = this.get("package");
       return {
@@ -98,28 +103,28 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     }
   }),
 
-  isInvalidQuantity: Ember.computed("packageForm.quantity", function() {
+  isInvalidQuantity: computed("packageForm.quantity", function() {
     return this.get("packageForm.quantity") <= 0;
   }),
 
-  isInvalidaLabelCount: Ember.computed("packageForm.labels", function() {
+  isInvalidaLabelCount: computed("packageForm.labels", function() {
     const labelCount = this.get("packageForm.labels");
     return !labelCount || Number(labelCount) < 0;
   }),
 
-  isMultipleCountPrint: Ember.computed("packageForm.labels", function() {
+  isMultipleCountPrint: computed("packageForm.labels", function() {
     return this.isValidLabelRange({ startRange: 1 });
   }),
 
-  isInvalidPrintCount: Ember.computed("packageForm.labels", function() {
+  isInvalidPrintCount: computed("packageForm.labels", function() {
     return this.isValidLabelRange({ startRange: 0 });
   }),
 
-  printLabelCount: Ember.computed("packageForm.labels", function() {
+  printLabelCount: computed("packageForm.labels", function() {
     return Number(this.get("packageForm.labels"));
   }),
 
-  isInvalidDimension: Ember.computed(
+  isInvalidDimension: computed(
     "packageForm.length",
     "packageForm.width",
     "packageForm.height",
@@ -133,7 +138,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     }
   ),
 
-  disableReceiveButton: Ember.computed(
+  disableReceiveButton: computed(
     "isInvalidPrintCount",
     "isInvalidaLabelCount",
     "locationId",
@@ -333,7 +338,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
             }
             pkg.set("packagesLocationsAttributes", {});
             this.redirectToReceiveOffer();
-            Ember.run.scheduleOnce("afterRender", this, () =>
+            scheduleOnce("afterRender", this, () =>
               this.get("reviewOfferController").set(
                 "displayCompleteReceivePopup",
                 this.get("offer.readyForClosure")
@@ -352,9 +357,10 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
         errorMessage === "Adapter Error" ||
         errorMessage.indexOf("Connection error") >= 0
       ) {
-        this.get("messageBox").alert(
-          "could not contact Stockit, try again later.",
-          () => pkg.rollbackAttributes()
+        this.get(
+          "messageBox"
+        ).alert("could not contact Stockit, try again later.", () =>
+          pkg.rollbackAttributes()
         );
       } else {
         this.get("messageBox").alert(

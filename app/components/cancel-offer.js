@@ -1,21 +1,24 @@
-import Ember from "ember";
-const { getOwner } = Ember;
+import $ from "jquery";
+import { computed } from "@ember/object";
+import { inject as service } from "@ember/service";
+import Component from "@ember/component";
+import { getOwner } from "@ember/application";
 
-export default Ember.Component.extend({
+export default Component.extend({
   hidden: true,
   packageId: null,
-  store: Ember.inject.service(),
-  i18n: Ember.inject.service(),
+  store: service(),
+  i18n: service(),
 
   selectedReason: null,
   invalidReason: false,
   displayUserPrompt: false,
 
-  displayCustomReason: Ember.computed("selectedReason", function() {
+  displayCustomReason: computed("selectedReason", function() {
     return this.get("selectedReason.id") === "-1";
   }),
 
-  cancellationOptions: Ember.computed(function() {
+  cancellationOptions: computed(function() {
     var reasons = this.get("store")
       .peekAll("cancellation_reason")
       .sortBy("id");
@@ -37,7 +40,7 @@ export default Ember.Component.extend({
 
       if (this.get("displayCustomReason")) {
         cancelReason = this.get("offer.cancelReason");
-        if (Ember.$.trim(cancelReason).length === 0) {
+        if ($.trim(cancelReason).length === 0) {
           this.set("invalidReason", true);
           return;
         }

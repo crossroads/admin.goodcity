@@ -1,4 +1,4 @@
-import Ember from "ember";
+import { run } from "@ember/runloop";
 import { module, test } from "qunit";
 import startApp from "../helpers/start-app";
 import FactoryGuy from "ember-data-factory-guy";
@@ -20,7 +20,7 @@ module("Authorization", {
     });
   },
   afterEach: function() {
-    Ember.run(App, "destroy");
+    run(App, "destroy");
   }
 });
 

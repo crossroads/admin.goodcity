@@ -1,18 +1,21 @@
-import Ember from "ember";
+import { computed, observer } from "@ember/object";
+import { inject as service } from "@ember/service";
+import { alias, or } from "@ember/object/computed";
+import Controller, { inject as controller } from "@ember/controller";
+import { getOwner } from "@ember/application";
 import AsyncTasksMixin from "../mixins/async_tasks";
-const { getOwner } = Ember;
 
-export default Ember.Controller.extend(AsyncTasksMixin, {
-  application: Ember.inject.controller(),
-  offer: Ember.computed.alias("model"),
+export default Controller.extend(AsyncTasksMixin, {
+  application: controller(),
+  offer: alias("model"),
   isStartReviewClicked: false,
-  i18n: Ember.inject.service(),
-  messageBox: Ember.inject.service(),
+  i18n: service(),
+  messageBox: service(),
   backLinkPath: "",
   displayCompleteReviewPopup: false,
   displayCompleteReceivePopup: false,
 
-  displayOfferOptions: Ember.computed({
+  displayOfferOptions: computed({
     get: function() {
       return false;
     },
@@ -21,7 +24,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     }
   }),
 
-  isMyOffer: Ember.computed("offer.reviewedBy", {
+  isMyOffer: computed("offer.reviewedBy", {
     get: function() {
       var currentUserId = this.session.get("currentUser.id");
       return this.get("offer.reviewedBy.id") === currentUserId;
@@ -31,7 +34,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     }
   }),
 
-  cancelByMe: Ember.computed("model", {
+  cancelByMe: computed("model", {
     get() {
       return false;
     },
@@ -40,9 +43,9 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     }
   }),
 
-  isOfferVanished: Ember.computed.or("offer.isDeleted", "offer.isDeleting"),
+  isOfferVanished: or("offer.isDeleted", "offer.isDeleting"),
 
-  showDeleteError: Ember.observer("offer", "isOfferVanished", function() {
+  showDeleteError: observer("offer", "isOfferVanished", function() {
     var currentPath = window.location.href;
 
     if (this.get("isOfferVanished") && !this.get("cancelByMe")) {

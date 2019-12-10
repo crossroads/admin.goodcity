@@ -1,43 +1,47 @@
-import Ember from "ember";
+import { debounce, run } from "@ember/runloop";
+import $ from "jquery";
+import { computed, observer } from "@ember/object";
+import { inject as service } from "@ember/service";
+import Controller from "@ember/controller";
 import { translationMacro as t } from "ember-i18n";
 import backNavigator from "./../mixins/back_navigator";
 import utilityMethods from "../utils/utility-methods";
 import _ from "lodash";
 
-export default Ember.Controller.extend(backNavigator, {
+export default Controller.extend(backNavigator, {
   filter: "",
   searchText: "",
   searchPlaceholder: t("search.placeholder"),
   minSearchTextLength: 1,
-  i18n: Ember.inject.service(),
+  i18n: service(),
   displayResults: false,
-  filterService: Ember.inject.service(),
+  filterService: service(),
 
-  allUsers: Ember.computed(function() {
+  allUsers: computed(function() {
     return this.store.peekAll("user");
   }),
 
-  allItems: Ember.computed(function() {
+  allItems: computed(function() {
     return this.store.peekAll("item");
   }),
 
-  allGogovanOrders: Ember.computed(function() {
+  allGogovanOrders: computed(function() {
     return this.store.peekAll("gogovan_order");
   }),
 
-  allPackageTypes: Ember.computed(function() {
+  allPackageTypes: computed(function() {
     return this.store.peekAll("package_type");
   }),
 
-  allAddresses: Ember.computed(function() {
+  allAddresses: computed(function() {
     return this.store.peekAll("address");
   }),
 
-  hasSearchText: Ember.computed("searchText", function() {
-    return Ember.$.trim(this.get("searchText")).length;
+  hasSearchText: computed("searchText", function() {
+    return $.trim(this.get("searchText")).length;
   }),
 
-  onSearchTextChange: Ember.observer("searchText", function() {
+  onSearchTextChange: observer("searchText", function() {
     const searchTextLength = this.get("searchText").length;
     if (
       searchTextLength > this.get("minSearchTextLength") ||
@@ -58,17 +62,17 @@ export default Ember.Controller.extend(backNavigator, {
 
   reloadResults() {
     this.hideResults();
-    Ember.run.debounce(this, this.showResults, 500);
+    debounce(this, this.showResults, 500);
   },
 
   hideResults() {
-    Ember.run(() => {
+    run(() => {
       this.set("displayResults", false);
     });
   },
 
   showResults() {
-    Ember.run(() => {
+    run(() => {
       this.set("displayResults", true);
     });
   },

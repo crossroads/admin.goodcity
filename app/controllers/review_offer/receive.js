@@ -1,10 +1,11 @@
-import Ember from "ember";
+import { filterBy } from "@ember/object/computed";
+import Controller from "@ember/controller";
 import AsyncTasksMixin from "../../mixins/async_tasks";
 
-export default Ember.Controller.extend(AsyncTasksMixin, {
+export default Controller.extend(AsyncTasksMixin, {
   queryParams: ["state"],
   state: "expecting",
-  items: Ember.computed.filterBy("model.items", "state", "accepted"),
+  items: filterBy("model.items", "state", "accepted"),
 
   actions: {
     addItem() {

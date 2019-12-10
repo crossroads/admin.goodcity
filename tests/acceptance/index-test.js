@@ -1,4 +1,4 @@
-import Ember from "ember";
+import { run } from "@ember/runloop";
 import { module, test } from "qunit";
 import startApp from "../helpers/start-app";
 import FactoryGuy from "ember-data-factory-guy";
@@ -99,7 +99,7 @@ module("Home Page", {
     visit("/holidays");
   },
   afterEach: function() {
-    Ember.run(App, "destroy");
+    run(App, "destroy");
   }
 });
 
@@ -123,7 +123,7 @@ test("redirect to dashboard page if logged-in as Supervisor", function(assert) {
 
 test("redirect to login page if try to visit home page", function(assert) {
   assert.expect(1);
-  Ember.run(function() {
+  run(function() {
     lookup("service:session").set("authToken", null);
   });
   visit("/");

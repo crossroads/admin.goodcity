@@ -1,3 +1,4 @@
+import { computed } from "@ember/object";
 import searchLabelController from "../search_label";
 
 export default searchLabelController.extend({
@@ -27,7 +28,7 @@ export default searchLabelController.extend({
     );
   },
 
-  donorConditions: Ember.computed(function() {
+  donorConditions: computed(function() {
     return this.get("store").peekAll("donorCondition");
   }),
 

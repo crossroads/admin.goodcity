@@ -1,4 +1,4 @@
-import Ember from "ember";
+import { run } from "@ember/runloop";
 import startApp from "../helpers/start-app";
 import { module, test } from "qunit";
 import "../factories/offer";
@@ -75,16 +75,16 @@ module("Receive package", {
     });
   },
   afterEach: function() {
-    Ember.run(function() {
+    run(function() {
       TestHelper.teardown();
     });
-    Ember.run(App, "destroy");
+    run(App, "destroy");
   }
 });
 
 test("If location not selected Receive button is disabled", function(assert) {
   visit("/offers/" + offer1.id + "/receive_package/" + package1.id);
-  Ember.run(function() {
+  run(function() {
     package1.set("location", null);
   });
   andThen(function() {
@@ -93,7 +93,7 @@ test("If location not selected Receive button is disabled", function(assert) {
 });
 
 test("If quantity is zero or below Receive button is disabled and it gives validation error", function(assert) {
-  Ember.run(function() {
+  run(function() {
     package1.set("quantity", 0);
   });
   visit("/offers/" + offer1.id + "/receive_package/" + package1.id);
@@ -111,7 +111,7 @@ test("If quantity is zero or below Receive button is disabled and it gives valid
 test("If labels is empty Receive button is disabled and it gives validation error", function(assert) {
   visit("/offers/" + offer1.id + "/receive_package/" + package1.id);
   andThen(function() {
-    Ember.run(function() {
+    run(function() {
       lookup("controller:receive_package").set("packageForm.labels", "");
     });
     assert.equal(
@@ -127,7 +127,7 @@ test("If labels is empty Receive button is disabled and it gives validation erro
 test("If labels is above 300 Receive button is disabled and it gives max value error", function(assert) {
   visit("/offers/" + offer1.id + "/receive_package/" + package1.id);
   andThen(function() {
-    Ember.run(function() {
+    run(function() {
       lookup("controller:receive_package").set("packageForm.labels", 301);
     });
     assert.equal(
@@ -144,7 +144,7 @@ test("Receive button displays print value according to labels count", function(a
   const labelValue = 10;
   visit("/offers/" + offer1.id + "/receive_package/" + package1.id);
   andThen(function() {
-    Ember.run(function() {
+    run(function() {
       lookup("controller:receive_package").set(
         "packageForm.labels",
         labelValue
@@ -160,7 +160,7 @@ test("Receive button displays print value according to labels count", function(a
 });
 
 test("Receive button enables on selecting location", function(assert) {
-  Ember.run(function() {
+  run(function() {
     package1.set("location", location);
   });
   visit("/offers/" + offer1.id + "/receive_package/" + package1.id);
@@ -170,7 +170,7 @@ test("Receive button enables on selecting location", function(assert) {
 });
 
 test("On receiving package redirects to recieve list pages", function(assert) {
-  Ember.run(function() {
+  run(function() {
     package1.set("location", location);
   });
   visit("/offers/" + offer1.id + "/receive_package/" + package1.id);

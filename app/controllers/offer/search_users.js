@@ -1,27 +1,30 @@
-import Ember from "ember";
+import { debounce, run } from "@ember/runloop";
+import $ from "jquery";
+import { computed, observer } from "@ember/object";
+import Controller from "@ember/controller";
 import _ from "lodash";
 import AjaxPromise from "goodcity/utils/ajax-promise";
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   displayResults: false,
   minSearchTextLength: 3,
 
-  hasSearchText: Ember.computed("searchText", function () {
-    return Ember.$.trim(this.get("searchText")).length;
+  hasSearchText: computed("searchText", function() {
+    return $.trim(this.get("searchText")).length;
   }),
 
-  onSearchTextChange: Ember.observer("searchText", function () {
+  onSearchTextChange: observer("searchText", function() {
     // wait before applying the filter
-    Ember.run.debounce(this, this.reloadResults, 500);
+    debounce(this, this.reloadResults, 500);
   }),
 
   reloadResults() {
     this.hideResults();
-    Ember.run.debounce(this, this.showResults, 500);
+    debounce(this, this.showResults, 500);
   },
 
   showResults() {
-    Ember.run(() => {
+    run(() => {
       this.set("displayResults", true);
     });
   },
@@ -45,7 +48,7 @@ export default Ember.Controller.extend({
   },
 
   hideResults() {
-    Ember.run(() => {
+    run(() => {
       this.set("displayResults", false);
     });
   },
@@ -80,7 +83,8 @@ export default Ember.Controller.extend({
       new AjaxPromise(
         "/offers/" + offerId,
         "PUT",
-        this.get("session.authToken"), {
+        this.get("session.authToken"),
+        {
           offer: offerParams
         }
       ).then(data => {

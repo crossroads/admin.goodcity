@@ -1,22 +1,25 @@
-import Ember from "ember";
+import { computed } from "@ember/object";
+import { inject as service } from "@ember/service";
+import { empty, alias } from "@ember/object/computed";
+import Component from "@ember/component";
 import AjaxPromise from "../utils/ajax-promise";
 import config from "../config/environment";
 
-export default Ember.Component.extend({
+export default Component.extend({
   mobile: null,
   offerId: null,
   twilioToken: null,
   activeCall: false,
   donorName: null,
   isCordovaApp: config.cordova.enabled,
-  hidden: Ember.computed.empty("mobile"),
-  currentUserId: Ember.computed.alias("session.currentUser.id"),
+  hidden: empty("mobile"),
+  currentUserId: alias("session.currentUser.id"),
   internetCallStatus: {},
-  logger: Ember.inject.service(),
+  logger: service(),
 
   outputSources: {},
 
-  hasTwilioSupport: Ember.computed(
+  hasTwilioSupport: computed(
     "hasTwilioBrowserSupport",
     "isCordovaApp",
     function() {
@@ -24,7 +27,7 @@ export default Ember.Component.extend({
     }
   ),
 
-  hasTwilioBrowserSupport: Ember.computed(function() {
+  hasTwilioBrowserSupport: computed(function() {
     var hasWebRtcSupport = !!window.webkitRTCPeerConnection; // twilio js doesn't use mozRTCPeerConnection
     var hasFlashSupport = !!(
       navigator.plugins["Shockwave Flash"] ||
@@ -35,7 +38,7 @@ export default Ember.Component.extend({
     return hasWebRtcSupport || hasFlashSupport;
   }),
 
-  twilio_device: Ember.computed(function() {
+  twilio_device: computed(function() {
     return this.get("isCordovaApp") ? Twilio.TwilioVoiceClient : Twilio.Device;
   }),
 

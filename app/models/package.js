@@ -1,6 +1,8 @@
+import { isEqual } from "@ember/utils";
+import { computed } from "@ember/object";
+import { bool, equal, alias } from "@ember/object/computed";
 import DS from "ember-data";
 import "../computed/foreign-key";
-import Ember from "ember";
 
 var attr = DS.attr,
   hasMany = DS.hasMany,
@@ -36,8 +38,8 @@ export default DS.Model.extend({
   allowWebPublish: attr("boolean"),
   packagesLocationsAttributes: attr(),
 
-  isDispatched: Ember.computed.bool("sentOn"),
-  isDesignated: Ember.computed(
+  isDispatched: bool("sentOn"),
+  isDesignated: computed(
     "designationId",
     "sentOn",
     "inventoryNumber",
@@ -50,19 +52,19 @@ export default DS.Model.extend({
     }
   ),
 
-  donorConditionId: Ember.computed.foreignKey("donorCondition.id"),
+  donorConditionId: computed.foreignKey("donorCondition.id"),
 
-  isReceived: Ember.computed.equal("state", "received"),
+  isReceived: equal("state", "received"),
 
-  packageName: Ember.computed("packageType", function() {
+  packageName: computed("packageType", function() {
     return this.get("packageType.name");
   }),
 
-  changedNotes: Ember.computed.alias("notes"),
+  changedNotes: alias("notes"),
 
-  packageTypeId: Ember.computed.foreignKey("packageType.id"),
+  packageTypeId: computed.foreignKey("packageType.id"),
 
-  packageTypeObject: Ember.computed("packageType", function() {
+  packageTypeObject: computed("packageType", function() {
     var obj = this.get("packageType").getProperties(
       "id",
       "name",
@@ -72,7 +74,7 @@ export default DS.Model.extend({
     return obj;
   }),
 
-  dimensions: Ember.computed("width", "height", "length", function() {
+  dimensions: computed("width", "height", "length", function() {
     var res = "";
     var append = val => {
       if (val) {
@@ -85,7 +87,7 @@ export default DS.Model.extend({
     return !res ? "" : res + "cm";
   }),
 
-  displayImageUrl: Ember.computed(
+  displayImageUrl: computed(
     "favouriteImage",
     "item.displayImageUrl",
     function() {
@@ -95,7 +97,7 @@ export default DS.Model.extend({
     }
   ),
 
-  favouriteImage: Ember.computed("packageImages.@each.favourite", function() {
+  favouriteImage: computed("packageImages.@each.favourite", function() {
     return (
       this.get("packageImages")
         .filterBy("favourite")
@@ -108,7 +110,7 @@ export default DS.Model.extend({
     );
   }),
 
-  hasOneDesignatedPackage: Ember.computed(
+  hasOneDesignatedPackage: computed(
     "ordersPackages.@each.quantity",
     "ordersPackages.@each.state",
     "ordersPackages.[]",
@@ -124,7 +126,7 @@ export default DS.Model.extend({
     }
   ),
 
-  hasOneDispatchedPackage: Ember.computed(
+  hasOneDispatchedPackage: computed(
     "ordersPackages.@each.quantity",
     "ordersPackages.@each.state",
     "ordersPackages.[]",
@@ -140,7 +142,7 @@ export default DS.Model.extend({
     }
   ),
 
-  remainingQty: Ember.computed(
+  remainingQty: computed(
     "ordersPackages.@each.quantity",
     "ordersPackages.[]",
     "ordersPackages.@each.state",
@@ -158,7 +160,7 @@ export default DS.Model.extend({
     }
   ),
 
-  hasAllPackagesDispatched: Ember.computed(
+  hasAllPackagesDispatched: computed(
     "ordersPackages.@each.quantity",
     "ordersPackages.@each.state",
     "ordersPackages.[]",
@@ -184,7 +186,7 @@ export default DS.Model.extend({
     }
   ),
 
-  hasAllPackagesDesignated: Ember.computed(
+  hasAllPackagesDesignated: computed(
     "ordersPackages.@each.quantity",
     "ordersPackages.@each.state",
     "ordersPackages.[]",
@@ -202,7 +204,7 @@ export default DS.Model.extend({
     }
   ),
 
-  designatedOrdersPackages: Ember.computed(
+  designatedOrdersPackages: computed(
     "ordersPackages.@each.quantity",
     "ordersPackages.@each.state",
     "ordersPackages.[]",
@@ -211,7 +213,7 @@ export default DS.Model.extend({
     }
   ),
 
-  dispatchedOrdersPackages: Ember.computed(
+  dispatchedOrdersPackages: computed(
     "ordersPackages.@each.quantity",
     "ordersPackages.@each.state",
     "ordersPackages.[]",
@@ -220,7 +222,7 @@ export default DS.Model.extend({
     }
   ),
 
-  totalDispatchedQty: Ember.computed(
+  totalDispatchedQty: computed(
     "ordersPackages.@each.quantity",
     "ordersPackages.@each.state",
     "ordersPackages.[]",
@@ -237,7 +239,7 @@ export default DS.Model.extend({
     }
   ),
 
-  totalDesignatedQty: Ember.computed(
+  totalDesignatedQty: computed(
     "ordersPackages.@each.quantity",
     "ordersPackages.@each.state",
     "ordersPackages.[]",
@@ -254,29 +256,23 @@ export default DS.Model.extend({
     }
   ),
 
-  dispatchedItemCount: Ember.computed(
-    "ordersPackages.@each.quantity",
-    function() {
-      return this.get("ordersPackages").filterBy("state", "dispatched").length;
-    }
-  ),
+  dispatchedItemCount: computed("ordersPackages.@each.quantity", function() {
+    return this.get("ordersPackages").filterBy("state", "dispatched").length;
+  }),
 
-  cancelledItemCount: Ember.computed(
-    "ordersPackages.@each.quantity",
-    function() {
-      return this.get("ordersPackages").filterBy("state", "cancelled").length;
-    }
-  ),
+  cancelledItemCount: computed("ordersPackages.@each.quantity", function() {
+    return this.get("ordersPackages").filterBy("state", "cancelled").length;
+  }),
 
-  hasSingleLocation: Ember.computed(
+  hasSingleLocation: computed(
     "packagesLocations.[]",
     "packagesLocations.@each.quantity",
     function() {
-      return Ember.isEqual(this.get("packagesLocations.length"), 1);
+      return isEqual(this.get("packagesLocations.length"), 1);
     }
   ),
 
-  firstLocationName: Ember.computed(
+  firstLocationName: computed(
     "packagesLocations.[]",
     "packagesLocations.@each.quantity",
     function() {
@@ -284,7 +280,7 @@ export default DS.Model.extend({
     }
   ),
 
-  hasMultiLocations: Ember.computed(
+  hasMultiLocations: computed(
     "packagesLocations.[]",
     "packagesLocations.@each.quantity",
     function() {

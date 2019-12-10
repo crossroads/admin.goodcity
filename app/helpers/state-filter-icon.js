@@ -1,4 +1,4 @@
-import Ember from "ember";
+import { helper as buildHelper } from "@ember/component/helper";
 import { STATE_FILTERS } from "../services/filter-service";
 
 const {
@@ -25,6 +25,6 @@ const STATE_ICONS = {
   [PRIORITY]: "warning"
 };
 
-export default Ember.Helper.helper(function(state) {
+export default buildHelper(function(state) {
   return STATE_ICONS[state[0]] || "";
 });

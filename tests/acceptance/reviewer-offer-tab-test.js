@@ -1,4 +1,4 @@
-import Ember from "ember";
+import { run } from "@ember/runloop";
 import startApp from "../helpers/start-app";
 import FactoryGuy from "ember-data-factory-guy";
 import TestHelper from "ember-data-factory-guy/factory-guy-test-helper";
@@ -50,7 +50,7 @@ module("Reviewer: Display Offer Tab", {
     Em.run(function() {
       TestHelper.teardown();
     });
-    Ember.run(App, "destroy");
+    run(App, "destroy");
   }
 });
 
@@ -163,7 +163,7 @@ test("visit offer message threads", function(assert) {
 
 ["closed", "cancelled", "received", "inactive"].forEach(state => {
   test(`add item button is disabled when offer is ${state}`, function(assert) {
-    Ember.run(() => {
+    run(() => {
       offer.set("state", state);
       visit("/offers/" + offer.id + "/review_offer/items");
     });

@@ -1,8 +1,8 @@
+import { computed } from "@ember/object";
 import AuthorizeRoute from "./authorize";
-import Ember from "ember";
 
 export default AuthorizeRoute.extend({
-  backLinkPath: Ember.computed.localStorage(),
+  backLinkPath: computed.localStorage(),
 
   afterModel(model, transition) {
     var pkgs = model.get("packages");

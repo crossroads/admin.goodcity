@@ -1,26 +1,30 @@
-import Ember from "ember";
+import $ from "jquery";
+import { computed } from "@ember/object";
+import { inject as service } from "@ember/service";
+import { alias } from "@ember/object/computed";
+import Controller, { inject as controller } from "@ember/controller";
+import { getOwner } from "@ember/application";
 import { translationMacro as t } from "ember-i18n";
-const { getOwner } = Ember;
 
-export default Ember.Controller.extend({
-  reviewItem: Ember.inject.controller(),
-  reviewOfferController: Ember.inject.controller("review_offer"),
-  offer: Ember.inject.controller(),
+export default Controller.extend({
+  reviewItem: controller(),
+  reviewOfferController: controller("review_offer"),
+  offer: controller(),
 
-  itemTypeId: Ember.computed.alias("reviewItem.itemTypeId"),
-  itemId: Ember.computed.alias("reviewItem.model.id"),
-  rejectionReasonId: Ember.computed.alias("model.rejectionReason.id"),
+  itemTypeId: alias("reviewItem.itemTypeId"),
+  itemId: alias("reviewItem.model.id"),
+  rejectionReasonId: alias("model.rejectionReason.id"),
   rejectReasonPlaceholder: t("reject.custom_reason"),
-  messageBox: Ember.inject.service(),
-  i18n: Ember.inject.service(),
-  itemPackages: Ember.computed.alias("item.packages"),
+  messageBox: service(),
+  i18n: service(),
+  itemPackages: alias("item.packages"),
   rejectMsg: "",
 
-  rejectReason: Ember.computed("itemId", function() {
+  rejectReason: computed("itemId", function() {
     return this.get("reviewItem.model.rejectReason");
   }),
 
-  isBlank: Ember.computed({
+  isBlank: computed({
     get: function() {
       return false;
     },
@@ -29,7 +33,7 @@ export default Ember.Controller.extend({
     }
   }),
 
-  noReasonSelected: Ember.computed({
+  noReasonSelected: computed({
     get: function() {
       return false;
     },
@@ -38,7 +42,7 @@ export default Ember.Controller.extend({
     }
   }),
 
-  selectedId: Ember.computed("rejectionReasonId", {
+  selectedId: computed("rejectionReasonId", {
     get: function() {
       this.set("isBlank", false);
       let reasonId = this.get("rejectionReasonId");
@@ -57,7 +61,7 @@ export default Ember.Controller.extend({
     }
   }),
 
-  rejectionOptions: Ember.computed(function() {
+  rejectionOptions: computed(function() {
     return this.store.peekAll("rejection_reason").sortBy("id");
   }),
 
@@ -86,7 +90,7 @@ export default Ember.Controller.extend({
     }
     if (
       selectedReason === "-1" &&
-      Ember.$.trim(rejectProperties.rejectReason).length === 0
+      $.trim(rejectProperties.rejectReason).length === 0
     ) {
       this.set("isBlank", true);
       return false;

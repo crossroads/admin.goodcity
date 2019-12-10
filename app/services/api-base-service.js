@@ -1,4 +1,4 @@
-import Ember from "ember";
+import Service, { inject as service } from "@ember/service";
 import AjaxPromise from "./../utils/ajax-promise";
 import _ from "lodash";
 
@@ -11,9 +11,9 @@ function urlWithParams(url, params) {
   return `${url}${separator}${paramStr}`;
 }
 
-export default Ember.Service.extend({
+export default Service.extend({
   // ----- Services -----
-  session: Ember.inject.service(),
+  session: service(),
 
   // ----- Utilities -----
   _request(url, options, authorizedRequest) {

@@ -1,13 +1,22 @@
-import Ember from 'ember';
-import config from '../config/environment';
-import AjaxPromise from '../utils/ajax-promise';
-const { getOwner } = Ember;
+import $ from "jquery";
+import { inject as service } from "@ember/service";
+import Component from "@ember/component";
+import { getOwner } from "@ember/application";
+import config from "../config/environment";
+import AjaxPromise from "../utils/ajax-promise";
 
-export default Ember.Component.extend({
-  i18n: Ember.inject.service(),
-  attributeBindings: ["name", "inputId", "value", "invalid", "disabled", "packageId"],
+export default Component.extend({
+  i18n: service(),
+  attributeBindings: [
+    "name",
+    "inputId",
+    "value",
+    "invalid",
+    "disabled",
+    "packageId"
+  ],
   isCordovaApp: config.cordova.enabled,
-  messageBox: Ember.inject.service(),
+  messageBox: service(),
   showMenu: false,
   bardcodeReadonly: true,
 
@@ -18,29 +27,33 @@ export default Ember.Component.extend({
       let error_message = this.get("i18n").t("camera_scan.permission_error");
       _this.get("messageBox").alert(error_message);
     };
-    let permissionSuccess = (status) => {
+    let permissionSuccess = status => {
       //after requesting check for permission then, permit to scan
-      if( status.hasPermission ) {
+      if (status.hasPermission) {
         _this.scan();
       } else {
         permissionError();
       }
     };
-    permissions.hasPermission(permissions.CAMERA, function( status ){
+    permissions.hasPermission(permissions.CAMERA, function(status) {
       //check permission here
-      if ( status.hasPermission ) {
+      if (status.hasPermission) {
         _this.scan();
-      }
-      else {
+      } else {
         //request permission here
-        permissions.requestPermission(permissions.CAMERA, permissionSuccess, permissionError);
+        permissions.requestPermission(
+          permissions.CAMERA,
+          permissionSuccess,
+          permissionError
+        );
       }
     });
   },
 
   scan() {
-    let options = {"formats": "CODE_128"};
-    let onError = error => this.get("messageBox").alert("Scanning failed: " + error);
+    let options = { formats: "CODE_128" };
+    let onError = error =>
+      this.get("messageBox").alert("Scanning failed: " + error);
     let onSuccess = res => {
       if (!res.cancelled) {
         this.set("value", res.text);
@@ -59,13 +72,21 @@ export default Ember.Component.extend({
     },
 
     printBarcode() {
-      var loadingView = getOwner(this).lookup('component:loading').append();
-      new AjaxPromise("/packages/print_barcode", "POST", this.get('session.authToken'), {package_id: this.get("packageId")})
+      var loadingView = getOwner(this)
+        .lookup("component:loading")
+        .append();
+      new AjaxPromise(
+        "/packages/print_barcode",
+        "POST",
+        this.get("session.authToken"),
+        { package_id: this.get("packageId") }
+      )
         .catch(xhr => {
           if (xhr.status !== 200) {
             var errors = xhr.responseText;
-            try { errors = Ember.$.parseJSON(xhr.responseText).errors; }
-            catch(err) {
+            try {
+              errors = $.parseJSON(xhr.responseText).errors;
+            } catch (err) {
               console.log(err);
             }
             this.get("messageBox").alert(errors);
@@ -83,5 +104,4 @@ export default Ember.Component.extend({
       this.set("bardcodeReadonly", false);
     }
   }
-
 });

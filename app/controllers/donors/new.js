@@ -1,7 +1,9 @@
-import Ember from "ember";
+import { computed } from "@ember/object";
+import { alias } from "@ember/object/computed";
+import Controller from "@ember/controller";
 
-export default Ember.Controller.extend({
-  offerId: Ember.computed.alias("model.id"),
+export default Controller.extend({
+  offerId: alias("model.id"),
   selectedDistrict: null,
   firstName: null,
   lastName: null,
@@ -9,11 +11,11 @@ export default Ember.Controller.extend({
   mobilePhone: null,
   otherPhone: null,
   receiveEmail: false,
-  districts: Ember.computed("model", function() {
+  districts: computed("model", function() {
     return this.store.peekAll("district").sortBy("name");
   }),
 
-  userTitle: Ember.computed("selectedTitle", function() {
+  userTitle: computed("selectedTitle", function() {
     let userTitle = this.get("model.createdBy.title");
     let titles = this.get("titles");
 
@@ -30,14 +32,14 @@ export default Ember.Controller.extend({
     };
   }),
 
-  selectedTitle: Ember.computed("userTitle", function() {
+  selectedTitle: computed("userTitle", function() {
     return {
       name: this.get("userTitle.name"),
       id: this.get("userTitle.id")
     };
   }),
 
-  titles: Ember.computed(function() {
+  titles: computed(function() {
     return [
       {
         name: "Mr",

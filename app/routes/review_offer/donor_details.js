@@ -1,5 +1,6 @@
+import { A } from "@ember/array";
+import { resolve } from "rsvp";
 import AuthorizeRoute from "./../authorize";
-import Ember from "ember";
 
 export default AuthorizeRoute.extend({
   currentDonor: null,
@@ -7,7 +8,7 @@ export default AuthorizeRoute.extend({
 
   model() {
     const offerPreload = this.modelFor("reviewOffer");
-    return Ember.RSVP.resolve(offerPreload).then(currentOffer => {
+    return resolve(offerPreload).then(currentOffer => {
       if (!currentOffer) {
         return;
       }
@@ -28,7 +29,7 @@ export default AuthorizeRoute.extend({
           }
         );
       }
-      return Ember.A([]);
+      return A([]);
     });
   },
 

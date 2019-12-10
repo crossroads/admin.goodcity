@@ -1,4 +1,4 @@
-import Ember from "ember";
+import { run } from "@ember/runloop";
 import startApp from "../helpers/start-app";
 import "../helpers/custom-helpers";
 import FactoryGuy from "ember-data-factory-guy";
@@ -71,7 +71,7 @@ module("Users", {
     Em.run(function() {
       TestHelper.teardown();
     });
-    Ember.run(App, "destroy");
+    run(App, "destroy");
     mocks.forEach($.mockjax.clear);
   }
 });

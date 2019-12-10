@@ -1,25 +1,23 @@
-import Ember from "ember";
+import { computed } from "@ember/object";
+import { empty, gte } from "@ember/object/computed";
+import { inject as service } from "@ember/service";
+import Component from "@ember/component";
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: "li",
   classNameBindings: ["hidden"],
   itemId: null,
   pState: null, // experienced initial value of 'inBuffer' on staging if name is state
-  store: Ember.inject.service(),
-  hidden: Ember.computed.empty("packages"),
-  hasMultiplePackages: Ember.computed.gte("packages.length", 2),
+  store: service(),
+  hidden: empty("packages"),
+  hasMultiplePackages: gte("packages.length", 2),
 
-  item: Ember.computed("itemId", function() {
+  item: computed("itemId", function() {
     return this.get("store").peekRecord("item", this.get("itemId"));
   }),
 
-  packages: Ember.computed(
-    "pState",
-    "item",
-    "item.packages.@each.state",
-    function() {
-      const itemPackages = this.get("item.packages");
-      return itemPackages && itemPackages.filterBy("state", this.get("pState"));
-    }
-  )
+  packages: computed("pState", "item", "item.packages.@each.state", function() {
+    const itemPackages = this.get("item.packages");
+    return itemPackages && itemPackages.filterBy("state", this.get("pState"));
+  })
 });

@@ -1,4 +1,4 @@
-import Ember from "ember";
+import { helper as buildHelper } from "@ember/component/helper";
 
 function applyIcon(stateCount, isPriority) {
   if (!stateCount) {
@@ -12,7 +12,7 @@ function applyCheckIconOrCountZero(isPriority) {
   return isPriority ? `<i class="fa fa-check"></i>` : 0;
 }
 
-export default Ember.Helper.helper(function(states) {
+export default buildHelper(function(states) {
   const [statesObject, state, isSelfReviewer, isPriority] = states;
   let priorityOrNormalState = isPriority ? `priority_${state}` : state;
   let searchState = isSelfReviewer

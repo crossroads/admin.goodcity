@@ -1,6 +1,8 @@
-import Ember from "ember";
+import $ from "jquery";
+import { observer } from "@ember/object";
+import TextArea from "@ember/component/text-area";
 
-export default Ember.TextArea.extend({
+export default TextArea.extend({
   tagName: "textarea",
 
   attributeBindings: [
@@ -14,7 +16,7 @@ export default Ember.TextArea.extend({
     "pattern"
   ],
 
-  valueChanged: Ember.observer("value", function() {
+  valueChanged: observer("value", function() {
     this.setTextareaHeight();
   }),
 
@@ -30,7 +32,7 @@ export default Ember.TextArea.extend({
     var textarea = this.element;
     var offset = textarea.offsetHeight - textarea.clientHeight;
 
-    Ember.$(textarea)
+    $(textarea)
       .css("height", "auto")
       .css("height", offset)
       .removeAttr("data-autoresize");

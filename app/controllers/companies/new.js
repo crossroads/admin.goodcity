@@ -1,7 +1,8 @@
-import Ember from "ember";
+import { alias } from "@ember/object/computed";
+import Controller from "@ember/controller";
 
-export default Ember.Controller.extend({
-  offerId: Ember.computed.alias("model.id"),
+export default Controller.extend({
+  offerId: alias("model.id"),
 
   actions: {
     saveComanyAndOffer() {

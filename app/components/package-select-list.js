@@ -1,4 +1,4 @@
-import Ember from "ember";
+import $ from "jquery";
 import SelectList from "./select-list";
 
 export default SelectList.extend({
@@ -22,7 +22,7 @@ export default SelectList.extend({
         this.set("pkg.notes", packageType.get("name"));
       }
       this.set("pkg.packageType", packageType);
-      Ember.$("textarea#" + this.get("index")).val(this.get("pkg.notes"));
+      $("textarea#" + this.get("index")).val(this.get("pkg.notes"));
       this.set("didUpdatedOnce", false);
     }
   },
@@ -54,7 +54,7 @@ export default SelectList.extend({
         selectedValue.set("indexOfChild", this.get("index"));
         var availablePkg = this.get("pkg");
         var name = selectedValue.get("name");
-        Ember.$("textarea#" + this.get("index")).val(name);
+        $("textarea#" + this.get("index")).val(name);
         selectedValue.set("indexOfChild", availablePkg.id);
       }
       this.set("selectedValue", selectedValue);

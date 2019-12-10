@@ -1,11 +1,13 @@
-import Ember from "ember";
+import Evented from "@ember/object/evented";
+import Service, { inject as service } from "@ember/service";
+import { computed } from "@ember/object";
 import timeRanges from "../utils/time-ranges";
 import _ from "lodash";
 
 // --- Helpers
 
 const PERSISTENT_VAR = function(propName, defaultValue, deserializeMap = {}) {
-  return Ember.computed({
+  return computed({
     get() {
       const data = this.get("localStorage").read(propName, defaultValue);
       for (let key in deserializeMap) {
@@ -37,9 +39,9 @@ export const STATE_FILTERS = {
 
 // --- Service
 
-export default Ember.Service.extend(Ember.Evented, {
-  localStorage: Ember.inject.service(),
-  routing: Ember.inject.service("-routing"),
+export default Service.extend(Evented, {
+  localStorage: service(),
+  routing: service("-routing"),
 
   offerStateFilters: PERSISTENT_VAR("offerStateFilters", []),
 
@@ -80,7 +82,7 @@ export default Ember.Service.extend(Ember.Evented, {
     this.get("routing").transitionTo("search");
   },
 
-  hasOfferFilters: Ember.computed("offerStateFilters", function() {
+  hasOfferFilters: computed("offerStateFilters", function() {
     const timeRange = this.get("offerTimeRange");
     return this.get("offerStateFilters").length > 0;
   }),
@@ -103,7 +105,7 @@ export default Ember.Service.extend(Ember.Evented, {
     }
   ),
 
-  offerTimeRangePresets: Ember.computed(function() {
+  offerTimeRangePresets: computed(function() {
     return timeRanges;
   }).volatile(),
 
@@ -134,7 +136,7 @@ export default Ember.Service.extend(Ember.Evented, {
    *
    * @param {String|Object} range A time range OR a preset name
    */
-  offerTimeRange: Ember.computed(function() {
+  offerTimeRange: computed(function() {
     const { preset = "", after = null, before = null } = this.get(
       "_offerTimeSettings"
     );

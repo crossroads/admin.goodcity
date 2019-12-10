@@ -1,4 +1,5 @@
-import Ember from "ember";
+import $ from "jquery";
+import { run } from "@ember/runloop";
 import startApp from "../helpers/start-app";
 import { module, test } from "qunit";
 import "../factories/role";
@@ -90,7 +91,7 @@ module("Display review Item", {
     });
   },
   afterEach: function() {
-    Ember.run(App, "destroy");
+    run(App, "destroy");
   }
 });
 
@@ -127,7 +128,7 @@ test("Assign description same as the assigned Package Name for the first time", 
   visit("/offers/" + offer.id + "/review_item/" + item.id + "/accept");
 
   andThen(function() {
-    Ember.$(".search_label_input").click();
+    $(".search_label_input").click();
   });
 
   andThen(function() {
@@ -153,7 +154,7 @@ test("Should save edited description", function(assert) {
   visit("/offers/" + offer.id + "/review_item/" + item.id + "/accept");
 
   andThen(function() {
-    Ember.$(".search_label_input").click();
+    $(".search_label_input").click();
   });
 
   andThen(function() {

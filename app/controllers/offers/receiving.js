@@ -1,20 +1,22 @@
-import Ember from 'ember';
+import { computed } from "@ember/object";
+import { inject as service } from "@ember/service";
+import { sort } from "@ember/object/computed";
+import Controller from "@ember/controller";
 
-export default Ember.Controller.extend({
-  sortProperties: ["unreadMessagesCount:desc", 'startReceivingAt:desc'],
-  arrangedContent: Ember.computed.sort("model", "sortProperties"),
+export default Controller.extend({
+  sortProperties: ["unreadMessagesCount:desc", "startReceivingAt:desc"],
+  arrangedContent: sort("model", "sortProperties"),
 
-  i18n: Ember.inject.service(),
-  pageTitle: Ember.computed(function() {
+  i18n: service(),
+  pageTitle: computed(function() {
     return this.get("i18n").t("inbox.receiving");
   }),
 
-  allOffers: Ember.computed(function(){
+  allOffers: computed(function() {
     return this.store.peekAll("offer");
   }),
 
-  model: Ember.computed("allOffers.@each.state", function(){
+  model: computed("allOffers.@each.state", function() {
     return this.get("allOffers").filterBy("isReceiving");
   })
-
 });

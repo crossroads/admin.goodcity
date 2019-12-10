@@ -1,4 +1,4 @@
-import Ember from "ember";
+import { hash } from "rsvp";
 import AuthorizeRoute from "./../authorize";
 import AjaxPromise from "./../../utils/ajax-promise";
 
@@ -19,7 +19,7 @@ export default AuthorizeRoute.extend({
       recent_offers: true,
       recent_offer_count: 5
     };
-    return Ember.RSVP.hash({
+    return hash({
       offersCount: new AjaxPromise(
         `/offers/summary`,
         "GET",

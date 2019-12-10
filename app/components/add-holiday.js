@@ -1,14 +1,14 @@
-import Ember from 'ember';
-const { getOwner } = Ember;
+import { inject as service } from "@ember/service";
+import Component from "@ember/component";
+import { getOwner } from "@ember/application";
 
-export default Ember.Component.extend({
-
+export default Component.extend({
   displayUserPrompt: false,
-  holidayName: '',
+  holidayName: "",
   invalidName: false,
   invalidDate: false,
-  selectedDate: '',
-  store: Ember.inject.service(),
+  selectedDate: "",
+  store: service(),
 
   actions: {
     displayAddHolidayForm() {
@@ -28,24 +28,27 @@ export default Ember.Component.extend({
       var name = this.get("holidayName");
       var date = this.get("selectedDate");
 
-      if(name.trim().length === 0) {
+      if (name.trim().length === 0) {
         this.set("invalidName", true);
         return false;
       }
 
-      if(date.toString().trim().length === 0) {
+      if (date.toString().trim().length === 0) {
         this.set("invalidDate", true);
         return false;
       }
 
-      var loadingView = getOwner(this).lookup('component:loading').append();
+      var loadingView = getOwner(this)
+        .lookup("component:loading")
+        .append();
 
       var holiday = this.get("store").createRecord("holiday", {
         name: name,
         holiday: date
       });
 
-      holiday.save()
+      holiday
+        .save()
         .catch(error => {
           holiday.unloadRecord();
           throw error;
@@ -57,5 +60,4 @@ export default Ember.Component.extend({
         });
     }
   }
-
 });

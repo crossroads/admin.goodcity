@@ -1,60 +1,95 @@
-import Ember from 'ember';
-const { getOwner } = Ember;
-import AjaxPromise from '../utils/ajax-promise';
+import { debounce } from "@ember/runloop";
+import $ from "jquery";
+import { computed } from "@ember/object";
+import { equal } from "@ember/object/computed";
+import { inject as service } from "@ember/service";
+import Component from "@ember/component";
+import { getOwner } from "@ember/application";
+import AjaxPromise from "../utils/ajax-promise";
 
-export default Ember.Component.extend({
+export default Component.extend({
   hidden: true,
   packageId: null,
-  store: Ember.inject.service(),
-  messageBox: Ember.inject.service(),
+  store: service(),
+  messageBox: service(),
   displayUserPrompt: false,
 
-  isReceived: Ember.computed.equal("package.state", "received"),
-  isMissing: Ember.computed.equal("package.state", "missing"),
+  isReceived: equal("package.state", "received"),
+  isMissing: equal("package.state", "missing"),
 
-  allowLabelPrint: Ember.computed("isReceived", "package.inventoryNumber", function(){
-    return this.get("isReceived") && this.get("package.inventoryNumber");
-  }),
+  allowLabelPrint: computed(
+    "isReceived",
+    "package.inventoryNumber",
+    function() {
+      return this.get("isReceived") && this.get("package.inventoryNumber");
+    }
+  ),
 
-  preventEdit: Ember.computed('package.hasAllPackagesDispatched', "package.hasAllPackagesDesignated", function(){
-    let pkg = this.get("store").peekRecord("package", this.get("packageId"));
-    return pkg.get('hasAllPackagesDispatched') || pkg.get('hasAllPackagesDesignated');
-  }),
+  preventEdit: computed(
+    "package.hasAllPackagesDispatched",
+    "package.hasAllPackagesDesignated",
+    function() {
+      let pkg = this.get("store").peekRecord("package", this.get("packageId"));
+      return (
+        pkg.get("hasAllPackagesDispatched") ||
+        pkg.get("hasAllPackagesDesignated")
+      );
+    }
+  ),
 
-  offer: Ember.computed('packageId', function(){
+  offer: computed("packageId", function() {
     return this.get("store").peekRecord("offer", this.get("package.offerId"));
   }),
 
-  package: Ember.computed('packageId', function(){
+  package: computed("packageId", function() {
     return this.get("store").peekRecord("package", this.get("packageId"));
   }),
 
-  currentUrl: Ember.computed('packageId', function(){
-    return getOwner(this).lookup("router:main").get("url");
+  currentUrl: computed("packageId", function() {
+    return getOwner(this)
+      .lookup("router:main")
+      .get("url");
   }),
 
-  isFirstReceivingPackage: Ember.computed('package', function(){
+  isFirstReceivingPackage: computed("package", function() {
     var offerPackages = this.get("offer.packages");
-    return offerPackages.get("length") === offerPackages.filterBy("state", "expecting").length && !this.get("offer.isReceiving");
+    return (
+      offerPackages.get("length") ===
+        offerPackages.filterBy("state", "expecting").length &&
+      !this.get("offer.isReceiving")
+    );
   }),
 
   updatePackage: function(action) {
-    var loadingView = getOwner(this).lookup('component:loading').append();
+    var loadingView = getOwner(this)
+      .lookup("component:loading")
+      .append();
     var pkg = this.get("package");
     action(pkg);
-    pkg.save()
+    pkg
+      .save()
       .then(() => {
         loadingView.destroy();
-        getOwner(this).lookup("controller:review_offer").set("displayCompleteReceivePopup", this.get("offer.readyForClosure"));
+        getOwner(this)
+          .lookup("controller:review_offer")
+          .set(
+            "displayCompleteReceivePopup",
+            this.get("offer.readyForClosure")
+          );
       })
       .catch(error => {
         loadingView.destroy();
         var errorMessage = pkg.get("errors.firstObject.message");
-        var matchFound = ["Connection error", "Dispatched"].some(v => errorMessage.indexOf(v) >= 0);
-        if(matchFound) {
-          this.get("messageBox").alert(pkg.get("errors.firstObject.message"), () => {
-            pkg.rollbackAttributes();
-          });
+        var matchFound = ["Connection error", "Dispatched"].some(
+          v => errorMessage.indexOf(v) >= 0
+        );
+        if (matchFound) {
+          this.get("messageBox").alert(
+            pkg.get("errors.firstObject.message"),
+            () => {
+              pkg.rollbackAttributes();
+            }
+          );
         } else {
           pkg.rollbackAttributes();
           throw error;
@@ -62,16 +97,24 @@ export default Ember.Component.extend({
       });
   },
 
-  i18n: Ember.inject.service(),
+  i18n: service(),
 
-  deliveredOptions: Ember.computed(function() { return [
-    { value: "Unknown", name: this.get("i18n").t("mark_received.unknown") },
-    { value: "Gogovan", name: this.get("i18n").t("mark_received.gogovan") },
-    { value: "Alternate", name: this.get("i18n").t("mark_received.crossroads_truck") },
-    { value: "Drop Off", name: this.get("i18n").t("mark_received.dropped_off") }
-  ]; }),
+  deliveredOptions: computed(function() {
+    return [
+      { value: "Unknown", name: this.get("i18n").t("mark_received.unknown") },
+      { value: "Gogovan", name: this.get("i18n").t("mark_received.gogovan") },
+      {
+        value: "Alternate",
+        name: this.get("i18n").t("mark_received.crossroads_truck")
+      },
+      {
+        value: "Drop Off",
+        name: this.get("i18n").t("mark_received.dropped_off")
+      }
+    ];
+  }),
 
-  deliveredBy: Ember.computed("offer.deliveredBy", function() {
+  deliveredBy: computed("offer.deliveredBy", function() {
     return this.get("offer.deliveredBy");
   }),
 
@@ -79,21 +122,23 @@ export default Ember.Component.extend({
 
   toggleItemClass() {
     var item = this.get("package");
-    Ember.$('.receive-options.' + item.id).toggleClass("hidden");
-    Ember.$('.options-link-open.' + item.id).toggleClass("hidden");
+    $(".receive-options." + item.id).toggleClass("hidden");
+    $(".options-link-open." + item.id).toggleClass("hidden");
   },
 
   actions: {
     toggle(hidden) {
       this.set("hidden", hidden);
       var item = this.get("package");
-      var itemOptionsLink = Ember.$('.options-link-open.' + item.id)[0];
-      var optionsLink = Ember.$('.options-link-open.hidden');
-      if(optionsLink.length) {
-        Ember.$('.receive-options').not('.hidden').toggleClass('hidden');
-        Ember.$('.options-link-open.hidden').toggleClass('hidden');
+      var itemOptionsLink = $(".options-link-open." + item.id)[0];
+      var optionsLink = $(".options-link-open.hidden");
+      if (optionsLink.length) {
+        $(".receive-options")
+          .not(".hidden")
+          .toggleClass("hidden");
+        $(".options-link-open.hidden").toggleClass("hidden");
         return false;
-      } else if(itemOptionsLink) {
+      } else if (itemOptionsLink) {
         this.toggleItemClass();
         return false;
       } else {
@@ -102,16 +147,17 @@ export default Ember.Component.extend({
     },
 
     checkReceiving(event) {
-      if(this.get("offer.isFinished")) {
+      if (this.get("offer.isFinished")) {
         this.get("messageBox").confirm(
           this.get("i18n").t("review_offer.confirm_receiving_message"),
-          () => this.send("applyReceiving", event, false) );
+          () => this.send("applyReceiving", event, false)
+        );
       } else {
         this.send("applyReceiving", event);
       }
     },
 
-    applyReceiving(event, allow_event=true) {
+    applyReceiving(event, allow_event = true) {
       if (!this.get("isFirstReceivingPackage") && allow_event) {
         return this.send(event);
       }
@@ -123,8 +169,12 @@ export default Ember.Component.extend({
       var offer = this.get("offer");
       offer.set("deliveredBy", this.get("deliveredBy.value"));
       offer.set("state_event", "start_receiving");
-      offer.save()
-        .catch(error => { offer.rollback(); throw error; })
+      offer
+        .save()
+        .catch(error => {
+          offer.rollback();
+          throw error;
+        })
         .then(() => this.send(this.get("confirmReceivingEvent")));
     },
 
@@ -150,18 +200,28 @@ export default Ember.Component.extend({
 
     receiveInInventory() {
       if (!this.get("isReceived")) {
-        this.get('router').transitionTo("receive_package", this.get("packageId"));
+        this.get("router").transitionTo(
+          "receive_package",
+          this.get("packageId")
+        );
       }
     },
 
     printBarcode() {
-      var loadingView = getOwner(this).lookup('component:loading').append();
-      new AjaxPromise(`/packages/${this.get('packageId')}/print_inventory_label`, "GET", this.get('session.authToken'))
+      var loadingView = getOwner(this)
+        .lookup("component:loading")
+        .append();
+      new AjaxPromise(
+        `/packages/${this.get("packageId")}/print_inventory_label`,
+        "GET",
+        this.get("session.authToken")
+      )
         .catch(xhr => {
           if (xhr.status !== 200) {
             var errors = xhr.responseText;
-            try { errors = Ember.$.parseJSON(xhr.responseText).errors; }
-            catch(err) {
+            try {
+              errors = $.parseJSON(xhr.responseText).errors;
+            } catch (err) {
               console.log(err);
             }
             this.get("messageBox").alert(errors);
@@ -172,13 +232,15 @@ export default Ember.Component.extend({
         .finally(() => {
           loadingView.destroy();
           this.send("toggle", true);
-          Ember.$(`#printer_message_${this.get('package.id')}`).css({"display": "block"});
-          Ember.run.debounce(this, this.hidePrinterMessage, 200);
+          $(`#printer_message_${this.get("package.id")}`).css({
+            display: "block"
+          });
+          debounce(this, this.hidePrinterMessage, 200);
         });
     }
   },
 
   hidePrinterMessage() {
-    Ember.$(`#printer_message_${this.get('package.id')}`).fadeOut(3000);
+    $(`#printer_message_${this.get("package.id")}`).fadeOut(3000);
   }
 });

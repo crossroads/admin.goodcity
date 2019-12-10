@@ -1,46 +1,43 @@
-import Ember from "ember";
+import { computed } from "@ember/object";
+import { alias } from "@ember/object/computed";
+import { inject as service } from "@ember/service";
+import Controller, { inject as controller } from "@ember/controller";
 import AsyncTasksMixin from "../mixins/async_tasks";
 
-export default Ember.Controller.extend(AsyncTasksMixin, {
-  store: Ember.inject.service(),
-  i18n: Ember.inject.service(),
-  application: Ember.inject.controller(),
-  appVersion: Ember.computed.alias("application.appVersion"),
+export default Controller.extend(AsyncTasksMixin, {
+  store: service(),
+  i18n: service(),
+  application: controller(),
+  appVersion: alias("application.appVersion"),
 
-  currentUser: Ember.computed("session.currentUser.id", function() {
+  currentUser: computed("session.currentUser.id", function() {
     return this.store.peekRecord("user", this.get("session.currentUser.id"));
   }),
 
-  newOffersCount: Ember.computed("allOffers.@each.isSubmitted", function() {
+  newOffersCount: computed("allOffers.@each.isSubmitted", function() {
     return this.get("allOffers").filterBy("isSubmitted", true).length;
   }),
 
-  receivingOffersCount: Ember.computed(
-    "allOffers.@each.isReceiving",
-    function() {
-      return this.get("allOffers").filterBy("isReceiving", true).length;
-    }
-  ),
+  receivingOffersCount: computed("allOffers.@each.isReceiving", function() {
+    return this.get("allOffers").filterBy("isReceiving", true).length;
+  }),
 
-  inProgressOffersCount: Ember.computed(
-    "allOffers.@each.isReviewing",
-    function() {
-      return this.get("allOffers").filterBy("isReviewing", true).length;
-    }
-  ),
+  inProgressOffersCount: computed("allOffers.@each.isReviewing", function() {
+    return this.get("allOffers").filterBy("isReviewing", true).length;
+  }),
 
-  scheduledCount: Ember.computed("allOffers.@each.isScheduled", function() {
+  scheduledCount: computed("allOffers.@each.isScheduled", function() {
     return this.get("allOffers").filterBy("isScheduled", true).length;
   }),
 
-  myOffersCount: Ember.computed("allOffers.@each.isReviewing", function() {
+  myOffersCount: computed("allOffers.@each.isReviewing", function() {
     var currentUserId = this.session.get("currentUser.id");
     return this.get("allOffers")
       .filterBy("adminCurrentOffer", true)
       .filterBy("reviewedBy.id", currentUserId).length;
   }),
 
-  allOffers: Ember.computed(function() {
+  allOffers: computed(function() {
     return this.store.peekAll("offer");
   }),
 
