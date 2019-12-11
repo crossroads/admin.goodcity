@@ -25,8 +25,7 @@ module("Display review Item", {
     packageType = FactoryGuy.make("package_type", { visibleInSelects: true });
     package1 = FactoryGuy.make("package", {
       item: item,
-      packageType: packageType,
-      notes: ""
+      packageType: packageType
     });
     package2 = FactoryGuy.make("package", {
       item: item,
@@ -144,7 +143,7 @@ test("Assign description same as the assigned Package Name for the first time", 
       "/offers/" + offer.id + "/review_item/" + item.id + "/accept"
     );
     assert.equal($(".search_label_input input").val(), packageType.get("name"));
-    assert.equal($("#comment0").val(), packageType.get("name"));
+    assert.equal($("#comment0").val(), package1.get("notes"));
   });
 });
 

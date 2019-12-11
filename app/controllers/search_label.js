@@ -110,7 +110,9 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
       var item = this.get("model");
       item.set("packageType", type);
       this.send("clearSearch", true);
-      this.transitionToRoute("review_item.accept", item);
+      this.transitionToRoute("review_item.accept", item, {
+        queryParams: { packageTypeUpdated: true }
+      });
     }
   }
 });
