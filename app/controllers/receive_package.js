@@ -50,13 +50,13 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     return this.get("printerService").allAvailablePrinter();
   }),
 
-  selectedPrinterDisplay: Ember.computed({
+  selectedPrinterDisplay: Ember.computed("inventoryNumber", {
     get(key) {
       let userPrinter = this.get("session").userDefaultPrinter();
       if (!userPrinter) {
         return [];
       }
-      return { id: userPrinter.id, tag: userPrinter.get("name") };
+      return { name: userPrinter.get("name"), id: userPrinter.id };
     },
     set(key, value) {
       return value;
@@ -281,14 +281,14 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     );
   },
 
-  printBarcode(printerValue) {
+  printBarcode() {
     const packageId = this.get("package.id");
     const labels = this.get("packageForm.labels");
     this.get("packageService")
       .printBarcode({
         package_id: packageId,
         labels,
-        printer_id: printerValue
+        printer_id: this.get("selectedPrinterDisplay").id
       })
       .catch(error => {
         this.get("messageBox").alert(error.responseJSON.errors);
@@ -306,11 +306,12 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     },
 
     setPrinterValue(value) {
+      console.log(value);
       this.set("selectedPrinterDisplay", {
-        id: value.id,
-        tag: this.get("store")
+        name: this.get("store")
           .peekRecord("printer", value.id)
-          .get("name")
+          .get("name"),
+        id: value.id
       });
     },
 
@@ -360,7 +361,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
           .save()
           .then(() => {
             if (this.get("isMultipleCountPrint")) {
-              this.printBarcode(this.get("printerValue"));
+              this.printBarcode(this.get("selectedPrinterDisplay"));
             }
             pkg.set("packagesLocationsAttributes", {});
             this.redirectToReceiveOffer();

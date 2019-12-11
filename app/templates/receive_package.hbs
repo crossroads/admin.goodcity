@@ -155,15 +155,12 @@
         </div>
         <div class="small-3 columns printer-dropdown">
           <div class="dropdown-wrap">
-            {{searchable-select
-              content=allAvailablePrinter
-              on-change=(action "setPrinterValue")
-              selected=selectedPrinterDisplay
-              sortBy="name"
-              prompt="Select"
-              optionLabelKey="tag"
-              isClearable=false
-            }}
+            {{select-list
+            content=allAvailablePrinter
+            on-change=(action "setPrinterValue")
+            selectedValue=selectedPrinterDisplay
+            value=selectedPrinterDisplay
+            selectArrow=true}}
           </div>
         </div>
       </div>
