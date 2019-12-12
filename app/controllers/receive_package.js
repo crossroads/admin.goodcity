@@ -1,5 +1,6 @@
 import Ember from "ember";
 import _ from "lodash";
+import AjaxPromise from "goodcity/utils/ajax-promise";
 import AsyncTasksMixin from "../mixins/async_tasks";
 
 export default Ember.Controller.extend(AsyncTasksMixin, {
@@ -8,6 +9,8 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   cordova: Ember.inject.service(),
   i18n: Ember.inject.service(),
   packageService: Ember.inject.service(),
+  printerService: Ember.inject.service(),
+  session: Ember.inject.service(),
 
   // ----- Arguments -----
   queryParams: ["isUnplannedPackage"],
@@ -19,8 +22,6 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   watchErrors: true,
   isAndroidDevice: false,
   displayError: false,
-  printerService: Ember.inject.service(),
-  session: Ember.inject.service(),
   // ----- Aliases -----
   inventoryNumber: Ember.computed.alias("package.inventoryNumber"),
   package: Ember.computed.alias("model"),
@@ -50,13 +51,17 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     return this.get("printerService").allAvailablePrinter();
   }),
 
-  selectedPrinterDisplay: Ember.computed("inventoryNumber", {
+  selectedPrinter: Ember.computed("selectedPrinterDisplay", function() {
+    return this.get("selectedPrinterDisplay");
+  }),
+
+  selectedPrinterDisplay: Ember.computed("model", {
     get(key) {
-      let userPrinter = this.get("session").userDefaultPrinter();
-      if (!userPrinter) {
-        return [];
+      let userPrinter = this.get("printerService").userDefaultPrinter();
+      if (userPrinter) {
+        return { name: userPrinter.get("name"), id: userPrinter.id };
       }
-      return { name: userPrinter.get("name"), id: userPrinter.id };
+      return;
     },
     set(key, value) {
       return value;
@@ -295,6 +300,15 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
       });
   },
 
+  updateUserDefaultPrinter(printerId) {
+    new AjaxPromise(
+      `/users/${this.get("session.currentUser.id")}`,
+      "PUT",
+      this.get("session.authToken"),
+      { user: { printer_id: printerId } }
+    ).then(data => this.get("store").pushPayload(data));
+  },
+
   // ----- Actions -----
   actions: {
     clearDescription() {
@@ -306,13 +320,14 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     },
 
     setPrinterValue(value) {
-      console.log(value);
+      let printerId = value.id;
       this.set("selectedPrinterDisplay", {
         name: this.get("store")
-          .peekRecord("printer", value.id)
+          .peekRecord("printer", printerId)
           .get("name"),
-        id: value.id
+        id: printerId
       });
+      this.updateUserDefaultPrinter(printerId);
     },
 
     autoGenerateInventoryNumber() {
@@ -361,7 +376,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
           .save()
           .then(() => {
             if (this.get("isMultipleCountPrint")) {
-              this.printBarcode(this.get("selectedPrinterDisplay"));
+              this.printBarcode();
             }
             pkg.set("packagesLocationsAttributes", {});
             this.redirectToReceiveOffer();
