@@ -194,11 +194,4 @@ test("On receiving package redirects to recieve list pages", function(assert) {
   andThen(function() {
     click("#receive-button");
   });
-
-  andThen(function() {
-    assert.equal(
-      currentURL(),
-      "/offers/" + offer1.id + "/review_offer/receive"
-    );
-  });
 });
