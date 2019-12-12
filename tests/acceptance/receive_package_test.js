@@ -170,6 +170,7 @@ test("Receive button enables on selecting location", function(assert) {
 });
 
 test("On receiving package redirects to recieve list pages", function(assert) {
+  assert.expect(0);
   Ember.run(function() {
     package1.set("location", location);
   });
