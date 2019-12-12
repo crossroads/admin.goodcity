@@ -52,6 +52,22 @@ export default Ember.Service.extend(Ember.Evented, {
     this.set("offerStateFilters", []);
   },
 
+  offerSorting: PERSISTENT_VAR("offerSorting", null),
+
+  init() {
+    this._super(...arguments);
+    this.set("openOfferSortOption", false);
+  },
+
+  applySortOn(column, isDesc = false) {
+    this.set("offerSorting", { column, isDesc });
+    this.toggleSortPage();
+  },
+
+  toggleSortPage() {
+    this.toggleProperty("openOfferSortOption");
+  },
+
   clearOfferTimeFilters() {
     this.setOfferTimeRange(null);
   },

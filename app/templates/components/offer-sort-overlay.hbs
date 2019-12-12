@@ -1,0 +1,26 @@
+<div class="cmp search-overlay order">
+  {{#popup-overlay open=open}}
+    <div class="main-container">
+      <div class="row search-field">
+        <div class="icon-holder small-2 columns">
+          <i class="fa fa-times" aria-hidden="true" {{action 'toggleSortPage' target=filterService}} ></i>
+        </div>
+      </div>
+      <ul class="list list-activity">
+        <li class="menu-list" {{action "applySortOn" 'schedules.scheduled_at' target=filterService}}>
+          Due Date
+          <i class="fa fa-sort-numeric-asc" aria-hidden="true"></i>
+          Newest first
+        </li>
+        <li class="menu-list" {{action "applySortOn" 'schedules.scheduled_at' 'true' target=filterService}}>
+          Due Date <i class="fa fa-sort-numeric-desc" aria-hidden="true"></i>
+ Oldest first</li>
+        <li class="menu-list" {{action "applySortOn" 'created_at' target=filterService}}>
+          Created Date <i class="fa fa-sort-numeric-asc" aria-hidden="true"></i>
+Oldest first</li>
+        <li class="menu-list" {{action "applySortOn" 'created_at' 'true' target=filterService}}>Created Date <i class="fa fa-sort-numeric-desc" aria-hidden="true"></i>
+ Oldest first</li>
+      </ul>
+    </div>
+  {{/popup-overlay}}
+</div>
