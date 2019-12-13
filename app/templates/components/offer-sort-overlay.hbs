@@ -7,18 +7,18 @@
         </div>
       </div>
       <ul class="list list-activity">
-        <li class="menu-list" {{action "applySortOn" 'schedules.scheduled_at' target=filterService}}>
+        <li class="menu-list" {{action "applySortOn" 'created_at' target=filterService}}>
           Due Date
           <i class="fa fa-sort-numeric-asc" aria-hidden="true"></i>
           Newest first
         </li>
-        <li class="menu-list" {{action "applySortOn" 'schedules.scheduled_at' 'true' target=filterService}}>
+        <li class="menu-list" {{action "applySortOn" 'created_at' 'true' target=filterService}}>
           Due Date <i class="fa fa-sort-numeric-desc" aria-hidden="true"></i>
  Oldest first</li>
-        <li class="menu-list" {{action "applySortOn" 'created_at' target=filterService}}>
+        <li class="menu-list" {{action "applySortOn" 'schedules.scheduled_at' target=filterService}}>
           Created Date <i class="fa fa-sort-numeric-asc" aria-hidden="true"></i>
 Oldest first</li>
-        <li class="menu-list" {{action "applySortOn" 'created_at' 'true' target=filterService}}>Created Date <i class="fa fa-sort-numeric-desc" aria-hidden="true"></i>
+        <li class="menu-list" {{action "applySortOn" 'schedules.scheduled_at' 'true' target=filterService}}>Created Date <i class="fa fa-sort-numeric-desc" aria-hidden="true"></i>
  Oldest first</li>
       </ul>
     </div>
