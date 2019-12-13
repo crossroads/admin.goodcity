@@ -25,6 +25,9 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   // ----- Aliases -----
   inventoryNumber: Ember.computed.alias("package.inventoryNumber"),
   package: Ember.computed.alias("model"),
+  selectedPrinterId: Ember.computed.oneWay(
+    "printerService.userDefaultPrinter.id"
+  ),
   item: Ember.computed.alias("model.item"),
   description: Ember.computed.alias("package.notes"),
   reviewOfferController: Ember.inject.controller("review_offer"),
@@ -51,21 +54,10 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     return this.get("printerService").allAvailablePrinter();
   }),
 
-  selectedPrinter: Ember.computed("selectedPrinterDisplay", function() {
-    return this.get("selectedPrinterDisplay");
-  }),
-
-  selectedPrinterDisplay: Ember.computed("model", {
-    get(key) {
-      let userPrinter = this.get("printerService").userDefaultPrinter();
-      if (userPrinter) {
-        return { name: userPrinter.get("name"), id: userPrinter.id };
-      }
-      return;
-    },
-    set(key, value) {
-      return value;
-    }
+  selectedPrinterDisplay: Ember.computed("selectedPrinterId", function() {
+    const printerId = this.get("selectedPrinterId");
+    const printer = this.store.peekRecord("printer", printerId);
+    return { name: printer.get("name"), id: printer.id };
   }),
 
   selectedGrade: Ember.computed("model", function() {
@@ -320,14 +312,9 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     },
 
     setPrinterValue(value) {
-      let printerId = value.id;
-      this.set("selectedPrinterDisplay", {
-        name: this.get("store")
-          .peekRecord("printer", printerId)
-          .get("name"),
-        id: printerId
-      });
-      this.updateUserDefaultPrinter(printerId);
+      const printerId = value.id;
+      this.set("selectedPrinterId", printerId);
+      this.get("printerService").updateUserDefaultPrinter(printerId);
     },
 
     autoGenerateInventoryNumber() {
