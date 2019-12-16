@@ -5,7 +5,15 @@ import "../factories/offer";
 import FactoryGuy from "ember-data-factory-guy";
 import TestHelper from "ember-data-factory-guy/factory-guy-test-helper";
 
-var App, offer1, item1, package1, role, location, order_pkg, packages_location;
+var App,
+  offer1,
+  item1,
+  package1,
+  role,
+  location,
+  order_pkg,
+  packages_location,
+  printer;
 
 module("Receive package", {
   beforeEach: function() {
@@ -13,6 +21,7 @@ module("Receive package", {
     TestHelper.setup();
 
     location = FactoryGuy.make("location");
+    printer = FactoryGuy.make("printer");
     item1 = FactoryGuy.make("item", { state: "accepted" });
     offer1 = FactoryGuy.make("offer", { state: "receiving", items: [item1] });
     package1 = FactoryGuy.make("package", {
@@ -62,6 +71,15 @@ module("Receive package", {
       status: 200,
       responseText: {
         package: package1.toJSON({ includeId: true })
+      }
+    });
+
+    $.mockjax({
+      url: "/api/v1/printer*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        printer: [printer.toJSON({ includeId: true })]
       }
     });
 
