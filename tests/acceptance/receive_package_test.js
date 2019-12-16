@@ -176,7 +176,7 @@ test("On receiving package redirects to recieve list pages", function(assert) {
   });
   visit("/offers/" + offer1.id + "/receive_package/" + package1.id);
   $.mockjax({
-    url: "api/v1/packages",
+    url: "/api/v1/packages*",
     type: "PUT",
     status: 200,
     responseText: {
@@ -184,7 +184,7 @@ test("On receiving package redirects to recieve list pages", function(assert) {
     }
   });
   $.mockjax({
-    url: "api/v1/packages/print_barcode",
+    url: "api/v1/packages/print_barcode*",
     type: "POST",
     status: 200,
     responseText: {
@@ -194,5 +194,12 @@ test("On receiving package redirects to recieve list pages", function(assert) {
 
   andThen(function() {
     click("#receive-button");
+  });
+
+  andThen(function() {
+    assert.equal(
+      currentURL(),
+      "/offers/" + offer1.id + "/review_offer/receive"
+    );
   });
 });
