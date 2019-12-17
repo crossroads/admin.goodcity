@@ -12271,7 +12271,7 @@ sha@~2.0.1:
 
 "shared-goodcity@git://github.com/crossroads/shared.goodcity.git#GCW-2853-support-printer-feature":
   version "0.0.0"
-  resolved "git://github.com/crossroads/shared.goodcity.git#909523678e2f2e16a1b3dc6b5797092bc3413a38"
+  resolved "git://github.com/crossroads/shared.goodcity.git#6c6b6f110bbdd85e16157a449e24930f2c097f1c"
   dependencies:
     cryptiles "^4.1.2"
     ember-cli-babel "^5.1.6"
