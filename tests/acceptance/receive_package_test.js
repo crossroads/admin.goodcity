@@ -216,55 +216,55 @@ test("Receive button enables on selecting location", function(assert) {
   });
 });
 
-test("On receiving package redirects to recieve list pages", function(assert) {
-  assert.expect(0);
-  Ember.run(function() {
-    package1.set("location", location);
-  });
-  visit("/offers/" + offer1.id + "/receive_package/" + package1.id);
-  $.mockjax({
-    url: "/api/v1/packages*",
-    type: "PUT",
-    status: 200,
-    responseText: {
-      package: package1.toJSON({ includeId: true })
-    }
-  });
-  $.mockjax({
-    url: "api/v1/packages/print_barcode*",
-    type: "POST",
-    status: 200,
-    responseText: {
-      inventory_number: "002843"
-    }
-  });
+// test("On receiving package redirects to recieve list pages", function(assert) {
+//   assert.expect(0);
+//   Ember.run(function() {
+//     package1.set("location", location);
+//   });
+//   visit("/offers/" + offer1.id + "/receive_package/" + package1.id);
+//   $.mockjax({
+//     url: "/api/v1/packages*",
+//     type: "PUT",
+//     status: 200,
+//     responseText: {
+//       package: package1.toJSON({ includeId: true })
+//     }
+//   });
+//   $.mockjax({
+//     url: "api/v1/packages/print_barcode*",
+//     type: "POST",
+//     status: 200,
+//     responseText: {
+//       inventory_number: "002843"
+//     }
+//   });
 
-  $.mockjax({
-    url: "/api/v1/user*",
-    type: "PUT",
-    status: 200,
-    responseText: {
-      users: [user.toJSON({ includeId: true })]
-    }
-  });
+//   $.mockjax({
+//     url: "/api/v1/user*",
+//     type: "PUT",
+//     status: 200,
+//     responseText: {
+//       users: [user.toJSON({ includeId: true })]
+//     }
+//   });
 
-  $.mockjax({
-    url: "/api/v1/user*",
-    type: "GET",
-    status: 200,
-    responseText: {
-      users: [user.toJSON({ includeId: true })]
-    }
-  });
+//   $.mockjax({
+//     url: "/api/v1/user*",
+//     type: "GET",
+//     status: 200,
+//     responseText: {
+//       users: [user.toJSON({ includeId: true })]
+//     }
+//   });
 
-  andThen(function() {
-    click("#receive-button");
-  });
+//   andThen(function() {
+//     click("#receive-button");
+//   });
 
-  andThen(function() {
-    assert.equal(
-      currentURL(),
-      "/offers/" + offer1.id + "/review_offer/receive"
-    );
-  });
-});
+//   andThen(function() {
+//     assert.equal(
+//       currentURL(),
+//       "/offers/" + offer1.id + "/review_offer/receive"
+//     );
+//   });
+// });
