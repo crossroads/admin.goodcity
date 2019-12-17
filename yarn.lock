@@ -12269,9 +12269,9 @@ sha@~2.0.1:
     graceful-fs "^4.1.2"
     readable-stream "^2.0.2"
 
-"shared-goodcity@git://github.com/crossroads/shared.goodcity.git#GCW-2853-support-printer-feature":
+"shared-goodcity@git://github.com/crossroads/shared.goodcity.git#master":
   version "0.0.0"
-  resolved "git://github.com/crossroads/shared.goodcity.git#6c6b6f110bbdd85e16157a449e24930f2c097f1c"
+  resolved "git://github.com/crossroads/shared.goodcity.git#780a6c70a2b5fd8884d6fa2fe05f13f4bbbe89b2"
   dependencies:
     cryptiles "^4.1.2"
     ember-cli-babel "^5.1.6"
