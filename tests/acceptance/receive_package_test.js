@@ -13,7 +13,8 @@ var App,
   location,
   order_pkg,
   packages_location,
-  printer;
+  printer,
+  user;
 
 module("Receive package", {
   beforeEach: function() {
@@ -21,6 +22,7 @@ module("Receive package", {
     TestHelper.setup();
 
     location = FactoryGuy.make("location");
+    user = FactoryGuy.make("user");
     printer = FactoryGuy.make("printer");
     item1 = FactoryGuy.make("item", { state: "accepted" });
     offer1 = FactoryGuy.make("offer", { state: "receiving", items: [item1] });
@@ -79,7 +81,34 @@ module("Receive package", {
       type: "GET",
       status: 200,
       responseText: {
-        printer: [printer.toJSON({ includeId: true })]
+        printers: [printer.toJSON({ includeId: true })]
+      }
+    });
+
+    $.mockjax({
+      url: "/api/v1/user*",
+      type: "PUT",
+      status: 200,
+      responseText: {
+        users: [user.toJSON({ includeId: true })]
+      }
+    });
+
+    $.mockjax({
+      url: "/api/v1/user*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        users: [user.toJSON({ includeId: true })]
+      }
+    });
+
+    $.mockjax({
+      url: "api/v1/packages/print_barcode*",
+      type: "POST",
+      status: 200,
+      responseText: {
+        inventory_number: "002843"
       }
     });
 
@@ -207,6 +236,24 @@ test("On receiving package redirects to recieve list pages", function(assert) {
     status: 200,
     responseText: {
       inventory_number: "002843"
+    }
+  });
+
+  $.mockjax({
+    url: "/api/v1/user*",
+    type: "PUT",
+    status: 200,
+    responseText: {
+      users: [user.toJSON({ includeId: true })]
+    }
+  });
+
+  $.mockjax({
+    url: "/api/v1/user*",
+    type: "GET",
+    status: 200,
+    responseText: {
+      users: [user.toJSON({ includeId: true })]
     }
   });
 

@@ -22,7 +22,7 @@ FactoryGuy.define("user", {
     firstName: FactoryGuy.generate("collectionFirstName"),
     lastName: FactoryGuy.generate("collectionLastName"),
     mobile: FactoryGuy.generate(mobile.hongKong),
-    printer: FactoryGuy.belongsTo("printer")
+    printerId: FactoryGuy.generate("printer_id")
   },
   user_with_image: {
     image: FactoryGuy.belongsTo("image")
