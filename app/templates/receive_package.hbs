@@ -6,7 +6,7 @@
     </section>
   </nav>
 
-  <div class="row new-item-attrs">
+  <div class="new-item-attrs">
 
     {{validate-inputs
       elementCssIdentifiersArrayJson='["#quantity", "#description", "#inventoryNumber"]'
@@ -23,7 +23,8 @@
           <div class="small-8 columns">
             {{numeric-input id='quantity' name="qty" value=packageForm.quantity placeholder=(t "placeholder.qty") maxlength="8" pattern="\d{1,8}"}}
             {{#if isInvalidQuantity}}
-              <div id="quantity-err" class='input-error-msg dimension-block validation-err'>{{t 'items.validation.quantity'}}</div>
+            <div id="quantity-err" class='input-error-msg dimension-block validation-err'>
+              {{t 'items.validation.quantity'}}</div>
             {{/if}}
           </div>
         </div>
@@ -41,10 +42,10 @@
       <div class="small-3 columns">
         <span class="image-box" {{action 'assignImageToPackage'}}>
           {{#if package.item.displayImageUrl}}
-            <img src={{package.item.displayImageUrl}} class="thumb" />
+          <img src={{package.item.displayImageUrl}} class="thumb" />
           {{else}}
-            <i class="fa fa-camera"></i><br />
-            {{t 'items.add_item.add_images'}}
+          <i class="fa fa-camera"></i><br />
+          {{t 'items.add_item.add_images'}}
           {{/if}}
         </span>
       </div>
@@ -103,62 +104,80 @@
       </div>
     </div>
     {{#if isInvalidDimension}}
-      <div class="row">
-        <div class="small-3 columns item-label"></div>
-        <div class='small-8 columns input-error-msg dimension-block'>{{t 'items.validation.dimensions'}}</div>
-      </div>
-    {{/if}}
-
     <div class="row">
-      <div class="small-3 columns item-label">{{t 'items.add_item.labels'}}</div>
-      <div class="small-3 columns">
-        {{numeric-input id="labels" name="labels" value=packageForm.labels placeholder="labels" maxlength="3" pattern="\d{1,8}"}}
-        {{#if isInvalidaLabelCount}}
-          <div id="label-empty-err" class='input-error-msg dimension-block validation-err'>{{t 'items.validation.labels'}}</div>
-        {{/if}}
-        {{#unless isInvalidPrintCount}}
-          <div id="max-val-err" class='input-error-msg dimension-block validation-err'>{{t 'items.validation.max_lable_count'}}</div>
-        {{/unless}}
-      </div>
-      <div class="small-2 columns item-label">
-        {{t 'items.add_item.inventory'}}#
-      </div>
-      <div class="small-3 columns end">
-        {{#if inputInventory}}
+      <div class="small-3 columns item-label"></div>
+      <div class='small-8 columns input-error-msg dimension-block'>{{t 'items.validation.dimensions'}}</div>
+    </div>
+    {{/if}}
+    <div class="form-footer">
+      <div class="row">
+        <div class="small-3 columns item-label">{{t 'items.add_item.labels'}}</div>
+        <div class="small-3 columns">
+          {{numeric-input id="labels" name="labels" class="label" value=packageForm.labels placeholder="labels" maxlength="3" pattern="\d{1,8}"}}
+          {{#if isInvalidaLabelCount}}
+          <div id="label-empty-err" class='input-error-msg dimension-block validation-err'>
+            {{t 'items.validation.labels'}}
+          </div>
+          {{/if}}
+          {{#unless isInvalidPrintCount}}
+          <div id="max-val-err" class='input-error-msg dimension-block validation-err'>
+            {{t 'items.validation.max_lable_count'}}</div>
+          {{/unless}}
+        </div>
+        <div class="small-2 columns item-label">
+          {{t 'items.add_item.inventory'}}#
+        </div>
+        <div class="small-3 columns end">
+          {{#if inputInventory}}
           {{numeric-input id='inventoryNumber' name="inventoryNumber" value=inventoryNumber placeholder="Inventory Number" maxlength="8" pattern="\d{1,8}"}}
-        {{else}}
+          {{else}}
           <span class="invenory-number">
             {{inventoryNumber}}
           </span>
-        {{/if}}
+          {{/if}}
 
-        <div class='input-error-msg'>{{t 'items.validation.inventory_number'}}</div>
-      </div>
-      <div class="small-1 columns">
-        {{partial "inventory_options"}}
-      </div>
-    </div>
-
-    {{#if showPublishItemCheckBox}}
-      <div class="row">
-        <div class="small-3 columns item-label">{{t 'items.add_item.publish'}}</div>
-        <div class="small-2 columns end">
-          {{input type="checkbox" id=(concat 'publishItem' package.id) checked=isAllowedToPublish}}
+          <div class='input-error-msg'>{{t 'items.validation.inventory_number'}}</div>
+        </div>
+        <div class="small-1 columns">
+          {{partial "inventory_options"}}
         </div>
       </div>
-    {{/if}}
 
-    <div class="row receive-buttons">
-      <div class="small-6 columns">
-        <a class="button expand secondary closeLink action1" {{action 'moveBack'}}>{{t "receive_package.cancel"}}</a>
+      <div class="row">
+        {{#if showPublishItemCheckBox}}
+        <div class="small-3 columns item-label">{{t 'items.add_item.publish'}}</div>
+        <div class="small-3 columns end">
+          {{input type="checkbox"  class="publish" id=(concat 'publishItem' package.id) checked=isAllowedToPublish}}
+        </div>
+        {{/if}}
+        <div class="small-2 columns item-label">
+          <label>{{t "items.add_item.printer"}}</label>
+        </div>
+        <div class="small-3 columns printer-dropdown">
+          <div class="dropdown-wrap">
+            {{select-list
+            content=allAvailablePrinter
+            on-change=(action "setPrinterValue")
+            selectedValue=selectedPrinterDisplay
+            value=selectedPrinterDisplay
+            selectArrow=true}}
+          </div>
+        </div>
       </div>
-      <div class="small-6 columns">
-        <button id='receive-button' disabled={{disableReceiveButton}} class="button expand action2 confirmLink" {{action 'receivePackage'}}>
-          {{t "items.add_item.receive"}}
-          {{#if isMultipleCountPrint}}
+
+      <div class="row receive-buttons">
+        <div class="small-6 columns">
+          <a class="button expand secondary closeLink action1" {{action 'moveBack'}}>{{t "receive_package.cancel"}}</a>
+        </div>
+        <div class="small-6 columns">
+          <button id='receive-button' disabled={{disableReceiveButton}} class="button expand action2 confirmLink"
+            {{action 'receivePackage'}}>
+            {{t "items.add_item.receive"}}
+            {{#if isMultipleCountPrint}}
             {{t "items.add_item.print" labels=printLabelCount}} <i class='fa fa-print'></i>
-          {{/if}}
-        </button>
+            {{/if}}
+          </button>
+        </div>
       </div>
     </div>
   </div>

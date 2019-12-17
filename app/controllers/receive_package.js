@@ -1,5 +1,6 @@
 import Ember from "ember";
 import _ from "lodash";
+import AjaxPromise from "goodcity/utils/ajax-promise";
 import AsyncTasksMixin from "../mixins/async_tasks";
 
 export default Ember.Controller.extend(AsyncTasksMixin, {
@@ -8,6 +9,8 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   cordova: Ember.inject.service(),
   i18n: Ember.inject.service(),
   packageService: Ember.inject.service(),
+  printerService: Ember.inject.service(),
+  session: Ember.inject.service(),
 
   // ----- Arguments -----
   queryParams: ["isUnplannedPackage"],
@@ -19,10 +22,10 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   watchErrors: true,
   isAndroidDevice: false,
   displayError: false,
-
   // ----- Aliases -----
   inventoryNumber: Ember.computed.alias("package.inventoryNumber"),
   package: Ember.computed.alias("model"),
+
   item: Ember.computed.alias("model.item"),
   description: Ember.computed.alias("package.notes"),
   reviewOfferController: Ember.inject.controller("review_offer"),
@@ -43,6 +46,18 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
       { name: i18n.t("receive_package.grade_c"), id: "C" },
       { name: i18n.t("receive_package.grade_d"), id: "D" }
     ];
+  }),
+
+  allAvailablePrinter: Ember.computed(function() {
+    return this.get("printerService").allAvailablePrinter();
+  }),
+
+  selectedPrinterDisplay: Ember.computed("selectedPrinterId", function() {
+    const printerId = this.get("selectedPrinterId");
+    if (printerId) {
+      const printer = this.store.peekRecord("printer", printerId);
+      return { name: printer.get("name"), id: printer.id };
+    }
   }),
 
   selectedGrade: Ember.computed("model", function() {
@@ -267,9 +282,15 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     const packageId = this.get("package.id");
     const labels = this.get("packageForm.labels");
     this.get("packageService")
-      .printBarcode({ package_id: packageId, labels })
+      .printBarcode({
+        package_id: packageId,
+        labels,
+        printer_id: this.get("selectedPrinterId")
+      })
       .catch(error => {
-        this.get("messageBox").alert(error.responseJSON.errors);
+        this.get("messageBox").alert(
+          error.responseJSON.errors && error.responseJSON.errors[0]
+        );
       });
   },
 
@@ -281,6 +302,12 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
 
     toggleInventoryOptions() {
       this.toggleProperty("displayInventoryOptions");
+    },
+
+    setPrinterValue(value) {
+      const printerId = value.id;
+      this.set("selectedPrinterId", printerId);
+      this.get("printerService").updateUserDefaultPrinter(printerId);
     },
 
     autoGenerateInventoryNumber() {
