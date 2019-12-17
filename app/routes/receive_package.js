@@ -1,6 +1,8 @@
 import AuthorizeRoute from "./authorize";
 
 export default AuthorizeRoute.extend({
+  printerService: Ember.inject.service(),
+
   model(params) {
     return this.store.findRecord("package", params.package_id);
   },
@@ -13,6 +15,14 @@ export default AuthorizeRoute.extend({
     controller.set("autoGenerateInventory", true);
     controller.set("inputInventory", false);
     model.get("inventoryNumber");
+    let allAvailablePrinters = this.get("printerService").allAvailablePrinter();
+    let userDefaultPrinter = this.get("printerService.userDefaultPrinter");
+    if (!userDefaultPrinter) {
+      this.get("printerService").updateUserDefaultPrinter(
+        allAvailablePrinters[0].id
+      );
+    }
+
     if (model.get("isReceived")) {
       return controller.redirectToReceiveOffer();
     }
