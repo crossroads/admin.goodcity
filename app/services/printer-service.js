@@ -23,6 +23,8 @@ export default Ember.Service.extend({
       "PUT",
       this.get("session.authToken"),
       { user: { printer_id: printerId } }
-    ).then(data => this.get("store").pushPayload(data));
+    ).then(data => {
+      this.get("store").pushPayload(data);
+    });
   }
 });

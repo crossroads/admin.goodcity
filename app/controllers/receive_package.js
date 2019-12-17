@@ -25,9 +25,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   // ----- Aliases -----
   inventoryNumber: Ember.computed.alias("package.inventoryNumber"),
   package: Ember.computed.alias("model"),
-  selectedPrinterId: Ember.computed.oneWay(
-    "printerService.userDefaultPrinter.id"
-  ),
+
   item: Ember.computed.alias("model.item"),
   description: Ember.computed.alias("package.notes"),
   reviewOfferController: Ember.inject.controller("review_offer"),
@@ -287,10 +285,12 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
       .printBarcode({
         package_id: packageId,
         labels,
-        printer_id: this.get("selectedPrinterDisplay").id
+        printer_id: this.get("selectedPrinterId")
       })
       .catch(error => {
-        this.get("messageBox").alert(error.responseJSON.errors);
+        this.get("messageBox").alert(
+          error.responseJSON.errors && error.responseJSON.errors[0]
+        );
       });
   },
 
