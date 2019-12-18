@@ -59,8 +59,8 @@ export default Ember.Service.extend(Ember.Evented, {
     this.set("openOfferSortOption", false);
   },
 
-  applySortOn(column, isDesc = false) {
-    this.set("offerSorting", { column, isDesc });
+  applySortOn(column, is_desc = false) {
+    this.set("offerSorting", { column, is_desc });
     this.toggleSortPage();
   },
 

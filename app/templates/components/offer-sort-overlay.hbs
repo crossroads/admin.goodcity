@@ -10,7 +10,7 @@
       </div>
       <ul class="list list-activity">
         {{#each sortTypes as |column|}}
-          <li class="menu-list" {{action "applySortOn" column.column_name column.isDesc target=filterService}}>
+          <li class="menu-list" {{action "applySortOn" column.column_name column.is_desc target=filterService}}>
             {{column.column_alias}}
             <i class="fa fa-sort-numeric-{{column.sort}}" aria-hidden="true"></i>
             {{column.sorting_alias}} first
