@@ -256,13 +256,23 @@
     .row {
       margin-bottom: 15px;
 
+      label {
+        @media #{$small-only} {
+          font-size: 0.7rem;
+        }
+      }
+
       .publish {
         position: static;
       }
 
-      .dropdown-wrap {
-        select {
-          font-size: 0.8rem;
+      .printer-dropdown {
+        float: left;
+
+        .dropdown-wrap {
+          select {
+            font-size: 0.8rem;
+          }
         }
       }
     }
