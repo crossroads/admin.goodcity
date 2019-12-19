@@ -52,16 +52,16 @@ export default Ember.Service.extend(Ember.Evented, {
     this.set("offerStateFilters", []);
   },
 
-  offerSorting: PERSISTENT_VAR("offerSorting", null),
+  offerSorting: PERSISTENT_VAR("offerSorting", {}),
 
   init() {
     this._super(...arguments);
     this.set("openOfferSortOption", false);
   },
 
-  applySortOn(column, is_desc = false) {
-    this.set("offerSorting", { column, is_desc });
-    this.toggleSortPage();
+  applySortOn(sort_column, is_desc = false) {
+    this.set("offerSorting", { sort_column, is_desc });
+    this.set("openOfferSortOption", false);
   },
 
   toggleSortPage() {

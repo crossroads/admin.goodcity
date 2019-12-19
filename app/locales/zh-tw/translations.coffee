@@ -70,7 +70,12 @@ I18nTranslationsZhTw =
         "missing": "遺失"
         "start_receiving_by": "{{lastName}} {{firstName}} 正在接收"
         "inactive": "列作暫停"
-
+    offer_sorts:
+      sort_by: "Sort By",
+      due_date: "Due date"
+      create_date: "Created date"
+      oldest: "Oldest"
+      newest: "Newest"
     offer_filters:
       time_presets:
         overdue: "Overdue",

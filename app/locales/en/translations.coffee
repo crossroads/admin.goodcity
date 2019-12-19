@@ -70,6 +70,12 @@ I18nTranslationsEn =
         "missing": "missing"
         "start_receiving_by": "{{firstName}} {{lastName}} began receiving"
         "inactive": "Marked as inactive"
+    offer_sorts:
+      sort_by: "Sort By",
+      due_date: "Due date"
+      create_date: "Created date"
+      oldest: "Oldest"
+      newest: "Newest"
     offer_filters:
       time_presets:
         overdue: "Overdue",

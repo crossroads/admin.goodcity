@@ -5,15 +5,15 @@
         <i class="fa fa-times fa-2x cancel-sort" aria-hidden="true" {{action 'toggleSortPage' target=filterService}} ></i>
 
         <div class="cancel-sort sort-by">
-          Sort By
+          {{t 'offer_sorts.sort_by'}}
         </div>
       </div>
       <ul class="list list-activity">
         {{#each sortTypes as |column|}}
           <li class="menu-list" {{action "applySortOn" column.column_name column.is_desc target=filterService}}>
-            {{column.column_alias}}
+            {{t (key-translator column.column_alias)}}
             <i class="fa fa-sort-numeric-{{column.sort}}" aria-hidden="true"></i>
-            {{column.sorting_alias}} first
+            {{t (key-translator column.sorting_alias)}} first
           </li>
         {{/each}}
       </ul>
