@@ -41,7 +41,7 @@ export const STATE_FILTERS = {
 
 export default Service.extend(Evented, {
   localStorage: service(),
-  routing: service("-routing"),
+  router: service(),
 
   offerStateFilters: PERSISTENT_VAR("offerStateFilters", []),
 
@@ -79,7 +79,7 @@ export default Service.extend(Evented, {
     }
     states.push(state);
     this.set("offerStateFilters", states);
-    this.get("routing").transitionTo("search");
+    this.get("router").transitionTo("search");
   },
 
   hasOfferFilters: computed("offerStateFilters", function() {
