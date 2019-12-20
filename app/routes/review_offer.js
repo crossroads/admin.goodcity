@@ -6,7 +6,8 @@ export default AuthorizeRoute.extend({
   backLinkPath: computed.localStorage(),
 
   beforeModel() {
-    var previousRoutes = this.router.router.currentHandlerInfos;
+    var previousRoutes =
+      this.router.router && this.router.router.currentHandlerInfos;
     var previousRoute = previousRoutes && previousRoutes.pop().name;
     if (previousRoute === "search") {
       this.set("backLinkPath", previousRoute);
