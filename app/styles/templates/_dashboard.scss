@@ -1,14 +1,5 @@
 .offer_detail {
   text-align: center;
-  height: 4.5rem;
-  @media #{$xlarge-only} {
-    height: 5.5rem;
-  }
-
-  @media #{$xxlarge-only} {
-    height: 5.5rem;
-  }
-
   font-size: 1.5vw;
   color:#DFE0E7;
 
@@ -35,7 +26,7 @@
 
   .inactive_offers_divider {
     border-bottom: 1px solid #8091A9;
-    padding-bottom: 5%;
+    padding-bottom: 2rem;
   }
 
   @media #{$small-only} {
@@ -69,24 +60,7 @@
   padding-left: 3%;
   padding-right: 3%;
   margin-bottom: 1rem;
-
-  @media #{$small-only} {
-    margin-top: 38%;
-  }
-  @media #{$large-only} {
-    margin-top: 25%;
-  }
-  @media #{$medium-only} {
-    margin-top: 25%;
-  }
-
-  @media #{$xlarge-only} {
-    margin-top: 26%;
-  }
-
-  @media #{$xxlarge-only} {
-    margin-top: 27%;
-  }
+  margin-top: 1.5rem;
 
   .offer_header {
     margin-bottom: 1rem!important;
