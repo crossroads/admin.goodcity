@@ -109,6 +109,10 @@ export default Ember.Controller.extend(backNavigator, {
     };
   },
 
+  getSortingType() {
+    return this.get("filterService.offerSorting");
+  },
+
   trimQuery(query) {
     // Remove any undefined values
     return _.pickBy(query, _.identity);
@@ -122,7 +126,8 @@ export default Ember.Controller.extend(backNavigator, {
           this.getFilterQuery(),
           this.getReviewerFilter(),
           this.getSearchQuery(),
-          this.getPaginationQuery(pageNo)
+          this.getPaginationQuery(pageNo),
+          this.getSortingType()
         )
       );
       return this.get("store").query("offer", params);

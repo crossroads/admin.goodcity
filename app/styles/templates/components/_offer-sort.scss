@@ -1,0 +1,24 @@
+.cmp.search-overlay {
+
+  .main-container {
+    margin: 0 auto;
+    max-width: 768px;
+
+    .menu-list{
+      padding-top: 5%;
+      padding-bottom: 5%;
+      border-bottom: 1px solid #2F445F;
+      text-align: center;
+    }
+
+    .cancel-sort {
+      margin-top: 2%;
+      margin-left: 2%;
+    }
+
+    .sort-by {
+      margin-top: 5%;
+      font-size: 130%;
+    }
+  }
+}
