@@ -93,7 +93,15 @@
     padding-top: 0;
     border: 2px solid #27436C;
     height: 5rem;
-    line-height: 4rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
 
     img {
       height: -webkit-fill-available;
