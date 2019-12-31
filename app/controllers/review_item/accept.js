@@ -41,10 +41,10 @@ export default Controller.extend({
   ),
 
   itemType: computed("itemTypeId", function() {
-    return this.get("store").peekRecord(
-      "packageType",
-      this.get("itemTypeId.id") || this.get("itemTypeId")
-    );
+    const itemTypeId = this.get("itemTypeId.id") || this.get("itemTypeId");
+    if (itemTypeId) {
+      return this.get("store").peekRecord("packageType", itemTypeId);
+    }
   }),
 
   subPackageTypes: computed("itemType", function() {
