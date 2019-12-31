@@ -341,45 +341,45 @@ workflows:
         - package_dependencies:
             requires:
               - checkout_code
-        - tests:
-            requires:
-              - package_dependencies
-        - upload-coverage:
-            requires:
-              - package_dependencies
-              - tests
-            filters:
-              branches:
-                only: /^(master|live)$/
+        # - tests:
+        #     requires:
+        #       - package_dependencies
+        # - upload-coverage:
+        #     requires:
+        #       - package_dependencies
+        #       - tests
+        #     filters:
+        #       branches:
+        #         only: /^(master|live|ember-upgrade)$/
         - www_build:
             requires:
-              - tests
+              # - tests
               - package_dependencies
             filters:
               branches:
-                only: /^(master|live)$/
+                only: /^(master|live|ember-upgrade)$/
         - www_deploy:
             requires:
               - www_build
             filters:
               branches:
-                only: /^(master|live)$/
+                only: /^(master|live|ember-upgrade)$/
         - ember_cordova_build:
             requires:
-              - tests
+              # - tests
               - package_dependencies
             filters:
               branches:
-                only: /^(master|live)$/
+                only: /^(master|live|ember-upgrade)$/
         - android_build_and_deploy:
             requires:
               - ember_cordova_build
             filters:
               branches:
-                only: /^(master|live)$/
+                only: /^(master|live|ember-upgrade)$/
         - ios_build_and_deploy:
             requires:
               - tests
             filters:
               branches:
-                only: /^(master|live)$/
+                only: /^(master|live|ember-upgrade)$/
