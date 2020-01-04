@@ -6,6 +6,9 @@ aliases:
       docker:
         - image: circleci/node:carbon
       working_directory: ~/code
+      environment:
+        # JOBS: 1 required to disable workers pools on broccoli as the underlying container reports 36 cores and runs out of memory if trying to spawn 36 threads!
+        JOBS: 1
   - &restore-repo-cache
       key: v1-admin-goodcity-repo-{{ .Environment.CIRCLE_SHA1 }}
   - &restore-yarn-cache
@@ -77,8 +80,6 @@ jobs:
     <<: *defaults
     docker:
       - image: circleci/node:8-browsers
-    environment:
-      JOBS: 1
     steps:
       - restore-cache: *restore-repo-cache
       - restore-cache: *restore-yarn-cache
@@ -113,7 +114,6 @@ jobs:
 
   www_build:
     <<: *defaults
-    environment:
     steps:
       - restore-cache: *restore-repo-cache
       - restore-cache: *restore-yarn-cache
@@ -125,7 +125,7 @@ jobs:
               master)
                 ENVIRONMENT=staging
                 ;;
-              preview)
+              preview|GCW-2905-admin-preview)
                 ENVIRONMENT=preview
                 ;;
               live)
@@ -150,7 +150,7 @@ jobs:
     steps:
       - restore-cache: *restore-repo-cache
       - restore-cache: *restore-bundler-cache
-      - run: bundle check --path=vendor/bundle || bundle install --deployment --jobs=4 --retry=3
+      - run: bundle check --path=vendor/bundle || bundle install --deployment --jobs=2 --retry=3
       - save-cache: *save-bundler-cache
       - attach_workspace:
           at: ~/code
@@ -162,7 +162,7 @@ jobs:
               master)
                 STAGE=staging
                 ;;
-              preview)
+              preview|GCW-2905-admin-preview)
                 STAGE=preview
                 ;;
               live)
@@ -183,7 +183,7 @@ jobs:
               master)
                 ASSET_HOST_URL=https://stock-staging.goodcity.hk/assets
                 ;;
-              preview)
+              preview|GCW-2905-admin-preview)
                 ASSET_HOST_URL=https://stock-preview.goodcity.hk/assets
                 ;;
               live)
@@ -205,7 +205,6 @@ jobs:
       - run:
           name: Ember build
           command: |
-            JOBS=2
             APP_VERSION=$(jq -r ".version" package.json)
             APP_SHA=$(echo $CIRCLE_SHA1 | cut -c1-7)
             if [ -z "$APP_SHARED_SHA" ]; then APP_SHARED_SHA=$( git ls-remote --heads https://github.com/crossroads/shared.goodcity.git $CIRCLE_BRANCH | cut -c1-7); fi
@@ -245,7 +244,7 @@ jobs:
       - restore-cache: *restore-repo-cache
       - restore-cache: *restore-yarn-cache
       - restore-cache: *restore-bundler-cache
-      - run: bundle install --deployment --jobs=4 --retry=3
+      - run: bundle install --deployment --jobs=2 --retry=3
       - save-cache: *save-bundler-cache
       - attach_workspace:
           at: ~/code
@@ -326,7 +325,7 @@ jobs:
                 exit 1
             esac
       - run:
-        command: npm rebuild node-sass
+          command: npm rebuild node-sass
       - run:
           command: |
             echo "Building for ENVIRONMENT: ${ENVIRONMENT}"
@@ -337,7 +336,7 @@ jobs:
           paths:
             - cordova/www
       - restore-cache: *restore-ios-bundler-cache
-      - run: bundle install --deployment --jobs=4 --retry=3
+      - run: bundle install --deployment --jobs=2 --retry=3
       - save-cache: *save-ios-bundler-cache
       - attach_workspace:
           at: ~/code
@@ -404,13 +403,13 @@ workflows:
               - package_dependencies
             filters:
               branches:
-                only: /^(master|live|preview)$/
+                only: /^(master|live|preview|GCW-2905-admin-preview)$/
         - www_deploy:
             requires:
               - www_build
             filters:
               branches:
-                only: /^(master|live|preview)$/
+                only: /^(master|live|preview|GCW-2905-admin-preview)$/
         - ember_cordova_build:
             requires:
               - tests
