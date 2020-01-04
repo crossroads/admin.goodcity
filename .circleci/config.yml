@@ -60,6 +60,7 @@ jobs:
     <<: *defaults
     steps:
       - checkout
+      - run: echo JOBS=${JOBS}
       - save_cache:
           key: v1-admin-goodcity-repo-{{ .Environment.CIRCLE_SHA1 }}
           paths:
@@ -114,8 +115,6 @@ jobs:
 
   www_build:
     <<: *defaults
-    environment:
-      JOBS: 1
     steps:
       - restore-cache: *restore-repo-cache
       - restore-cache: *restore-yarn-cache
