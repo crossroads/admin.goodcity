@@ -9,21 +9,15 @@ module.exports = function(environment) {
     defaultLocationType: "auto",
 
     emberRollbarClient: {
-      enabled: environment !== "test" && environment !== "development",
       accessToken: "e0c3ee33bdc049fbbdecbad844c552da",
       verbose: true,
       ignoredMessages: ["TransitionAborted"],
       payload: {
+        environment: environment,
         client: {
           javascript: {
-            source_map_enabled: true, //this is now true by default
-            code_version: require("child_process")
-              .execSync("git rev-parse HEAD")
-              .toString()
-              .trim(),
             // Optionally have Rollbar guess which frames the error was thrown from
             // when the browser does not provide line and column numbers.
-            environment: environment,
             guess_uncaught_frames: false
           }
         }
