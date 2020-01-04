@@ -8,10 +8,17 @@
     "test": "tests"
   },
   "scripts": {
-    "start": "EMBER_CLI_CORDOVA=0 ember serve --port 4201 --live-reload-port 35730",
-    "build": "EMBER_CLI_CORDOVA=0 ember build",
-    "test": "EMBER_CLI_CORDOVA=0 ember test --server --test-port 7358",
-    "test:ci": "EMBER_CLI_CORDOVA=0 ember-pretty-test"
+    "start": "EMBER_CLI_CORDOVA=0 ENVIRONMENT=development ember serve --port 4201 --live-reload-port 35730",
+    "test": "EMBER_CLI_CORDOVA=0 ENVIRONMENT=test ember test --server --test-port 7358",
+    "test:ci": "EMBER_CLI_CORDOVA=0 ENVIRONMENT=test ember-pretty-test",
+    "build:web:development": "EMBER_CLI_CORDOVA=0 ENVIRONMENT=development ember build",
+    "build:web:staging": "EMBER_CLI_CORDOVA=0 ENVIRONMENT=staging ember build --environment=production",
+    "build:web:preview": "EMBER_CLI_CORDOVA=0 ENVIRONMENT=preview ember build --environment=production",
+    "build:web:production": "EMBER_CLI_CORDOVA=0 ENVIRONMENT=production ember build --environment=production",
+    "build:cordova:development": "EMBER_CLI_CORDOVA=1 ENVIRONMENT=development ember build",
+    "build:cordova:staging": "EMBER_CLI_CORDOVA=1 ENVIRONMENT=staging ember build --environment=production",
+    "build:cordova:preview": "EMBER_CLI_CORDOVA=1 ENVIRONMENT=preview ember build --environment=production",
+    "build:cordova:production": "EMBER_CLI_CORDOVA=1 ENVIRONMENT=production ember build --environment=production"
   },
   "husky": {
     "hooks": {
