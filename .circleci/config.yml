@@ -7,8 +7,8 @@ aliases:
         - image: circleci/node:carbon
       working_directory: ~/code
       environment:
-        # JOBS: 2 required to ensure broccoli and other processes don't use the reported 36 cores and run out of memory
-        JOBS: 2
+        # JOBS: 1 required to disable workers pools on broccoli as the underlying container reports 36 cores and runs out of memory if trying to spawn 36 threads!
+        JOBS: 1
   - &restore-repo-cache
       key: v1-admin-goodcity-repo-{{ .Environment.CIRCLE_SHA1 }}
   - &restore-yarn-cache
