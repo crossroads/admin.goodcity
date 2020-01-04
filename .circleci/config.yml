@@ -125,7 +125,7 @@ jobs:
               master)
                 ENVIRONMENT=staging
                 ;;
-              preview|GCW-2905-admin-preview)
+              preview)
                 ENVIRONMENT=preview
                 ;;
               live)
@@ -162,7 +162,7 @@ jobs:
               master)
                 STAGE=staging
                 ;;
-              preview|GCW-2905-admin-preview)
+              preview)
                 STAGE=preview
                 ;;
               live)
@@ -183,7 +183,7 @@ jobs:
               master)
                 ASSET_HOST_URL=https://stock-staging.goodcity.hk/assets
                 ;;
-              preview|GCW-2905-admin-preview)
+              preview)
                 ASSET_HOST_URL=https://stock-preview.goodcity.hk/assets
                 ;;
               live)
@@ -403,13 +403,13 @@ workflows:
               - package_dependencies
             filters:
               branches:
-                only: /^(master|live|preview|GCW-2905-admin-preview)$/
+                only: /^(master|live|preview)$/
         - www_deploy:
             requires:
               - www_build
             filters:
               branches:
-                only: /^(master|live|preview|GCW-2905-admin-preview)$/
+                only: /^(master|live|preview)$/
         - ember_cordova_build:
             requires:
               - tests
