@@ -4,7 +4,7 @@ export default Ember.Controller.extend({
   offerId: Ember.computed.alias("model.id"),
 
   actions: {
-    saveComany() {
+    saveCompany() {
       let offer = this.get("model");
       let name = this.get("name");
       let crmId = this.get("crmId");
