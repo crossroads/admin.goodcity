@@ -64,7 +64,7 @@ test("searching a valid term should display results", function(assert) {
     fillIn("#searchText", "Kendrick");
 
     andThen(function() {
-      assert.equal(find("ul li").length, 4);
+      assert.equal(find("ul li").length, 8);
     });
   });
 });

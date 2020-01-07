@@ -1,6 +1,7 @@
 /* jshint node: true */
 const pkgJson = require("../package.json");
 module.exports = function(environment) {
+  environment = process.env.ENVIRONMENT || environment || 'development';
   var ENV = {
     modulePrefix: "goodcity",
     environment: environment,
@@ -13,16 +14,11 @@ module.exports = function(environment) {
       verbose: true,
       ignoredMessages: ["TransitionAborted"],
       payload: {
+        environment: environment,
         client: {
           javascript: {
-            source_map_enabled: true, //this is now true by default
-            code_version: require("child_process")
-              .execSync("git rev-parse HEAD")
-              .toString()
-              .trim(),
             // Optionally have Rollbar guess which frames the error was thrown from
             // when the browser does not provide line and column numbers.
-            environment: environment,
             guess_uncaught_frames: false
           }
         }
@@ -79,9 +75,9 @@ module.exports = function(environment) {
         "cancellation_reason",
         "holiday"
       ],
-      SHA: process.env.APP_SHA || "00000000",
-      SHARED_SHA: process.env.APP_SHARED_SHA || "00000000",
-      VERSION: pkgJson.version || "1.0.0"
+      SHA: process.env.APP_SHA,
+      SHARED_SHA: process.env.APP_SHARED_SHA,
+      VERSION: pkgJson.version
     },
 
     cordova: {
@@ -147,6 +143,7 @@ module.exports = function(environment) {
   }
 
   if (environment === "production") {
+    if (!process.env.ENVIRONMENT) throw('Please pass an appropriate ENVIRONMENT=(staging|preview|production) param.');
     // RESTAdapter Settings
     ENV.APP.API_HOST_URL = "https://api.goodcity.hk";
     ENV.ADMIN_APP_HOST_URL = "https://admin.goodcity.hk";
@@ -175,8 +172,7 @@ module.exports = function(environment) {
     ENV.cordova.FcmSenderId = "876198075877";
   }
 
-  if ((process.env.staging || process.env.STAGING) === "true") {
-    ENV.staging = true;
+  if (environment === "staging") {
     ENV.APP.API_HOST_URL = "https://api-staging.goodcity.hk";
     ENV.ADMIN_APP_HOST_URL = "https://admin-staging.goodcity.hk";
     ENV.APP.SOCKETIO_WEBSERVICE_URL =
@@ -207,11 +203,40 @@ module.exports = function(environment) {
         process.env.VERSION + "." + process.env.BUILD_BUILDNUMBER;
       ENV.APP.APP_SHA = process.env.BUILD_SOURCEVERSION;
     }
-  } else {
-    ENV.staging = false;
+  }
+  if (environment === "preview") {
+    ENV.APP.API_HOST_URL = "https://api-preview.goodcity.hk";
+    ENV.ADMIN_APP_HOST_URL = "https://admin-preview.goodcity.hk";
+    ENV.APP.SOCKETIO_WEBSERVICE_URL =
+      "https://socket-preview.goodcity.hk:81/goodcity";
+    ENV.APP.GOODCITY_NUMBER = "+85258084822";
+    ENV.contentSecurityPolicy["connect-src"] = [
+      "https://admin-preview.goodcity.hk",
+      "https://api-preview.goodcity.hk",
+      "https://socket-preview.goodcity.hk:81",
+      "ws://socket-preview.goodcity.hk:81",
+      "wss://socket-preview.goodcity.hk:81",
+      "https://api.cloudinary.com",
+      "https://errbit.crossroads.org.hk",
+      "https://media.twiliocdn.com",
+      "https://api.twilio.com",
+      "http://static.twilio.com",
+      "https://static.twilio.com",
+      "wss://chunderw.twilio.com/signal",
+      "wss://chunderw-vpc-gll.twilio.com/signal",
+      "https://eventgw.twilio.com/v1/EndpointEvents"
+    ].join(" ");
+    ENV.googleAnalytics = { webPropertyId: "UA-62978462-3" };
+    ENV.cordova.FcmSenderId = "907786683525";
+
+    // VSO build
+    if (process.env.BUILD_BUILDNUMBER) {
+      ENV.APP.VERSION =
+        process.env.VERSION + "." + process.env.BUILD_BUILDNUMBER;
+      ENV.APP.APP_SHA = process.env.BUILD_SOURCEVERSION;
+    }
   }
 
   ENV.APP.SERVER_PATH = ENV.APP.API_HOST_URL + "/" + ENV.APP.NAMESPACE;
-
   return ENV;
 };

@@ -7,7 +7,8 @@ export default Ember.Service.extend({
   allAvailablePrinter() {
     return this.get("store")
       .peekAll("printer")
-      .sortBy("id");
+      .sortBy("id")
+      .map(printer => printer.getProperties("name", "id"));
   },
 
   userDefaultPrinter: Ember.computed(function() {
