@@ -19,6 +19,12 @@
     }
   }
 
+  .search-input-field {
+    @media #{$small-only} {
+      width: 73%;
+    }
+  }
+
   .back-icon {
     top: 0.9rem;
     left: 1%;
