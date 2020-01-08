@@ -14,12 +14,13 @@
     {{#if hasSearchText}}
       <i class="fa fa-times-circle clear-search" {{action "clearSearch"}}></i>
     {{/if}}
-  </div>
-  <div class="small-1 columns back-icon fa-2x" {{action "toggleSortPage" target=filterService}}>
-    <i class="fa fa-sliders sort-icon"></i>
-  </div>
-  <div class="small-12 columns">
-  {{offer-filters-button}}
+    </div>
+    <div class="small-1 columns back-icon fa-2x" {{action "toggleSortPage" target=filterService}}>
+      <i class="fa fa-sliders sort-icon"></i>
+    </div>
+    <div class="small-12 columns">
+    {{offer-filters-button}}
+    </div>
   </div>
 </div>
 
