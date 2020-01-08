@@ -396,7 +396,7 @@ workflows:
               - tests
             filters:
               branches:
-                only: /^(master|live|GCW-2947-horizontal-scroll-input-field-issue)$/
+                only: /^(master|live)$/
         - www_build:
             requires:
               - tests
@@ -416,16 +416,16 @@ workflows:
               - package_dependencies
             filters:
               branches:
-                only: /^(master|live|GCW-2947-horizontal-scroll-input-field-issue)$/
+                only: /^(master|live)$/
         - android_build_and_deploy:
             requires:
               - ember_cordova_build
             filters:
               branches:
-                only: /^(master|live|GCW-2947-horizontal-scroll-input-field-issue)$/
+                only: /^(master|live)$/
         - ios_build_and_deploy:
             requires:
               - tests
             filters:
               branches:
-                only: /^(master|live|GCW-2947-horizontal-scroll-input-field-issue)$/
+                only: /^(master|live)$/
