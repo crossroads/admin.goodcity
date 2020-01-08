@@ -403,13 +403,13 @@ workflows:
               - package_dependencies
             filters:
               branches:
-                only: /^(master|live|preview|GCW-2947-horizontal-scroll-input-field-issue)$/
+                only: /^(master|live|preview)$/
         - www_deploy:
             requires:
               - www_build
             filters:
               branches:
-                only: /^(master|live|preview|GCW-2947-horizontal-scroll-input-field-issue)$/
+                only: /^(master|live|preview)$/
         - ember_cordova_build:
             requires:
               - tests
