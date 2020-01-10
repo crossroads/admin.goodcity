@@ -1,7 +1,7 @@
 /* jshint node: true */
 const pkgJson = require("../package.json");
 module.exports = function(environment) {
-  environment = process.env.ENVIRONMENT || environment || 'development';
+  environment = process.env.ENVIRONMENT || environment || "development";
   var ENV = {
     modulePrefix: "goodcity",
     environment: environment,
@@ -103,7 +103,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
 
     // RESTAdapter Settings
-    ENV.APP.API_HOST_URL = "http://localhost:3000";
+    ENV.APP.API_HOST_URL = "http://localhost:4000";
     ENV.APP.SOCKETIO_WEBSERVICE_URL = "http://localhost:1337/goodcity";
     ENV.ADMIN_APP_HOST_URL = "http://localhost:4201";
 
@@ -111,7 +111,7 @@ module.exports = function(environment) {
 
     ENV.contentSecurityPolicy["connect-src"] = [
       "http://localhost:4201",
-      "http://localhost:3000",
+      "http://localhost:4000",
       "http://localhost:1337",
       "ws://localhost:1337",
       "wss://localhost:1337",
@@ -143,7 +143,8 @@ module.exports = function(environment) {
   }
 
   if (environment === "production") {
-    if (!process.env.ENVIRONMENT) throw('Please pass an appropriate ENVIRONMENT=(staging|preview|production) param.');
+    if (!process.env.ENVIRONMENT)
+      throw "Please pass an appropriate ENVIRONMENT=(staging|preview|production) param.";
     // RESTAdapter Settings
     ENV.APP.API_HOST_URL = "https://api.goodcity.hk";
     ENV.ADMIN_APP_HOST_URL = "https://admin.goodcity.hk";
