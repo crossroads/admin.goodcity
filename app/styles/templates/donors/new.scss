@@ -52,10 +52,14 @@
   select {
     background-color: unset;
     color: white;
-    padding-top: 0.8em;
     font-size: 0.9em;
-    padding-bottom: 0.9em;
+    height: 2.75rem;
     border: 1px #a3aab6 solid;
+
+    option {
+      background-color: $tabbar-menu-icon-color;
+      color: $black;
+    }
   }
 
 
