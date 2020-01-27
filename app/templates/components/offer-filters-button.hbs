@@ -1,74 +1,76 @@
 <div class="filter-buttons">
-  <div class="small-4 columns">
+  <div class="row">
+    <div class="small-4 columns">
 
-    <!-- State button -->
-    <div
-      id="offer-state-filter"
-      class="button expand filter-button-css {{if hasStateFilters 'filter-button-border'}}"
-    >
-      <!-- Close btn -->
-      {{#if hasStateFilters}}
-        <div class="remove-filters-icon" {{action "clearOfferStateFilters" target=filterService}}>
-          <i class="fa fa-times"></i>
-        </div>
-      {{/if}}
-
-      <!-- Open btn -->
-      <div class="button-text" id="state-filter-button" {{action "redirectTofilters" "applyStateFilter"}} >
-        {{#if (is-equal offerStateFilters.length 0) }}
-          {{t 'offer_filters.button_state'}}
-        {{else if (is-equal offerStateFilters.length 1) }}
-          {{t (concat 'offer_filters.' offerStateFilters.firstObject) }}
-        {{else}}
-          {{t 'offer_filters.button_state'}}: {{offerStateFilters.length}}
-        {{/if}}
-      </div>
-    </div>
-  </div>
-
-  <!-- All button -->
-  <div class="small-4 columns">
-    <div
-      id="offer-all-filter"
-      class="button expand filter-button-css {{if selfReviewFilter 'filter-button-border'}}">
-
-
-      {{#if selfReviewFilter}}
-        <div class="remove-filters-icon" {{action "clearReviewFilters" target=filterService}}>
-          <i class="fa fa-times"></i>
-        </div>
-      {{/if}}
-
-      <div class="button-text" id="reviewer-filter-button" {{action "enableReviewFilter" target=filterService}}>
-        {{#if selfReviewFilter}}
-          {{t 'offer_filters.self_review'}}
-        {{else}}
-          {{t 'offer_filters.all_review'}}
-        {{/if}}
-      </div>
-    </div>
-  </div>
-
-  <!-- Time ranges -->
-  <div class="small-4 columns">
-    <div
-      id="offer-time-filter"
-      class="button expand filter-button-css {{if hasTimeFilters 'filter-button-border'}}">
-
-        {{#if hasTimeFilters}}
-          <div class="remove-filters-icon" {{action "clearOfferTimeFilters" target=filterService}}>
+      <!-- State button -->
+      <div
+        id="offer-state-filter"
+        class="button expand filter-button-css {{if hasStateFilters 'filter-button-border'}}"
+      >
+        <!-- Close btn -->
+        {{#if hasStateFilters}}
+          <div class="remove-filters-icon" {{action "clearOfferStateFilters" target=filterService}}>
             <i class="fa fa-times"></i>
           </div>
         {{/if}}
 
-        <div class="button-text" id="time-filter-button" {{action "redirectTofilters" "applyTimeFilter"}} >
-          {{#if offerTimeRange.preset }}
-            {{t (concat 'offer_filters.time_presets.' offerTimeRange.preset) }}
+        <!-- Open btn -->
+        <div class="button-text" id="state-filter-button" {{action "redirectTofilters" "applyStateFilter"}} >
+          {{#if (is-equal offerStateFilters.length 0) }}
+            {{t 'offer_filters.button_state'}}
+          {{else if (is-equal offerStateFilters.length 1) }}
+            {{t (concat 'offer_filters.' offerStateFilters.firstObject) }}
           {{else}}
-            {{t 'offer_filters.button_due'}}
+            {{t 'offer_filters.button_state'}}: {{offerStateFilters.length}}
           {{/if}}
         </div>
       </div>
+    </div>
+
+    <!-- All button -->
+    <div class="small-4 columns">
+      <div
+        id="offer-all-filter"
+        class="button expand filter-button-css {{if selfReviewFilter 'filter-button-border'}}">
+
+
+        {{#if selfReviewFilter}}
+          <div class="remove-filters-icon" {{action "clearReviewFilters" target=filterService}}>
+            <i class="fa fa-times"></i>
+          </div>
+        {{/if}}
+
+        <div class="button-text" id="reviewer-filter-button" {{action "enableReviewFilter" target=filterService}}>
+          {{#if selfReviewFilter}}
+            {{t 'offer_filters.self_review'}}
+          {{else}}
+            {{t 'offer_filters.all_review'}}
+          {{/if}}
+        </div>
+      </div>
+    </div>
+
+    <!-- Time ranges -->
+    <div class="small-4 columns">
+      <div
+        id="offer-time-filter"
+        class="button expand filter-button-css {{if hasTimeFilters 'filter-button-border'}}">
+
+          {{#if hasTimeFilters}}
+            <div class="remove-filters-icon" {{action "clearOfferTimeFilters" target=filterService}}>
+              <i class="fa fa-times"></i>
+            </div>
+          {{/if}}
+
+          <div class="button-text" id="time-filter-button" {{action "redirectTofilters" "applyTimeFilter"}} >
+            {{#if offerTimeRange.preset }}
+              {{t (concat 'offer_filters.time_presets.' offerTimeRange.preset) }}
+            {{else}}
+              {{t 'offer_filters.button_due'}}
+            {{/if}}
+          </div>
+        </div>
+    </div>
   </div>
 </div>
 
