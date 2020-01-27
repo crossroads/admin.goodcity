@@ -111,7 +111,6 @@ jobs:
           name: Upload coverage results to Code Climate
           command: |
             yarn run codeclimate-test-reporter < coverage*/lcov.info
-
   www_build:
     <<: *defaults
     steps:
@@ -122,7 +121,7 @@ jobs:
       - run:
           command: |
             case "$CIRCLE_BRANCH" in
-              master)
+              GCW-2946-ios-live-build-fix)
                 ENVIRONMENT=staging
                 ;;
               preview)
@@ -194,7 +193,6 @@ jobs:
                 exit 1
             esac
             curl https://api.rollbar.com/api/1/sourcemap/download -F access_token="${ROLLBAR_KEY}" -F version="${APP_VERSION}" -F minified_url=$ASSET_HOST_URL/$SOURCE_MAP
-
   ember_cordova_build:
     <<: *defaults
     steps:
@@ -396,36 +394,36 @@ workflows:
               - tests
             filters:
               branches:
-                only: /^(GCW-2946-ios-live-build-fix|live)$/
+                only: /^(master|live|GCW-2946-ios-live-build-fix  )$/
         - www_build:
             requires:
               - tests
               - package_dependencies
             filters:
               branches:
-                only: /^(GCW-2946-ios-live-build-fix|live|preview)$/
+                only: /^(master|live|preview|GCW-2946-ios-live-build-fix)$/
         - www_deploy:
             requires:
               - www_build
             filters:
               branches:
-                only: /^(GCW-2946-ios-live-build-fix|live|preview)$/
+                only: /^(master|live|preview|GCW-2946-ios-live-build-fix)$/
         - ember_cordova_build:
             requires:
               - tests
               - package_dependencies
             filters:
               branches:
-                only: /^(GCW-2946-ios-live-build-fix|live)$/
+                only: /^(master|live)$/
         - android_build_and_deploy:
             requires:
               - ember_cordova_build
             filters:
               branches:
-                only: /^(GCW-2946-ios-live-build-fix|live)$/
+                only: /^(master|live)$/
         - ios_build_and_deploy:
             requires:
               - tests
             filters:
               branches:
-                only: /^(GCW-2946-ios-live-build-fix|live)$/
+                only: /^(master|live)$/
