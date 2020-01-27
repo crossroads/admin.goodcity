@@ -111,6 +111,7 @@ jobs:
           name: Upload coverage results to Code Climate
           command: |
             yarn run codeclimate-test-reporter < coverage*/lcov.info
+
   www_build:
     <<: *defaults
     steps:
@@ -121,7 +122,7 @@ jobs:
       - run:
           command: |
             case "$CIRCLE_BRANCH" in
-              GCW-2946-ios-live-build-fix)
+              master)
                 ENVIRONMENT=staging
                 ;;
               preview)
@@ -158,7 +159,7 @@ jobs:
           name: Upload to www server
           command: |
             case "$CIRCLE_BRANCH" in
-              GCW-2946-ios-live-build-fix)
+              master)
                 STAGE=staging
                 ;;
               preview)
@@ -179,7 +180,7 @@ jobs:
             SOURCE_MAP_WITH_VARIABLE_NAME=$(grep sourceMappingURL dist/assets/goodcity-*.js)
             SOURCE_MAP=$(eval echo $SOURCE_MAP_WITH_VARIABLE_NAME | cut -c22-100)
             case "$CIRCLE_BRANCH" in
-              GCW-2946-ios-live-build-fix)
+              master)
                 ASSET_HOST_URL=https://stock-staging.goodcity.hk/assets
                 ;;
               preview)
@@ -193,6 +194,7 @@ jobs:
                 exit 1
             esac
             curl https://api.rollbar.com/api/1/sourcemap/download -F access_token="${ROLLBAR_KEY}" -F version="${APP_VERSION}" -F minified_url=$ASSET_HOST_URL/$SOURCE_MAP
+
   ember_cordova_build:
     <<: *defaults
     steps:
@@ -208,7 +210,7 @@ jobs:
             if [ -z "$APP_SHARED_SHA" ]; then APP_SHARED_SHA=$( git ls-remote --heads https://github.com/crossroads/shared.goodcity.git $CIRCLE_BRANCH | cut -c1-7); fi
             if [ -z "$APP_SHARED_SHA" ]; then APP_SHARED_SHA=$( git ls-remote --heads https://github.com/crossroads/shared.goodcity.git master | cut -c1-7); fi
             case "$CIRCLE_BRANCH" in
-            GCW-2946-ios-live-build-fix)
+            master)
               ENVIRONMENT=staging
               ;;
             preview)
@@ -308,7 +310,7 @@ jobs:
           name: Setup Environment variables
           command: |
             case "$CIRCLE_BRANCH" in
-              GCW-2946-ios-live-build-fix)
+              master)
                 echo 'export ENVIRONMENT=staging' >> $BASH_ENV
                 echo 'export CERTIFICATE=GoodCity_2020_Development.p12' >> $BASH_ENV
                 echo 'export PROVISIONING_PROFILE=GoodcityAdminStaging.mobileprovision' >> $BASH_ENV
@@ -394,36 +396,36 @@ workflows:
               - tests
             filters:
               branches:
-                only: /^(master|live|GCW-2946-ios-live-build-fix  )$/
+                only: /^(master|live)$/
         - www_build:
             requires:
               - tests
               - package_dependencies
             filters:
               branches:
-                only: /^(master|live|preview|GCW-2946-ios-live-build-fix)$/
+                only: /^(master|live|preview)$/
         - www_deploy:
             requires:
               - www_build
             filters:
               branches:
-                only: /^(master|live|preview|GCW-2946-ios-live-build-fix)$/
+                only: /^(master|live|preview)$/
         - ember_cordova_build:
             requires:
               - tests
               - package_dependencies
             filters:
               branches:
-                only: /^(master|live|preview|GCW-2946-ios-live-build-fix)$/
+                only: /^(master|live)$/
         - android_build_and_deploy:
             requires:
               - ember_cordova_build
             filters:
               branches:
-                only: /^(master|live|preview|GCW-2946-ios-live-build-fix)$/
+                only: /^(master|live)$/
         - ios_build_and_deploy:
             requires:
               - tests
             filters:
               branches:
-                only: /^(master|live|preview|GCW-2946-ios-live-build-fix)$/
+                only: /^(master|live)$/
