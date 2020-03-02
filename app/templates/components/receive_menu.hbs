@@ -25,14 +25,14 @@
       {{t "receive.missing"}}
     </div>
   {{else}}
-    <div {{action "checkReceiving" "missing"}} class="{{if isMissing 'disabled'}}">
-      <i class="fa fa-exclamation-triangle"></i>
-      {{t "receive.missing"}}
-    </div>
+  <div {{action "checkReceiving" "missing" isMissing}} class="{{if isMissing 'disabled'}}">
+    <i class="fa fa-exclamation-triangle"></i>
+    {{t "receive.missing"}}
+  </div>
   {{/if}}
 
 
-  <div {{action "checkReceiving" "receive"}} class="{{if isReceived 'disabled'}}">
+  <div {{action "checkReceiving" "receive" isReceived}} class="{{if isReceived 'disabled'}}">
     <i class="fa fa-check-circle-o"></i>
     {{t "receive.receive"}}
   </div>
@@ -43,10 +43,10 @@
       {{t "receive.label"}}
     </div>
   {{else}}
-    <div {{action "checkReceiving" "receiveInInventory"}} class="{{if isReceived 'disabled'}}">
-      <i class= "fa fa-barcode"></i>
-      {{t "receive.inventory"}}
-    </div>
+  <div {{action "checkReceiving" "receiveInInventory" isReceived}} class="{{if isReceived 'disabled'}}">
+    <i class="fa fa-barcode"></i>
+    {{t "receive.inventory"}}
+  </div>
   {{/if}}
 
   <div class="options-link-close" {{action "toggle" true}}>
