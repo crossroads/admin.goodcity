@@ -85,7 +85,7 @@
   <access launch-external="yes" origin="tel:*" />
   <access origin="*" />
   <allow-intent href="https://maps.google.com/*" />
-  <engine name="ios" spec="https://github.com/apache/cordova-ios.git#4.5.5" />
+  <engine name="ios" spec="https://github.com/apache/cordova-ios.git#5.0.0" />
   <engine name="android" spec="8.0.0" />
   <engine name="windows" spec="~4.3.1" />
   <plugin name="cordova-plugin-statusbar" spec="~2.1.1" />
