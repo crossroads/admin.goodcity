@@ -15,7 +15,7 @@ moduleForModel("package", "Package Model", {
 });
 
 test("check attributes", function(assert) {
-  assert.expect(18);
+  assert.expect(17);
   var model = this.subject();
   var state_event = Object.keys(model.toJSON()).indexOf("state_event") > -1;
   var state = Object.keys(model.toJSON()).indexOf("state") > -1;
