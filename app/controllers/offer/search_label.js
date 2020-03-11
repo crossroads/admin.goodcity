@@ -52,7 +52,7 @@ export default searchLabelController.extend({
 
     return {
       notes: item.get("packageType.name"),
-      quantity: 1,
+      receivedQuantity: 1,
       packageTypeId,
       packageType: pkgType,
       offerId: item.get("offer.id"),

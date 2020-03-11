@@ -69,7 +69,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
 
   showPublishItemCheckBox: Ember.computed(
     "packageForm.quantity",
-    "package.quantity",
+    "package.receivedQuantity",
     function() {
       this.set("isAllowedToPublish", false);
       return +this.get("packageForm.quantity") === 1;
@@ -104,11 +104,11 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     get: function() {
       const pkg = this.get("package");
       return {
-        quantity: pkg.get("quantity"),
+        quantity: pkg.get("receivedQuantity"),
         length: pkg.get("length"),
         width: pkg.get("width"),
         height: pkg.get("height"),
-        labels: pkg.get("quantity")
+        labels: pkg.get("receivedQuantity")
       };
     }
   }),
@@ -204,7 +204,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     }
     pkg.set("state", "received");
     pkg.set("state_event", "mark_received");
-    pkg.set("quantity", pkgData.quantity);
+    pkg.set("receivedQuantity", pkgData.quantity);
     pkg.set("length", pkgData.length);
     pkg.set("width", pkgData.width);
     pkg.set("height", pkgData.height);

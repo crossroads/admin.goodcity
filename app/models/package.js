@@ -7,7 +7,12 @@ var attr = DS.attr,
   belongsTo = DS.belongsTo;
 
 export default DS.Model.extend({
-  quantity: attr("number"),
+  availableQuantity: attr("number"),
+  onHandQuantity: attr("number"),
+  dispatchedQuantity: attr("number"),
+  designatedQuantity: attr("number"),
+  receivedQuantity: attr("number"),
+  quantity: Ember.computed.alias("availableQuantity"),
   length: attr("number"),
   width: attr("number"),
   height: attr("number"),
@@ -32,23 +37,8 @@ export default DS.Model.extend({
   sentOn: attr("date"),
   designationId: attr("number"),
   favouriteImageId: attr("number"),
-  receivedQuantity: attr("number"),
   allowWebPublish: attr("boolean"),
   packagesLocationsAttributes: attr(),
-
-  isDispatched: Ember.computed.bool("sentOn"),
-  isDesignated: Ember.computed(
-    "designationId",
-    "sentOn",
-    "inventoryNumber",
-    function() {
-      return (
-        this.get("designationId") &&
-        this.get("sentOn") === null &&
-        this.get("inventoryNumber")
-      );
-    }
-  ),
 
   donorConditionId: Ember.computed.foreignKey("donorCondition.id"),
 
@@ -140,65 +130,24 @@ export default DS.Model.extend({
     }
   ),
 
-  remainingQty: Ember.computed(
-    "ordersPackages.@each.quantity",
-    "ordersPackages.[]",
-    "ordersPackages.@each.state",
-    "receivedQuantity",
-    function() {
-      var qty = 0;
-      this.get("ordersPackages").forEach(record => {
-        if (record && record.get("state") !== "cancelled") {
-          this.store
-            .findRecord("ordersPackage", record.get("id"))
-            .then((qty += parseInt(record.get("quantity"), 10)));
-        }
-      });
-      return this.get("receivedQuantity") - qty || 0;
-    }
-  ),
-
   hasAllPackagesDispatched: Ember.computed(
-    "ordersPackages.@each.quantity",
-    "ordersPackages.@each.state",
-    "ordersPackages.[]",
+    "dispatchedQuantity",
+    "onHandQuantity",
     function() {
-      var ordersPackages = this.store.query("ordersPackage", {
-        search_by_package_id: this.get("id")
-      });
-      var packagesLocations = this.store.query("packagesLocation", {
-        search_by_package_id: this.get("id")
-      });
-      this.store.pushPayload(packagesLocations);
-      this.store.pushPayload(ordersPackages);
-      var received_quantity = this.get("receivedQuantity");
-      var totalDispatchedQty = 0;
-      var dispatchedOrdersPackages = this.get("ordersPackages").filterBy(
-        "state",
-        "dispatched"
+      return (
+        this.get("onHandQuantity") === 0 && this.get("dispatchedQuantity") > 0
       );
-      dispatchedOrdersPackages.forEach(record => {
-        totalDispatchedQty += parseInt(record.get("quantity"), 10);
-      });
-      return totalDispatchedQty === received_quantity ? true : false;
     }
   ),
 
   hasAllPackagesDesignated: Ember.computed(
-    "ordersPackages.@each.quantity",
-    "ordersPackages.@each.state",
-    "ordersPackages.[]",
+    "designatedQuantity",
+    "availableQuantity",
     function() {
-      var received_quantity = this.get("receivedQuantity");
-      var totalDesignatedQty = 0;
-      var dispatchedOrdersPackages = this.get("ordersPackages").filterBy(
-        "state",
-        "designated"
+      return (
+        this.get("availableQuantity") === 0 &&
+        this.get("designatedQuantity") > 0
       );
-      dispatchedOrdersPackages.forEach(record => {
-        totalDesignatedQty += parseInt(record.get("quantity"), 10);
-      });
-      return totalDesignatedQty === received_quantity ? true : false;
     }
   ),
 
@@ -217,40 +166,6 @@ export default DS.Model.extend({
     "ordersPackages.[]",
     function() {
       return this.get("ordersPackages").filterBy("state", "dispatched");
-    }
-  ),
-
-  totalDispatchedQty: Ember.computed(
-    "ordersPackages.@each.quantity",
-    "ordersPackages.@each.state",
-    "ordersPackages.[]",
-    function() {
-      var totalDispatchedQty = 0;
-      var dispatchedOrdersPackages = this.get("ordersPackages").filterBy(
-        "state",
-        "dispatched"
-      );
-      dispatchedOrdersPackages.forEach(record => {
-        totalDispatchedQty += parseInt(record.get("quantity"), 10);
-      });
-      return totalDispatchedQty;
-    }
-  ),
-
-  totalDesignatedQty: Ember.computed(
-    "ordersPackages.@each.quantity",
-    "ordersPackages.@each.state",
-    "ordersPackages.[]",
-    function() {
-      var totalDesignatedQty = 0;
-      var dispatchedOrdersPackages = this.get("ordersPackages").filterBy(
-        "state",
-        "designated"
-      );
-      dispatchedOrdersPackages.forEach(record => {
-        totalDesignatedQty += parseInt(record.get("quantity"), 10);
-      });
-      return totalDesignatedQty;
     }
   ),
 
