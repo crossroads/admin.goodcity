@@ -91,7 +91,7 @@
     "azure-api": "git://github.com/crossroads/azure-api.git#master",
     "bower": "^1.8.4",
     "codeclimate-test-reporter": "^0.5.0",
-    "cordova": "7.1.0",
+    "cordova": "8.1.0",
     "cordova-update-config": "^1.0.2",
     "cryptiles": "^4.1.2",
     "deep-extend": "^0.5.1",
