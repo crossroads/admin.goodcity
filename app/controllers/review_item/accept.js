@@ -233,6 +233,7 @@ export default Ember.Controller.extend({
         return item.save().finally(() => {
           this.set("itemSaving", false);
           loadingView.destroy();
+          this.set("reviewItem.originalPackageType", this.get("itemType"));
           this.transitionToRoute("review_offer.items");
           this.get("reviewOfferController").set(
             "displayCompleteReviewPopup",
