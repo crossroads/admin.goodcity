@@ -233,6 +233,8 @@ export default Ember.Controller.extend({
         return item.save().finally(() => {
           this.set("itemSaving", false);
           loadingView.destroy();
+          // Done to handle GCW-2167
+          // On saving of package type, update the original package type to the saved one.
           this.set("reviewItem.originalPackageType", this.get("itemType"));
           this.transitionToRoute("review_offer.items");
           this.get("reviewOfferController").set(

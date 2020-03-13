@@ -74,10 +74,14 @@ export default Ember.Controller.extend({
 
   itemType: Ember.computed("defaultPackage", {
     get: function() {
+      // Done to handle GCW-2167
+      // Make use of originalPackageType. This is used to reset the selected package type,
+      // when navigated back without saving.
+      const defaultPackage = this.get("defaultPackage");
       if (!this.get("originalPackageType")) {
-        this.set("originalPackageType", this.get("defaultPackage"));
+        this.set("originalPackageType", defaultPackage);
       }
-      return this.get("defaultPackage");
+      return defaultPackage;
     },
     set: function(key, value) {
       return value;

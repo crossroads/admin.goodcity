@@ -14,13 +14,11 @@ export default AuthorizeRoute.extend({
         ) >= 0;
       this.set("editItemRequest", editItemRequest);
 
-      previousRoute.name == "search_label";
-    }
-
-    if (previousRoute && previousRoute.name == "search_label") {
-      this.set("searchLabelRequest", true);
-    } else {
-      this.set("searchLabelRequest", false);
+      if (previousRoute.name == "search_label") {
+        this.set("searchLabelRequest", true);
+      } else {
+        this.set("searchLabelRequest", false);
+      }
     }
   },
 
@@ -31,6 +29,9 @@ export default AuthorizeRoute.extend({
   setupController(controller, model) {
     this._super(controller, model);
 
+    // This is done to handle GCW-2167
+    // If the previous request is search_label request, then the selected package type must be used.
+    // If the previous request is not search_label request, then the original package type must be used.
     if (
       !this.get("searchLabelRequest") &&
       controller.get("originalPackageType")
