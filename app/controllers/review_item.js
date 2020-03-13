@@ -95,10 +95,6 @@ export default Ember.Controller.extend({
       this.set("isEditing", value);
     },
 
-    resetItemType() {
-      this.set("itemType", this.get("originalPackageType"));
-    },
-
     copyItem() {
       var loadingView = getOwner(this)
         .lookup("component:loading")
