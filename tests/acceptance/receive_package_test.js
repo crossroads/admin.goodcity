@@ -141,7 +141,7 @@ test("If location not selected Receive button is disabled", function(assert) {
 
 test("If quantity is zero or below Receive button is disabled and it gives validation error", function(assert) {
   Ember.run(function() {
-    package1.set("quantity", 0);
+    package1.set("receivedQuantity", 0);
   });
   visit("/offers/" + offer1.id + "/receive_package/" + package1.id);
   andThen(function() {

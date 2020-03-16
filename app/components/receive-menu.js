@@ -1,12 +1,14 @@
 import Ember from "ember";
 const { getOwner } = Ember;
 import AjaxPromise from "../utils/ajax-promise";
+import AsyncTasksMixin, { ERROR_STRATEGIES } from "../mixins/async_tasks";
 
-export default Ember.Component.extend({
+export default Ember.Component.extend(AsyncTasksMixin, {
   hidden: true,
   packageId: null,
   store: Ember.inject.service(),
   messageBox: Ember.inject.service(),
+  packageService: Ember.inject.service(),
   displayUserPrompt: false,
 
   isReceived: Ember.computed.equal("package.state", "received"),
@@ -177,11 +179,11 @@ export default Ember.Component.extend({
 
     missing() {
       if (!this.get("isMissing")) {
-        this.updatePackage(p => {
-          p.set("state", "missing");
-          p.set("state_event", "mark_missing");
-          p.set("location", null);
-        });
+        const pkg = this.get("package");
+        this.runTask(
+          this.get("packageService").markMissing(pkg),
+          ERROR_STRATEGIES.MODAL
+        );
       }
     },
 

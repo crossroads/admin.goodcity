@@ -11,7 +11,7 @@ FactoryGuy.define("package", {
   },
   default: {
     id: FactoryGuy.generate("id"),
-    quantity: 1,
+    receivedQuantity: 1,
     labels: 1,
     length: 10,
     width: 10,

@@ -40,7 +40,7 @@
                 </div>
                 <div class="row bottom">
                   <div class="small-6 columns ui inner">
-                    {{numeric-input id=(concat 'qty' index) name="qty" value=pkg.quantity placeholder=(t "placeholder.qty") maxlength="8" required='true' pattern="\d{1,8}"}}
+                    {{numeric-input id=(concat 'qty' index) name="qty" value=pkg.receivedQuantity placeholder=(t "placeholder.qty") maxlength="8" required='true' pattern="\d{1,8}"}}
                   </div>
                   <div class="small-2 columns ui inner">
                     {{numeric-input name="length" id=(concat 'length' index) value=pkg.length placeholder=(t "placeholder.length") maxlength="8" pattern="\d{1,8}"}}
