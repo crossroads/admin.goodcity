@@ -56,11 +56,7 @@ export default Ember.TextField.extend({
 
         onOpen: function() {
           const date = cmp.get("model");
-          if (!date) {
-            this.set("val", null);
-          } else {
-            this.set("val", date);
-          }
+          this.set("val", date ? date : null);
         },
 
         onSet: function() {
