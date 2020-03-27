@@ -145,18 +145,13 @@ export default Ember.Component.extend({
       if (this.get("applyTimeFilter")) {
         this.clearTimeFilters();
       }
-
-      this.set("selectedTimeRange.date_filter_2", null);
-      this.set("selectedTimeRange.date_filter_1", null);
     },
 
     setBeforeTime(before) {
-      this.set("selectedTimeRange.date_filter_2", before);
       this._setRangeProperty("before", endOfDay(before));
     },
 
     setAfterTime(after) {
-      this.set("selectedTimeRange.date_filter_1", after);
       this._setRangeProperty("after", startOfDay(after));
     }
   }

@@ -50,10 +50,8 @@ export default Ember.TextField.extend({
         onClose: function() {
           Ember.$(document.activeElement).blur();
           const [minDate, maxDate] = [cmp.get("minDate"), cmp.get("maxDate")];
-          if (minDate || maxDate) {
-            this.set("min", minDate || "");
-            this.set("max", maxDate || "");
-          }
+          this.set("min", minDate || "");
+          this.set("max", maxDate || "");
         },
 
         onOpen: function() {
@@ -73,7 +71,6 @@ export default Ember.TextField.extend({
           if (_.isFunction(onSelect)) {
             onSelect(date);
           }
-          console.log(this);
         }
       });
     });
