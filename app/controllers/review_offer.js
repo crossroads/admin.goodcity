@@ -51,7 +51,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
         currentPath.indexOf(`offers/${this.get("offer.id")}`) >= 0
       ) {
         this.get("messageBox").alert(this.get("i18n").t("404_error"), () => {
-          this.transitionToRoute("my_list");
+          this.transitionToRoute("dashboard");
         });
       }
     }
