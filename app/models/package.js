@@ -29,7 +29,6 @@ export default DS.Model.extend({
   location: belongsTo("location", { async: false }),
   donorCondition: belongsTo("donor_condition", { async: false }),
   ordersPackages: hasMany("orders_package", { async: true }),
-  packageImages: hasMany("package_image", { async: false }),
   packagesLocations: hasMany("packages_location", { async: true }),
   offerId: attr("number"),
   inventoryNumber: attr("string"),
@@ -84,6 +83,12 @@ export default DS.Model.extend({
         : this.get("item.displayImageUrl");
     }
   ),
+
+  images: hasMany("image", {
+    async: false
+  }),
+
+  packageImages: Ember.computed.alias("images"),
 
   favouriteImage: Ember.computed("packageImages.@each.favourite", function() {
     return (
