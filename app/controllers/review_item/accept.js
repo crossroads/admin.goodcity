@@ -23,7 +23,7 @@ export default Ember.Controller.extend({
 
   onItemPackagesChange: Ember.observer(
     "itemPackages.[]",
-    "itemPackages.@each.quantity",
+    "itemPackages.@each.receivedQuantity",
     "itemPackages.@each.length",
     "itemPackages.@each.width",
     "itemPackages.@each.height",
@@ -65,7 +65,7 @@ export default Ember.Controller.extend({
   returnPackageProperties(pkg) {
     return pkg.getProperties(
       "id",
-      "quantity",
+      "receivedQuantity",
       "length",
       "width",
       "height",
@@ -106,7 +106,7 @@ export default Ember.Controller.extend({
           obj.packageType = packageTypes[index] || packageTypes[0];
         }
         obj.hideComment = false;
-        obj.quantity = obj.quantity || 1;
+        obj.receivedQuantity = obj.receivedQuantity || 1;
         packages.pushObject(obj);
       });
     }
@@ -151,7 +151,7 @@ export default Ember.Controller.extend({
         hideComment: false,
         displayImageUrl: this.get("item.displayImageUrl"),
         notes: note_text,
-        quantity: 1,
+        receivedQuantity: 1,
         packageTypeId,
         packageType: this.get("store").peekRecord("packageType", packageTypeId),
         offerId: this.get("item.offer.id"),

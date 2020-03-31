@@ -133,11 +133,11 @@ test("visit accepted item with item_type", function(assert) {
     // display quantity value
     assert.equal(
       parseInt($(".detail_container:eq(0) input[name='qty']").val()),
-      package1.get("quantity")
+      package1.get("receivedQuantity")
     );
     assert.equal(
       parseInt($(".detail_container:eq(1) input[name='qty']").val()),
-      package2.get("quantity")
+      package2.get("receivedQuantity")
     );
 
     // display length value
