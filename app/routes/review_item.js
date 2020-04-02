@@ -1,26 +1,45 @@
-import AuthorizeRoute from './authorize';
+import AuthorizeRoute from "./authorize";
 
 export default AuthorizeRoute.extend({
-
   editItemRequest: "",
+  searchLabelRequest: false,
 
-  beforeModel(){
+  beforeModel() {
     var previousRoutes = this.router.router.currentHandlerInfos;
     var previousRoute = previousRoutes && previousRoutes.pop();
-    if(previousRoute){
-      var editItemRequest = ["review_offer.items", "review_offer.receive"].indexOf(previousRoute.name) >= 0;
+    if (previousRoute) {
+      var editItemRequest =
+        ["review_offer.items", "review_offer.receive"].indexOf(
+          previousRoute.name
+        ) >= 0;
       this.set("editItemRequest", editItemRequest);
+
+      if (previousRoute.name == "search_label") {
+        this.set("searchLabelRequest", true);
+      } else {
+        this.set("searchLabelRequest", false);
+      }
     }
   },
 
   model(params) {
-    return this.store.findRecord('item', params.item_id);
+    return this.store.findRecord("item", params.item_id);
   },
 
   setupController(controller, model) {
     this._super(controller, model);
 
-    if((this.get("editItemRequest"))){
+    // This is done to handle GCW-2167
+    // If the previous request is search_label request, then the selected package type must be used.
+    // If the previous request is not search_label request, then the original package type must be used.
+    if (
+      !this.get("searchLabelRequest") &&
+      controller.get("originalPackageType")
+    ) {
+      controller.set("defaultPackage", controller.get("originalPackageType"));
+    }
+
+    if (this.get("editItemRequest")) {
       var itemDetails = {
         donorConditionId: model.get("donorConditionId"),
         donorDescription: model.get("donorDescription")
