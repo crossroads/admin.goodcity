@@ -62,7 +62,7 @@ export default Ember.Controller.extend({
       }
     }
   ),
-  canCopy: Ember.computed("item", {
+  canCopyItem: Ember.computed("item", {
     get: function() {
       const item = this.get("item");
       return (
