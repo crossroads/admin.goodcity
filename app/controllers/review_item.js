@@ -62,16 +62,9 @@ export default Ember.Controller.extend({
       }
     }
   ),
-  canCopyItem: Ember.computed("item", {
-    get: function() {
-      const item = this.get("item");
-      return (
-        !item.get("offer").get("isFinished") && item.get("state") != "draft"
-      );
-    },
-    set: function(key, value) {
-      return value;
-    }
+  canCopyItem: Ember.computed("item", function() {
+    const item = this.get("item");
+    return !item.get("offer").get("isFinished") && item.get("state") != "draft";
   }),
 
   itemTypeId: Ember.computed("defaultPackage", {
