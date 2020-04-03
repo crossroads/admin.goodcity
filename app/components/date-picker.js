@@ -49,14 +49,14 @@ export default Ember.TextField.extend({
 
         onClose: function() {
           Ember.$(document.activeElement).blur();
-          const [minDate, maxDate] = [cmp.get("minDate"), cmp.get("maxDate")];
-          this.set("min", minDate || "");
-          this.set("max", maxDate || "");
         },
 
         onOpen: function() {
           const date = cmp.get("model");
           this.set("val", date ? date : null);
+          const [minDate, maxDate] = [cmp.get("minDate"), cmp.get("maxDate")];
+          this.set("min", minDate || "");
+          this.set("max", maxDate || "");
         },
 
         onSet: function() {
@@ -64,7 +64,7 @@ export default Ember.TextField.extend({
           var onSelect = cmp.get("onSelect");
           const date =
             this.get("val") || (this.get("select") && this.get("select").obj);
-          if (_.isFunction(onSelect)) {
+          if (isValidDate(date) && _.isFunction(onSelect)) {
             onSelect(date);
           }
         }
