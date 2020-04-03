@@ -39,6 +39,15 @@ module("Display review Item", {
     });
     packages_location = FactoryGuy.make("packages_location");
     $.mockjax({
+      url: "/api/v1/printer*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        printers: [printer.toJSON({ includeId: true })]
+      }
+    });
+
+    $.mockjax({
       url: "/api/v1/role*",
       type: "GET",
       status: 200,

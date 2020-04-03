@@ -27,6 +27,16 @@ module("Reviewer: Accept Item Tab", {
     App = startApp({}, 2);
     TestHelper.setup();
     role = FactoryGuy.make("role");
+
+    $.mockjax({
+      url: "/api/v1/printer*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        printers: [printer.toJSON({ includeId: true })]
+      }
+    });
+
     $.mockjax({
       url: "/api/v1/role*",
       type: "GET",
