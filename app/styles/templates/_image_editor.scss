@@ -1,0 +1,97 @@
+.image-editor-page {
+  padding: 0;
+
+  #photo-list {
+    margin-left: 0;
+    li {
+      list-style-type: none;
+      padding: 3px;
+      display: inline-block;
+      vertical-align: middle;
+      position: relative;
+      img:hover, .selected img {
+        border-color: white;
+      }
+    }
+    .disabled {
+      border-color: $org-grey !important;
+      color: $org-grey !important;
+    }
+    .fa-star {
+      position: absolute;
+      top: -3px;
+      right: -3px;
+    }
+    .noImage {
+      left: 20%;
+      a {
+        text-decoration: underline;
+        font-weight: bold;
+        color: #596573 !important;
+      }
+    }
+  }
+
+  #add-photo {
+    font-size: 0.8em;
+    vertical-align: middle;
+    color: white;
+    border: white 2px dashed;
+    border-radius: 2px;
+    background-color: $white-with-shadow;
+    text-align: center;
+    padding: 5px;
+  }
+
+  #main-image {
+    margin-bottom: 20px;
+    background-color: black;
+    > div {
+      height: 92%;
+      width: 100%;
+      background-repeat: no-repeat;
+      background-position: center center;
+      position: relative;
+    }
+  }
+
+  #main-image-controls {
+    color: white;
+    background-color: $black-with-shadow;
+    bottom: 0;
+    left: 0;
+    font-size: 34px;
+    padding: 0.5rem 0.5rem;
+    display: inline-block;
+    height: 8% !important;
+
+    .fa-star-o, .fa-star, .fa-trash, .fa-repeat, .fa-undo {
+      float: right;
+    }
+    .fa-expand, .fa-compress {
+      float: left;
+    }
+    .fa-star-o, .fa-star, .fa-trash, .fa-repeat, {
+      margin-left: 1rem;
+    }
+  }
+
+  #main-image.is-expanded {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    margin-bottom: 0;
+    padding-bottom: 3%;
+  }
+
+  .hidden_file_input{
+    opacity: 0;
+    height: 0;
+    z-index: -100;
+    width: 0;
+    position: absolute;
+  }
+}
