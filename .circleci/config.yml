@@ -92,11 +92,8 @@ jobs:
           name: Wait for Ember test server to start
           command: dockerize -wait tcp://localhost:4201 -timeout 1m
       - run:
-          name: Sleep for a while
-          command: sleep 30
-      - run:
           name: Run Ember tests
-          command: COVERAGE=true yarn test:ci
+          command: yarn test:ci
       - persist_to_workspace:
           root: .
           paths:
