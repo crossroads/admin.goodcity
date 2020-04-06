@@ -1,20 +1,7 @@
-import Ember from "ember";
 import ApiBaseService from "./api-base-service";
 import _ from "lodash";
 
-const ID = record => {
-  switch (typeof record) {
-    case "string":
-    case "number":
-      return record;
-    default:
-      return record.get("id");
-  }
-};
-
 export default ApiBaseService.extend({
-  store: Ember.inject.service(),
-
   createImage(imageableRecord, cloudinaryId, params = {}) {
     const modelName = imageableRecord.get("constructor.modelName");
 
