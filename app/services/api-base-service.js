@@ -41,10 +41,9 @@ export default Ember.Service.extend({
     const { authorizedRequest = true } = opts;
     return this._request(
       urlWithParams(url, opts),
-      {
-        ...opts,
+      _.extend({}, opts, {
         action: "GET"
-      },
+      }),
       authorizedRequest
     );
   },
@@ -53,11 +52,10 @@ export default Ember.Service.extend({
     const { authorizedRequest = true } = opts;
     return this._request(
       url,
-      {
-        ...opts,
+      _.extend({}, opts, {
         action: "POST",
         body
-      },
+      }),
       authorizedRequest
     );
   },
@@ -66,11 +64,10 @@ export default Ember.Service.extend({
     const { authorizedRequest = true } = opts;
     return this._request(
       url,
-      {
-        ...opts,
+      _.extend({}, opts, {
         action: "PUT",
         body
-      },
+      }),
       authorizedRequest
     );
   },
@@ -79,10 +76,9 @@ export default Ember.Service.extend({
     const { authorizedRequest = true } = opts;
     return this._request(
       url,
-      {
-        ...opts,
+      _.extend({}, opts, {
         action: "DELETE"
-      },
+      }),
       authorizedRequest
     );
   }
