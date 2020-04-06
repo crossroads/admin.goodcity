@@ -7,7 +7,7 @@ import utils from "../utils/utility-methods";
 /**
  * Image Editor
  *
- * This is based on the old `edit_images` controller (shared.goodcity)
+ * This is a modified version of the old `edit_images` controller (shared.goodcity)
  * This version supports any time of imageable record. In our case Item and Package
  *
  */
@@ -315,7 +315,7 @@ export default Ember.Controller.extend(AsyncMixin, {
 
       this.runTask(() => {
         return this.get("imageService").createImage(record, identifier, {
-          favourite
+          favourite: favourite
         });
       }, this.ERROR_STRATEGIES.MODAL);
     },
