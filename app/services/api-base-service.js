@@ -13,17 +13,23 @@ function urlWithParams(url, params) {
 
 export default Ember.Service.extend({
   // ----- Services -----
+  store: Ember.inject.service(),
   session: Ember.inject.service(),
 
   // ----- Utilities -----
   _request(url, options, authorizedRequest) {
-    const { action, body } = options;
+    const { action, body, persist = false } = options;
     return new AjaxPromise(
       url,
       action,
       authorizedRequest ? this.get("session.authToken") : null,
       body
-    );
+    ).then(data => {
+      if (persist) {
+        this.get("store").pushPayload(data);
+      }
+      return data;
+    });
   },
 
   // ----- CRUD ACTIONS -----
@@ -36,6 +42,7 @@ export default Ember.Service.extend({
     return this._request(
       urlWithParams(url, opts),
       {
+        ...opts,
         action: "GET"
       },
       authorizedRequest
@@ -47,6 +54,7 @@ export default Ember.Service.extend({
     return this._request(
       url,
       {
+        ...opts,
         action: "POST",
         body
       },
@@ -59,6 +67,7 @@ export default Ember.Service.extend({
     return this._request(
       url,
       {
+        ...opts,
         action: "PUT",
         body
       },
@@ -71,6 +80,7 @@ export default Ember.Service.extend({
     return this._request(
       url,
       {
+        ...opts,
         action: "DELETE"
       },
       authorizedRequest

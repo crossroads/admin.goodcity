@@ -336,9 +336,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
 
     assignImageToPackage() {
       const itemId = this.get("package.item.id");
-      this.transitionToRoute("item.edit_images", itemId, {
-        queryParams: { isUnplannedPackage: true }
-      });
+      this.transitionToRoute("package.image_editor", this.get("package"));
     },
 
     moveBack() {

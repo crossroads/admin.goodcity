@@ -41,8 +41,8 @@
 
       <div class="small-3 columns">
         <span class="image-box" {{action 'assignImageToPackage'}}>
-          {{#if package.item.displayImageUrl}}
-          <img src={{package.item.displayImageUrl}} class="thumb" />
+          {{#if package.displayImageUrl}}
+          <img src={{package.displayImageUrl}} class="thumb" />
           {{else}}
           <i class="fa fa-camera"></i><br />
           {{t 'items.add_item.add_images'}}
