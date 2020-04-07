@@ -99,12 +99,9 @@ export default Ember.Controller.extend(AsyncMixin, {
 
   favouriteImage: Ember.computed(
     "images.@each.favourite",
-    "supportsFavouriteImage",
-    "record.favouriteImageId",
+    "images.[]",
     function() {
-      return this.get("supportsFavouriteImage")
-        ? this.get("record.favouriteImage")
-        : this.get("images").findBy("favourite");
+      return this.get("images").findBy("favourite");
     }
   ),
 
@@ -195,8 +192,6 @@ export default Ember.Controller.extend(AsyncMixin, {
     },
 
     setPreview(image) {
-      this.get("images").setEach("selected", false);
-      image.set("selected", true);
       this.set("previewImage", image);
     },
 
