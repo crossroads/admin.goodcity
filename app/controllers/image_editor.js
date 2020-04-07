@@ -177,7 +177,7 @@ export default Ember.Controller.extend(AsyncMixin, {
 
     this.get("messageBox").custom(
       this.locale("edit_images.delete_confirm"),
-      this.locale("edit_images.cancel_item"),
+      this.locale("receive.receiving.not_now"),
       () => deferred.resolve(false),
       this.locale("edit_images.remove_image"),
       () => deferred.resolve(true)
@@ -230,7 +230,9 @@ export default Ember.Controller.extend(AsyncMixin, {
               this.send("setFavourite");
             }
           });
-        }, this.ERROR_STRATEGIES.MODAL);
+        }, this.ERROR_STRATEGIES.MODAL).finally(() => {
+          this.set("isExpanded", false);
+        });
       });
     },
 
