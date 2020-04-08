@@ -9,7 +9,7 @@ moduleForModel("package", "Package Model", {
     "model:location",
     "model:donor_condition",
     "model:orders_package",
-    "model:package_image",
+    "model:image",
     "model:packages_location"
   ]
 });

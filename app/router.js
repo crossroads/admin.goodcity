@@ -45,6 +45,14 @@ Router.map(function() {
       }
     );
 
+    this.route(
+      "package",
+      { resetNamespace: true, path: "/package/:package_id" },
+      function() {
+        this.route("image_editor");
+      }
+    );
+
     this.route("review_offer", { resetNamespace: true }, function() {
       this.route("items");
       this.route("logistics");

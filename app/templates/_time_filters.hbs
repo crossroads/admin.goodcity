@@ -14,6 +14,7 @@
           {{date-picker
             name='selectedTimeRangeAfter'
             id='selectedTimeRangeAfter'
+            maxDate=selectedTimeRange.before
             model=selectedTimeRange.after
             onSelect=(action 'setAfterTime')
           }}
@@ -25,6 +26,7 @@
         <div class="input-container">
           {{date-picker
             name='selectedTimeRangeBefore'
+            minDate = selectedTimeRange.after
             id='selectedTimeRangeBefore'
             model=selectedTimeRange.before
             onSelect=(action 'setBeforeTime')

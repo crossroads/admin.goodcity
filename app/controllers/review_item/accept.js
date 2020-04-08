@@ -161,11 +161,9 @@ export default Ember.Controller.extend({
       });
     },
 
-    setPackageImage(index, image) {
-      var currentPackage = this.get("packages")[index];
+    setPackageImage(currentPackage, image) {
       Ember.set(currentPackage, "favouriteImageId", image.get("id"));
       Ember.set(currentPackage, "displayImageUrl", image.get("thumbImageUrl"));
-      this.get("packages")[index] = currentPackage;
     },
 
     removePackage(index) {

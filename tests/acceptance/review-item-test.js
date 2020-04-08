@@ -21,7 +21,10 @@ module("Display review Item", {
     App = startApp({}, 2);
     role = FactoryGuy.make("role");
     offer = FactoryGuy.make("offer", { state: "under_review" });
-    item = FactoryGuy.make("item_with_type", { state: "accepted" });
+    item = FactoryGuy.make("item_with_type", {
+      offer: offer,
+      state: "accepted"
+    });
     packageType = FactoryGuy.make("package_type", { visibleInSelects: true });
     package1 = FactoryGuy.make("package", {
       item: item,
@@ -63,7 +66,7 @@ module("Display review Item", {
       }
     });
     $.mockjax({
-      url: "/api/v1/package*",
+      url: "/api/v1/package_type*",
       type: "GET",
       status: 200,
       responseText: {
@@ -75,7 +78,9 @@ module("Display review Item", {
       type: "PUT",
       status: 200,
       responseText: {
-        package: [package2.toJSON({ includeId: true })]
+        packages: [package2.toJSON({ includeId: true })],
+        items: [item.toJSON({ includeId: true })],
+        offers: [offer.toJSON({ includeId: true })]
       }
     });
     $.mockjax({
@@ -83,8 +88,9 @@ module("Display review Item", {
       type: "PUT",
       status: 200,
       responseText: {
-        item: [item.toJSON({ includeId: true })],
-        package: [package2.toJSON({ includeId: true })]
+        items: [item.toJSON({ includeId: true })],
+        packages: [package2.toJSON({ includeId: true })],
+        offers: [offer.toJSON({ includeId: true })]
       }
     });
   },

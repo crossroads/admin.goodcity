@@ -29,7 +29,6 @@ export default DS.Model.extend({
   location: belongsTo("location", { async: false }),
   donorCondition: belongsTo("donor_condition", { async: false }),
   ordersPackages: hasMany("orders_package", { async: true }),
-  packageImages: hasMany("package_image", { async: false }),
   packagesLocations: hasMany("packages_location", { async: true }),
   offerId: attr("number"),
   inventoryNumber: attr("string"),
@@ -75,27 +74,20 @@ export default DS.Model.extend({
     return !res ? "" : res + "cm";
   }),
 
-  displayImageUrl: Ember.computed(
-    "favouriteImage",
-    "item.displayImageUrl",
-    function() {
-      return this.get("favouriteImage")
-        ? this.get("favouriteImage.thumbImageUrl")
-        : this.get("item.displayImageUrl");
-    }
-  ),
+  displayImageUrl: Ember.computed("favouriteImage", function() {
+    return this.getWithDefault("favouriteImage.thumbImageUrl", "");
+  }),
 
-  favouriteImage: Ember.computed("packageImages.@each.favourite", function() {
-    return (
-      this.get("packageImages")
-        .filterBy("favourite")
-        .get("firstObject") ||
-      this.get("packageImages")
-        .sortBy("id")
-        .get("firstObject") ||
-      this.get("item.displayImage") ||
-      null
-    );
+  images: hasMany("image", {
+    async: false
+  }),
+
+  packageImages: Ember.computed.alias("images"),
+
+  favouriteImage: Ember.computed("images.@each.favourite", function() {
+    const images = this.get("images");
+
+    return images.findBy("favourite") || images.sortBy("id").get("firstObject");
   }),
 
   hasOneDesignatedPackage: Ember.computed(

@@ -15,7 +15,9 @@ export default Ember.TextField.extend({
     "id",
     "required",
     "pattern",
-    "placeholder"
+    "placeholder",
+    "minDate",
+    "maxDate"
   ],
 
   model: Ember.computed({
@@ -46,18 +48,23 @@ export default Ember.TextField.extend({
         close: false,
 
         onClose: function() {
-          const picker = this;
           Ember.$(document.activeElement).blur();
+        },
 
-          const date = picker.get("select") && picker.get("select").obj;
+        onOpen: function() {
+          const date = cmp.get("model");
+          this.set("val", date ? date : null);
+          const [minDate, maxDate] = [cmp.get("minDate"), cmp.get("maxDate")];
+          this.set("min", minDate || "");
+          this.set("max", maxDate || "");
+        },
 
-          // Support for model binding
-          cmp.set("model", date);
-          cmp.notifyPropertyChange("model");
-
+        onSet: function() {
           // Support for callback
           var onSelect = cmp.get("onSelect");
-          if (_.isFunction(onSelect)) {
+          const date =
+            this.get("val") || (this.get("select") && this.get("select").obj);
+          if (isValidDate(date) && _.isFunction(onSelect)) {
             onSelect(date);
           }
         }
