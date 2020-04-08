@@ -102,8 +102,6 @@ Router.map(function() {
     );
   });
 
-  this.route("item_types");
-  this.route("packages");
   this.route("my_notifications");
   this.route("search");
   this.route("offers_filters");
