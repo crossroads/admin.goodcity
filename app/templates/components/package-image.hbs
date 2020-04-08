@@ -9,7 +9,7 @@
   <ul class="package-image-list">
     {{#each images as |image|}}
       <li>
-        <a {{action "selectImage" image}} class="{{if image.selected 'selected'}}">
+        <a {{action "selectImage" image}} class="{{if (is-equal image selectedImage) 'selected'}}">
           <img src="{{image.thumbImageUrl}}" style={{thumbImageCss}} class="thumb" />
         </a>
       </li>

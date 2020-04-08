@@ -99,12 +99,9 @@ export default Ember.Controller.extend(AsyncMixin, {
 
   favouriteImage: Ember.computed(
     "images.@each.favourite",
-    "supportsFavouriteImage",
-    "record.favouriteImageId",
+    "images.[]",
     function() {
-      return this.get("supportsFavouriteImage")
-        ? this.get("record.favouriteImage")
-        : this.get("images").findBy("favourite");
+      return this.get("images").findBy("favourite");
     }
   ),
 
@@ -180,7 +177,7 @@ export default Ember.Controller.extend(AsyncMixin, {
 
     this.get("messageBox").custom(
       this.locale("edit_images.delete_confirm"),
-      this.locale("edit_images.cancel_item"),
+      this.locale("receive.receiving.not_now"),
       () => deferred.resolve(false),
       this.locale("edit_images.remove_image"),
       () => deferred.resolve(true)
@@ -195,8 +192,6 @@ export default Ember.Controller.extend(AsyncMixin, {
     },
 
     setPreview(image) {
-      this.get("images").setEach("selected", false);
-      image.set("selected", true);
       this.set("previewImage", image);
     },
 
@@ -235,7 +230,9 @@ export default Ember.Controller.extend(AsyncMixin, {
               this.send("setFavourite");
             }
           });
-        }, this.ERROR_STRATEGIES.MODAL);
+        }, this.ERROR_STRATEGIES.MODAL).finally(() => {
+          this.set("isExpanded", false);
+        });
       });
     },
 
