@@ -74,15 +74,9 @@ export default DS.Model.extend({
     return !res ? "" : res + "cm";
   }),
 
-  displayImageUrl: Ember.computed(
-    "favouriteImage",
-    "item.displayImageUrl",
-    function() {
-      return this.get("favouriteImage")
-        ? this.get("favouriteImage.thumbImageUrl")
-        : this.get("item.displayImageUrl");
-    }
-  ),
+  displayImageUrl: Ember.computed("favouriteImage", function() {
+    return this.getWithDefault("favouriteImage.thumbImageUrl", "");
+  }),
 
   images: hasMany("image", {
     async: false
@@ -90,17 +84,10 @@ export default DS.Model.extend({
 
   packageImages: Ember.computed.alias("images"),
 
-  favouriteImage: Ember.computed("packageImages.@each.favourite", function() {
-    return (
-      this.get("packageImages")
-        .filterBy("favourite")
-        .get("firstObject") ||
-      this.get("packageImages")
-        .sortBy("id")
-        .get("firstObject") ||
-      this.get("item.displayImage") ||
-      null
-    );
+  favouriteImage: Ember.computed("images.@each.favourite", function() {
+    const images = this.get("images");
+
+    return images.findBy("favourite") || images.sortBy("id").get("firstObject");
   }),
 
   hasOneDesignatedPackage: Ember.computed(
