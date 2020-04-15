@@ -41,7 +41,7 @@ Router.map(function() {
       "item",
       { resetNamespace: true, path: "/items/:item_id" },
       function() {
-        this.route("edit_images");
+        this.route("image_editor");
       }
     );
 

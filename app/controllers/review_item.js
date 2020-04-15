@@ -126,7 +126,9 @@ export default Ember.Controller.extend({
 
         Ember.RSVP.all(promises).then(function() {
           loadingView.destroy();
-          _this.transitionToRoute("item.edit_images", newItem);
+          _this.transitionToRoute("item.image_editor", newItem, {
+            queryParams: { forwardRoute: "review_item.accept" }
+          });
         });
       });
     }

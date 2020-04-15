@@ -1,5 +1,5 @@
 <span class="item-image">
-  {{#link-to "item.edit_images" item}}
+  {{#link-to "item.image_editor" item (query-params forwardRoute="review_item.accept")}}
     <img src={{item.displayImageUrl}} class="thumb" />
   {{/link-to}}
   <div class="accept_badge {{unless item.isAccepted 'hidden'}}">{{t 'offer.offer_details.accepted'}}</div>

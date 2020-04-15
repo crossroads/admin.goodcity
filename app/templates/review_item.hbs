@@ -19,24 +19,33 @@
       <div class='row'>
         {{partial 'item/status_message'}}
       </div>
-      {{#if isEditing}}
-        {{partial 'item/item_edit_form'}}
-      {{else}}
+
+      <div class="item-details">
         <div class="row top-bottom-margin">
           <div class="small-2 columns">
-            {{#link-to "item.edit_images" model}}
+            {{#link-to "item.image_editor" model}}
               <img src={{model.displayImageUrl}} class="thumb" style="width:100px;" />
             {{/link-to}}
           </div>
           <div class="small-10 columns">
-            <h3 class="ellipsis five-line-ellipsis">{{model.donorDescription}}</h3>
-            {{t "review_item.condition"}}: {{model.donorCondition.name}}
-            {{#if displayEditLink}}
-              <i class="fa fa-pencil edit-item-link" {{action "setEditing" true}}></i>
+            {{#if isEditing}}
+              <div class="small-8 large-10 columns">
+                {{input-ui-control-with-counter type="textarea" value=formData.donorDescription label="" name="donorDescription" rows=5 placeholder=itemDescriptionPlaceholder maxlength="180" required='true' }}
+              </div>
+            {{else}}
+              <h3 class="ellipsis five-line-ellipsis">{{model.donorDescription}}</h3>
+              {{t "review_item.condition"}}: {{model.donorCondition.name}}
+              {{#if displayEditLink}}
+                <i class="fa fa-pencil edit-item-link" {{action "setEditing" true}}></i>
+              {{/if}}
             {{/if}}
           </div>
+          {{#if isEditing}}
+            {{donor-conditions selectedId=formData.donorConditionId}}
+          {{/if}}
         </div>
-      {{/if}}
+      </div>
+
       <div class="row top-bottom-margin">
         <div class="small-12 columns link item_lable_input">
           {{#link-to "search_label" model classNames="search_label_input"}}

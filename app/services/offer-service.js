@@ -7,5 +7,20 @@ export default ApiBaseService.extend({
 
   offersSearch(searchParams) {
     return this.GET(`/offers/search`, searchParams);
+  },
+
+  addNewItem(offer) {
+    const defaultDonorCondition = this.get("store")
+      .peekAll("donorCondition")
+      .sortBy("id")
+      .get("firstObject");
+
+    return this.get("store")
+      .createRecord("item", {
+        offer: offer,
+        donorCondition: defaultDonorCondition,
+        state: "draft"
+      })
+      .save();
   }
 });
