@@ -12,6 +12,7 @@ import utils from "../utils/utility-methods";
  *
  */
 export default Ember.Controller.extend(AsyncMixin, {
+  queryParams: ["forwardRoute"],
   session: Ember.inject.service(),
   store: Ember.inject.service(),
   messageBox: Ember.inject.service(),
@@ -98,9 +99,19 @@ export default Ember.Controller.extend(AsyncMixin, {
   }),
 
   favouriteImage: Ember.computed(
+    "supportsFavouriteImage",
+    "record.favouriteImageId",
     "images.@each.favourite",
     "images.[]",
     function() {
+      if (this.get("supportsFavouriteImage")) {
+        const id = this.get("record.favouriteImageId");
+        const im = id && this.get("images").findBy("id", id);
+
+        if (im) {
+          return im;
+        }
+      }
       return this.get("images").findBy("favourite");
     }
   ),
@@ -108,6 +119,10 @@ export default Ember.Controller.extend(AsyncMixin, {
   initPreviewImage: Ember.on(
     "init",
     Ember.observer("record", "images.[]", function() {
+      if (this.get("images").includes(this.get("previewImage"))) {
+        return;
+      }
+
       var image = this.get("images.firstObject");
       if (image) {
         this.send("setPreview", image);
@@ -188,7 +203,11 @@ export default Ember.Controller.extend(AsyncMixin, {
 
   actions: {
     done() {
-      window.history.back();
+      if (this.get("forwardRoute")) {
+        this.replaceRoute(this.get("forwardRoute"), this.get("record"));
+      } else {
+        window.history.back();
+      }
     },
 
     setPreview(image) {
