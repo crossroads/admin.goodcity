@@ -63,7 +63,7 @@ export default Ember.Controller.extend({
     }
   ),
 
-  canCopyItem: Ember.computed("item", function() {
+  canCopyItem: Ember.computed("item.state", function() {
     const item = this.get("item");
     return !item.get("offer").get("isFinished") && item.get("state") != "draft";
   }),
