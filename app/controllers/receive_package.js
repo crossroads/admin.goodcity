@@ -32,12 +32,6 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   selectedCondition: Ember.computed.alias("model.donorCondition"),
 
   // ----- Computed Properties -----
-  donorConditions: Ember.computed(function() {
-    return this.get("store")
-      .peekAll("donor_condition")
-      .sortBy("id");
-  }),
-
   grades: Ember.computed(function() {
     const i18n = this.get("i18n");
     return [

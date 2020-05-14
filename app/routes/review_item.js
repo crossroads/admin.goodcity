@@ -1,29 +1,36 @@
-import AuthorizeRoute from './authorize';
+import AuthorizeRoute from "./authorize";
 
 export default AuthorizeRoute.extend({
-
   editItemRequest: "",
 
-  beforeModel(){
+  beforeModel() {
     var previousRoutes = this.router.router.currentHandlerInfos;
     var previousRoute = previousRoutes && previousRoutes.pop();
-    if(previousRoute){
-      var editItemRequest = ["review_offer.items", "review_offer.receive"].indexOf(previousRoute.name) >= 0;
+    if (previousRoute) {
+      var editItemRequest =
+        ["review_offer.items", "review_offer.receive"].indexOf(
+          previousRoute.name
+        ) >= 0;
       this.set("editItemRequest", editItemRequest);
     }
   },
 
   model(params) {
-    return this.store.findRecord('item', params.item_id);
+    return Ember.RSVP.hash({
+      item: this.store.findRecord("item", params.item_id),
+      donorConditions: this.store.query("donor_condition", {})
+    });
   },
 
   setupController(controller, model) {
     this._super(controller, model);
-
-    if((this.get("editItemRequest"))){
+    const item = model.item;
+    controller.set("donorConditions", model.donorConditions);
+    controller.set("model", item);
+    if (this.get("editItemRequest")) {
       var itemDetails = {
-        donorConditionId: model.get("donorConditionId"),
-        donorDescription: model.get("donorDescription")
+        donorConditionId: item.get("donorConditionId"),
+        donorDescription: item.get("donorDescription")
       };
       controller.set("formData", itemDetails);
     }

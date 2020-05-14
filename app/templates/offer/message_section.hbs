@@ -8,7 +8,7 @@
             {{partial 'offer/recent_offer_message'}}
           {{/link-to}}
         {{else}}
-          {{#link-to item.pageLink item}}
+          {{#link-to item.pageLink item.id}}
             {{partial 'offer/recent_item_message'}}
           {{/link-to}}
         {{/if}}

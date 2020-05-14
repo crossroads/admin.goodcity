@@ -6,7 +6,10 @@ export default AuthorizeRoute.extend({
   store: Ember.inject.service(),
 
   model(params) {
-    return this.store.findRecord("package", params.package_id);
+    return Ember.RSVP.hash({
+      package: this.store.findRecord("package", params.package_id),
+      donorConditions: this.store.query("donor_condition", { for: "package" })
+    });
   },
 
   setupPrinterId(controller) {
@@ -23,18 +26,20 @@ export default AuthorizeRoute.extend({
 
   setupController(controller, model) {
     this._super(controller, model);
-    controller.set("package", model);
+    const pkg = model.package;
+    controller.set("donorConditions", model.donorConditions);
+    controller.set("model", pkg);
     controller.resetInputs();
     controller.set("displayInventoryOptions", false);
     controller.set("autoGenerateInventory", true);
     controller.set("inputInventory", false);
-    model.get("inventoryNumber");
+    pkg.get("inventoryNumber");
     this.setupPrinterId(controller);
 
-    if (model.get("isReceived")) {
+    if (pkg.get("isReceived")) {
       return controller.redirectToReceiveOffer();
     }
-    if (!model.get("inventoryNumber")) {
+    if (!pkg.get("inventoryNumber")) {
       controller.generateInventoryNumber();
     }
   },
