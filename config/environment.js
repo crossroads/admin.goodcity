@@ -1,7 +1,7 @@
 /* jshint node: true */
 const pkgJson = require("../package.json");
 module.exports = function(environment) {
-  environment = process.env.ENVIRONMENT || environment || 'development';
+  environment = process.env.ENVIRONMENT || environment || "development";
   var ENV = {
     modulePrefix: "goodcity",
     environment: environment,
@@ -65,7 +65,6 @@ module.exports = function(environment) {
       PRELOAD_TYPES: ["territory", "printer"],
       PRELOAD_AUTHORIZED_TYPES: [
         "package_type",
-        "donor_condition",
         "rejection_reason",
         "role",
         "timeslot",
@@ -143,7 +142,8 @@ module.exports = function(environment) {
   }
 
   if (environment === "production") {
-    if (!process.env.ENVIRONMENT) throw('Please pass an appropriate ENVIRONMENT=(staging|preview|production) param.');
+    if (!process.env.ENVIRONMENT)
+      throw "Please pass an appropriate ENVIRONMENT=(staging|preview|production) param.";
     // RESTAdapter Settings
     ENV.APP.API_HOST_URL = "https://api.goodcity.hk";
     ENV.ADMIN_APP_HOST_URL = "https://admin.goodcity.hk";
