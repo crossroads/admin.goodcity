@@ -130,11 +130,12 @@ module("Receive package", {
 });
 
 test("If location not selected Receive button is disabled", function(assert) {
+  var store = FactoryGuy.store;
   visit("/offers/" + offer1.id + "/receive_package/" + package1.id);
-  Ember.run(function() {
-    package1.set("location", null);
-  });
   andThen(function() {
+    Ember.run(function() {
+      lookup("controller:receive_package").set("locationId", "");
+    });
     assert.equal($("#receive-button").prop("disabled"), true);
   });
 });
