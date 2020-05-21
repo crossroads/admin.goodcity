@@ -5,8 +5,7 @@ FactoryGuy.define("donor_condition", {
   default: {
     name: FactoryGuy.generate(function(num) {
       return conditions[num] + num;
-    }),
-    visibleToDonor: true
+    })
   }
 });
 
