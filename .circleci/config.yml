@@ -4,7 +4,7 @@ aliases:
 
   - defaults: &defaults
       docker:
-        - image: circleci/node:carbon
+        - image: circleci/node:8.15
       working_directory: ~/code
       environment:
         # JOBS: 1 required to disable workers pools on broccoli as the underlying container reports 36 cores and runs out of memory if trying to spawn 36 threads!
@@ -79,7 +79,9 @@ jobs:
   tests:
     <<: *defaults
     docker:
-      - image: circleci/node:8-browsers
+      - image: circleci/node:8.15-browsers
+    environment:
+        JOBS: 1
     steps:
       - restore-cache: *restore-repo-cache
       - restore-cache: *restore-yarn-cache
@@ -122,6 +124,9 @@ jobs:
       - run:
           command: |
             case "$CIRCLE_BRANCH" in
+              test-ios-build)
+                ENVIRONMENT=staging
+                ;;
               master)
                 ENVIRONMENT=staging
                 ;;
@@ -159,6 +164,9 @@ jobs:
           name: Upload to www server
           command: |
             case "$CIRCLE_BRANCH" in
+              test-ios-build)
+                STAGE=staging
+                ;;
               master)
                 STAGE=staging
                 ;;
@@ -173,27 +181,27 @@ jobs:
                 exit 1
             esac
             bundle exec cap $STAGE deploy:upload
-      - run:
-          name: Upload Source Map to Rollbar
-          command: |
-            APP_VERSION=$(jq -r ".version" package.json)
-            SOURCE_MAP_WITH_VARIABLE_NAME=$(grep sourceMappingURL dist/assets/goodcity-*.js)
-            SOURCE_MAP=$(eval echo $SOURCE_MAP_WITH_VARIABLE_NAME | cut -c22-100)
-            case "$CIRCLE_BRANCH" in
-              master)
-                ASSET_HOST_URL=https://stock-staging.goodcity.hk/assets
-                ;;
-              preview)
-                ASSET_HOST_URL=https://stock-preview.goodcity.hk/assets
-                ;;
-              live)
-                ASSET_HOST_URL=https://stock.goodcity.hk/assets
-                ;;
-              *)
-                echo 'Unexpected branch deployment. Choose master|preview|live'
-                exit 1
-            esac
-            curl https://api.rollbar.com/api/1/sourcemap/download -F access_token="${ROLLBAR_KEY}" -F version="${APP_VERSION}" -F minified_url=$ASSET_HOST_URL/$SOURCE_MAP
+      # - run:
+      #     name: Upload Source Map to Rollbar
+      #     command: |
+      #       APP_VERSION=$(jq -r ".version" package.json)
+      #       SOURCE_MAP_WITH_VARIABLE_NAME=$(grep sourceMappingURL dist/assets/goodcity-*.js)
+      #       SOURCE_MAP=$(eval echo $SOURCE_MAP_WITH_VARIABLE_NAME | cut -c22-100)
+      #       case "$CIRCLE_BRANCH" in
+      #         master)
+      #           ASSET_HOST_URL=https://stock-staging.goodcity.hk/assets
+      #           ;;
+      #         preview)
+      #           ASSET_HOST_URL=https://stock-preview.goodcity.hk/assets
+      #           ;;
+      #         live)
+      #           ASSET_HOST_URL=https://stock.goodcity.hk/assets
+      #           ;;
+      #         *)
+      #           echo 'Unexpected branch deployment. Choose master|preview|live'
+      #           exit 1
+      #       esac
+      #       curl https://api.rollbar.com/api/1/sourcemap/download -F access_token="${ROLLBAR_KEY}" -F version="${APP_VERSION}" -F minified_url=$ASSET_HOST_URL/$SOURCE_MAP
 
   ember_cordova_build:
     <<: *defaults
@@ -210,6 +218,9 @@ jobs:
             if [ -z "$APP_SHARED_SHA" ]; then APP_SHARED_SHA=$( git ls-remote --heads https://github.com/crossroads/shared.goodcity.git $CIRCLE_BRANCH | cut -c1-7); fi
             if [ -z "$APP_SHARED_SHA" ]; then APP_SHARED_SHA=$( git ls-remote --heads https://github.com/crossroads/shared.goodcity.git master | cut -c1-7); fi
             case "$CIRCLE_BRANCH" in
+            test-ios-build)
+              ENVIRONMENT=staging
+              ;;
             master)
               ENVIRONMENT=staging
               ;;
@@ -323,6 +334,11 @@ jobs:
           name: Setup Environment variables
           command: |
             case "$CIRCLE_BRANCH" in
+              test-ios-build)
+                echo 'export ENVIRONMENT=staging' >> $BASH_ENV
+                echo 'export CERTIFICATE=GoodCity_2020_Development.p12' >> $BASH_ENV
+                echo 'export PROVISIONING_PROFILE=GoodcityAdminStaging.mobileprovision' >> $BASH_ENV
+                ;;
               master)
                 echo 'export ENVIRONMENT=staging' >> $BASH_ENV
                 echo 'export CERTIFICATE=GoodCity_2020_Development.p12' >> $BASH_ENV
@@ -416,7 +432,7 @@ workflows:
               - package_dependencies
             filters:
               branches:
-                only: /^(master|live|preview)$/
+                only: /^(master|live|preview|test-ios-build)$/
         - www_deploy:
             requires:
               - www_build
@@ -429,7 +445,7 @@ workflows:
               - package_dependencies
             filters:
               branches:
-                only: /^(master|live)$/
+                only: /^(master|live|test-ios-build)$/
         - android_build_and_deploy:
             requires:
               - ember_cordova_build
@@ -441,4 +457,4 @@ workflows:
               - tests
             filters:
               branches:
-                only: /^(master|live)$/
+                only: /^(master|live|test-ios-build)$/
