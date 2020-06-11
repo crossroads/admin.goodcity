@@ -95,7 +95,6 @@
     "cordova-update-config": "^1.0.2",
     "cryptiles": "^4.1.2",
     "deep-extend": "^0.5.1",
-    "ember-browserify": "^1.2.2",
     "ember-cli-test-loader": "^1.1.0",
     "ember-form-validator": "^1.0.7",
     "ember-infinite-list": "1.0.4",
