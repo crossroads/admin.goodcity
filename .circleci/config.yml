@@ -301,7 +301,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: install node@8.15.0
+          name: install node@10.8.0
           command: |
               set +e
               touch $BASH_ENV
