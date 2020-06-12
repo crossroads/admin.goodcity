@@ -4,7 +4,7 @@ aliases:
 
   - defaults: &defaults
       docker:
-        - image: circleci/node:chakracore-10.13
+        - image: circleci/node:carbon
       working_directory: ~/code
       environment:
         # JOBS: 1 required to disable workers pools on broccoli as the underlying container reports 36 cores and runs out of memory if trying to spawn 36 threads!
@@ -301,7 +301,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: install node@10.8.0
+          name: install node@8.15.0
           command: |
               set +e
               touch $BASH_ENV
