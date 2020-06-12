@@ -48,7 +48,7 @@ export default AuthorizeRoute.extend({
 
   afterModel(model) {
     if (!model) {
-      this.transitionTo("my_list.reviewing");
+      this.transitionTo("dashboard");
     }
   }
 });

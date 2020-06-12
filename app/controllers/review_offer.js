@@ -7,6 +7,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   offer: Ember.computed.alias("model"),
   isStartReviewClicked: false,
   i18n: Ember.inject.service(),
+  offerService: Ember.inject.service(),
   messageBox: Ember.inject.service(),
   backLinkPath: "",
   displayCompleteReviewPopup: false,
@@ -51,7 +52,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
         currentPath.indexOf(`offers/${this.get("offer.id")}`) >= 0
       ) {
         this.get("messageBox").alert(this.get("i18n").t("404_error"), () => {
-          this.transitionToRoute("my_list");
+          this.transitionToRoute("dashboard");
         });
       }
     }
@@ -63,11 +64,17 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     },
 
     addItem() {
-      var draftItemId =
-        this.get("model.items")
-          .filterBy("state", "draft")
-          .get("firstObject.id") || "new";
-      this.transitionToRoute("item.edit_images", draftItemId);
+      const offer = this.get("offer");
+
+      const task = this.get("offerService")
+        .addNewItem(offer)
+        .then(item => {
+          this.transitionToRoute("item.image_editor", item, {
+            queryParams: { forwardRoute: "review_item.accept" }
+          });
+        });
+
+      this.runTask(task, this.ERROR_STRATEGIES.MODAL);
     },
 
     startReview() {

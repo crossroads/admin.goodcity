@@ -18,7 +18,7 @@ export default Ember.Controller.extend({
     if (this.get("isItemVanished")) {
       if (currentRoute.indexOf("review_item") >= 0) {
         this.get("messageBox").alert(this.get("i18n").t("404_error"), () => {
-          this.transitionToRoute("my_list");
+          this.transitionToRoute("dashboard");
         });
       }
     }
@@ -62,7 +62,8 @@ export default Ember.Controller.extend({
       }
     }
   ),
-  canCopyItem: Ember.computed("item", function() {
+
+  canCopyItem: Ember.computed("item.state", function() {
     const item = this.get("item");
     return !item.get("offer").get("isFinished") && item.get("state") != "draft";
   }),
@@ -125,7 +126,9 @@ export default Ember.Controller.extend({
 
         Ember.RSVP.all(promises).then(function() {
           loadingView.destroy();
-          _this.transitionToRoute("item.edit_images", newItem);
+          _this.transitionToRoute("item.image_editor", newItem, {
+            queryParams: { forwardRoute: "review_item.accept" }
+          });
         });
       });
     }

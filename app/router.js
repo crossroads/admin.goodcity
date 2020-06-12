@@ -41,7 +41,7 @@ Router.map(function() {
       "item",
       { resetNamespace: true, path: "/items/:item_id" },
       function() {
-        this.route("edit_images");
+        this.route("image_editor");
       }
     );
 
@@ -102,8 +102,6 @@ Router.map(function() {
     );
   });
 
-  this.route("item_types");
-  this.route("packages");
   this.route("my_notifications");
   this.route("search");
   this.route("offers_filters");
