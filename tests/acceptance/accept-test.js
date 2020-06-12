@@ -20,19 +20,38 @@ var App,
   item4,
   package4,
   role,
-  printer;
+  printer,
+  condition1,
+  condition2,
+  condition3,
+  condition4;
 
 module("Reviewer: Accept Item Tab", {
   beforeEach: function() {
     App = startApp({}, 2);
     TestHelper.setup();
     role = FactoryGuy.make("role");
+    condition1 = FactoryGuy.make("donor_condition", { visibleToDonor: true });
+    condition2 = FactoryGuy.make("donor_condition", { visibleToDonor: true });
+    condition3 = FactoryGuy.make("donor_condition", { visibleToDonor: true });
+    condition4 = FactoryGuy.make("donor_condition", { visibleToDonor: true });
     $.mockjax({
       url: "/api/v1/role*",
       type: "GET",
       status: 200,
       responseText: {
         roles: [role.toJSON({ includeId: true })]
+      }
+    });
+
+    $.mockjax({
+      url: "/api/v1/donor_condition*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        donor_conditions: [condition1, condition2, condition3, condition4].map(
+          m => m.toJSON({ includeId: true })
+        )
       }
     });
 
