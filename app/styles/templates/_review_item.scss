@@ -134,4 +134,11 @@
 
 .review-item-background {
   background: $light-grey;
+  &:hover {
+    color: none;
+  }
+
+  li:hover {
+    background: $light-grey;
+  }
 }
