@@ -67,7 +67,7 @@ export default Ember.Component.extend({
         )}</span>`;
       },
       selectClass: "highlight",
-      noMatchTemplate: () => null,
+      noMatchTemplate: e => `<div style="display: 'none'"/>`,
       menuContainer: document.getElementsByClassName(
         "message-textbar-container"
       )[0]
