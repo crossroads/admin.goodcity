@@ -1,5 +1,3 @@
 import MessagesBaseController from "shared-goodcity/controllers/messages_base";
 
-export default MessagesBaseController.extend({
-  isPrivate: false
-});
+export default MessagesBaseController;
