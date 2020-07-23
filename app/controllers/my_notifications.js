@@ -23,36 +23,47 @@ export default Ember.Controller.extend({
   showUnread: true,
   notifications: [],
 
-  init() {
+  on() {
     // When a new message arrives, we move it to the top
-    this.get("subscriptions").on("create:message", ({ id }) => {
-      const store = this.get("store");
-      const msg = store.peekRecord("message", id);
-      const messageableId = msg.get("messageableId");
-      const notifications = this.get("notifications");
+    this.get("subscriptions").on(
+      "create:message",
+      this,
+      this.onNewNotification
+    );
+  },
 
-      if (
-        !messageableId ||
-        this.get("target.currentURL") !== "/my_notifications"
-      ) {
-        return;
-      }
+  off() {
+    this.get("subscriptions").off(
+      "create:message",
+      this,
+      this.onNewNotification
+    );
+  },
 
-      let notif = notifications.findBy("key", MSG_KEY(msg));
+  onNewNotification({ id }) {
+    const store = this.get("store");
+    const msg = store.peekRecord("message", id);
+    const messageableId = msg.get("messageableId");
+    const notifications = this.get("notifications");
 
-      if (notif) {
-        // Update existing one
-        notifications.removeObject(notif);
-        msg.set("unreadCount", +notif.get("unreadCount") + 1);
-        notif.get("messages").addObject(msg);
-      } else {
-        // Create new one
-        msg.set("unreadCount", 1);
-        notif = this.messagesToNotification([msg]);
-      }
+    if (!messageableId) {
+      return;
+    }
 
-      notifications.insertAt(0, notif);
-    });
+    let notif = notifications.findBy("key", MSG_KEY(msg));
+
+    if (notif) {
+      // Update existing one
+      notifications.removeObject(notif);
+      msg.set("unreadCount", +notif.get("unreadCount") + 1);
+      notif.get("messages").addObject(msg);
+    } else {
+      // Create new one
+      msg.set("unreadCount", 1);
+      notif = this.messagesToNotification([msg]);
+    }
+
+    notifications.insertAt(0, notif);
   },
 
   /**
@@ -70,18 +81,21 @@ export default Ember.Controller.extend({
       "createdAt",
       "isPrivate"
     ];
-    const lastMessage = messages.sortBy("id").get("lastObject");
-    let itemId = lastMessage.get("itemId");
-    const item =
-      itemId &&
-      (this.get("store").peekRecord("item", itemId) ||
-        this.get("store").findRecord("item", itemId));
 
-    let offerId = lastMessage.get("offerId");
-    const offer =
-      offerId &&
-      (this.get("store").peekRecord("offer", offerId) ||
-        this.get("store").findRecord("offer", offerId));
+    let item, offer;
+    const lastMessage = messages.sortBy("id").get("lastObject");
+    let messageableType = lastMessage.get("messageableType");
+    let recordId = lastMessage.get("messageableId");
+
+    if (messageableType === "Item") {
+      item =
+        this.get("store").peekRecord("item", recordId) ||
+        this.get("store").findRecord("item", recordId);
+    } else if (messageableType === "Offer") {
+      offer =
+        this.get("store").peekRecord("offer", recordId) ||
+        this.get("store").findRecord("offer", recordId);
+    }
 
     let notification = Ember.Object.create(lastMessage.getProperties(props));
     notification.setProperties({
