@@ -81,7 +81,7 @@ test("offer-messages thread details", function(assert) {
 
     // display latest offer message in 'General Messages' thread
     assert.equal(
-      offer_message_thread_text.indexOf(message1.get("body")) > 0,
+      offer_message_thread_text.indexOf(message1.get("plainBody")) > 0,
       true
     );
 

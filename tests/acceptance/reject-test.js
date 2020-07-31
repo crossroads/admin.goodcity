@@ -128,7 +128,7 @@ test("visit reject item tab without item_type", function(assert) {
   console.log(rejectionReason1.id);
   visit("/offers/" + offer.id + "/review_item/" + item1.id + "/reject");
   andThen(function() {
-    click($("li label:contains('Quality')"));
+    click($("#1_reason"));
     andThen(function() {
       assert.equal(
         $("#rejectMessage").val(),

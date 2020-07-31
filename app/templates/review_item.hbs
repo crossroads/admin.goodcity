@@ -13,13 +13,11 @@
     {{/if}}
   </section>
 </nav>
-<section class="main-section review_item">
-  <div class="row">
+<section class="main-section offer_details offer_messages_section">
     <div class="small-12 columns">
       <div class='row'>
         {{partial 'item/status_message'}}
       </div>
-
       <div class="item-details">
         <div class="row top-bottom-margin">
           <div class="small-2 columns">
@@ -45,7 +43,6 @@
           {{/if}}
         </div>
       </div>
-
       <div class="row top-bottom-margin">
         <div class="small-12 columns link item_lable_input">
           {{#link-to "search_label" model classNames="search_label_input"}}
@@ -53,7 +50,7 @@
           {{/link-to}}
         </div>
       </div>
-      <div class="row row-grey">
+      <div class="row">
         <dl class="tabs" data-tab>
           {{#link-to 'review_item.accept' tagName="dd" classNames="small-3 columns text-center"}}
             {{#link-to 'review_item.accept'}}
@@ -86,11 +83,10 @@
             {{/link-to}}
           {{/link-to}}
         </dl>
-        <div class="tabs-content {{if model.offer.isFinished 'disable-canceloffer-review'}}">
+      </div>
+        <div class="{{if model.offer.isFinished 'disable-canceloffer-review'}}">
           <br />
           {{outlet}}
         </div>
-      </div>
-    </div>
   </div>
 </section>

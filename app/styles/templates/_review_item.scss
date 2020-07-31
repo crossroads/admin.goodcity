@@ -131,3 +131,11 @@
     color: black;
   }
 }
+
+.review-item-background {
+  background: $light-grey;
+
+  li:hover {
+    background: $light-grey;
+  }
+}
