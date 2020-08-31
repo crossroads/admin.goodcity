@@ -63,11 +63,6 @@
     <feature name="StatusBar">
       <param name="ios-package" onload="true" value="CDVStatusBar" />
     </feature>
-    <feature name="CDVWKWebViewEngine">
-      <param name="ios-package" value="CDVWKWebViewEngine" />
-    </feature>
-    <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
-    <preference name="WKWebViewOnly" value="true" />
     <preference name="Orientation" value="portrait" />
     <preference name="Fullscreen" value="true" />
     <preference name="CAMERA_USAGE_DESCRIPTION" default=" " />
@@ -90,7 +85,7 @@
   <access launch-external="yes" origin="tel:*" />
   <access origin="*" />
   <allow-intent href="https://maps.google.com/*" />
-  <engine name="ios" spec="~5.0.0" />
+  <engine name="ios" spec="6.1.0" />
   <engine name="android" spec="9.0.0" />
   <engine name="windows" spec="~4.3.1" />
   <plugin name="cordova-plugin-statusbar" spec="~2.1.1" />
@@ -109,6 +104,5 @@
     <variable name="MASK_INCOMING_PHONE_NUMBER" value="true" />
   </plugin>
   <plugin name="phonegap-plugin-media-stream" spec="^1.2.1" />
-  <plugin name="cordova-plugin-wkwebview-engine" spec="^1.2.1" />
 </widget>
 
