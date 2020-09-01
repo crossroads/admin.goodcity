@@ -10,14 +10,18 @@ export default AuthorizeRoute.extend({
   },
 
   setupPrinterId(controller) {
-    let allAvailablePrinters = this.get("printerService").allAvailablePrinter();
-    let user = this.get("session.loggedInUser");
-    if (user.get("printerId")) {
-      controller.set("selectedPrinterId", user.get("printerId"));
+    let defaultPrinter = this.get("printerService").getDefaultPrinter();
+    if (defaultPrinter) {
+      controller.set("selectedPrinterId", defaultPrinter.id);
     } else {
-      let firstPrinterId = allAvailablePrinters[0].id;
-      this.get("printerService").updateUserDefaultPrinter(firstPrinterId);
-      controller.set("selectedPrinterId", firstPrinterId);
+      let allAvailablePrinters = this.get(
+        "printerService"
+      ).allAvailablePrinters();
+      if (allAvailablePrinters.length) {
+        let firstPrinterId = allAvailablePrinters[0].id;
+        this.get("printerService").addDefaultPrinter(firstPrinterId);
+        controller.set("selectedPrinterId", firstPrinterId);
+      }
     }
   },
 
