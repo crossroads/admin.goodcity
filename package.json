@@ -103,7 +103,7 @@
     "extend": "2.0.2",
     "hoek": "4.2.1",
     "loader.js": "^4.0.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "minimatch": "^3.0.2",
     "npm": "^3.8.3",
     "phantomjs-prebuilt": "^2.1.14",
