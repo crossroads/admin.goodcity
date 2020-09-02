@@ -245,6 +245,7 @@ I18nTranslationsZhTw =
         "submit_offer": "重新提交捐贈項目"
         "merge_offer": "合拼捐贈項目"
         "yes": "Yes"
+        "reopen_offer": Reopen
 
     "mark_received":
       "delivered_by": "運送人員："

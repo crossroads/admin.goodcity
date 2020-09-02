@@ -113,6 +113,13 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
       );
     },
 
+    reopenOffer() {
+      this.runTask(() => {
+        this.get("offerService").reopenOffer(this.get("model"));
+        this.send("toggleOfferOptions");
+      });
+    },
+
     submitOffer() {
       this.toggleProperty("displayOfferOptions");
       var offer = this.get("model");

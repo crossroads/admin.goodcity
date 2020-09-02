@@ -1,4 +1,5 @@
 import ApiBaseService from "./api-base-service";
+import { toID } from "goodcity/utils/helpers";
 
 export default ApiBaseService.extend({
   offersCount() {
@@ -22,5 +23,18 @@ export default ApiBaseService.extend({
         state: "draft"
       })
       .save();
+  },
+
+  reopenOffer(offer) {
+    return this.__udpateState(offer, "reopen_offer");
+  },
+
+  async __udpateState(offer, state, params = {}) {
+    const id = toID(offer);
+    const url = `/offers/${id}/${state}`;
+
+    const data = await this.PUT(url, params);
+    this.get("store").pushPayload(data);
+    return this.get("store").peekRecord("offer", id);
   }
 });
