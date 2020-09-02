@@ -240,12 +240,12 @@ I18nTranslationsZhTw =
         "active_call": "即時通話"
 
       "options":
+        "reopen_offer": "Reopen"
         "add_item": "添加項目"
         "delete_offer": "刪除捐贈項目"
         "submit_offer": "重新提交捐贈項目"
         "merge_offer": "合拼捐贈項目"
         "yes": "Yes"
-        "reopen_offer": Reopen
 
     "mark_received":
       "delivered_by": "運送人員："
