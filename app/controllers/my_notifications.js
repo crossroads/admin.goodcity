@@ -1,21 +1,18 @@
-import { AjaxBuilder } from "goodcity/utils/ajax-promise";
 import Ember from "ember";
-import offers from "./offers";
 import _ from "lodash";
+import AjaxPromise from "goodcity/utils/ajax-promise";
 
 const { computed } = Ember;
 
 const MSG_KEY = msg => {
   return [
     msg.get("isPrivate") ? "private" : "public",
-    msg.get("offerId") || "-",
-    msg.get("itemId") || "-"
+    msg.get("messageableType") || "-",
+    msg.get("messageableId") || "-"
   ].join("/");
 };
 
-export default offers.extend({
-  sortProperties: ["createdAt:desc"],
-  sortedModel: Ember.computed.sort("model", "sortProperties"),
+export default Ember.Controller.extend({
   messagesUtil: Ember.inject.service("messages"),
   subscriptions: Ember.inject.controller(),
   store: Ember.inject.service(),
@@ -26,31 +23,47 @@ export default offers.extend({
   showUnread: true,
   notifications: [],
 
-  init() {
+  on() {
     // When a new message arrives, we move it to the top
-    this.get("subscriptions").on("create:message", ({ id }) => {
-      const store = this.get("store");
-      const msg = store.peekRecord("message", id);
-      const offerId = msg && msg.get("offerId");
-      const notifications = this.get("notifications");
+    this.get("subscriptions").on(
+      "create:message",
+      this,
+      this.onNewNotification
+    );
+  },
 
-      if (!offerId) {
-        return;
-      }
+  off() {
+    this.get("subscriptions").off(
+      "create:message",
+      this,
+      this.onNewNotification
+    );
+  },
 
-      this.loadIfAbsent("offer", offerId).then(() => {
-        let notif = notifications.findBy("key", MSG_KEY(msg));
-        if (notif) {
-          // Update existing one
-          notifications.removeObject(notif);
-          notif.get("messages").addObject(msg);
-        } else {
-          // Create new one
-          notif = this.messagesToNotification([msg]);
-        }
-        notifications.insertAt(0, notif);
-      });
-    });
+  onNewNotification({ id }) {
+    const store = this.get("store");
+    const msg = store.peekRecord("message", id);
+    const messageableId = msg.get("messageableId");
+    const notifications = this.get("notifications");
+
+    if (!messageableId) {
+      return;
+    }
+
+    let notif = notifications.findBy("key", MSG_KEY(msg));
+
+    if (notif) {
+      // Update existing one
+      notifications.removeObject(notif);
+      msg.set("unreadCount", +notif.get("unreadCount") + 1);
+      notif.get("messages").addObject(msg);
+    } else {
+      // Create new one
+      msg.set("unreadCount", 1);
+      notif = this.messagesToNotification([msg]);
+    }
+
+    notifications.insertAt(0, notif);
   },
 
   /**
@@ -60,29 +73,53 @@ export default offers.extend({
    * @returns
    */
   messagesToNotification(messages) {
-    const props = ["id", "itemId", "offer", "sender", "createdAt", "isPrivate"];
-    const lastMessage = messages.sortBy("createdAt").get("lastObject");
-    const item =
-      lastMessage.get("itemId") &&
-      this.get("store").peekRecord("item", lastMessage.get("itemId"));
+    const props = [
+      "id",
+      "itemId",
+      "offerId",
+      "sender",
+      "createdAt",
+      "isPrivate"
+    ];
+
+    let item, offer;
+    const lastMessage = messages.sortBy("id").get("lastObject");
+    let messageableType = lastMessage.get("messageableType");
+    let recordId = lastMessage.get("messageableId");
+
+    if (messageableType === "Item") {
+      item =
+        this.get("store").peekRecord("item", recordId) ||
+        this.get("store").findRecord("item", recordId);
+    } else if (messageableType === "Offer") {
+      offer =
+        this.get("store").peekRecord("offer", recordId) ||
+        this.get("store").findRecord("offer", recordId);
+    }
 
     let notification = Ember.Object.create(lastMessage.getProperties(props));
     notification.setProperties({
       key: MSG_KEY(lastMessage),
       item: item,
       messages: messages,
-      isSingleMessage: computed.equal("messages.length", 1),
+      isSingleMessage: computed.equal("unreadCount", 1),
       isThread: computed.not("isSingleMessage"),
-      offerId: computed.alias("messages.firstObject.offerId"),
+      offer: offer,
       text: computed("messages.[]", function() {
         return this.get("messages")
-          .sortBy("createdAt")
+          .sortBy("id")
           .get("lastObject.body");
       }),
-      unreadCount: computed("messages.@each.state", function() {
-        return this.get("messages")
-          .filterBy("isUnread")
-          .get("length");
+      unreadCount: computed("messages.@each.unreadCount", "messages.[]", {
+        get() {
+          let lastMessage = this.get("messages")
+            .sortBy("id")
+            .get("lastObject");
+          return lastMessage.get("unreadCount");
+        },
+        set(key, value) {
+          return value;
+        }
       })
     });
     return notification;
@@ -90,16 +127,13 @@ export default offers.extend({
 
   /**
    * Transform offers into "notifications" object with more UI-friendly properties
-   *
-   * @param {Offer} offer
-   * @returns {Object}
    */
-  buildNotifications(offer) {
-    const offerMessages = offer.get("messages").filter(msg => {
+  buildNotifications(messages) {
+    const groupedMessages = messages.filter(msg => {
       return this.get("showUnread") ? msg.get("isUnread") : true;
     });
 
-    return _.chain(offerMessages)
+    return _.chain(groupedMessages)
       .groupBy(MSG_KEY)
       .map(msgs => this.messagesToNotification(msgs))
       .value();
@@ -109,51 +143,42 @@ export default offers.extend({
    * Injects API JSON into the store and returns a list of models
    *
    * @param {Object} data
-   * @returns {Offer[]}
+   * @returns {Message[]}
    */
-  toOfferModels(data) {
+  toMessageModels(data) {
     this.get("store").pushPayload(data);
-    return data["offers"].map(({ id }) => {
-      return this.get("store").peekRecord("offer", id);
+    return data.messages.map(({ id }) => {
+      return this.get("store").peekRecord("message", id);
     });
-  },
-
-  /**
-   * Loads a record from either the store or the api
-   *
-   * @param {String} model
-   * @param {String} id
-   * @returns {Model}
-   */
-  loadIfAbsent(model, id) {
-    const store = this.get("store");
-    return Ember.RSVP.resolve(
-      store.peekRecord(model, id) || store.findRecord(model, id)
-    );
   },
 
   actions: {
     /**
-     * Loads a page of offers
+     * Loads a page of Message Notifications
      * Used by the infinite list
      *
      * @param {*} pageNo
      * @returns
      */
     loadMoreMessages(pageNo) {
-      const state = this.get("showUnread") ? "unread" : "all";
+      const state = this.get("showUnread") ? "unread" : "";
 
-      return new AjaxBuilder("/offers/search")
-        .withAuth(this.get("session.authToken"))
-        .withQuery({
-          with_notifications: state,
-          include_messages: true,
-          recent_offers: true
-        })
-        .getPage(pageNo, 10)
-        .then(data => this.toOfferModels(data))
-        .then(offers => {
-          const notifications = _.chain(offers)
+      const params = {
+        page: pageNo,
+        state: state,
+        messageable_type: ["offer", "item"]
+      };
+
+      return new AjaxPromise(
+        "/messages/notifications",
+        "GET",
+        this.get("session.authToken"),
+        params
+      )
+        .then(data => this.toMessageModels(data))
+        .then(messages => {
+          const notifications = _.chain(messages)
+            .groupBy(MSG_KEY)
             .map(o => this.buildNotifications(o))
             .flatten()
             .value();

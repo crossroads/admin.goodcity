@@ -30,38 +30,54 @@ module("Reviewer: Notifications", {
     role = FactoryGuy.make("role");
     offer = FactoryGuy.make("offer", { state: "under_review" });
     item = FactoryGuy.make("item", { state: "submitted", offer: offer });
-    message2 = FactoryGuy.make("message", {
-      offer: offer,
-      itemId: item.id,
-      item: item,
-      body: "Message from Donor",
-      state: "unread"
-    });
+
     message1 = FactoryGuy.make("message", {
       offer: offer,
       itemId: item.id,
       item: item,
+      messageableId: item.id,
+      messageableType: "Item",
       state: "unread"
     });
+
+    message2 = FactoryGuy.make("message", {
+      offer: offer,
+      itemId: item.id,
+      item: item,
+      messageableId: item.id,
+      messageableType: "Item",
+      body: "Message from Donor",
+      state: "unread",
+      unreadCount: 2
+    });
+
     message3 = FactoryGuy.make("message", {
       offer: offer,
       itemId: item.id,
       item: item,
+      messageableId: item.id,
+      messageableType: "Item",
       body: "Message from Supervisor",
       isPrivate: true,
       state: "read"
     });
+
     message4 = FactoryGuy.make("message", {
       offer: offer,
       itemId: null,
       item: null,
+      messageableId: offer.id,
+      messageableType: "Offer",
       body: "General Message for offer",
       state: "unread"
     });
+
     message5 = FactoryGuy.make("message", {
       offer: offer,
       itemId: null,
       item: null,
+      messageableId: offer.id,
+      messageableType: "Offer",
       state: "read",
       isPrivate: true
     });

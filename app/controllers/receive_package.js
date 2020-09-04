@@ -49,7 +49,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   }),
 
   allAvailablePrinter: Ember.computed(function() {
-    return this.get("printerService").allAvailablePrinter();
+    return this.get("printerService").allAvailablePrinters();
   }),
 
   selectedPrinterDisplay: Ember.computed("selectedPrinterId", function() {

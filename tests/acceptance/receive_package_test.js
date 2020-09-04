@@ -14,6 +14,7 @@ var App,
   order_pkg,
   packages_location,
   printer,
+  reviewer1,
   user;
 
 module("Receive package", {
@@ -39,6 +40,106 @@ module("Receive package", {
       quantity: 6
     });
     packages_location = FactoryGuy.make("packages_location");
+    reviewer1 = FactoryGuy.make("user", { isReviewer: true });
+    window.localStorage.currentUserId = reviewer1.id;
+
+    $.mockjax({
+      url: "/api/v1/role*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        roles: [role.toJSON({ includeId: true })]
+      }
+    });
+
+    $.mockjax({
+      url: "/api/v1/offer*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        offers: [offer1.toJSON({ includeId: true })]
+      }
+    });
+
+    $.mockjax({
+      url: "/api/v1/printer*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        printers: [printer.toJSON({ includeId: true })]
+      }
+    });
+
+    $.mockjax({
+      url: "/api/v1/auth/current_user_profil*",
+      responseText: {
+        user_profile: reviewer1.toJSON({ includeId: true }),
+        printers_users: []
+      }
+    });
+
+    $.mockjax({
+      url: "/api/v1/messag*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        messages: []
+      }
+    });
+
+    $.mockjax({
+      url: "/api/v1/holiday*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        holidays: []
+      }
+    });
+
+    $.mockjax({
+      url: "/api/v1/gogovan_transport*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        gogovan_transports: []
+      }
+    });
+
+    $.mockjax({
+      url: "/api/v1/crossroads_transport*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        crossroads_transports: []
+      }
+    });
+
+    $.mockjax({
+      url: "/api/v1/cancellation_reason*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        cancellation_reasons: []
+      }
+    });
+
+    $.mockjax({
+      url: "/api/v1/rejection_reason*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        rejection_reasons: []
+      }
+    });
+
+    $.mockjax({
+      url: "/api/v1/location*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        locations: []
+      }
+    });
 
     $.mockjax({
       url: "/api/v1/packages_location*",
@@ -77,26 +178,8 @@ module("Receive package", {
     });
 
     $.mockjax({
-      url: "/api/v1/printer*",
-      type: "GET",
-      status: 200,
-      responseText: {
-        printers: [printer.toJSON({ includeId: true })]
-      }
-    });
-
-    $.mockjax({
       url: "/api/v1/user*",
       type: "PUT",
-      status: 200,
-      responseText: {
-        users: [user.toJSON({ includeId: true })]
-      }
-    });
-
-    $.mockjax({
-      url: "/api/v1/user*",
-      type: "GET",
       status: 200,
       responseText: {
         users: [user.toJSON({ includeId: true })]
@@ -120,6 +203,15 @@ module("Receive package", {
         inventory_number: "002843"
       }
     });
+
+    $.mockjax({
+      url: "api/v1/printers*",
+      type: "POST",
+      status: 200,
+      responseText: {
+        printers_user: { id: 3, printer_id: 2, user_id: 19, tag: "admin" }
+      }
+    });
   },
   afterEach: function() {
     Ember.run(function() {
@@ -135,6 +227,7 @@ test("If location not selected Receive button is disabled", function(assert) {
     package1.set("location", null);
   });
   andThen(function() {
+    debugger;
     assert.equal($("#receive-button").prop("disabled"), true);
   });
 });

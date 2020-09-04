@@ -1,31 +1,48 @@
 import Ember from "ember";
-import AjaxPromise from "goodcity/utils/ajax-promise";
+import { toID } from "goodcity/utils/helpers";
+import ApiBaseService from "./api-base-service";
 
-export default Ember.Service.extend({
+export default ApiBaseService.extend({
   store: Ember.inject.service(),
   session: Ember.inject.service(),
-  allAvailablePrinter() {
+  allAvailablePrinters() {
     return this.get("store")
       .peekAll("printer")
-      .sortBy("id")
+      .sortBy("name")
       .map(printer => printer.getProperties("name", "id"));
   },
 
-  userDefaultPrinter: Ember.computed(function() {
-    let currentUserId = this.get("session.currentUser.id");
-    return this.get("store")
-      .peekRecord("user", currentUserId)
-      .get("printer");
-  }),
-
   updateUserDefaultPrinter(printerId) {
-    new AjaxPromise(
-      `/users/${this.get("session.currentUser.id")}`,
-      "PUT",
-      this.get("session.authToken"),
-      { user: { printer_id: printerId } }
-    ).then(data => {
+    const defaultPrinterUser = this.__getStockPrintersUsers().get(
+      "firstObject"
+    );
+    this.PUT(`/printers_users/${defaultPrinterUser.id}`, {
+      printers_users: {
+        printer_id: printerId
+      }
+    }).then(data => {
       this.get("store").pushPayload(data);
     });
+  },
+
+  addDefaultPrinter(printer) {
+    const id = toID(printer);
+    this.POST(`/printers_users`, {
+      printers_users: {
+        printer_id: id,
+        user_id: this.get("session.currentUser.id"),
+        tag: "admin"
+      }
+    }).then(data => this.get("store").pushPayload(data));
+  },
+
+  getDefaultPrinter() {
+    return this.__getStockPrintersUsers().get("firstObject.printer");
+  },
+
+  __getStockPrintersUsers() {
+    return this.get("store")
+      .peekAll("printers_user")
+      .filterBy("tag", "admin");
   }
 });

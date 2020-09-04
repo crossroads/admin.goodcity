@@ -15,7 +15,8 @@
   overflow: hidden !important;
 
   li{
-    border-bottom: 1px solid $light-gray-1;
+    border-bottom: 2px solid $light-gray-1;
+    margin-bottom: 0;
   }
 }
 
@@ -128,5 +129,13 @@
       width: 35%;
       font-size: 1.2rem;
     }
+  }
+}
+
+.notifications-section {
+  padding: 0;
+
+  .notifications-threads.columns {
+    padding: 0;
   }
 }
