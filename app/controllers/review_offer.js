@@ -1,5 +1,5 @@
 import Ember from "ember";
-import AsyncTasksMixin from "../mixins/async_tasks";
+import AsyncTasksMixin, { ERROR_STRATEGIES } from "../mixins/async_tasks";
 const { getOwner } = Ember;
 
 export default Ember.Controller.extend(AsyncTasksMixin, {
@@ -114,10 +114,10 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     },
 
     reopenOffer() {
-      this.runTask(() => {
-        this.get("offerService").reopenOffer(this.get("model"));
+      this.runTask(async () => {
+        await this.get("offerService").reopenOffer(this.get("model"));
         this.send("toggleOfferOptions");
-      });
+      }, ERROR_STRATEGIES.MODAL);
     },
 
     submitOffer() {
