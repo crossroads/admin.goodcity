@@ -24,6 +24,8 @@ var App,
   condition1,
   condition2,
   condition3,
+  reviewer1,
+  printer,
   condition4;
 
 module("Reviewer: Accept Item Tab", {
@@ -31,6 +33,8 @@ module("Reviewer: Accept Item Tab", {
     App = startApp({}, 2);
     TestHelper.setup();
     role = FactoryGuy.make("role");
+    reviewer1 = FactoryGuy.make("user", { isReviewer: true });
+    printer = FactoryGuy.make("printer");
     condition1 = FactoryGuy.make("donor_condition", { visibleToDonor: true });
     condition2 = FactoryGuy.make("donor_condition", { visibleToDonor: true });
     condition3 = FactoryGuy.make("donor_condition", { visibleToDonor: true });
@@ -41,6 +45,32 @@ module("Reviewer: Accept Item Tab", {
       status: 200,
       responseText: {
         roles: [role.toJSON({ includeId: true })]
+      }
+    });
+
+    $.mockjax({
+      url: "api/v1/printers*",
+      type: "POST",
+      status: 200,
+      responseText: {
+        printers_user: { id: 3, printer_id: 2, user_id: 19, tag: "admin" }
+      }
+    });
+
+    $.mockjax({
+      url: "/api/v1/printer*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        printers: [printer.toJSON({ includeId: true })]
+      }
+    });
+
+    $.mockjax({
+      url: "/api/v1/auth/current_user_profil*",
+      responseText: {
+        user_profile: reviewer1.toJSON({ includeId: true }),
+        printers_users: []
       }
     });
 

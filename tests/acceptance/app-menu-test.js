@@ -7,7 +7,7 @@ import startApp from "../helpers/start-app";
 import FactoryGuy from "ember-data-factory-guy";
 import TestHelper from "ember-data-factory-guy/factory-guy-test-helper";
 
-var App, reviewer1, role, mocks;
+var App, reviewer1, role, mocks, printer;
 
 const times = n => ({
   do(func) {
@@ -27,7 +27,7 @@ module("App Menu", {
     TestHelper.setup();
 
     mocks = [];
-
+    printer = FactoryGuy.make("printer");
     role = FactoryGuy.make("role");
     mocks.push(
       $.mockjax({
@@ -42,6 +42,24 @@ module("App Menu", {
 
     reviewer1 = FactoryGuy.make("user", { isReviewer: true });
     window.localStorage.currentUserId = reviewer1.id;
+
+    $.mockjax({
+      url: "api/v1/printers*",
+      type: "POST",
+      status: 200,
+      responseText: {
+        printers_user: { id: 3, printer_id: 2, user_id: 19, tag: "admin" }
+      }
+    });
+
+    $.mockjax({
+      url: "/api/v1/printer*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        printers: [printer.toJSON({ includeId: true })]
+      }
+    });
 
     mocks.push(
       $.mockjax({
