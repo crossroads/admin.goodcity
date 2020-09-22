@@ -23,7 +23,8 @@ moduleForModel("offer", "Offer Model", {
     "model:cancellation_reason",
     "service:i18n",
     "service:cloudinaryUtils",
-    "model:printer"
+    "model:printer",
+    "model:company"
   ]
 });
 

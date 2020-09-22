@@ -2,7 +2,7 @@ import { moduleForModel, test } from "ember-qunit";
 
 moduleForModel("printer", "Unit | Model | printer", {
   // Specify the other units that are required for this test.
-  needs: ["model:user"]
+  needs: ["model:user", "printers-user"]
 });
 
 test("it exists", function(assert) {
