@@ -146,10 +146,11 @@ jobs:
   www_deploy:
     <<: *defaults
     docker:
-      - image: circleci/ruby:2.5.5
+      - image: circleci/ruby:2.6.0-node
     steps:
       - restore-cache: *restore-repo-cache
       - restore-cache: *restore-bundler-cache
+      - run: gem install bundler:2.0.2
       - run: bundle check --path=vendor/bundle || bundle install --deployment --jobs=2 --retry=3
       - save-cache: *save-bundler-cache
       - attach_workspace:
