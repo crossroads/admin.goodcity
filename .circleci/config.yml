@@ -4,7 +4,7 @@ aliases:
 
   - defaults: &defaults
       docker:
-        - image: circleci/node:carbon
+        - image: circleci/node:10.15.1
       working_directory: ~/code
       environment:
         # JOBS: 1 required to disable workers pools on broccoli as the underlying container reports 36 cores and runs out of memory if trying to spawn 36 threads!
@@ -301,15 +301,15 @@ jobs:
     steps:
       - checkout
       - run:
-          name: install node@8.15.0
+          name: install node@10.15.1
           command: |
               set +e
               touch $BASH_ENV
               curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.5/install.sh | bash
               echo 'export NVM_DIR="$HOME/.nvm"' >> $BASH_ENV
               echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-              echo nvm install 8.15.0 >> $BASH_ENV
-              echo nvm alias default 8.15.0 >> $BASH_ENV
+              echo nvm install 10.15.1 >> $BASH_ENV
+              echo nvm alias default 10.15.1 >> $BASH_ENV
       - run:
           name: verify node version
           command: node --version
@@ -376,7 +376,7 @@ jobs:
           command: npm i -g cordova-update-config
       - run:
           name: Install cordova globally
-          command: npm i -g cordova@7.1.0
+          command: npm i -g cordova@9.0.0
       - run:
           name: Create keychain and import p12 certificate
           command: bundle exec fastlane ios prepare_certificates cert:$CERTIFICATE
