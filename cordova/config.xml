@@ -84,8 +84,10 @@
   </platform>
   <access launch-external="yes" origin="tel:*" />
   <access origin="*" />
+  <preference name="scheme" value="app" />
+  <preference name="hostname" value="localhost" />
   <allow-intent href="https://maps.google.com/*" />
-  <engine name="ios" spec="~5.0.0" />
+  <engine name="ios" spec="6.1.1" />
   <engine name="android" spec="9.0.0" />
   <engine name="windows" spec="~4.3.1" />
   <plugin name="cordova-plugin-statusbar" spec="~2.1.1" />
