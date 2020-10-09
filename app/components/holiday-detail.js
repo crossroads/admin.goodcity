@@ -1,8 +1,7 @@
-import Ember from 'ember';
+import Ember from "ember";
 const { getOwner } = Ember;
 
 export default Ember.Component.extend({
-
   i18n: Ember.inject.service(),
   messageBox: Ember.inject.service(),
   isEditing: false,
@@ -14,40 +13,51 @@ export default Ember.Component.extend({
         this.get("i18n").t("holiday.delete_confirm"),
         this.get("i18n").t("yes"),
         () => {
-          var loadingView = getOwner(this).lookup('component:loading').append();
+          var loadingView = getOwner(this)
+            .lookup("component:loading")
+            .append();
 
           holiday.deleteRecord();
-          holiday.save()
-            .catch(error => { holiday.rollback(); throw error; })
+          holiday
+            .save()
+            .catch(error => {
+              holiday.rollbackAttributes();
+              throw error;
+            })
             .finally(() => loadingView.destroy());
         },
         this.get("i18n").t("no")
-        );
+      );
     },
 
     displayEditForm() {
-      this.set('isEditing', true);
+      this.set("isEditing", true);
     },
 
     hideEditForm() {
-      this.get('day').rollbackAttributes();
-      this.set('isEditing', false);
+      this.get("day").rollbackAttributes();
+      this.set("isEditing", false);
     },
 
     saveHoliday() {
       var holiday = this.get("day");
 
-      if(holiday.get("name").length !== 0) {
-        var loadingView = getOwner(this).lookup('component:loading').append();
+      if (holiday.get("name").length !== 0) {
+        var loadingView = getOwner(this)
+          .lookup("component:loading")
+          .append();
 
-        holiday.save()
-          .catch(error => { holiday.rollback(); throw error; })
+        holiday
+          .save()
+          .catch(error => {
+            holiday.rollbackAttributes();
+            throw error;
+          })
           .finally(() => {
             loadingView.destroy();
-            this.set('isEditing', false);
+            this.set("isEditing", false);
           });
       }
-
     }
   }
 });

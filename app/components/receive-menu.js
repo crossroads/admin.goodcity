@@ -171,7 +171,7 @@ export default Ember.Component.extend(AsyncTasksMixin, {
       offer
         .save()
         .catch(error => {
-          offer.rollback();
+          offer.rollbackAttributes();
           throw error;
         })
         .then(() => this.send(this.get("confirmReceivingEvent")));

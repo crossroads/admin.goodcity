@@ -155,7 +155,7 @@ export default Ember.Controller.extend({
           })
           .catch(error => {
             if (item) {
-              item.rollback();
+              item.rollbackAttributes();
             }
             if (
               error.errors instanceof Array &&
