@@ -103,7 +103,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
           this.runTask(offer.destroyRecord())
             .then(() => this.transitionToRoute(this.get("backLinkPath")))
             .catch(error => {
-              offer.rollback();
+              offer.rollbackAttributes();
               throw error;
             })
             .finally(() => this.set("cancelByMe", false));
