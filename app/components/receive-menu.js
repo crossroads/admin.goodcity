@@ -9,6 +9,7 @@ export default Ember.Component.extend(AsyncTasksMixin, {
   store: Ember.inject.service(),
   messageBox: Ember.inject.service(),
   packageService: Ember.inject.service(),
+  printerService: Ember.inject.service(),
   displayUserPrompt: false,
 
   isReceived: Ember.computed.equal("package.state", "received"),
@@ -207,35 +208,17 @@ export default Ember.Component.extend(AsyncTasksMixin, {
     },
 
     printBarcode() {
-      var loadingView = getOwner(this)
-        .lookup("component:loading")
-        .append();
-      new AjaxPromise(
-        `/packages/${this.get("packageId")}/print_inventory_label`,
-        "GET",
-        this.get("session.authToken")
-      )
-        .catch(xhr => {
-          if (xhr.status !== 200) {
-            var errors = xhr.responseText;
-            try {
-              errors = Ember.$.parseJSON(xhr.responseText).errors;
-            } catch (err) {
-              console.log(err);
-            }
-            this.get("messageBox").alert(errors);
-          } else {
-            throw xhr;
-          }
-        })
-        .finally(() => {
-          loadingView.destroy();
-          this.send("toggle", true);
-          Ember.$(`#printer_message_${this.get("package.id")}`).css({
-            display: "block"
+      this.runTask(() => {
+        this.get("printerService")
+          .printInventoryLabel(this.get("packageId"))
+          .then(() => {
+            this.send("toggle", true);
+            Ember.$(`#printer_message_${this.get("packageId")}`).css({
+              display: "block"
+            });
+            Ember.run.debounce(this, this.hidePrinterMessage, 200);
           });
-          Ember.run.debounce(this, this.hidePrinterMessage, 200);
-        });
+      }, ERROR_STRATEGIES.MODAL);
     }
   },
 
