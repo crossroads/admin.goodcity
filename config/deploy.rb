@@ -1,5 +1,3 @@
-lock '3.11.0'
-
 set :application, 'admin.goodcity'
 set :deploy_to, '/var/www/html/admin.goodcity.hk'
 set :shared_repo, 'https://github.com/crossroads/shared.goodcity.git'
