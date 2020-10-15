@@ -12,15 +12,13 @@ export default Ember.Component.extend({
   displayUserPrompt: false,
 
   displayCustomReason: Ember.computed("selectedReason", function() {
-    return this.get("selectedReason.id") === "-1";
+    return this.get("selectedReason.id") === "8";
   }),
 
   cancellationOptions: Ember.computed(function() {
-    var reasons = this.get("store")
+    return this.get("store")
       .peekAll("cancellation_reason")
       .sortBy("id");
-    reasons.push({ id: "-1", name: this.get("i18n").t("other") });
-    return reasons;
   }),
 
   actions: {
@@ -33,18 +31,16 @@ export default Ember.Component.extend({
     },
 
     confirmCancelOffer() {
-      let cancelReason, selectedReason;
+      let cancelReason = this.get("offerCancelReason") || "";
+      let selectedReason =
+        this.get("selectedReason") ||
+        this.get("cancellationOptions.firstObject");
 
-      if (this.get("displayCustomReason")) {
-        cancelReason = this.get("offer.cancelReason");
-        if (Ember.$.trim(cancelReason).length === 0) {
-          this.set("invalidReason", true);
-          return;
-        }
-        this.set("invalidReason", false);
-      } else {
-        selectedReason = this.get("selectedReason");
+      if (this.get("displayCustomReason") && cancelReason.trim().length == 0) {
+        this.set("invalidReason", true);
+        return false;
       }
+
       var loadingView = getOwner(this)
         .lookup("component:loading")
         .append();
@@ -52,6 +48,7 @@ export default Ember.Component.extend({
       offer.set("cancelReason", cancelReason);
       offer.set("cancellationReason", selectedReason);
       offer.set("state_event", "cancel");
+      this.set("offerCancelReason", "");
 
       offer.save().finally(() => {
         this.sendAction("toggleAction");
