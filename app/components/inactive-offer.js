@@ -23,7 +23,7 @@ export default Ember.Component.extend({
       var inactiveMessage =
         this.get("inactiveMessage.string") || this.get("inactiveMessage");
 
-      if (!inactiveMessage) {
+      if (Ember.$.trim(inactiveMessage).length === 0) {
         this.set("invalidMessage", true);
         return false;
       }
