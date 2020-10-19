@@ -94,10 +94,11 @@ jobs:
       - run:
           name: Run Ember tests
           command: COVERAGE=true yarn test:ci
-      - persist_to_workspace:
-          root: .
-          paths:
-            - coverage*/lcov.info
+          # command: COVERAGE=true yarn test:ci
+      # - persist_to_workspace:
+      #     root: .
+      #     paths:
+      #       - coverage*/lcov.info
 
   upload-coverage:
     <<: *defaults
@@ -404,13 +405,13 @@ workflows:
         - tests:
             requires:
               - package_dependencies
-        - upload-coverage:
-            requires:
-              - package_dependencies
-              - tests
-            filters:
-              branches:
-                only: /^(master|live)$/
+        # - upload-coverage:
+        #     requires:
+        #       - package_dependencies
+        #       - tests
+        #     filters:
+        #       branches:
+        #         only: /^(master|live)$/
         - www_build:
             requires:
               - tests
