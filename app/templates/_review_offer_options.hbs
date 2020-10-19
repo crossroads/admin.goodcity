@@ -47,4 +47,12 @@
     </div>
   {{/if}}
 
+  {{#if offer.canReopen}}
+    <div class="merge_option option_menu">
+      <a {{action "reopenOffer"}}>
+        <i class="fa fa-reply"></i>
+        {{t "review_offer.options.reopen_offer"}}
+      </a>
+    </div>
+  {{/if}}
 </div>
