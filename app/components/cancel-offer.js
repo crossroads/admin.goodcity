@@ -12,7 +12,8 @@ export default Ember.Component.extend({
   displayUserPrompt: false,
 
   displayCustomReason: Ember.computed("selectedReason", function() {
-    return this.get("selectedReason.id") === "8";
+    let translation = this.get("i18n");
+    return this.get("selectedReason.name") == translation.t("other");
   }),
 
   cancellationOptions: Ember.computed(function() {
