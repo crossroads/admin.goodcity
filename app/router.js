@@ -109,8 +109,6 @@ Router.map(function() {
     this.route("my_offers");
   });
 
-  this.route("users");
-  this.route("user", { path: "/users/:user_id" });
   this.route("holidays");
 });
 
