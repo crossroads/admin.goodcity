@@ -285,7 +285,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
       .printBarcode({
         package_id: packageId,
         labels,
-        printer_id: this.get("selectedPrinterId")
+        tag: "admin"
       })
       .catch(error => {
         this.get("messageBox").alert(
