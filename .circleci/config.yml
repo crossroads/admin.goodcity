@@ -213,7 +213,10 @@ jobs:
             master)
               ENVIRONMENT=staging
               ;;
-            master)
+            GCW-3303-Deprecate-Usage-of-AppVersion)
+            ENVIRONMENT=staging
+              ;;
+            preview)
               ENVIRONMENT=preview
               ;;
             live)
