@@ -213,7 +213,7 @@ jobs:
             master)
               ENVIRONMENT=staging
               ;;
-            preview)
+            master)
               ENVIRONMENT=preview
               ;;
             live)
