@@ -1,0 +1,25 @@
+.search.users {
+  .item-content {
+    margin-top: 1rem;
+  }
+
+  li {
+    padding: 0.5rem 1.2rem;
+    a {
+      color: white;
+    }
+  }
+}
+
+.user-profile {
+  .radio-buttons li {
+    border: none;
+    float: left;
+    width: 240px;
+    margin: 7px 5px;
+  }
+}
+
+.headline{
+  font-size: 25px;
+}
