@@ -16,7 +16,7 @@
 
   @media #{$small-only} {
     width: 9.5rem;
-    margin-left: -8rem;
+    margin-left: -6rem;
   }
 
   /* box-shadow style */
@@ -45,7 +45,7 @@
     float: none;
 
     @media #{$small-only} {
-      font-size: 0.85rem;
+      font-size: 0.65rem;
     }
   }
 }

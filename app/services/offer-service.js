@@ -29,6 +29,10 @@ export default ApiBaseService.extend({
     return this.__udpateState(offer, "reopen_offer");
   },
 
+  resumeReceiving(offer) {
+    return this.__udpateState(offer, "resume_receiving");
+  },
+
   async __udpateState(offer, state, params = {}) {
     const id = toID(offer);
     const url = `/offers/${id}/${state}`;

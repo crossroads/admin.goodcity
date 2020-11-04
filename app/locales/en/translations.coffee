@@ -243,6 +243,7 @@ I18nTranslationsEn =
 
       "options":
         "reopen_offer": "Reopen"
+        "resume_resuming_offer": "Resume receiving"
         "add_item": "Add an item"
         "delete_offer": "Delete Offer"
         "submit_offer": "Re-submit Offer"
