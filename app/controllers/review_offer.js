@@ -123,7 +123,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     resumeReceivingOffer() {
       this.runTask(async () => {
         await this.get("offerService").resumeReceiving(this.get("model"));
-        this.send("toggleOfferOptions");
+        this.set("displayOfferOptions", false);
       }, ERROR_STRATEGIES.MODAL);
     },
 
