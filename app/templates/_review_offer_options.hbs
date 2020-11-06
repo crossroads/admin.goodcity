@@ -55,4 +55,13 @@
       </a>
     </div>
   {{/if}}
+
+  {{#if offer.canResumeReceiving}}
+    <div class="merge_option option_menu">
+      <a {{action "resumeReceivingOffer"}}>
+        <i class="fa fa-reply"></i>
+        {{t "review_offer.options.resume_resuming_offer"}}
+      </a>
+    </div>
+  {{/if}}
 </div>
