@@ -18,6 +18,7 @@ fastlane/*.json
 *.mobileprovision
 *.keystore
 *.p12
+*.p8
 
 # misc
 .sass-cache
