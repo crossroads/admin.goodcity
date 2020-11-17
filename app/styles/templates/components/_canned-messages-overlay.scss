@@ -9,6 +9,11 @@
     list-style: none;
   }
 
+  ul {
+    margin-left: 10%;
+    margin-right: 5%;
+  }
+
   .header {
     display: flex;
     align-items: center;
@@ -32,13 +37,13 @@
   }
 
   .canned-content-container {
-    max-width: 58%;
+    max-width: 70%;
   }
 
   .canned-content {
     white-space: nowrap;
     font-size: clamp(12px, 2vw, 14px);
-    width: 10rem;
+    width: clamp(5rem, 10rem, 20rem);
     overflow: hidden;
     text-overflow: ellipsis;
     color: #a3aab6;

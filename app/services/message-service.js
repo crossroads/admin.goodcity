@@ -15,8 +15,8 @@ export default ApiBaseService.extend({
     this.toggleProperty("isCannedMessagesVisible");
   },
 
-  async fetchCannedResponse() {
-    const data = await this.GET(`/canned_responses`);
+  async fetchCannedResponse(opts = {}) {
+    const data = await this.GET(`/canned_responses`, opts);
     this.get("store").pushPayload(data);
     return data;
   },

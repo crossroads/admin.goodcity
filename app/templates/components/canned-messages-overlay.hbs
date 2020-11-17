@@ -2,7 +2,7 @@
   {{#popup-overlay open=open}}
     <div class="row search-box ui">
       <div class="row">
-        <div class="small-2 columns back-icon" {{action "cancelSearch"}}>
+        <div class="small-2 columns back-icon" {{action "cancel"}}>
           <i class="fa fa-angle-left"></i>
           <span>{{t 'cancel'}}</span>
         </div>
@@ -22,30 +22,32 @@
       <div class="header">
         Manage pro-forma messages
       </div>
-      <ul>
-        {{#each cannedResponses as |res|}}
-          <li>
-            <div class="canned-message-list-container" {{action "setCannedResponse" res.contentEn}}>
-              <div class="message-container">
-                <div>
-                  {{res.nameEn}}
-                </div>
-                <div class="canned-content-container">
-                  <div class="canned-content">
-
-                      {{res.contentEn}}
-
+      {{#if displayResults}}
+        {{#infinite-list height="82vh" loadMore=(action "loadMoreCannedMessages") as |cannedMessages| }}
+          <ul>
+            {{#each cannedMessages as |cannedMessage|}}
+              <li>
+                <div class="canned-message-list-container">
+                  <div class="message-container">
+                    <div>
+                      {{cannedMessage.name}}
+                    </div>
+                    <div class="canned-content-container">
+                      <div class="canned-content">
+                        {{cannedMessage.content}}
+                      </div>
+                    </div>
+                  </div>
+                  <div class='language-container'>
+                    <span {{action "setCannedResponse" cannedMessage.contentEn}}>EN</span>
+                    <span {{action "setCannedResponse" cannedMessage.contentZhTw}}>中文</span>
                   </div>
                 </div>
-              </div>
-              <div class='language-container'>
-                <span>EN</span>
-                <span>中文</span>
-              </div>
-            </div>
-          </li>
-        {{/each}}
-      </ul>
+              </li>
+            {{/each}}
+          </ul>
+        {{/infinite-list}}
+      {{/if}}
     </div>
   {{/popup-overlay}}
 </div>
