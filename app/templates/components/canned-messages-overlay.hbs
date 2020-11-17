@@ -1,0 +1,51 @@
+<div class="cmp search-overlay order">
+  {{#popup-overlay open=open}}
+    <div class="row search-box ui">
+      <div class="row">
+        <div class="small-2 columns back-icon" {{action "cancelSearch"}}>
+          <i class="fa fa-angle-left"></i>
+          <span>{{t 'cancel'}}</span>
+        </div>
+        <div class="small-10 columns">
+          {{focus-textfield
+          name="searchText"
+          id="searchText"
+          placeholder=(t 'search.placeholder')
+          value=searchText }}
+          {{#if hasSearchText}}
+            <i class="fa fa-times-circle clear-search" {{action "clearSearch"}}></i>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+    <div class="canned-message-container">
+      <div class="header">
+        Manage pro-forma messages
+      </div>
+      <ul>
+        {{#each cannedResponses as |res|}}
+          <li>
+            <div class="canned-message-list-container" {{action "setCannedResponse" res.contentEn}}>
+              <div class="message-container">
+                <div>
+                  {{res.nameEn}}
+                </div>
+                <div class="canned-content-container">
+                  <div class="canned-content">
+
+                      {{res.contentEn}}
+
+                  </div>
+                </div>
+              </div>
+              <div class='language-container'>
+                <span>EN</span>
+                <span>中文</span>
+              </div>
+            </div>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/popup-overlay}}
+</div>

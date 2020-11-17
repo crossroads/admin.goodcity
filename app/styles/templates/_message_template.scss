@@ -1,0 +1,198 @@
+.message-textbar {
+  padding-top: 0rem !important;
+}
+.scaled_icon {
+  transform: scale(2);
+  margin-top: 10px;
+}
+
+.message_bubble_box {
+  background-color: $white;
+  color: black;
+  width: 80%;
+  border-radius: 0.5rem;
+  padding: 0.8rem;
+  margin-bottom: 0.8rem;
+  font-size: 0.9rem;
+  position: relative;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+
+  @media #{$small-only} {
+    font-size: 0.7rem;
+  }
+
+  .message_details {
+    font-size: 0.7rem;
+    margin-bottom: 0.5rem;
+
+    @media #{$small-only} {
+      font-size: 0.6rem;
+    }
+  }
+
+  .item_message {
+    float: right;
+    margin-top: -5%;
+  }
+
+  audio {
+    width: 100%;
+  }
+}
+
+.my_message {
+  @extend .message_bubble_box;
+  background-color: $light-yellow;
+  float: right;
+}
+
+.received_message {
+  @extend .message_bubble_box;
+  float: left;
+}
+
+.message_arrow {
+  content: '';
+  position: absolute;
+  border-style: solid;
+  border-width: 0.5rem 0.5rem 0;
+  border-color: $white transparent;
+  display: block;
+  width: 0;
+  z-index: 1;
+  bottom: -0.4rem;
+}
+
+.received_message:after
+{
+  @extend .message_arrow;
+  left: 1.5rem;
+}
+
+.my_message:after
+{
+  @extend .message_arrow;
+  right: 1.5rem;
+  border-color: $light-yellow transparent;
+}
+
+.message-section {
+  .icon-empty-items {
+    color: $body-font-color;
+  }
+
+  .item_log {
+    text-align: center;
+    margin-bottom: 0.3rem;
+  }
+  a {
+    color: inherit !important;
+    text-decoration: underline;
+  }
+}
+
+.btm.message-form {
+  height: 0px !important;
+}
+
+.message-footer {
+  height: 65px;
+
+  @media #{$small-only} {
+    height: 50px;
+  }
+}
+
+.message_footer_small_page {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.message-form {
+  .ui {
+    padding-bottom: 0.1rem;
+
+    textarea {
+      margin: 0;
+      max-width: 100%;
+      min-height: 1rem !important;
+      height: 2.3rem;
+      padding: 0.3rem !important;
+
+      @media #{$small-only} {
+        margin-left:0.2rem;
+        margin-right:0.2rem;
+      }
+
+      @media #{$medium-only} {
+        margin-left:0.2rem;
+      }
+    }
+
+    button {
+      padding: 0.53rem;
+      border-radius: 0.2rem;
+      line-height: 1.2rem;
+      width: 5rem;
+      margin: 0;
+
+      @media #{$small-only} {
+        font-size: 0.9rem;
+        width: 4rem;
+      }
+    }
+  }
+
+  div {
+    padding-top: 0.1rem;
+    padding-right: 0.2rem;
+    z-index: 10;
+  }
+
+  .message-base {
+    background-color: #dee4eb;
+  }
+}
+
+.day_seperator {
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid $light-blue;
+  line-height: 0.1em;
+  margin: 10px 0 20px;
+
+  span {
+    padding: 0 10px;
+    color: $medium-blue;
+    background: $dark-blue;
+  }
+}
+
+.tabs-content .day_seperator span {
+  background: $light-grey;
+}
+
+.review_item .day_seperator {
+  border-bottom: 1px solid $medium-blue;
+}
+
+.chat_note {
+  color: white;
+  margin-bottom: 0.5rem;
+
+  @media #{$small-only} {
+    font-size: 0.8rem;
+  }
+
+  i {
+    color: $coral-red;
+  }
+}
+
+.offer_details {
+  .message-section {
+    padding-top: 1rem;
+  }
+}
