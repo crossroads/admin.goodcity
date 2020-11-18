@@ -28,7 +28,11 @@
                 <div class="canned-message-list-container">
                   <div class="message-container">
                     <div>
-                      {{cannedMessage.name}}
+                      {{#if cannedMessage.name}}
+                        {{cannedMessage.name}}
+                      {{else}}
+                        {{cannedMessage.nameEn}}
+                      {{/if}}
                     </div>
                     <div class="canned-content-container">
                       <div class="canned-content">
