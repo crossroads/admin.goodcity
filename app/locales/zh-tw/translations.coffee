@@ -240,6 +240,8 @@ I18nTranslationsZhTw =
         "active_call": "即時通話"
 
       "options":
+        "reopen_offer": "Reopen"
+        "resume_resuming_offer": "Resume receiving"
         "add_item": "添加項目"
         "delete_offer": "刪除捐贈項目"
         "submit_offer": "重新提交捐贈項目"

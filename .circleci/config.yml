@@ -93,11 +93,12 @@ jobs:
           command: dockerize -wait tcp://localhost:4201 -timeout 1m
       - run:
           name: Run Ember tests
-          command: COVERAGE=true yarn test:ci
-      - persist_to_workspace:
-          root: .
-          paths:
-            - coverage*/lcov.info
+          command: yarn test:ci
+          # command: COVERAGE=true yarn test:ci
+      # - persist_to_workspace:
+      #     root: .
+      #     paths:
+      #       - coverage*/lcov.info
 
   upload-coverage:
     <<: *defaults
@@ -362,6 +363,12 @@ jobs:
               mv $PROVISIONING_PROFILE ~/Library/MobileDevice/Provisioning\ Profiles
           working_directory: ~/code
       - run:
+          name: Download AppStore API KEY file
+          command: |
+            APPSTORE_CONNECT_API_KEY_FILENAME="AuthKey_${APPSTORE_CONNECT_API_KEY_ID}.p8"
+            yarn run azure-filestore download -d ios -f $APPSTORE_CONNECT_API_KEY_FILENAME
+            mv $APPSTORE_CONNECT_API_KEY_FILENAME ~/code/fastlane
+      - run:
           name: Download P12 certificate
           command: |
               yarn run azure-filestore download -f $CERTIFICATE
@@ -404,13 +411,13 @@ workflows:
         - tests:
             requires:
               - package_dependencies
-        - upload-coverage:
-            requires:
-              - package_dependencies
-              - tests
-            filters:
-              branches:
-                only: /^(master|live)$/
+        # - upload-coverage:
+        #     requires:
+        #       - package_dependencies
+        #       - tests
+        #     filters:
+        #       branches:
+        #         only: /^(master|live)$/
         - www_build:
             requires:
               - tests

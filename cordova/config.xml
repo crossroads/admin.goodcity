@@ -92,7 +92,7 @@
   <engine name="android" spec="9.0.0" />
   <engine name="windows" spec="~4.3.1" />
   <plugin name="cordova-plugin-statusbar" spec="~2.1.1" />
-  <plugin name="cordova-plugin-device" spec="^1.1.1" />
+  <plugin name="cordova-plugin-device" spec="2.0.3" />
   <plugin name="cordova-plugin-android-permissions" spec="https://github.com/NeoLSN/cordova-plugin-android-permissions" />
   <plugin name="cordova-plugin-whitelist" spec="~1.2.1" />
   <plugin name="cordova-plugin-inappbrowser" spec="https://github.com/apache/cordova-plugin-inappbrowser.git"/>
@@ -106,6 +106,6 @@
     <variable name="INCOMING_CALL_APP_NAME" value="Crossroads" />
     <variable name="MASK_INCOMING_PHONE_NUMBER" value="true" />
   </plugin>
-  <plugin name="phonegap-plugin-media-stream" spec="^1.2.1" />
+  <plugin name="phonegap-plugin-media-stream" spec="https://github.com/phonegap/phonegap-plugin-media-stream.git" />
 </widget>
 
