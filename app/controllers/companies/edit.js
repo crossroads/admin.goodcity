@@ -2,6 +2,13 @@ import Ember from "ember";
 
 export default Ember.Controller.extend({
   actions: {
+    back() {
+      this.get("model.company").rollbackAttributes();
+      this.transitionToRoute(
+        "review_offer.donor_details",
+        this.get("model.id")
+      );
+    },
     updateCompany() {
       let self = this;
       let company = this.get("model.company");
