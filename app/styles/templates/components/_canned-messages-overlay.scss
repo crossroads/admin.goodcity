@@ -1,9 +1,9 @@
 .canned-search-container {
   display: flex;
-  width: 58%;
+  width: clamp(25rem, 62%, 46rem);
   justify-content: space-around;
   align-items: center;
-  margin-left: 21%;
+  margin-left: 20%;
 
   @media #{$small-only} {
     width: 100%;
@@ -23,17 +23,22 @@
   display: flex;
   color: white;
   flex-direction: column;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 
 
   li {
-    margin: clamp(1rem, 2vw, 4rem);
+    margin-bottom: clamp(1rem, 5vw, 4rem);
     list-style: none;
   }
 
   ul {
-    margin-left: 10%;
+    margin-left: clamp(4rem, 20%, 14rem);
     margin-right: 5%;
+    margin-top: 1rem;
+    @media #{$small-only} {
+      margin-left: 8%;
+      margin-right: auto;
+    }
   }
 
   .header {
