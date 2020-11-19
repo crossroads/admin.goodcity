@@ -1,3 +1,8 @@
+.scaled_icon {
+  transform: scale(2);
+  margin-top: 0.8rem;
+}
+
 .canned-search-container {
   display: flex;
   width: clamp(25rem, 62%, 46rem);
@@ -45,6 +50,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    text-decoration: underline;
   }
 
   .canned-message-list-container {

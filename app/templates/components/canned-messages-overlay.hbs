@@ -18,7 +18,7 @@
     </div>
     <div class="canned-message-container">
       <div class="header">
-        Manage pro-forma messages
+        {{t 'canned_response.title'}}
       </div>
       {{#if displayResults}}
         {{#infinite-list height="82vh" loadMore=(action "loadMoreCannedMessages") as |cannedMessages| }}

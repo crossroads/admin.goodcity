@@ -446,4 +446,7 @@ I18nTranslationsZhTw =
           "last_name": "姓氏不能漏空"
           "cell_phone": "電話號碼不能漏空"
 
+    "canned_response":
+      "title": "Manage pro-forma messages"
+
 `export default I18nTranslationsZhTw`
