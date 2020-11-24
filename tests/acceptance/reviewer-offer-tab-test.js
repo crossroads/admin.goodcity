@@ -28,6 +28,15 @@ module("Reviewer: Display Offer Tab", {
       }
     });
 
+    $.mockjax({
+      url: "/api/v1/canned_response*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        canned_responses: []
+      }
+    });
+
     offer = FactoryGuy.make("offer", { state: "under_review" });
     msg_time = new Date().setHours(0, 0, 0);
     message1 = FactoryGuy.make("message", {
