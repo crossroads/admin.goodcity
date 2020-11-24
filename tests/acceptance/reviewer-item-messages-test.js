@@ -67,7 +67,7 @@ module("Reviewer: Display Item Messages", {
     });
 
     $.mockjax({
-      url: "/api/v1/canned_responses",
+      url: "/api/v1/canned_response*",
       type: "GET",
       status: 200,
       responseText: {

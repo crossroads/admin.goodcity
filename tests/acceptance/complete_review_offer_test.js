@@ -34,7 +34,7 @@ module("In Review Offers", {
     });
 
     $.mockjax({
-      url: "/api/v1/canned_responses",
+      url: "/api/v1/canned_respons*",
       type: "GET",
       status: 200,
       responseText: {
