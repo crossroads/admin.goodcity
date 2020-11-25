@@ -1,7 +1,7 @@
 <div class="row">
   <div class="small-12 columns summary recent_offers counts" >
     <h2 class="offer-title">
-      <i class="fa fa-shopping-basket"></i> {{t "dashboard.new_offers"}}
+      <i class="fa fa-shopping-basket"></i> {{t "dashboard.new_offers"}} ({{offers-count-display offersCount "submitted" false}})&ensp; <i class="fa fa-exclamation-triangle"></i> ({{if offersCount.priority_submitted  offersCount.priority_submitted 0}})
     </h2>
 
     {{#each model.recentOffers as |offer|}}
