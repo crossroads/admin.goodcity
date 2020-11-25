@@ -1,16 +1,6 @@
-import AuthorizeRoute from "goodcity/routes/authorize";
+import MessagesBaseRoute from "../message_base";
 
-export default AuthorizeRoute.extend({
-  setupController(controller, model) {
-    this._super(controller, model);
-    controller.set("isActive", true);
-  },
-
-  resetController(controller, isExiting) {
-    if (isExiting) {
-      controller.set("isActive", false);
-    }
-  },
+export default MessagesBaseRoute.extend({
   renderTemplate() {
     this.render("message_template", {
       controller: "review_item.donor_messages"
