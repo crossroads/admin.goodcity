@@ -1,3 +1,5 @@
-import MessagesBaseController from "shared-goodcity/controllers/messages_base";
+import MessagesBaseController from "goodcity/controllers/message_base_controller";
 
-export default MessagesBaseController;
+export default MessagesBaseController.extend({
+  displayCannedMessages: true
+});

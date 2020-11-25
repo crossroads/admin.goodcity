@@ -1,6 +1,7 @@
 .scaled_icon {
   transform: scale(2);
   margin-top: 0.8rem;
+  color: black;
 }
 
 .canned-search-container {
@@ -47,7 +48,7 @@
   }
 
   .header {
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     text-decoration: underline;
