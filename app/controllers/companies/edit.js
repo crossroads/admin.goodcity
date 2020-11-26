@@ -22,9 +22,9 @@ export default Ember.Controller.extend({
         .then(() => {
           this.transitionToRoute("review_offer.donor_details", offer.get("id"));
         })
-        .catch(e =>
-          this.get("messageBox").alert(e.errors[0]["detail"].message)
-        );
+        .catch(({ errors }) => {
+          throw errors[0]["detail"];
+        });
     }
   }
 });

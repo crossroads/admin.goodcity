@@ -38,9 +38,9 @@ export default Ember.Controller.extend({
             );
           });
         })
-        .catch(e =>
-          this.get("messageBox").alert(e.errors[0]["detail"].message)
-        );
+        .catch(({ errors }) => {
+          throw errors[0]["detail"];
+        });
     }
   }
 });
