@@ -19,7 +19,7 @@
     <div class="row">
       <div class="{{if isMobileApp 'small-7 large-8' 'small-12'}} columns">
         {{#form-control}}
-          {{input type='text' value=model.company.name required='true' class='company-input'}}
+          {{input type='text' value=model.company.name required='true' pattern=".*\S.*" class='company-input'}}
           <div class='input-error'>
             {{t 'donor_details.company.company_name_validation'}}
           </div>

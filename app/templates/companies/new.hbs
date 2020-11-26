@@ -19,7 +19,7 @@
   </div>
   <div class="row">
     <div class="{{if isMobileApp 'small-7 large-8' 'small-12'}} columns">
-      {{input type='text' value=name required='true' autofocus ="true" class='company-input' placeholder=(t 'donor_details.company.enter_name')}}
+      {{input type='text' value=name required='true' autofocus ="true" pattern=".*\S.*" class='company-input' placeholder=(t 'donor_details.company.enter_name')}}
       {{#unless name}}
         <div class ="empty-name-error">
           {{t 'donor_details.company.company_name_validation'}}
