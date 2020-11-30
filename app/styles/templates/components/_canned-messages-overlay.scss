@@ -21,7 +21,7 @@
   }
 
   .clear-search {
-    margin-right: 1rem;
+    margin-right: 5%;
   }
 }
 
@@ -74,7 +74,6 @@
   }
 
   .language-container > span.disabled {
-
       color: $org-grey;
       cursor: default;
   }
@@ -93,6 +92,10 @@
     @media #{$small-only} {
       width: 10rem;
     }
+  }
+
+  .show {
+    white-space: initial;
   }
 }
 

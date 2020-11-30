@@ -1,0 +1,19 @@
+
+  <div {{action 'handleClick'}}>
+    <div>
+      {{#if cannedMessage.name}}
+        {{cannedMessage.name}}
+      {{else}}
+        {{cannedMessage.nameEn}}
+      {{/if}}
+    </div>
+    <div class="canned-content-container">
+      <div class="canned-content {{if isClicked 'show'}}">
+        {{#if cannedMessage.content }}
+          {{cannedMessage.content}}
+        {{else}}
+          {{cannedMessage.contentEn}}
+        {{/if}}
+      </div>
+    </div>
+  </div>
