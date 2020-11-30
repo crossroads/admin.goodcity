@@ -12,7 +12,9 @@
                 placeholder=(t 'search.placeholder')
                 value=searchText }}
         {{#if hasSearchText}}
-          <i class="fa fa-times-circle clear-search" {{action "clearSearch"}}></i>
+          <div>
+            <i class="fa fa-times-circle clear-search" {{action "clearSearch"}}></i>
+          </div>
         {{/if}}
       </div>
     </div>
@@ -27,31 +29,16 @@
               <li>
                 <div class="canned-message-list-container">
                   <div class="message-container">
-                    <div>
-                      {{#if cannedMessage.name}}
-                        {{cannedMessage.name}}
-                      {{else}}
-                        {{cannedMessage.nameEn}}
-                      {{/if}}
-                    </div>
-                    <div class="canned-content-container">
-                      <div class="canned-content">
-                        {{#if cannedMessage.content }}
-                          {{cannedMessage.content}}
-                        {{else}}
-                          {{cannedMessage.contentEn}}
-                        {{/if}}
-                      </div>
-                    </div>
-                  </div>
-                  <div class='language-container'>
-                    <span {{action "setCannedResponse" cannedMessage.contentEn}}>EN</span>
-                    <span class="{{if (is-not cannedMessage.contentZhTw) 'disabled'}}"
-                          {{action "setCannedResponse" cannedMessage.contentZhTw}}>
-                          中文
-                    </span>
-                  </div>
+                    {{canned-content cannedMessage=cannedMessage}}
                 </div>
+                    <div class='language-container'>
+                      <span {{action "setCannedResponse" cannedMessage.contentEn}}>EN</span>
+                      <span class="{{if (is-not cannedMessage.contentZhTw) 'disabled'}}"
+                        {{action "setCannedResponse" cannedMessage.contentZhTw}}>
+                        中文
+                      </span>
+                    </div>
+                  </div>
               </li>
             {{/each}}
           </ul>
