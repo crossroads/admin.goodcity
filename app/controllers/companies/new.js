@@ -4,6 +4,10 @@ export default Ember.Controller.extend({
   offerId: Ember.computed.alias("model.id"),
   messageBox: Ember.inject.service(),
 
+  isInvalidCompanyName: Ember.computed("name", function() {
+    return this.get("name").trim().length === 0;
+  }),
+
   actions: {
     back() {
       this.get("model.company") &&
@@ -13,8 +17,9 @@ export default Ember.Controller.extend({
         this.get("model.id")
       );
     },
+
     saveCompanyAndOffer() {
-      if (!this.get("name")) {
+      if (this.get("isInvalidCompanyName")) {
         return;
       }
       let offer = this.get("model");
