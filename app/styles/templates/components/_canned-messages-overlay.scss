@@ -1,0 +1,101 @@
+.scaled_icon {
+  transform: scale(2);
+  margin-top: 0.8rem;
+  color: black;
+}
+
+.canned-search-container {
+  display: flex;
+  width: clamp(25rem, 62%, 46rem);
+  justify-content: space-around;
+  align-items: center;
+  margin-left: 20%;
+
+  @media #{$small-only} {
+    width: 100%;
+    margin-left: 0%;
+  }
+
+  .search-field {
+    flex: 0.8;
+  }
+
+  .clear-search {
+    margin-right: 5%;
+  }
+}
+
+.canned-message-container  {
+  display: flex;
+  color: white;
+  flex-direction: column;
+  margin-top: 1.5rem;
+
+
+  li {
+    margin-bottom: clamp(1rem, 5vw, 4rem);
+    list-style: none;
+  }
+
+  ul {
+    margin-left: clamp(4rem, 20%, 14rem);
+    margin-right: 5%;
+    margin-top: 1rem;
+    @media #{$small-only} {
+      margin-left: 8%;
+      margin-right: auto;
+    }
+  }
+
+  .header {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    text-decoration: underline;
+  }
+
+  .canned-message-list-container {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .message-container {
+    flex: 0.5;
+  }
+
+  .language-container {
+    display: flex;
+    flex: 0.5;
+    justify-content: space-evenly;
+  }
+
+  .language-container > span {
+    cursor: pointer;
+  }
+
+  .language-container > span.disabled {
+      color: $org-grey;
+      cursor: default;
+  }
+
+  .canned-content-container {
+    max-width: 70%;
+  }
+
+  .canned-content {
+    white-space: nowrap;
+    font-size: clamp(12px, 2vw, 14px);
+    width: 20rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #a3aab6;
+    @media #{$small-only} {
+      width: 10rem;
+    }
+  }
+
+  .show {
+    white-space: initial;
+  }
+}
+

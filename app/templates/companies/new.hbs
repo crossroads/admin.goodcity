@@ -1,6 +1,6 @@
 <nav class="tab-bar">
   <section class="left-small">
-    {{#link-to "review_offer.donor_details" model.id classNames="back"}}{{t 'back'}}{{/link-to}}
+    <div class="back" {{action "back"}}>{{t 'back'}}</div>
   </section>
 
   <section class="middle tab-bar-section">
@@ -19,12 +19,12 @@
   </div>
   <div class="row">
     <div class="{{if isMobileApp 'small-7 large-8' 'small-12'}} columns">
-      {{#form-control}}
-        {{input type='text' value=name required='true' class='company-input' placeholder=(t 'donor_details.company.enter_name')}}
-        <div class='input-error'>
+      {{input type='text' value=name required='true' autofocus ="true" pattern=".*\S.*" class='company-input' placeholder=(t 'donor_details.company.enter_name')}}
+      {{#unless name}}
+        <div class ="empty-name-error">
           {{t 'donor_details.company.company_name_validation'}}
         </div>
-      {{/form-control}}
+      {{/unless}}
     </div>
   </div>
 

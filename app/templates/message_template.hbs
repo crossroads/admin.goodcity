@@ -1,0 +1,80 @@
+<section class="message-section">
+  <div class="row">
+    <div class="small-12 columns">
+      {{#href-to-link-to}}
+        {{#each groupedElements as |messages|}}
+          <div class="small-12 columns day_seperator">
+            <span>{{display-messages-date messages.firstObject.createdDate (t 'day.today')}}</span>
+          </div>
+          {{#each messages as |message|}}
+            {{#if message.isMessage}}
+              <div class="ellipsis {{message.state}} {{if message.myMessage 'my_message' 'received_message'}}"
+                id={{message.id}}>
+                <div class='message_details'>
+                  {{#if message.myMessage}}
+                    {{t "messages.owner" }}
+                  {{else}}
+                    {{custom-img-tag src=message.sender.displayImageUrl class="user-avatar"}}
+                    {{t "full_name" firstName=message.sender.firstName lastName=message.sender.lastName}}
+                    {{message.sender.roleInitials}}
+                  {{/if}}
+                  →
+                  {{display-datetime message.createdAt format="HH:mm"}}
+                </div>
+                {{{apply-line-break message.body}}}
+              </div>
+            {{else}}
+              <div class="small-12 columns item_log">
+                {{display-datetime message.createdAt format="HH:mm"}} - {{message.displayMessage}}
+              </div>
+            {{/if}}
+          {{/each}}
+        {{/each}}
+      {{/href-to-link-to}}
+    </div>
+  </div>
+</section>
+<div class="message-footer">
+  <div class="btm message-form">
+    <div class="row message-textbar">
+      {{#if displayChatNote}}
+        <div class="row">
+          <div class="small-12 columns chat_note">
+            <i class="fa fa-info-circle"></i>
+            {{t "messages.chat_note"}}
+          </div>
+        </div>
+      {{/if}}
+      {{#if offer.isDraft}}
+        <div class="row">
+          <div class="small-12 columns chat_note">
+            <i class="fa fa-info-circle"></i>
+            {{t "messages.draft_chat_note"}}
+          </div>
+        </div>
+      {{/if}}
+      <div class="row message-base">
+        <div class="small-12 columns">
+          {{#validatable-form class="form-horizontal" action="sendMessage" on="submit"}}
+            <div class="row ui">
+              {{#if displayCannedMessages}}
+                <div class="small-1 large-1 medium-1 columns">
+                  <i class="fa fa-plus-square scaled_icon" {{action 'cannedMessageLookup'}}></i>
+                </div>
+              {{/if}}
+              <div class="small-8 large-9 medium-9 columns">
+                {{variable-height-textarea value=body name="body" required="true" disabled=disabled parentDiv="message-section"}}
+              </div>
+              <div class="small-3 large-2 medium-2 columns">
+                {{#online-button disabledOverride=disabled tagName="button" disabled=inProgress}}{{t "send"}}{{/online-button}}
+              </div>
+            </div>
+          {{/validatable-form}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{!-- This div holds the id of first unread message. As on page visit, it marked as read and lost the reference to first unread message --}}
+<div class="hidden unread_id"></div>
+{{canned-messages-overlay open=messageService.isCannedMessagesVisible onSelect=messageService.onCannedMessageSelect}}

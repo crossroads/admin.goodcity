@@ -86,6 +86,15 @@ module("Reviewer: Display Offer Messages", {
     });
 
     $.mockjax({
+      url: "/api/v1/canned_response*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        canned_responses: []
+      }
+    });
+
+    $.mockjax({
       url: "/api/v1/offer*",
       type: "GET",
       status: 200,

@@ -447,4 +447,7 @@ I18nTranslationsEn =
           "last_name": "Last name can't be blank"
           "cell_phone": "Mobile number can't be blank"
 
+    "canned_response":
+      "title": "Manage pro-forma messages"
+
 `export default I18nTranslationsEn`

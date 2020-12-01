@@ -65,6 +65,15 @@ module("Reviewer: Display Item Messages", {
         messages: [message1, message2, message3]
       }
     });
+
+    $.mockjax({
+      url: "/api/v1/canned_response*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        canned_responses: []
+      }
+    });
   },
 
   afterEach: function() {

@@ -1,0 +1,49 @@
+<div class="cmp search-overlay order">
+  {{#popup-overlay open=open}}
+    <div class="canned-search-container search-box ui">
+      <div class="back-arow" {{action "cancel"}}>
+        <i class="fa fa-angle-left"></i>
+        <span>{{t 'cancel'}}</span>
+      </div>
+      <div class="search-field">
+        {{focus-textfield
+                name="searchText"
+                id="searchText"
+                placeholder=(t 'search.placeholder')
+                value=searchText }}
+        {{#if hasSearchText}}
+          <div>
+            <i class="fa fa-times-circle clear-search" {{action "clearSearch"}}></i>
+          </div>
+        {{/if}}
+      </div>
+    </div>
+    <div class="canned-message-container">
+      <div class="header">
+        {{t 'canned_response.title'}}
+      </div>
+      {{#if displayResults}}
+        {{#infinite-list height="82vh" loadMore=(action "loadMoreCannedMessages") as |cannedMessages| }}
+          <ul>
+            {{#each cannedMessages as |cannedMessage|}}
+              <li>
+                <div class="canned-message-list-container">
+                  <div class="message-container">
+                    {{canned-content cannedMessage=cannedMessage}}
+                </div>
+                    <div class='language-container'>
+                      <span {{action "setCannedResponse" cannedMessage.contentEn}}>EN</span>
+                      <span class="{{if (is-not cannedMessage.contentZhTw) 'disabled'}}"
+                        {{action "setCannedResponse" cannedMessage.contentZhTw}}>
+                        中文
+                      </span>
+                    </div>
+                  </div>
+              </li>
+            {{/each}}
+          </ul>
+        {{/infinite-list}}
+      {{/if}}
+    </div>
+  {{/popup-overlay}}
+</div>
