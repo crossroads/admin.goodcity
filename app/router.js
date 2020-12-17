@@ -58,6 +58,7 @@ Router.map(function() {
       this.route("logistics");
       this.route("donor_details");
       this.route("receive");
+      this.route("share");
     });
 
     this.route("receive_package", {

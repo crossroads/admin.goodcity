@@ -1,9 +1,10 @@
 import Ember from "ember";
 import AuthorizeRoute from "./authorize";
-import "./../computed/local-storage";
+import { SHAREABLE_TYPES } from "../services/sharing-service";
 
 export default AuthorizeRoute.extend({
   backLinkPath: Ember.computed.localStorage(),
+  sharingService: Ember.inject.service(),
 
   beforeModel() {
     var previousRoutes = this.router.router.currentHandlerInfos;
@@ -28,9 +29,14 @@ export default AuthorizeRoute.extend({
     return this.store.findRecord("offer", offerId, { reload: true });
   },
 
-  model() {
+  async model() {
     var offerId = this.modelFor("offer").get("id");
-    return this.loadIfAbsent(offerId);
+    const [offer] = await Ember.RSVP.all([
+      this.loadIfAbsent(offerId),
+      this.get("sharingService").findShareable(SHAREABLE_TYPES.OFFER, offerId)
+    ]);
+
+    return offer;
   },
 
   setupController(controller, model) {

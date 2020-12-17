@@ -13,6 +13,24 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   displayCompleteReviewPopup: false,
   displayCompleteReceivePopup: false,
 
+  allShareables: Ember.computed(function() {
+    return this.get("store").peekAll("shareable");
+  }),
+
+  isShared: Ember.computed(
+    "offer.id",
+    "allShareables.[]",
+    "allShareables.@each.expiresAt",
+    function() {
+      return this.get("allShareables").find(sh => {
+        return (
+          sh.get("resourceType") == "Offer" &&
+          sh.get("resourceId") == this.get("offer.id")
+        );
+      });
+    }
+  ),
+
   displayOfferOptions: Ember.computed({
     get: function() {
       return false;

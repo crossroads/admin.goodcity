@@ -22,37 +22,47 @@
   }}
 
   <div class="row">
-    <div class="small-12 columns">
-      <dl class="tabs" data-tab>
+    <div class="">
+      <dl class="tabs flex no-wrap space-between" data-tab>
 
-        {{#link-to 'review_offer.items' tagName="dd" classNames="small-3 columns text-center"}}
+        <dd class="text-center">
           {{#link-to 'review_offer.items'}}
             <i class="fa fa-comment-o fa-2x"></i>
             <div>{{t "offer.title"}}</div>
           {{/link-to}}
-        {{/link-to}}
+        </dd>
 
-        {{#link-to 'review_offer.donor_details' tagName="dd" classNames="small-3 columns text-center"}}
+        <dd class="text-center">
           {{#link-to 'review_offer.donor_details'}}
             <i class="fa fa-id-card-o fa-2x"></i>
             <div>{{t "offer.donor"}}</div>
           {{/link-to}}
-        {{/link-to}}
+        </dd>
 
-        {{#link-to 'review_offer.logistics' tagName="dd" classNames="small-3 columns text-center"}}
+        <dd class="text-center">
           {{#link-to 'review_offer.logistics'}}
             <i class="fa fa-truck fa-2x"></i>
             <div>{{t "offer.transport"}}</div>
           {{/link-to}}
-        {{/link-to}}
+        </dd>
 
-        {{#link-to 'review_offer.receive' tagName="dd" classNames="small-3 columns text-center"}}
+        <dd class="text-center">
           {{#link-to 'review_offer.receive'}}
             <i class="fa fa-sign-in fa-2x"></i>
             <div>{{t "review_offer.receive"}}</div>
           {{/link-to}}
-        {{/link-to}}
+        </dd>
 
+        <dd class="text-center">
+          {{#link-to 'review_offer.share'}}
+            {{#if isShared}}
+              <i class="fa fa-eye fa-2x"></i>
+            {{else}}
+              <i class="fa fa-eye-slash fa-2x"></i>
+            {{/if}}
+            <div>{{t "review_offer.share"}}</div>
+          {{/link-to}}
+        </dd>
       </dl>
 
       {{outlet}}

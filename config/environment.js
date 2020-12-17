@@ -1,7 +1,7 @@
 /* jshint node: true */
 const pkgJson = require("../package.json");
 module.exports = function(environment) {
-  environment = process.env.ENVIRONMENT || environment || 'development';
+  environment = process.env.ENVIRONMENT || environment || "development";
   var ENV = {
     modulePrefix: "goodcity",
     environment: environment,
@@ -61,6 +61,7 @@ module.exports = function(environment) {
         "https://www.google.com.hk/maps/place/22%C2%B022'27.9%22N+113%C2%B059'36.1%22E/@22.3744154,113.9758515,14z/data=!3m1!4b1!4m2!3m1!1s0x0:0x0",
       // RESTAdapter Settings
       NAMESPACE: "api/v1",
+      NAMESPACE_V2: "api/v2",
 
       PRELOAD_TYPES: ["territory", "printer"],
       PRELOAD_AUTHORIZED_TYPES: [
@@ -143,7 +144,8 @@ module.exports = function(environment) {
   }
 
   if (environment === "production") {
-    if (!process.env.ENVIRONMENT) throw('Please pass an appropriate ENVIRONMENT=(staging|preview|production) param.');
+    if (!process.env.ENVIRONMENT)
+      throw "Please pass an appropriate ENVIRONMENT=(staging|preview|production) param.";
     // RESTAdapter Settings
     ENV.APP.API_HOST_URL = "https://api.goodcity.hk";
     ENV.ADMIN_APP_HOST_URL = "https://admin.goodcity.hk";
@@ -238,5 +240,6 @@ module.exports = function(environment) {
   }
 
   ENV.APP.SERVER_PATH = ENV.APP.API_HOST_URL + "/" + ENV.APP.NAMESPACE;
+  ENV.APP.SERVER_PATH_V2 = ENV.APP.API_HOST_URL + "/" + ENV.APP.NAMESPACE_V2;
   return ENV;
 };

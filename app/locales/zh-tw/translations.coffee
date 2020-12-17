@@ -213,6 +213,7 @@ I18nTranslationsZhTw =
       "offer_closed_by": "捐贈項目由 {{firstName}} {{lastName}} 關閉"
       "offer_cancelled_by": "捐贈項目由 {{firstName}} {{lastName}} 取消"
       "receive": "收到"
+      "share": "Share"
       "missing": "遺失"
       "received": "已經收到"
       "expecting": "等候中"

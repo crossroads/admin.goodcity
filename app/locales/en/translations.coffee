@@ -215,6 +215,7 @@ I18nTranslationsEn =
       "offer_closed_by": "Offer closed by {{firstName}} {{lastName}}"
       "offer_cancelled_by": "Cancelled by {{firstName}} {{lastName}}"
       "receive": "Receive"
+      "share": "Share"
       "missing": "Missing"
       "received": "Received"
       "expecting": "Expecting"

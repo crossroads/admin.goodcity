@@ -1,4 +1,6 @@
 .review_offer {
+  @include flex-controls();
+  
   button {
     &.centered {
       margin: 0 auto;
