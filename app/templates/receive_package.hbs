@@ -68,7 +68,7 @@
       <div class="small-4 columns">
         {{select-list
           content=grades
-          on-change=(action (mut selectedGrade))
+          on-change=(action "changeGrade")
           selectedValue=selectedGrade
           value=selectedGrade
           selectArrow=true }}
@@ -77,7 +77,7 @@
       <div class="small-5 columns end">
         {{select-list
           content=donorConditions
-          on-change=(action (mut selectedCondition))
+          on-change=(action 'changeDonorCondition')
           selectedValue=selectedCondition
           value=selectedCondition
           selectArrow=true }}
