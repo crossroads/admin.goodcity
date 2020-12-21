@@ -1,0 +1,173 @@
+.review_offer .sharing-center {
+  .button-container {
+    padding: 1rem;
+  }
+
+  .explanation-text {
+    text-align: center;
+    padding: 0 4rem;
+  }
+
+  .editor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #002352;
+    z-index: 1000;
+
+    .editor-content {
+      margin: 0 auto;
+      width: 100%;
+      max-width: 768px;
+
+      .header {
+        padding: 1rem;
+        border-bottom: 1px solid gray;
+
+        .offer-title {
+          @include bold();
+          color: white;
+          text-transform: capitalize;
+          text-align: center;
+        }
+      }
+
+      .sharing-mode-selection {
+        margin-top: 1rem;
+        li {
+          line-height: 1.5rem;
+          margin-bottom: 0.5rem;
+          border: none;
+          .bullet {
+            width: 1.5rem;
+            height: 1.5rem;
+            background-color: white;
+            border-radius: 50%;
+            padding-top: 0.25rem;
+            margin-left: 1rem;
+            margin-right: 1rem;
+
+            .bullet-fill {
+              width: 1rem;
+              height: 1rem;
+              background-color: black;
+              border-radius: 50%;
+              margin: auto auto;
+            }
+          }
+        }
+      }
+
+      .package-sharing {
+        .package-header {
+          padding-left: 1rem;
+          padding-right: 1rem;
+          padding-bottom: 1rem;
+          border-bottom: 1px solid gray;
+          
+          .bold {
+            @include bold();
+            color: white;
+          }
+
+          .underlined {
+            text-decoration: underline;
+          }
+        }
+
+        .package-list {
+          .package {
+            padding: 1rem;
+            border-bottom: 1px solid gray;
+            
+            .package-share-checkbox {
+              visibility: visible;
+              position: relative;
+              width: 1rem;
+              height: 1rem;
+              background: white;
+              left: 0;
+            }
+
+            .package-image {
+              position: relative;
+              width: 5rem;
+              height: 5rem;
+              overflow: hidden;
+              margin: 1rem auto 0 auto;
+
+              @include screen-lte(300px) {
+                width: 4rem;
+                height: 4rem;
+              }
+              @include screen-lte(260px) {
+                width: 3rem;
+                height: 3rem;
+              }
+
+              background-size: cover;
+              border: 1px solid gray;
+
+              .package-state {
+                @include ellipsis();
+                @include auto-state-color-set("background-color");
+                background-color: black; // default
+                position: absolute;
+                color: white;
+                height: 1rem;
+                bottom: 0;
+                text-align: center;
+                width: 100%;
+                font-size: 0.7rem;
+              }
+            }
+
+            .package-name {
+              margin-bottom: 0;
+              height: 1.5rem;
+
+              .columns {
+                padding-left: 0;
+              }
+            }
+
+            .notes-edition {
+              .notes-lang-selection {
+                margin-bottom: 0.5rem;
+                .lang {
+                  color: gray;
+                  &.selected {
+                    color: white;
+                  }
+                }
+              }
+              .notes-text {
+                textarea {
+                  font-size: 0.8rem;
+                  height: 2em;
+                  background-color: transparent;
+                  color: white;
+                  border: 1px solid gray;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .button-row {
+        .columns {
+          text-align: center;
+          padding: 1rem;
+
+          button.light {
+            background-color: transparent;
+            border-color: white;
+          }
+        }
+      }
+    }
+  }
+}

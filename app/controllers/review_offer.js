@@ -17,19 +17,22 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     return this.get("store").peekAll("shareable");
   }),
 
-  isShared: Ember.computed(
+  offerShareable: Ember.computed(
     "offer.id",
     "allShareables.[]",
-    "allShareables.@each.expiresAt",
+    "allShareables.@each.active",
     function() {
       return this.get("allShareables").find(sh => {
         return (
           sh.get("resourceType") == "Offer" &&
-          sh.get("resourceId") == this.get("offer.id")
+          sh.get("resourceId") == this.get("offer.id") &&
+          sh.get("active")
         );
       });
     }
   ),
+
+  isShared: Ember.computed.alias("offerShareable"),
 
   displayOfferOptions: Ember.computed({
     get: function() {

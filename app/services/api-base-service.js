@@ -84,7 +84,7 @@ export default Ember.Service.extend({
   DELETE(url, opts = {}) {
     const { authorizedRequest = true } = opts;
     return this._request(
-      url,
+      urlWithParams(url, opts),
       _.extend({}, opts, {
         action: "DELETE"
       }),

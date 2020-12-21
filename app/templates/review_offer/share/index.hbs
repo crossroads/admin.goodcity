@@ -1,0 +1,19 @@
+<div class="button-container flex end">
+  <button class="button add-item" {{action 'startEdit'}}>
+    {{#if isShared}}
+      <span>{{t "review_offer.modify_sharing"}}</span>
+    {{else}}
+      <i class="fa fa-eye-slash fa-lg"></i>
+      <span>{{t "review_offer.share_offer"}}</span>
+    {{/if}}
+  </button>
+</div>
+{{#unless isShared}}
+  <div class="explanation-text">
+    {{t "review_offer.share_offer_explanation"}}
+  </div>
+{{/unless}}
+
+{{#if showEditor}}
+  {{partial "review_offer/share/editor"}}
+{{/if}}

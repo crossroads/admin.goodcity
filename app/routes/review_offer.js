@@ -1,6 +1,6 @@
 import Ember from "ember";
 import AuthorizeRoute from "./authorize";
-import { SHAREABLE_TYPES } from "../services/sharing-service";
+import { SHAREABLE_TYPES } from "../models/shareable";
 
 export default AuthorizeRoute.extend({
   backLinkPath: Ember.computed.localStorage(),
@@ -33,7 +33,7 @@ export default AuthorizeRoute.extend({
     var offerId = this.modelFor("offer").get("id");
     const [offer] = await Ember.RSVP.all([
       this.loadIfAbsent(offerId),
-      this.get("sharingService").findShareable(SHAREABLE_TYPES.OFFER, offerId)
+      this.get("sharingService").loadShareable(SHAREABLE_TYPES.OFFER, offerId)
     ]);
 
     return offer;

@@ -40,5 +40,11 @@ export default ApiBaseService.extend({
     const data = await this.PUT(url, params);
     this.get("store").pushPayload(data);
     return this.get("store").peekRecord("offer", id);
+  },
+
+  packagesOf(offer) {
+    return offer.get("items").reduce((pkgs, item) => {
+      return [...pkgs, ...item.get("packages").toArray()];
+    }, []);
   }
 });

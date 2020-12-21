@@ -17,6 +17,7 @@ export default DS.Model.extend({
   width: attr("number"),
   height: attr("number"),
   notes: attr("string"),
+  notesZhTw: attr("string"),
   state: attr("string", { defaultValue: "expecting" }),
   state_event: attr("string"),
   receivedAt: attr("date"),

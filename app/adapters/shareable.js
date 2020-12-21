@@ -16,5 +16,17 @@ export default DS.JSONAPIAdapter.extend({
       "X-GOODCITY-APP-SHA": config.APP.SHA,
       "X-GOODCITY-APP-SHARED-SHA": config.APP.SHARED_SHA
     };
-  })
+  }),
+
+  updateRecord(store, type, snapshot) {
+    var data = {};
+    var serializer = store.serializerFor(type.modelName);
+
+    serializer.serializeIntoHash(data, type, snapshot, { includeId: true });
+
+    var id = snapshot.id;
+    var url = this.buildURL(type.modelName, id, snapshot, "updateRecord");
+
+    return this.ajax(url, "PUT", { data });
+  }
 });

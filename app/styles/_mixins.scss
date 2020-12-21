@@ -16,6 +16,9 @@
     &.center {
       justify-content: center;
     }
+    &.start {
+      justify-content: flex-start;
+    }
     &.end {
       justify-content: flex-end;
     }
@@ -27,5 +30,43 @@
     &.gutter-small {
       >* { margin-right: 0.5rem; }
     }
+  }
+}
+
+@mixin bold() {
+  font-family: Museo700;
+}
+
+@mixin auto-state-color-set($prop) {
+  &.submitted {
+    #{$prop}: $bright-orange;
+  }
+  
+  &.under-review, &.scheduled, &.rejected, &.closed  {
+    #{$prop}: $coral-red;
+  }
+  
+  &.reviewed, &.accepted {
+    #{$prop}: $bar-green;
+  }
+  
+  &.closed {
+    #{$prop}: $black;
+  }
+  
+  &.received {
+    #{$prop}: $sky-blue;
+  }
+}
+
+@mixin ellipsis() {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@mixin screen-lte($w) {
+  @media only screen and (max-width: $w) {
+    @content
   }
 }

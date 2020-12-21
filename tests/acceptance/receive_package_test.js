@@ -227,7 +227,6 @@ test("If location not selected Receive button is disabled", function(assert) {
     package1.set("location", null);
   });
   andThen(function() {
-    debugger;
     assert.equal($("#receive-button").prop("disabled"), true);
   });
 });

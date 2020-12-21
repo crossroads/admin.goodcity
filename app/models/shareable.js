@@ -1,27 +1,33 @@
 import Ember from "ember";
 import DS from "ember-data";
-import { SHAREABLE_TYPES } from "../services/sharing-service";
 
 var attr = DS.attr,
   belongsTo = DS.belongsTo;
 
+export const SHAREABLE_TYPES = {
+  OFFER: "Offer",
+  PACKAGE: "Package"
+};
+
 export default DS.Model.extend({
+  allowListing: attr("boolean"),
+  publicUid: attr("string"),
   expiresAt: attr("date"),
   resourceId: attr("string"),
   resourceType: attr("string"),
   createdById: attr("string"),
   createdBy: belongsTo("user", { async: false }),
-
-  offer: Ember.computed("resourceId", "resourceType", function() {
-    if (this.get("resourceType") !== SHAREABLE_TYPES.OFFER) {
-      return null;
-    }
-    return this.get("store").peekRecord("offer", this.get("resourceId"));
-  }).volatile(),
+  offerId: attr("string"),
+  itemId: attr("string"),
+  item: belongsTo("item", { async: false }),
+  offer: belongsTo("offer", { async: false }),
 
   active: Ember.computed("expiresAt", function() {
     return (
       !this.get("expiresAt") || this.get("expiresAt").getTime() > Date.now()
     );
-  }).volatile()
+  }).volatile(),
+
+  isPackage: Ember.computed.equal("resourceType", SHAREABLE_TYPES.PACKAGE),
+  isOffer: Ember.computed.equal("resourceType", SHAREABLE_TYPES.OFFER)
 });
