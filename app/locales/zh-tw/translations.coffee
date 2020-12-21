@@ -220,6 +220,7 @@ I18nTranslationsZhTw =
       "share": "Share"
       "share_offer": "Share this offer"
       "modify_sharing": "Modify Sharing"
+      "view_shared_offer": "View Shared Offer"
       "share_offer_explanation": "Make it possible for registered charities to see and indicate interest in this offer"
       "private_sharing_mode_desc": "Do not share"
       "public_sharing_mode_desc": "Share via URL"

@@ -37,6 +37,7 @@ export default DS.Model.extend({
   sentOn: attr("date"),
   designationId: attr("number"),
   favouriteImageId: attr("number"),
+  packageSetId: attr("number"),
   allowWebPublish: attr("boolean"),
   packagesLocationsAttributes: attr(),
 

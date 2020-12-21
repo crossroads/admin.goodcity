@@ -76,7 +76,7 @@
            </button>
          </div>
          <div class="columns small-6">
-           <button {{action 'applyChanges'}}>
+           <button {{action 'applyChanges'}} class="{{unless allowConfirm 'disabled'}}">
              {{t 'save_changes'}}
            </button>
          </div>

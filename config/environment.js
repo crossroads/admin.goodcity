@@ -107,6 +107,7 @@ module.exports = function(environment) {
     ENV.APP.API_HOST_URL = "http://localhost:3000";
     ENV.APP.SOCKETIO_WEBSERVICE_URL = "http://localhost:1337/goodcity";
     ENV.ADMIN_APP_HOST_URL = "http://localhost:4201";
+    ENV.BROWSE_APP_HOST_URL = "http://localhost:4203";
 
     ENV.APP.GOODCITY_NUMBER = "+85258087803";
 
@@ -149,6 +150,7 @@ module.exports = function(environment) {
     // RESTAdapter Settings
     ENV.APP.API_HOST_URL = "https://api.goodcity.hk";
     ENV.ADMIN_APP_HOST_URL = "https://admin.goodcity.hk";
+    ENV.BROWSE_APP_HOST_URL = "https://charities.goodcity.hk";
     ENV.APP.SOCKETIO_WEBSERVICE_URL = "https://socket.goodcity.hk:81/goodcity";
 
     ENV.APP.GOODCITY_NUMBER = "+85258088700";
@@ -177,6 +179,7 @@ module.exports = function(environment) {
   if (environment === "staging") {
     ENV.APP.API_HOST_URL = "https://api-staging.goodcity.hk";
     ENV.ADMIN_APP_HOST_URL = "https://admin-staging.goodcity.hk";
+    ENV.BROWSE_APP_HOST_URL = "https://charities-staging.goodcity.hk";
     ENV.APP.SOCKETIO_WEBSERVICE_URL =
       "https://socket-staging.goodcity.hk:81/goodcity";
     ENV.APP.GOODCITY_NUMBER = "+85258084822";
@@ -209,6 +212,7 @@ module.exports = function(environment) {
   if (environment === "preview") {
     ENV.APP.API_HOST_URL = "https://api-preview.goodcity.hk";
     ENV.ADMIN_APP_HOST_URL = "https://admin-preview.goodcity.hk";
+    ENV.BROWSE_APP_HOST_URL = "https://charities-preview.goodcity.hk";
     ENV.APP.SOCKETIO_WEBSERVICE_URL =
       "https://socket-preview.goodcity.hk:81/goodcity";
     ENV.APP.GOODCITY_NUMBER = "+85258084822";

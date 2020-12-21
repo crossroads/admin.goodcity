@@ -1,6 +1,5 @@
 import Ember from "ember";
 import AsyncTasksMixin from "../../mixins/async_tasks";
-import { SHAREABLE_TYPES } from "../../models/shareable";
 
 export default Ember.Controller.extend(AsyncTasksMixin, {
   store: Ember.inject.service(),

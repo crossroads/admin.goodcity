@@ -1,6 +1,12 @@
 .review_offer .sharing-center {
   .button-container {
     padding: 1rem;
+
+    .charities-link {
+      line-height: 2rem;
+      text-decoration: underline;
+      margin: 0 0.5rem;
+    }
   }
 
   .explanation-text {
@@ -162,9 +168,16 @@
           text-align: center;
           padding: 1rem;
 
-          button.light {
-            background-color: transparent;
-            border-color: white;
+          button {
+            &.light {
+              background-color: transparent;
+              border-color: white;
+            }
+
+            &.disabled {
+              pointer-events: none;
+              opacity: 0.7;
+            }
           }
         }
       }

@@ -1,14 +1,26 @@
 import Ember from "ember";
 import AsyncTasksMixin from "../../../mixins/async_tasks";
 import { SHAREABLE_TYPES } from "../../../models/shareable";
+import config from "../../../config/environment";
 
 export default Ember.Controller.extend(AsyncTasksMixin, {
   parentController: Ember.inject.controller("review_offer.share"),
   isShared: Ember.computed.alias("parentController.isShared"),
-  offerSheareable: Ember.computed.alias("parentController.isShared"),
+  offerShareable: Ember.computed.alias("parentController.offerShareable"),
   shareables: Ember.computed.alias("parentController.shareables"),
   offerService: Ember.inject.service(),
   sharingService: Ember.inject.service(),
+
+  offerLink: Ember.computed("offerShareable.publicUid", function() {
+    if (!this.get("isShared")) {
+      return "";
+    }
+    return (
+      config.BROWSE_APP_HOST_URL +
+      "/offer/" +
+      this.get("offerShareable.publicUid")
+    );
+  }),
 
   sharingModes: Object.freeze({
     PRIVATE: "private",
@@ -48,6 +60,33 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
         shared: this.isPackageShared(p)
       };
     });
+  },
+
+  allowConfirm: Ember.computed(
+    "selectedSharingMode",
+    "packageList",
+    "packageList.length",
+    "packageList.@each.shared",
+    function() {
+      return (
+        this.get("selectedSharingMode") === this.get("sharingModes").PRIVATE ||
+        this.getWithDefault("packageList", []).findBy("shared", true)
+      );
+    }
+  ),
+
+  persistPackageChanges() {
+    return Ember.RSVP.all(
+      this.get("packageList").reduce((promises, row) => {
+        if (
+          row.package.changedAttributes().notes ||
+          row.package.changedAttributes().notesZhTw
+        ) {
+          promises.push(row.package.save());
+        }
+        return promises;
+      }, [])
+    );
   },
 
   persistOfferShareable({ allowListing }) {
@@ -111,6 +150,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
           await this.get("sharingService").unshareOffer(offer);
         } else {
           await Ember.RSVP.all([
+            this.persistPackageChanges(),
             this.persistOfferShareable({ allowListing: listed }),
             this.persistPackageShareables()
           ]);

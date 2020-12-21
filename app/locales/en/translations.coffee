@@ -220,6 +220,7 @@ I18nTranslationsEn =
       "offer_cancelled_by": "Cancelled by {{firstName}} {{lastName}}"
       "receive": "Receive"
       "share": "Share"
+      "view_shared_offer": "View Shared Offer"
       "modify_sharing": "Modify Sharing"
       "share_offer": "Share offer"
       "share_offer_explanation": "Make it possible for registered charities to see and indicate interest in this offer"
