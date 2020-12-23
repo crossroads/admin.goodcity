@@ -1,6 +1,23 @@
 .review_offer .sharing-center {
+  @mixin overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #002352;
+    z-index: 1000;
+
+    .overlay-content {
+      margin: 0 auto;
+      width: 100%;
+      max-width: 768px;
+    }
+  }
+
   .button-container {
     padding: 1rem;
+    border-bottom: 1px solid gray;
 
     .charities-link {
       line-height: 2rem;
@@ -15,18 +32,9 @@
   }
 
   .editor {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #002352;
-    z-index: 1000;
+    @include overlay();
 
     .editor-content {
-      margin: 0 auto;
-      width: 100%;
-      max-width: 768px;
 
       .header {
         padding: 1rem;
@@ -181,6 +189,58 @@
           }
         }
       }
+    }
+  }
+
+  .threads {
+    .thread {
+      width: 100%;
+      margin: 0 auto;
+      border-bottom: 1px solid gray;
+
+      .message-preview {
+        @include ellipsis();
+        margin-top: 0.5rem;
+        color: white;
+      }
+
+      .arrow {
+        color: white;
+        opacity: 0.6;
+        padding-top: 1rem;
+      }
+    }
+  }
+
+  .charity-chat {
+    @include overlay();
+    $header-height: 7vh;
+
+    .header {
+      padding: 1rem;
+      border-bottom: 1px solid gray;
+      height: $header-height;
+
+      .offer-title {
+        @include bold();
+        color: white;
+        text-transform: capitalize;
+        text-align: center;
+      }
+    }
+
+    .message-section {
+      padding-top: 2vh;
+      height: 85vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .message-base {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100vw;
     }
   }
 }

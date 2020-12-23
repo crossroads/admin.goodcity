@@ -4,12 +4,74 @@ import { SHAREABLE_TYPES } from "../../../models/shareable";
 import config from "../../../config/environment";
 
 export default Ember.Controller.extend(AsyncTasksMixin, {
-  parentController: Ember.inject.controller("review_offer.share"),
-  isShared: Ember.computed.alias("parentController.isShared"),
-  offerShareable: Ember.computed.alias("parentController.offerShareable"),
-  shareables: Ember.computed.alias("parentController.shareables"),
+  parent: Ember.inject.controller("review_offer.share"),
+  isShared: Ember.computed.alias("parent.isShared"),
+  offer: Ember.computed.alias("parent.offer"),
+  offerShareable: Ember.computed.alias("parent.offerShareable"),
+  shareables: Ember.computed.alias("parent.shareables"),
   offerService: Ember.inject.service(),
   sharingService: Ember.inject.service(),
+
+  allMessages: Ember.computed(function() {
+    return this.get("store").peekAll("message");
+  }),
+
+  threadUserIds: Ember.computed(
+    "offer.id",
+    "offer.createdById",
+    "allMessages.[]",
+    "allMessages.length",
+    "allMessages.@each.{senderId,recipientId}",
+    function() {
+      const donorId = this.get("offer.createdById");
+      return this.get("allMessages")
+        .filterBy("offerId", this.get("offer.id"))
+        .filter(m =>
+          // Messages from staff will have a recipient_id, but charity messages wont
+          m.get("fromCharity")
+        )
+        .mapBy("senderId")
+        .uniq();
+    }
+  ),
+
+  messageThreads: Ember.computed(
+    "offer.id",
+    "offer.createdById",
+    "threadUserIds",
+    "threadUserIds.length",
+    "allMessages.[]",
+    "allMessages.length",
+    "allMessages.@each.{senderId,recipientId}",
+    function() {
+      return this.get("threadUserIds").map(uid => {
+        const messages = this.get("offer.messages")
+          .sortBy("createdAt")
+          .filter(
+            m => m.get("senderId") === uid || m.get("recipientId") === uid
+          );
+        const lastMessage = messages.get("lastObject");
+
+        return {
+          userId: uid,
+          user: this.get("store").peekRecord("user", uid),
+          lastMessage: lastMessage,
+          unreadCount: messages.reduce((sum, m) => {
+            return sum + (m.get("isRead") ? 0 : 1);
+          }, 0),
+          organisation: this.organisationOf(uid)
+        };
+      });
+    }
+  ),
+
+  organisationOf(userId) {
+    const ou = this.get("store")
+      .peekAll("organisations_user")
+      .findBy("userId", userId);
+
+    return ou && ou.get("organisation");
+  },
 
   offerLink: Ember.computed("offerShareable.publicUid", function() {
     if (!this.get("isShared")) {
@@ -120,9 +182,13 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
       this.set("selectedSharingMode", mode);
     },
 
+    openChat(recipientId) {
+      this.replaceRoute("review_offer.share.chat", recipientId);
+    },
+
     startEdit() {
       this.modalCatch(() => {
-        const shareable = this.get("offerSheareable");
+        const shareable = this.get("offerShareable");
         this.set("selectedSharingMode", this.computeSharingMode(shareable));
         this.set("packageList", this.buildPackageList());
         this.set("showEditor", true);

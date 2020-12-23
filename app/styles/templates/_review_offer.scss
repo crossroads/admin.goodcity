@@ -1,12 +1,29 @@
 .review_offer {
   @include flex-controls();
-  
+
   button {
     &.centered {
       margin: 0 auto;
       display: block;
     }
   }
+
+  .notification-circle {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background-color: #ee4c4e;
+    color: white;
+    text-align: center;
+    font-size: 0.7rem;
+
+    &.top-right {
+      position: absolute;
+      right: -0.5rem;
+      top: 0.3rem;
+    }
+  }
+
   .tabs-content {
     background-color: inherit;
     color: inherit;

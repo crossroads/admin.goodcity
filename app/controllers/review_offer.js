@@ -17,6 +17,10 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     return this.get("store").peekAll("shareable");
   }),
 
+  allMessages: Ember.computed(function() {
+    return this.get("store").peekAll("message");
+  }),
+
   offerShareable: Ember.computed(
     "offer.id",
     "allShareables.[]",
@@ -29,6 +33,19 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
           sh.get("active")
         );
       });
+    }
+  ),
+
+  unreadCharityMessages: Ember.computed(
+    "offer.id",
+    "allMessages.[]",
+    "allMessages.length",
+    "allMessages.@each.isUnread",
+    function() {
+      return this.get("allMessages")
+        .filterBy("isCharityConversation")
+        .filterBy("isUnread")
+        .filterBy("offerId", this.get("offer.id"));
     }
   ),
 

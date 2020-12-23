@@ -1,0 +1,11 @@
+<div class="charity-chat">
+  <div class="header row">
+    <div class="close-button columns small-3" {{action 'leave'}}>
+      <i class="fa fa-chevron-left"></i>
+      {{t 'back'}}
+    </div>
+    <div class="offer-title columns small-6">{{t 'review_offer.share_offer'}} {{offer.id}}</div>
+    <div class="close-button columns small-3"></div>
+  </div>
+  {{partial 'message_template'}}
+</div>

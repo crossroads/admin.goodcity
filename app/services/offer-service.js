@@ -2,6 +2,14 @@ import ApiBaseService from "./api-base-service";
 import { toID } from "goodcity/utils/helpers";
 
 export default ApiBaseService.extend({
+  async fetchOffer(id, params) {
+    const payload = await this.GET(`/offers/${id}`, params);
+
+    this.get("store").pushPayload(payload);
+
+    return this.get("store").peekRecord("offer", id);
+  },
+
   offersCount() {
     return this.GET(`/offers/summary`);
   },

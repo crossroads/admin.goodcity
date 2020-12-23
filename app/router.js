@@ -60,6 +60,7 @@ Router.map(function() {
       this.route("receive");
       this.route("share", function() {
         this.route("home");
+        this.route("chat", { path: "/chat/:user_id" });
       });
     });
 

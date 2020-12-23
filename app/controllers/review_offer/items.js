@@ -7,6 +7,29 @@ export default Ember.Controller.extend({
   offer: Ember.computed.alias("model"),
   reviewOffer: Ember.inject.controller(),
 
+  lastMessage: Ember.computed(
+    "offer.messages",
+    "offer.messages.[]",
+    function() {
+      return this.get("offer.messages")
+        .sortBy("createdAt")
+        .filter(m => !m.get("isCharityConversation"))
+        .get("lastObject");
+    }
+  ),
+
+  unreadOfferMessagesCount: Ember.computed(
+    "offer.messages",
+    "offer.messages.[]",
+    function() {
+      return this.get("offer.messages")
+        .sortBy("createdAt")
+        .filter(m => !m.get("isCharityConversation"))
+        .filterBy("isUnread")
+        .get("length");
+    }
+  ),
+
   offerAndItems: Ember.computed("items.@each.state", function() {
     // avoid deleted-items which are not persisted yet.
     var elements = this.get("items")
