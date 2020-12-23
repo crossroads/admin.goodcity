@@ -12,8 +12,8 @@ export default Ember.Controller.extend({
     "offer.messages.[]",
     function() {
       return this.get("offer.messages")
-        .sortBy("createdAt")
         .filter(m => !m.get("isCharityConversation"))
+        .sortBy("createdAt")
         .get("lastObject");
     }
   ),
@@ -23,7 +23,6 @@ export default Ember.Controller.extend({
     "offer.messages.[]",
     function() {
       return this.get("offer.messages")
-        .sortBy("createdAt")
         .filter(m => !m.get("isCharityConversation"))
         .filterBy("isUnread")
         .get("length");
