@@ -21,7 +21,19 @@
   }
 
   .clear-search {
-    margin-right: 5%;
+    width: 1.5rem;
+    padding: 0.5rem;
+    margin-top: -0.5rem;
+    padding-right: 3rem;
+
+    @media #{$small-only} {
+      padding-right: 1.5rem;
+    }
+
+    @media #{$medium-only} {
+      padding-right: 2rem;
+    }
+
   }
 }
 
