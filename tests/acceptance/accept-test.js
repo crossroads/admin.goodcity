@@ -83,7 +83,8 @@ module("Reviewer: Accept Item Tab", {
 
     item4 = FactoryGuy.make("item_with_type", {
       offer: offer,
-      state: "rejected"
+      state: "rejected",
+      rejectionReason: FactoryGuy.make("rejection_reason")
     });
     package4 = FactoryGuy.make("package", {
       item: item4,

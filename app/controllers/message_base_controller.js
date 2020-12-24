@@ -39,17 +39,40 @@ export default Ember.Controller.extend({
     return this.store.peekAll("message");
   }),
 
-  messages: Ember.computed("allMessages.[]", "offer", "item", function() {
-    var messages = this.get("allMessages");
-    messages = this.get("isItemThread")
-      ? messages.filterBy("itemId", this.get("item.id"))
-      : messages
-          .filterBy("offerId", this.get("offer.id"))
-          .filterBy("item", null);
-    return messages.filter(m => {
-      return Boolean(m.get("isPrivate")) === this.get("isPrivate");
-    });
-  }),
+  messages: Ember.computed(
+    "allMessages.[]",
+    "allMessages.@each.recipientId",
+    "offer",
+    "item",
+    "isPrivate",
+    "recipientId",
+    function() {
+      var messages = this.get("allMessages");
+      messages = this.get("isItemThread")
+        ? messages.filterBy("itemId", this.get("item.id"))
+        : messages
+            .filterBy("offerId", this.get("offer.id"))
+            .filterBy("item", null);
+
+      // For a public chat with no recipient, we default to the donor
+      let recipientId =
+        this.get("recipientId") ||
+        (this.get("isPrivate") ? null : this.get("offer.createdById"));
+
+      if (recipientId) {
+        messages = messages.filter(m => {
+          return (
+            m.get("recipientId") === recipientId ||
+            m.get("senderId") === recipientId
+          );
+        });
+      }
+
+      return messages.filter(m => {
+        return Boolean(m.get("isPrivate")) === this.get("isPrivate");
+      });
+    }
+  ),
 
   messagesAndVersions: Ember.computed(
     "messages.[]",
@@ -163,6 +186,12 @@ export default Ember.Controller.extend({
         "user",
         this.get("session.currentUser.id")
       );
+
+      if (!this.get("isPrivate")) {
+        values.recipientId =
+          this.get("recipientId") || this.get("offer.createdById");
+      }
+
       this.get("messageLinkConvertor").convert(values);
       var message = this.store.createRecord("message", values);
       message

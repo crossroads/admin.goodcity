@@ -1,0 +1,72 @@
+@mixin flex-controls() {
+  .flex {
+    display: flex;
+    &.no-wrap {
+      flex-wrap: nowrap;
+    }
+    &.wrap {
+      flex-wrap: wrap;
+    }
+    &.space-around {
+      justify-content: space-around;
+    }
+    &.space-between {
+      justify-content: space-between;
+    }
+    &.center {
+      justify-content: center;
+    }
+    &.start {
+      justify-content: flex-start;
+    }
+    &.end {
+      justify-content: flex-end;
+    }
+
+    >.grow {
+      flex-grow: 1;
+    }
+
+    &.gutter-small {
+      >* { margin-right: 0.5rem; }
+    }
+  }
+}
+
+@mixin bold() {
+  font-family: Museo700;
+}
+
+@mixin auto-state-color-set($prop) {
+  &.submitted {
+    #{$prop}: $bright-orange;
+  }
+  
+  &.under-review, &.scheduled, &.rejected, &.closed  {
+    #{$prop}: $coral-red;
+  }
+  
+  &.reviewed, &.accepted {
+    #{$prop}: $bar-green;
+  }
+  
+  &.closed {
+    #{$prop}: $black;
+  }
+  
+  &.received {
+    #{$prop}: $sky-blue;
+  }
+}
+
+@mixin ellipsis() {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@mixin screen-lte($w) {
+  @media only screen and (max-width: $w) {
+    @content
+  }
+}

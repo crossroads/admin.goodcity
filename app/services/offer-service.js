@@ -2,6 +2,13 @@ import ApiBaseService from "./api-base-service";
 import { toID } from "goodcity/utils/helpers";
 
 export default ApiBaseService.extend({
+  fetchOffer(id, params) {
+    return this.GET(`/offers/${id}`, params).then(payload => {
+      this.get("store").pushPayload(payload);
+      return this.get("store").peekRecord("offer", id);
+    });
+  },
+
   offersCount() {
     return this.GET(`/offers/summary`);
   },
@@ -40,5 +47,11 @@ export default ApiBaseService.extend({
     const data = await this.PUT(url, params);
     this.get("store").pushPayload(data);
     return this.get("store").peekRecord("offer", id);
+  },
+
+  packagesOf(offer) {
+    return offer.get("items").reduce((pkgs, item) => {
+      return [...pkgs, ...item.get("packages").toArray()];
+    }, []);
   }
 });

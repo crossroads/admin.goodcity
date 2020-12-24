@@ -3,6 +3,7 @@
 @import "porterage_charges";
 
 /* template specific */
+@import "mixins";
 @import "templates/admin_main";
 @import "templates/components/twilio_make_call";
 @import "templates/components/package_image";
@@ -29,6 +30,7 @@
 @import "templates/review_offer";
 @import "templates/review_offer/logistics";
 @import "templates/review_offer/receive";
+@import "templates/review_offer/share";
 @import "templates/review_offer/donor_details";
 @import "templates/review_item/reject";
 @import "templates/review_item";

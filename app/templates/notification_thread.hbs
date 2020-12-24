@@ -1,4 +1,4 @@
-<a {{action "view" notification.id}}>
+<a {{action "view" notification}}>
   <div class="thread {{if notification.unreadCount 'unread'}}">
     <span class="thread_image">
       {{#if notification.item}}
@@ -19,6 +19,11 @@
           </div>
 
           <div class="sender">
+            {{#if notification.isCharity}}
+              <i class="fa fa-building-o fa-lg"></i>
+            {{else}}
+              <i class="fa fa-user fa-lg"></i>
+            {{/if}}
             {{notification.sender.fullName}}
             <i class="fa fa-clock-o"></i>
             {{message-time notification.createdAt}}

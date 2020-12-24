@@ -58,6 +58,9 @@ Router.map(function() {
       this.route("logistics");
       this.route("donor_details");
       this.route("receive");
+      this.route("share", function() {
+        this.route("chat", { path: "/chat/:user_id" });
+      });
     });
 
     this.route("receive_package", {

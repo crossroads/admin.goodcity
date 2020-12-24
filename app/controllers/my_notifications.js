@@ -4,14 +4,6 @@ import AjaxPromise from "goodcity/utils/ajax-promise";
 
 const { computed } = Ember;
 
-const MSG_KEY = msg => {
-  return [
-    msg.get("isPrivate") ? "private" : "public",
-    msg.get("messageableType") || "-",
-    msg.get("messageableId") || "-"
-  ].join("/");
-};
-
 export default Ember.Controller.extend({
   messagesUtil: Ember.inject.service("messages"),
   subscriptions: Ember.inject.controller(),
@@ -50,7 +42,7 @@ export default Ember.Controller.extend({
       return;
     }
 
-    let notif = notifications.findBy("key", MSG_KEY(msg));
+    let notif = notifications.findBy("key", this.buildMessageKey(msg));
 
     if (notif) {
       // Update existing one
@@ -97,14 +89,19 @@ export default Ember.Controller.extend({
         this.get("store").findRecord("offer", recordId);
     }
 
+    let controller = this;
     let notification = Ember.Object.create(lastMessage.getProperties(props));
     notification.setProperties({
-      key: MSG_KEY(lastMessage),
+      key: this.buildMessageKey(lastMessage),
       item: item,
       messages: messages,
       isSingleMessage: computed.equal("unreadCount", 1),
       isThread: computed.not("isSingleMessage"),
       offer: offer,
+      recipientId: this.getRecipientId(lastMessage),
+      isCharity: computed("offer.createdById", function() {
+        return controller.isCharityDiscussion(this.get("messages.lastObject"));
+      }),
       text: computed("messages.[]", function() {
         return this.get("messages")
           .sortBy("id")
@@ -134,7 +131,7 @@ export default Ember.Controller.extend({
     });
 
     return _.chain(groupedMessages)
-      .groupBy(MSG_KEY)
+      .groupBy(m => this.buildMessageKey(m))
       .map(msgs => this.messagesToNotification(msgs))
       .value();
   },
@@ -150,6 +147,45 @@ export default Ember.Controller.extend({
     return data.messages.map(({ id }) => {
       return this.get("store").peekRecord("message", id);
     });
+  },
+
+  buildMessageKey(msg) {
+    return [
+      msg.get("isPrivate") ? "private" : "public",
+      msg.get("messageableType") || "-",
+      msg.get("messageableId") || "-",
+      this.getRecipientId(msg) || "-"
+    ].join("/");
+  },
+
+  getRecipientId(msg) {
+    if (msg.get("isPrivate")) {
+      return null;
+    }
+
+    if (msg.get("recipientId")) {
+      // Case: staff is sending the message
+      return msg.get("recipientId");
+    }
+
+    // Case: user is sending the message
+    return msg.get("senderId");
+  },
+
+  isCharityDiscussion(message) {
+    if (
+      message.get("messageableType") !== "Offer" ||
+      message.get("isPrivate")
+    ) {
+      return false;
+    }
+
+    const donorId = message.get("offer.createdById");
+
+    return (
+      message.get("senderId") !== donorId &&
+      message.get("recipientId") !== donorId
+    );
   },
 
   actions: {
@@ -178,7 +214,7 @@ export default Ember.Controller.extend({
         .then(data => this.toMessageModels(data))
         .then(messages => {
           const notifications = _.chain(messages)
-            .groupBy(MSG_KEY)
+            .groupBy(m => this.buildMessageKey(m))
             .map(o => this.buildNotifications(o))
             .flatten()
             .value();
@@ -188,10 +224,19 @@ export default Ember.Controller.extend({
         });
     },
 
-    view(messageId) {
-      var message = this.store.peekRecord("message", messageId);
-      var route = this.get("messagesUtil").getRoute(message);
-      this.transitionToRoute.apply(this, route);
+    view(notification) {
+      if (notification.get("isCharity")) {
+        this.transitionToRoute(
+          "review_offer.share.chat",
+          notification.get("offer.id"),
+          notification.get("recipientId")
+        );
+      } else {
+        const messageId = notification.get("id");
+        var message = this.store.peekRecord("message", messageId);
+        var route = this.get("messagesUtil").getRoute(message);
+        this.transitionToRoute.apply(this, route);
+      }
     },
 
     markThreadRead(notification) {
@@ -200,7 +245,7 @@ export default Ember.Controller.extend({
         this.get("messagesUtil").markRead(message);
         notification.set("unreadCount", 0);
       } else {
-        this.send("view", notification.id);
+        this.send("view", notification);
       }
     },
 

@@ -19,6 +19,9 @@ export default Ember.Service.extend({
   // ----- Utilities -----
   _request(url, options, authorizedRequest) {
     const { action, body, persist = false } = options;
+
+    url = this.baseUrl ? `${this.baseUrl}${url}` : url;
+
     return new AjaxPromise(
       url,
       action,
@@ -30,6 +33,12 @@ export default Ember.Service.extend({
       }
       return data;
     });
+  },
+
+  // ----- Configuration -----
+
+  useBaseUrl(baseUrl) {
+    this.baseUrl = baseUrl;
   },
 
   // ----- CRUD ACTIONS -----
@@ -75,7 +84,7 @@ export default Ember.Service.extend({
   DELETE(url, opts = {}) {
     const { authorizedRequest = true } = opts;
     return this._request(
-      url,
+      urlWithParams(url, opts),
       _.extend({}, opts, {
         action: "DELETE"
       }),

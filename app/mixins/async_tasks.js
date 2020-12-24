@@ -24,6 +24,7 @@ export const ERROR_STRATEGIES = {
 };
 
 export default Ember.Mixin.create({
+  i18n: Ember.inject.service(),
   messageBox: Ember.inject.service(),
   logger: Ember.inject.service(),
 
@@ -57,6 +58,10 @@ export default Ember.Mixin.create({
 
   __toErrorMessage(reason) {
     const defaultMessage = this.get("i18n").t("unexpected_error");
+
+    if (_.isString(reason)) {
+      return reason;
+    }
 
     if (reason && reason.responseJSON) {
       reason = reason.responseJSON;
@@ -100,6 +105,22 @@ export default Ember.Mixin.create({
       });
   },
 
+  /**
+   * Runs function, show a modal if it fails
+   *
+   * @memberof AsyncMixin
+   * @instance
+   * @param {Function} task the job to run
+   * @param {String} message an optional message to supersede the actual error
+   */
+  async modalCatch(func, message = null) {
+    try {
+      await func();
+    } catch (e) {
+      return this.__handleError(e || message, ERROR_STRATEGIES.MODAL);
+    }
+  },
+
   showLoadingSpinner() {
     if (Ember.testing) {
       return;
@@ -137,5 +158,9 @@ export default Ember.Mixin.create({
 
   i18nAlert(key, cb) {
     this.get("messageBox").alert(this.get("i18n").t(key), cb);
+  },
+
+  raiseI18n(key) {
+    throw new Error(this.get("i18n").t(key));
   }
 });
