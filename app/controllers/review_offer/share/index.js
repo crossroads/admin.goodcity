@@ -73,16 +73,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     return ou && ou.get("organisation");
   },
 
-  offerLink: Ember.computed("offerShareable.publicUid", function() {
-    if (!this.get("isShared")) {
-      return "";
-    }
-    return (
-      config.BROWSE_APP_HOST_URL +
-      "/offer/" +
-      this.get("offerShareable.publicUid")
-    );
-  }),
+  charitiesWebsiteURL: config.BROWSE_APP_HOST_URL,
 
   sharingModes: Object.freeze({
     PRIVATE: "private",

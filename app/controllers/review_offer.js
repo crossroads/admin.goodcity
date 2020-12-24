@@ -23,8 +23,9 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
 
   offerShareable: Ember.computed(
     "offer.id",
+    "allShareables.length",
     "allShareables.[]",
-    "allShareables.@each.active",
+    "allShareables.@each.{id,active,publicUid}",
     function() {
       return this.get("allShareables").find(sh => {
         return (
