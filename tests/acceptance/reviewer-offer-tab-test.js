@@ -77,27 +77,27 @@ test("item status badge on item-image", function(assert) {
   });
 });
 
-test.skip("offer-messages thread details", function(assert) {
-  assert.expect(3);
-  visit("/offers/" + offer.id + "/review_offer/items");
-  andThen(function() {
-    // display 'General Messages' thread
-    assert.equal($('div:contains("General Messages"):last').length, 1);
+// test("offer-messages thread details", function(assert) {
+//   assert.expect(3);
+//   visit("/offers/" + offer.id + "/review_offer/items");
+//   andThen(function() {
+//     // display 'General Messages' thread
+//     assert.equal($('div:contains("General Messages"):last').length, 1);
 
-    var offer_message_thread_text = $('div:contains("General Messages"):last')
-      .closest("span.info")
-      .text();
+//     var offer_message_thread_text = $('div:contains("General Messages"):last')
+//       .closest("span.info")
+//       .text();
 
-    // display latest offer message in 'General Messages' thread
-    assert.equal(
-      offer_message_thread_text.indexOf(message1.get("body")) > 0,
-      true
-    );
+//     // display latest offer message in 'General Messages' thread
+//     assert.equal(
+//       offer_message_thread_text.indexOf(message1.get("body")) > 0,
+//       true
+//     );
 
-    // display unread offer message count in 'General Messages' thread
-    assert.equal(offer_message_thread_text.indexOf("1") > 0, true);
-  });
-});
+//     // display unread offer message count in 'General Messages' thread
+//     assert.equal(offer_message_thread_text.indexOf("1") > 0, true);
+//   });
+// });
 
 test("ordering of message threads", function(assert) {
   assert.expect(2);
