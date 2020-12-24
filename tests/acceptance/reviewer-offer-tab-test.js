@@ -77,7 +77,7 @@ test("item status badge on item-image", function(assert) {
   });
 });
 
-test("offer-messages thread details", function(assert) {
+test.skip("offer-messages thread details", function(assert) {
   assert.expect(3);
   visit("/offers/" + offer.id + "/review_offer/items");
   andThen(function() {
