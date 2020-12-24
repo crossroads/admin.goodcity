@@ -17,7 +17,7 @@
 
   .button-container {
     padding: 1rem;
-    border-bottom: 1px solid gray;
+    padding-bottom: 0;
 
     .charities-link {
       line-height: 2rem;
@@ -28,7 +28,7 @@
 
   .explanation-text {
     text-align: center;
-    padding: 0 4rem;
+    padding: 0.5rem 4rem;
   }
 
   .editor {
@@ -193,6 +193,8 @@
   }
 
   .threads {
+    border-top: 1px solid gray;
+
     .thread {
       width: 100%;
       margin: 0 auto;
