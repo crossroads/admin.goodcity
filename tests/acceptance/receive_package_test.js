@@ -172,8 +172,10 @@ module("Receive package", {
       url: "/api/v1/package*",
       type: "GET",
       status: 200,
-      responseText: {
-        package: package1.toJSON({ includeId: true })
+      response: function() {
+        this.responseText = {
+          package: package1.toJSON({ includeId: true })
+        };
       }
     });
 
@@ -222,10 +224,11 @@ module("Receive package", {
 });
 
 test("If location not selected Receive button is disabled", function(assert) {
-  visit("/offers/" + offer1.id + "/receive_package/" + package1.id);
   Ember.run(function() {
     package1.set("location", null);
+    package1.set("locationId", null);
   });
+  visit("/offers/" + offer1.id + "/receive_package/" + package1.id);
   andThen(function() {
     assert.equal($("#receive-button").prop("disabled"), true);
   });

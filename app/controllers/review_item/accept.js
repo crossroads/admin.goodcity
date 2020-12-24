@@ -38,10 +38,13 @@ export default Ember.Controller.extend({
   ),
 
   itemType: Ember.computed("itemTypeId", function() {
-    return this.get("store").peekRecord(
-      "packageType",
-      this.get("itemTypeId.id") || this.get("itemTypeId")
-    );
+    const typeId = this.get("itemTypeId.id") || this.get("itemTypeId");
+
+    if (!typeId) {
+      return null;
+    }
+
+    return this.get("store").peekRecord("packageType", typeId);
   }),
 
   subPackageTypes: Ember.computed("itemType", function() {
