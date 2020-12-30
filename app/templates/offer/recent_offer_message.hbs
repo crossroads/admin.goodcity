@@ -8,24 +8,24 @@
       {{t 'offer.offer_details.offer_messages'}}
     </div>
     <div class="small-3 columns message-time right">
-      {{message-time model.lastMessage.createdAt}}
+      {{message-time lastMessage.createdAt}}
     </div>
   </div>
 
   <div class="row">
     <div class="small-1 columns">
-      <span class="no-avatar {{unless model.lastMessage 'hidden'}}">
-        {{model.lastMessage.sender.nameInitial}}
+      <span class="no-avatar {{unless lastMessage 'hidden'}}">
+        {{lastMessage.sender.nameInitial}}
       </span>
     </div>
     <div class="small-10 columns">
       <div class='ellipsis two-line-ellipsis message-text'>
-        {{{model.lastMessage.body}}}
+        {{{lastMessage.body}}}
       </div>
     </div>
     <div class="small-1 columns right">
-      <span class="unread_length {{unless model.unreadOfferMessages.length 'hidden'}}">
-        {{model.unreadOfferMessagesCount}}
+      <span class="unread_length {{unless unreadOfferMessagesCount 'hidden'}}">
+        {{unreadOfferMessagesCount}}
       </span>
     </div>
   </div>

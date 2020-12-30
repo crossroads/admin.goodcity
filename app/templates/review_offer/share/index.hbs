@@ -1,0 +1,61 @@
+<div class="button-container flex space-between">
+    {{#if isShared}}
+      <div>
+        <span class="charities-link">
+          <a target="_blank" href="{{charitiesWebsiteURL}}/offers/{{offerShareable.publicUid}}">
+            {{t 'review_offer.view_shared_offer'}}
+          </a>
+        </span>
+        <i class="fa fa-external-link fa-lg"></i>
+      </div>
+    {{/if}}
+    <button class="button add-item" {{action 'startEdit'}}>
+    {{#if isShared}}
+      <span>{{t "review_offer.modify_sharing"}}</span>
+    {{else}}
+      <i class="fa fa-eye-slash fa-lg"></i>
+      <span>{{t "review_offer.share_offer"}}</span>
+    {{/if}}
+  </button>
+</div>
+{{#unless isShared}}
+  <div class="explanation-text">
+    {{t "review_offer.share_offer_explanation"}}
+  </div>
+{{/unless}}
+
+<div class="threads">
+  {{#each messageThreads as |thread|}}
+    <div class="thread row" {{action 'openChat' thread.userId}}>
+      <div class="columns small-11">
+        <div class="flex space-between">
+          <div>{{thread.user.firstName}} {{thread.user.lastName}}</div>
+          <div>
+            <i class="fa fa-clock-o fa-lg"></i>
+            {{display-datetime thread.lastMessage.createdAt format="DD MMM YY, HH:mm"}}
+          </div>
+        </div>
+        <div>{{thread.organisation.nameEn}}</div>
+        <div class="message-preview">
+          {{thread.lastMessage.body}}
+        </div>
+      </div>
+      <div class="columns small-1">
+        <div class="unread-count">
+          {{#unless (is-equal thread.unreadCount 0)}}
+            <div class="notification-circle">
+              {{thread.unreadCount}}
+            </div>
+          {{/unless}}
+        </div>
+        <div class="arrow">
+          <i class="fa fa-arrow-right fa-lg"></i>
+        </div>
+      </div>
+    </div>
+  {{/each}}
+</div>
+
+{{#if showEditor}}
+  {{partial "review_offer/share/editor"}}
+{{/if}}

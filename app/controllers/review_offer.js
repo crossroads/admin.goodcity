@@ -13,6 +13,45 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   displayCompleteReviewPopup: false,
   displayCompleteReceivePopup: false,
 
+  allShareables: Ember.computed(function() {
+    return this.get("store").peekAll("shareable");
+  }),
+
+  allMessages: Ember.computed(function() {
+    return this.get("store").peekAll("message");
+  }),
+
+  offerShareable: Ember.computed(
+    "offer.id",
+    "allShareables.length",
+    "allShareables.[]",
+    "allShareables.@each.{id,active,publicUid}",
+    function() {
+      return this.get("allShareables").find(sh => {
+        return (
+          sh.get("resourceType") == "Offer" &&
+          sh.get("resourceId") == this.get("offer.id") &&
+          sh.get("active")
+        );
+      });
+    }
+  ),
+
+  unreadCharityMessages: Ember.computed(
+    "offer.id",
+    "allMessages.[]",
+    "allMessages.length",
+    "allMessages.@each.isUnread",
+    function() {
+      return this.get("allMessages")
+        .filterBy("isCharityConversation")
+        .filterBy("isUnread")
+        .filterBy("offerId", this.get("offer.id"));
+    }
+  ),
+
+  isShared: Ember.computed.alias("offerShareable"),
+
   displayOfferOptions: Ember.computed({
     get: function() {
       return false;

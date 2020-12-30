@@ -17,6 +17,7 @@ export default DS.Model.extend({
   width: attr("number"),
   height: attr("number"),
   notes: attr("string"),
+  notesZhTw: attr("string"),
   state: attr("string", { defaultValue: "expecting" }),
   state_event: attr("string"),
   receivedAt: attr("date"),
@@ -36,6 +37,7 @@ export default DS.Model.extend({
   sentOn: attr("date"),
   designationId: attr("number"),
   favouriteImageId: attr("number"),
+  packageSetId: attr("number"),
   allowWebPublish: attr("boolean"),
   packagesLocationsAttributes: attr(),
 

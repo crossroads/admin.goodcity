@@ -119,11 +119,16 @@ test("Display Item under review", function(assert) {
 
 test("Back button redirects to review offer page", function(assert) {
   assert.expect(1);
-  visit("/offers/1/review_item/4");
-  click("a:contains('Back')");
 
+  const itemId = item.get("id");
+  const offerId = item.get("offer.id");
+
+  visit(`/offers/${offerId}/review_item/${itemId}`);
   andThen(function() {
-    assert.equal(currentURL(), "/offers/1/review_offer/items");
+    click("a:contains('Back')");
+  });
+  andThen(function() {
+    assert.equal(currentURL(), `/offers/${offerId}/review_offer/items`);
   });
 });
 
