@@ -29,7 +29,7 @@
     <div class="package-sharing">
       <div class="package-header flex space-between">
         <div class="bold">{{t 'review_offer.items_to_share'}}</div>
-        <div class="underlined">{{t 'review_offer.select_all'}}</div>
+        <div class="underlined" {{action 'toggleSelectAllPackages'}}>{{t 'review_offer.select_all'}}</div>
       </div>
       <div class="package-list">
         {{#each packageList as |pkgRow|}}

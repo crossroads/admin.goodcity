@@ -72,6 +72,7 @@ I18nTranslationsEn =
         "rejected": "rejected"
         "pending": "pending"
         "missing": "missing"
+        "submitted": "submitted"
         "start_receiving_by": "{{firstName}} {{lastName}} began receiving"
         "inactive": "Marked as inactive"
     offer_sorts:

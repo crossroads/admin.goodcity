@@ -72,6 +72,7 @@ I18nTranslationsZhTw =
         "rejected": "已拒絕"
         "pending": "正在等候"
         "missing": "遺失"
+        "submitted": "已提交"
         "start_receiving_by": "{{lastName}} {{firstName}} 正在接收"
         "inactive": "列作暫停"
     offer_sorts:
