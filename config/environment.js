@@ -107,7 +107,7 @@ module.exports = function(environment) {
     ENV.APP.API_HOST_URL = "http://localhost:3000";
     ENV.APP.SOCKETIO_WEBSERVICE_URL = "http://localhost:1337/goodcity";
     ENV.ADMIN_APP_HOST_URL = "http://localhost:4201";
-    ENV.BROWSE_APP_HOST_URL = "http://localhost:4203";
+    ENV.BROWSE_APP_HOST_URL = "http://localhost:4202";
 
     ENV.APP.GOODCITY_NUMBER = "+85258087803";
 

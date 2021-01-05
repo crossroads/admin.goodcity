@@ -215,6 +215,13 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
 
         this.set("showEditor", false);
       });
+    },
+
+    toggleSelectAllPackages() {
+      const pkgs = this.get("packageList");
+      const on = Boolean(pkgs.findBy("shared", false));
+
+      pkgs.forEach(p => Ember.set(p, "shared", on));
     }
   }
 });
