@@ -216,14 +216,12 @@ export default Ember.Controller.extend({
         // save item
         var item = this.get("item");
         item.set("packageType", this.get("itemType")); // this throws error in onItemTypeChange so using itemSaving as workaround
-        item.set(
-          "donorDescription",
-          this.get("reviewItem.formData.donorDescription")
-        );
-        item.set(
-          "donorConditionId",
-          this.get("reviewItem.formData.donorConditionId")
-        );
+
+        item.setProperties({
+          donorConditionId: this.get("reviewItem.formData.donorConditionId"),
+          donorDescription: this.get("reviewItem.formData.donorDescription")
+        });
+
         if (this.get("isAccepting")) {
           item.set("state_event", "accept");
         } else if (item.get("isDrafted")) {
@@ -231,6 +229,7 @@ export default Ember.Controller.extend({
         } else {
           item.set("state_event", null);
         }
+
         return item.save().finally(() => {
           this.set("itemSaving", false);
           loadingView.destroy();
