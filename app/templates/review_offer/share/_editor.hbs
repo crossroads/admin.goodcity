@@ -1,9 +1,11 @@
 <div class="editor">
   <div class="overlay-content editor-content">
     <div class="header row">
-      <div class="close-button columns small-3" {{action 'cancelEdit'}}>
-        <i class="fa fa-chevron-left"></i>
-        {{t 'cancel'}}
+      <div class="close-button columns small-3">
+        <span {{action 'cancelEdit'}}>
+          <i class="fa fa-chevron-left"></i>
+          {{t 'cancel'}}
+        </span>
       </div>
       <div class="offer-title columns small-6">{{t 'review_offer.share_offer'}} {{offer.id}}</div>
       <div class="close-button columns small-3"></div>
@@ -26,60 +28,76 @@
         {{/each-in}}
       </ul>
     </div>
-    <div class="package-sharing">
-      <div class="package-header flex space-between">
-        <div class="bold">{{t 'review_offer.items_to_share'}}</div>
-        <div class="underlined" {{action 'toggleSelectAllPackages'}}>{{t 'review_offer.select_all'}}</div>
+    {{#if sharingEnabled}}
+      <div class="row notes-edition large padded">
+        <div class="notes-lang-selection">
+          <span class="lang {{unless showZhNotes 'selected'}}" {{action (mut showZhNotes) false}}>{{t 'review_offer.offer_instructions_en'}}</span> |
+          <span class="lang {{if showZhNotes 'selected'}}" {{action (mut showZhNotes) true}}>{{t 'review_offer.offer_instructions_zh'}}</span>
+        </div>
+        <div class="notes-subtitle">{{t 'review_offer.offer_instructions_details' }}</div>
+        <div class="notes-text">
+          {{#if showZhNotes}}
+            {{textarea type='textarea' value=notesZh placeholder=(t 'notes_zh')}}
+          {{else}}
+            {{textarea type='textarea' value=notesEn placeholder=(t 'notes_en')}}
+          {{/if}}
+        </div>
       </div>
-      <div class="package-list">
-        {{#each packageList as |pkgRow|}}
-          <div class="package">
-            <div class="row">
-              <div class="columns small-4">
-                <div class="package-image" style="background-image: url({{ pkgRow.package.displayImageUrl }})">
-                  <div class="package-state {{pkgRow.package.item.state}}">
-                    {{t (concat 'offer.offer_details.' pkgRow.package.item.state)}}
+      <div class="package-sharing">
+        <div class="package-header flex space-between">
+          <div class="bold">{{t 'review_offer.items_to_share'}}</div>
+          <div class="underlined" {{action 'toggleSelectAllPackages'}}>{{t 'review_offer.select_all'}}</div>
+        </div>
+        <div class="package-list">
+          {{#each packageList as |pkgRow|}}
+            <div class="package">
+              <div class="row">
+                <div class="columns small-4">
+                  <div class="package-image" style="background-image: url({{ pkgRow.package.displayImageUrl }})">
+                    <div class="package-state {{pkgRow.package.item.state}}">
+                      {{t (concat 'offer.offer_details.' pkgRow.package.item.state)}}
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="columns small-8">
-                <div class="row package-name">
-                  <div class="columns small-10">
-                    {{pkgRow.package.receivedQuantity}} x {{pkgRow.package.packageName}}
+                <div class="columns small-8">
+                  <div class="row package-name">
+                    <div class="columns small-10">
+                      {{pkgRow.package.receivedQuantity}} x {{pkgRow.package.packageName}}
+                    </div>
+                    <div class="columns small-2">
+                      {{input type="checkbox"  class="package-share-checkbox" id=(concat 'sharePackage' pkgRow.package.id) checked=pkgRow.shared}}
+                    </div>
                   </div>
-                  <div class="columns small-2">
-                    {{input type="checkbox"  class="package-share-checkbox" id=(concat 'sharePackage' pkgRow.package.id) checked=pkgRow.shared}}
-                  </div>
-                </div>
-                <div class="row notes-edition">
-                  <div class="notes-lang-selection">
-                    <span class="lang {{unless pkgRow.zhNotes 'selected'}}" {{action (mut pkgRow.zhNotes) false}}>{{t 'notes_en'}}</span> |
-                    <span class="lang {{if pkgRow.zhNotes 'selected'}}" {{action (mut pkgRow.zhNotes) true}}>{{t 'notes_zh'}}</span>
-                  </div>
-                  <div class="notes-text">
-                    {{#if pkgRow.zhNotes}}
-                      {{textarea type='textarea' value=pkgRow.package.notesZhTw placeholder=(t 'notes_zh')}}
-                    {{else}}
-                      {{textarea type='textarea' value=pkgRow.package.notes placeholder=(t 'notes_en')}}
-                    {{/if}}
+                  <div class="row notes-edition">
+                    <div class="notes-lang-selection">
+                      <span class="lang {{unless pkgRow.zhNotes 'selected'}}" {{action (mut pkgRow.zhNotes) false}}>{{t 'notes_en'}}</span> |
+                      <span class="lang {{if pkgRow.zhNotes 'selected'}}" {{action (mut pkgRow.zhNotes) true}}>{{t 'notes_zh'}}</span>
+                    </div>
+                    <div class="notes-text">
+                      {{#if pkgRow.zhNotes}}
+                        {{textarea type='textarea' value=pkgRow.package.notesZhTw placeholder=(t 'notes_zh')}}
+                      {{else}}
+                        {{textarea type='textarea' value=pkgRow.package.notes placeholder=(t 'notes_en')}}
+                      {{/if}}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        {{/each}}
+          {{/each}}
+        </div>
       </div>
-      <div class="button-row row">
-         <div class="columns small-6">
-           <button class="light" {{action 'cancelEdit'}}>
-             {{t 'not_now'}}
-           </button>
-         </div>
-         <div class="columns small-6">
-           <button {{action 'applyChanges'}} class="{{unless allowConfirm 'disabled'}}">
-             {{t 'save_changes'}}
-           </button>
-         </div>
+    {{/if}}
+    <div class="button-row row">
+      <div class="columns small-6">
+        <button class="light" {{action 'cancelEdit'}}>
+          {{t 'not_now'}}
+        </button>
+      </div>
+      <div class="columns small-6">
+        <button {{action 'applyChanges'}} class="{{unless allowConfirm 'disabled'}}">
+          {{t 'save_changes'}}
+        </button>
       </div>
     </div>
   </div>

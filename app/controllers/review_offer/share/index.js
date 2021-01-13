@@ -81,6 +81,10 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     PUBLIC_LISTED: "public_listed"
   }),
 
+  sharingEnabled: Ember.computed("selectedSharingMode", function() {
+    return this.get("selectedSharingMode") !== this.get("sharingModes.PRIVATE");
+  }),
+
   isPackageShared(pkg) {
     return Boolean(
       this.get("store")
@@ -128,6 +132,30 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     }
   ),
 
+  defaultNotes(locale) {
+    const currentLocale = this.get("i18n.locale");
+    const saleable = this.get("offer.saleable");
+
+    this.set("i18n.locale", locale);
+
+    const t = k => this.get("i18n").t(k);
+    const district = this.getWithDefault(
+      "offer.createdBy.address.district.name",
+      "N/A"
+    );
+    const lines = [
+      `${t("review_offer.donor.district")}: ${district}`,
+      saleable
+        ? t("review_offer.sale_allowed")
+        : t("review_offer.sale_not_allowed"),
+      t("review_offer.sharing_notes_default")
+    ];
+
+    this.set("i18n.locale", currentLocale);
+
+    return lines.join("\n");
+  },
+
   persistPackageChanges() {
     return Ember.RSVP.all(
       this.get("packageList").reduce((promises, row) => {
@@ -145,7 +173,9 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   persistOfferShareable({ allowListing }) {
     const sharing = this.get("sharingService");
     return sharing.share(SHAREABLE_TYPES.OFFER, this.get("offer.id"), {
-      allowListing
+      allowListing: allowListing,
+      notes: this.get("notesEn"),
+      notesZhTw: this.get("notesZh")
     });
   },
 
@@ -181,6 +211,15 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
       this.modalCatch(() => {
         const shareable = this.get("offerShareable");
         this.set("selectedSharingMode", this.computeSharingMode(shareable));
+        this.set("showZhNotes", false);
+        this.set(
+          "notesEn",
+          shareable ? shareable.get("notes") : this.defaultNotes("en")
+        );
+        this.set(
+          "notesZh",
+          shareable ? shareable.get("notesZhTw") : this.defaultNotes("zh-tw")
+        );
         this.set("packageList", this.buildPackageList());
         this.set("showEditor", true);
       });
