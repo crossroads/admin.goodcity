@@ -40,6 +40,7 @@ export default DS.Model.extend({
   packageSetId: attr("number"),
   allowWebPublish: attr("boolean"),
   packagesLocationsAttributes: attr(),
+  valueHkDollar: attr("string"),
 
   donorConditionId: Ember.computed.foreignKey("donorCondition.id"),
 

@@ -43,8 +43,7 @@ export default ApiBaseService.extend({
     return [...some.toArray(), ...more.toArray()]; // flatten
   },
 
-  share(type, id, opts = {}) {
-    const { allowListing = false } = opts;
+  share(type, id, props = {}) {
     let shareable = this.get("store")
       .peekAll("shareable")
       .filterBy("resourceType", type)
@@ -57,7 +56,7 @@ export default ApiBaseService.extend({
         resourceType: type
       });
 
-    shareable.set("allowListing", allowListing);
+    shareable.setProperties(props);
 
     if (Object.keys(shareable.changedAttributes()).length === 0) {
       return Ember.RSVP.resolve(shareable);

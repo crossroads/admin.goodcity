@@ -27,7 +27,9 @@ export default JSONAPISerializer.extend({
       resource_id: snapshot.attr("resourceId"),
       resource_type: snapshot.attr("resourceType"),
       allow_listing: snapshot.attr("allowListing"),
-      expires_at: snapshot.attr("expiresAt")
+      expires_at: snapshot.attr("expiresAt"),
+      notes: snapshot.attr("notes"),
+      notes_zh_tw: snapshot.attr("notesZhTw")
     };
   },
 

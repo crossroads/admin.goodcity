@@ -33,5 +33,17 @@ export default ApiBaseService.extend({
       this.get("store").pushPayload(data);
       return this.get("store").peekRecord("package", id);
     });
+  },
+
+  getItemValuation({
+    donorConditionId: donor_condition_id,
+    packageTypeId: package_type_id,
+    grade
+  }) {
+    return this.GET(`/packages/package_valuation`, {
+      donor_condition_id,
+      package_type_id,
+      grade
+    });
   }
 });

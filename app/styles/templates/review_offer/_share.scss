@@ -12,6 +12,41 @@
       margin: 0 auto;
       width: 100%;
       max-width: 768px;
+      height: 100%;
+      overflow-y: auto;
+    }
+  }
+
+  .notes-edition {
+    &.padded {
+      padding: 1rem;
+    }
+
+    &.large textarea {
+      min-height: 5rem;
+    }
+
+    .notes-subtitle {
+      margin-bottom: 0.5rem;
+    }
+
+    .notes-lang-selection {
+      margin-bottom: 0.5rem;
+      .lang {
+        color: gray;
+        &.selected {
+          color: white;
+        }
+      }
+    }
+    .notes-text {
+      textarea {
+        font-size: 0.8rem;
+        height: 2em;
+        background-color: transparent;
+        color: white;
+        border: 1px solid gray;
+      }
     }
   }
 
@@ -144,27 +179,6 @@
 
               .columns {
                 padding-left: 0;
-              }
-            }
-
-            .notes-edition {
-              .notes-lang-selection {
-                margin-bottom: 0.5rem;
-                .lang {
-                  color: gray;
-                  &.selected {
-                    color: white;
-                  }
-                }
-              }
-              .notes-text {
-                textarea {
-                  font-size: 0.8rem;
-                  height: 2em;
-                  background-color: transparent;
-                  color: white;
-                  border: 1px solid gray;
-                }
               }
             }
           }

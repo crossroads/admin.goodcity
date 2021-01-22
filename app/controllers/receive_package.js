@@ -213,6 +213,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     pkg.set("grade", this.get("selectedGrade.id"));
     pkg.set("allowWebPublish", this.get("isAllowedToPublish"));
     pkg.set("donorCondition", this.get("selectedCondition"));
+    pkg.set("valueHkDollar", this.get("valueHkDollar"));
     return pkg;
   },
 
@@ -294,10 +295,34 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
       });
   },
 
+  async calculateValuation() {
+    const model = this.get("model");
+
+    const valueHkDollar = await this.get("packageService").getItemValuation({
+      donorConditionId: this.get("selectedCondition.id"),
+      grade: this.get("selectedGrade.id"),
+      packageTypeId: model.get("packageType.id")
+    });
+
+    this.set("valueHkDollar", valueHkDollar.value_hk_dollar);
+  },
+
   // ----- Actions -----
   actions: {
     clearDescription() {
       this.set("description", "");
+    },
+
+    async changeGrade(grade) {
+      this.set("selectedGrade", grade);
+
+      await this.calculateValuation();
+    },
+
+    async changeDonorCondition(condition) {
+      this.set("selectedCondition", condition);
+
+      await this.calculateValuation();
     },
 
     toggleInventoryOptions() {
@@ -349,6 +374,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
 
     receivePackage() {
       const pkg = this.receivePackageParams();
+
       this.runTask(
         pkg
           .save()

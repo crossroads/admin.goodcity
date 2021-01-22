@@ -21,6 +21,8 @@ export default DS.Model.extend({
   itemId: attr("string"),
   item: belongsTo("item", { async: false }),
   offer: belongsTo("offer", { async: false }),
+  notes: attr("string"),
+  notesZhTw: attr("string"),
 
   active: Ember.computed("expiresAt", function() {
     return (

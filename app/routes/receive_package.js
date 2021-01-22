@@ -4,6 +4,7 @@ export default AuthorizeRoute.extend({
   printerService: Ember.inject.service(),
   session: Ember.inject.service(),
   store: Ember.inject.service(),
+  packageService: Ember.inject.service(),
 
   model(params) {
     return this.store.findRecord("package", params.package_id);
@@ -25,7 +26,7 @@ export default AuthorizeRoute.extend({
     }
   },
 
-  setupController(controller, model) {
+  async setupController(controller, model) {
     this._super(controller, model);
     controller.set("package", model);
     controller.resetInputs();
@@ -41,6 +42,14 @@ export default AuthorizeRoute.extend({
     if (!model.get("inventoryNumber")) {
       controller.generateInventoryNumber();
     }
+
+    const valueHkDollar = await this.get("packageService").getItemValuation({
+      donorConditionId: model.get("donorCondition.id"),
+      grade: model.get("grade"),
+      packageTypeId: model.get("packageType.id")
+    });
+
+    controller.set("valueHkDollar", valueHkDollar.value_hk_dollar);
   },
 
   resetController(controller, isExiting, transition) {
