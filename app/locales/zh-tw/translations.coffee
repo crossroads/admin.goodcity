@@ -349,7 +349,8 @@ I18nTranslationsZhTw =
         "header": "開始接收捐贈項目"
         "cant_modify_note": "提示：一旦捐贈項目狀態改成「正在接收」，將無法還原，捐贈人士亦無法更改物資資料。"
         "not_now": "現在無法進行"
-        "begin_receiving": "開始接收"
+        "begin_receiving": "開始接收",
+      "inventorize_warning": "Are you sure you want to inventorize?"  
 
 
     "finished":
