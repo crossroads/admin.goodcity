@@ -353,6 +353,8 @@ I18nTranslationsEn =
         "not_now": "Not Now"
         "begin_receiving": "Begin Receiving"
 
+      "inventorize_warning": "Are you sure you want to inventorize?"
+
     "finished":
       "title": "Finished"
       "received": "Received"

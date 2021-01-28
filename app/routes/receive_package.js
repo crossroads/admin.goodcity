@@ -36,7 +36,7 @@ export default AuthorizeRoute.extend({
     model.get("inventoryNumber");
     this.setupPrinterId(controller);
 
-    if (model.get("isReceived")) {
+    if (model.get("isReceived") && model.get("inventoryNumber")) {
       return controller.redirectToReceiveOffer();
     }
     if (!model.get("inventoryNumber")) {

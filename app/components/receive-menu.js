@@ -15,6 +15,14 @@ export default Ember.Component.extend(AsyncTasksMixin, {
   isReceived: Ember.computed.equal("package.state", "received"),
   isMissing: Ember.computed.equal("package.state", "missing"),
 
+  isReceivedWithoutInventory: Ember.computed(
+    "package",
+    "isReceived",
+    function() {
+      return this.get("isReceived") && !this.get("package.inventoryNumber");
+    }
+  ),
+
   allowLabelPrint: Ember.computed(
     "isReceived",
     "package.inventoryNumber",
@@ -155,6 +163,18 @@ export default Ember.Component.extend(AsyncTasksMixin, {
           this.send("applyReceiving", event);
         }
       }
+    },
+
+    inventorizeReceivedItem() {
+      this.get("messageBox").confirm(
+        this.get("i18n").t("receive.inventorize_warning"),
+        () => {
+          this.get("router").transitionTo(
+            "receive_package",
+            this.get("packageId")
+          );
+        }
+      );
     },
 
     applyReceiving(event, allow_event = true) {
