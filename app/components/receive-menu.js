@@ -168,20 +168,13 @@ export default Ember.Component.extend(AsyncTasksMixin, {
     inventorizeReceivedItem() {
       this.get("messageBox").confirm(
         this.get("i18n").t("receive.inventorize_warning"),
-        () => this.send("assingInventoryNumber")
+        () => {
+          this.get("router").transitionTo(
+            "receive_package",
+            this.get("packageId")
+          );
+        }
       );
-    },
-
-    async assingInventoryNumber() {
-      const pkg = this.get("package");
-      this.runTask(async () => {
-        const inventoryNumber = await this.get(
-          "packageService"
-        ).generateInventoryNumber();
-        pkg.set("inventoryNumber", inventoryNumber.inventory_number);
-        pkg.set("state", "received");
-        await pkg.save();
-      }, ERROR_STRATEGIES.MODAL);
     },
 
     applyReceiving(event, allow_event = true) {
