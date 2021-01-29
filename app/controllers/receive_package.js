@@ -398,22 +398,11 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     pkgUpdateError(pkg) {
       const errorMessage =
         pkg.get("errors.firstObject.message") ||
-        pkg.get("adapterError.errors.firstObject.title");
-      if (
-        errorMessage === "Adapter Error" ||
-        errorMessage.indexOf("Connection error") >= 0
-      ) {
-        this.get("messageBox").alert(
-          "could not contact Stockit, try again later.",
-          () => pkg.rollbackAttributes()
-        );
-      } else {
-        this.get("messageBox").alert(
-          pkg
-            .get("errors")
-            .getEach("message")
-            .join("\n")
-        );
+        pkg.get("adapterError.errors.firstObject.detail.errors.firstObject");
+
+      if (errorMessage) {
+        pkg.rollbackAttributes();
+        this.get("messageBox").alert(errorMessage);
       }
     }
   }
