@@ -54,7 +54,11 @@ export default Ember.Component.extend({
 
   offerStateFilters: Ember.computed("allOfferStateFilters.[]", function() {
     // Separate out "showPriority" filter as it has some different css properties than others
-    return _.without(this.get("allOfferStateFilters"), STATE_FILTERS.PRIORITY);
+    return _.without(
+      this.get("allOfferStateFilters"),
+      STATE_FILTERS.PRIORITY,
+      STATE_FILTERS.PUBLISHED
+    );
   }),
 
   presetTimeKeys: Ember.computed(function() {

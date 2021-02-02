@@ -91,7 +91,7 @@ I18nTranslationsZhTw =
         month: "This month",
         next_month: "Next month"
 
-      show_priority_offers: "Only Show Priority Offers"
+      show_priority_offers: "Only Show ..."
       offer_statuses: "Offer Statuses"
       on_or_after: "On or after"
       on_or_before: "On or before"
@@ -102,8 +102,10 @@ I18nTranslationsZhTw =
       all_review: "All"
       time_filter_title: "Offer Due Date"
       button_state: "State"
-      showPriority: "Show Priority"
-      showPriority_info: "Have remained in a state too long. Need attention."
+      priorityOffers: "Priority Offers"
+      priorityOffers_info: "Have remained in a state too long. Need attention."
+      publishedOffers: "Published Offers"
+      publishedOffers_info: "Shared on charity site"
       submitted: "New"
       submitted_info: "Offers that have yet to be reviewed."
       under_review: "Reviewing"
@@ -350,7 +352,7 @@ I18nTranslationsZhTw =
         "cant_modify_note": "提示：一旦捐贈項目狀態改成「正在接收」，將無法還原，捐贈人士亦無法更改物資資料。"
         "not_now": "現在無法進行"
         "begin_receiving": "開始接收",
-      "inventorize_warning": "Are you sure you want to inventorize?"  
+      "inventorize_warning": "Are you sure you want to inventorize?"
 
 
     "finished":

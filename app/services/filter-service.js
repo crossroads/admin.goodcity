@@ -24,7 +24,8 @@ const PERSISTENT_VAR = function(propName, defaultValue, deserializeMap = {}) {
 };
 
 export const STATE_FILTERS = {
-  PRIORITY: "showPriority",
+  PRIORITY: "priorityOffers",
+  PUBLISHED: "publishedOffers",
   NEW: "submitted",
   REVIEWING: "under_review",
   REVIEWED: "reviewed",
@@ -46,6 +47,11 @@ export default Ember.Service.extend(Ember.Evented, {
   isPriority() {
     const filters = this.get("offerStateFilters");
     return filters && filters.indexOf(STATE_FILTERS.PRIORITY) >= 0;
+  },
+
+  isPublished() {
+    const filters = this.get("offerStateFilters");
+    return filters && filters.indexOf(STATE_FILTERS.PUBLISHED) >= 0;
   },
 
   clearOfferStateFilters() {

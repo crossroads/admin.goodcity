@@ -173,7 +173,7 @@ test("Checking multiple states checkboxes in State filter page applies number of
     assert.equal(currentURL(), "/offers_filters?applyStateFilter=true");
     click("#submitted");
     noOfSelectedStates += 1;
-    click("#showPriority");
+    click("#priorityOffers");
     noOfSelectedStates += 1;
   });
 

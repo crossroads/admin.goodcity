@@ -3,6 +3,7 @@ import { STATE_FILTERS } from "../services/filter-service";
 
 const {
   PRIORITY,
+  PUBLISHED,
   NEW,
   REVIEWING,
   REVIEWED,
@@ -22,7 +23,8 @@ const STATE_ICONS = {
   [RECEIVED]: "thumbs-up",
   [CANCELLED]: "thumbs-down",
   [INACTIVE]: "bed",
-  [PRIORITY]: "warning"
+  [PRIORITY]: "warning",
+  [PUBLISHED]: "bed"
 };
 
 export default Ember.Helper.helper(function(state) {
