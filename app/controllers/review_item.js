@@ -97,8 +97,8 @@ export default Ember.Controller.extend({
       this.set("isEditing", value);
     },
 
-    goBack() {
-      this.set("model.packageType", "");
+    returnToItemDetails() {
+      this.get("model").rollbackAttributes();
       this.transitionToRoute("review_offer", this.get("item.offer"));
     },
 

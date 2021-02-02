@@ -133,7 +133,7 @@ test("Back button redirects to review offer page", function(assert) {
 
   visit(`/offers/${offerId}/review_item/${itemId}`);
   andThen(function() {
-    click("div:contains('Back')");
+    click("#backToItem");
   });
   andThen(function() {
     assert.equal(currentURL(), `/offers/${offerId}/review_offer/items`);
