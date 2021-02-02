@@ -97,6 +97,11 @@ export default Ember.Controller.extend({
       this.set("isEditing", value);
     },
 
+    goBack() {
+      this.set("model.packageType", "");
+      this.transitionToRoute("review_offer", this.get("item.offer"));
+    },
+
     copyItem() {
       var loadingView = getOwner(this)
         .lookup("component:loading")
