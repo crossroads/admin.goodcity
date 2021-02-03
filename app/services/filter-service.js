@@ -51,7 +51,7 @@ export default Ember.Service.extend(Ember.Evented, {
 
   isPublished() {
     const filters = this.get("offerStateFilters");
-    return filters && filters.indexOf(STATE_FILTERS.PUBLISHED) >= 0;
+    return _.includes(filters, STATE_FILTERS.PUBLISHED);
   },
 
   clearOfferStateFilters() {
