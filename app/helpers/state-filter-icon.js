@@ -24,7 +24,7 @@ const STATE_ICONS = {
   [CANCELLED]: "thumbs-down",
   [INACTIVE]: "bed",
   [PRIORITY]: "warning",
-  [PUBLISHED]: "bed"
+  [PUBLISHED]: "eye"
 };
 
 export default Ember.Helper.helper(function(state) {
