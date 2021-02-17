@@ -24,8 +24,8 @@ export default Ember.Component.extend({
       return this.get("store").query("canned_response", params);
     },
 
-    openProFormaOverlay() {
-      this.set("messageService.isProFormaMessageVisible", true);
+    addMessage() {
+      this.set("messageService.isAddMessageVisible", true);
     },
 
     setCannedResponse(text) {

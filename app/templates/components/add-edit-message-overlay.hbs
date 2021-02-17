@@ -1,0 +1,38 @@
+<div class="cmp search-overlay order">
+  {{#popup-overlay open=open}}
+    <nav class="tab-bar item_details_title">
+      <section class="left-small">
+        {{#link-to 'dashboard.index' classNames="back"}}{{t "back"}}{{/link-to}}
+      </section>
+      <section class="middle tab-bar-section">
+        <h1 class="title">Edit Message</h1>
+      </section>
+    </nav>
+    <div class="canned-message-container">
+      <button class="light-button">Delete </button>
+      <div class="row" style="margin-top: 18%;">
+        <span clas="small-3 columns">
+            Label
+        </span>
+        <span clas="small-9 columns">
+          {{textarea type='textarea' value=label}}
+        </span>
+      </div>  
+
+
+      <div class="row" style="margin-top: 18%;">
+        <span clas="small-3 columns">
+            Label
+        </span>
+        <span clas="small-9 columns">
+          {{textarea type='textarea' value=message}}
+        </span>
+      </div>  
+
+      <button {{action "createCannedMessage"}}>Create</button>
+
+    </div>  
+
+    
+  {{/popup-overlay}}  
+</div>

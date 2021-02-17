@@ -9,6 +9,8 @@ export default ApiBaseService.extend({
   init() {
     this._super(...arguments);
     this.set("isCannedMessagesVisible", false);
+    this.set("isProFormaMessageVisible", false);
+    this.set("isAddMessageVisible", false);
   },
 
   toggle() {

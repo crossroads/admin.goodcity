@@ -16,6 +16,19 @@
     margin-left: 0%;
   }
 
+  .tabs {
+    width: 50%;
+    padding-left: 15%;
+    margin-left: -10%;
+    float: left;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    cursor: pointer;
+  }
+
+  .selected {
+    border-bottom: 2px solid #ddd;
+  }
   .search-field {
     flex: 0.8;
   }
@@ -42,6 +55,23 @@
   color: white;
   flex-direction: column;
   margin-top: 1.5rem;
+
+  .light-button {
+    border: 1px solid #fff;
+    max-width: 16rem;
+    height: 2rem;
+    line-height: 2rem;
+    text-align: center;
+    cursor: pointer;
+    color: #fff;
+    background: #002352;
+    font-size: 120%;
+    padding-bottom: 8%;
+    padding-top: 1%;
+    padding-left: 7%;
+    padding-right: 7%;
+    position: absolute;
+  }
 
 
   li {

@@ -1,28 +1,25 @@
 <div class="cmp search-overlay order">
   {{#popup-overlay open=open}}
-    <div class="canned-search-container search-box ui">
-      <div class="back-arow" {{action "cancel"}}>
-        <i class="fa fa-angle-left"></i>
-        <span>{{t 'cancel'}}</span>
-      </div>
-      <div class="search-field">
-        {{focus-textfield
-                name="searchText"
-                id="searchText"
-                placeholder=(t 'search.placeholder')
-                value=searchText }}
-        {{#if hasSearchText}}
-          <div>
-            <i class="fa fa-times-circle clear-search" {{action "clearSearch"}}></i>
-          </div>
-        {{/if}}
-      </div>
+    <div class="canned-search-container"> 
+        <div class="back-arow">
+            <i class="fa fa-angle-left"></i>
+            <span>{{t 'cancel'}}</span>
+        </div>
+        <div class="search-field">
+            Message Admin
+        </div>
     </div>
+    <div class="canned-search-container">
+        <div clas="small-3 columns text-center tabs selected">
+            Canned Message
+        </div>
+        <div clas="small-3 columns text-center tabs">
+            System Message
+        </div>
+    </div>    
+
     <div class="canned-message-container">
-      <div class="header" style="cursor: pointer; display: flex;" {{action "openProFormaOverlay"}}>
-        {{t 'canned_response.title'}}
-      </div>
-      
+      <button style="float: right;" {{action 'addMessage'}}>Add Message</button>
       {{#if displayResults}}
         {{#infinite-list height="82vh" loadMore=(action "loadMoreCannedMessages") as |cannedMessages| }}
           <ul>
@@ -46,5 +43,5 @@
         {{/infinite-list}}
       {{/if}}
     </div>
-  {{/popup-overlay}}
+  {{/popup-overlay}}      
 </div>
