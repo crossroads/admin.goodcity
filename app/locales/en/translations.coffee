@@ -91,7 +91,7 @@ I18nTranslationsEn =
         month: "This month",
         next_month: "Next month"
 
-      show_priority_offers: "Only Show Priority Offers"
+      show_priority_offers: "Only Show ..."
       offer_statuses: "Offer Statuses"
       on_or_after: "On or after"
       on_or_before: "On or before"
@@ -103,8 +103,10 @@ I18nTranslationsEn =
       time_filter_title: "Offer Due Date"
       button_state: "State"
       button_due: "Due"
-      showPriority: "Show Priority"
-      showPriority_info: "Have remained in a state too long. Need attention."
+      priorityOffers: "Priority Offers"
+      priorityOffers_info: "Have remained in a state too long. Need attention."
+      publishedOffers: "Published Offers"
+      publishedOffers_info: "Shared on charity site"
       submitted: "New"
       submitted_info: "Offers that have yet to be reviewed."
       under_review: "Reviewing"
