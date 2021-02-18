@@ -2,7 +2,10 @@
   {{#popup-overlay open=open}}
     <nav class="tab-bar item_details_title">
       <section class="left-small">
-        {{#link-to 'dashboard.index' classNames="back"}}{{t "back"}}{{/link-to}}
+        <div class="back-arow" {{action 'closeOverlay'}}>
+          <i class="fa fa-angle-left"></i>
+          <span>{{t 'cancel'}}</span>
+        </div>
       </section>
       <section class="middle tab-bar-section">
         <h1 class="title">Edit Message</h1>

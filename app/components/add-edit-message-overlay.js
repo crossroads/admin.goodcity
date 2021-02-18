@@ -17,6 +17,10 @@ export default Ember.Component.extend({
         console.log("saved");
         this.set("messageService.isAddMessageVisible", false);
       });
+    },
+
+    closeOverlay() {
+      this.set("messageService.isAddMessageVisible", false);
     }
   }
 });

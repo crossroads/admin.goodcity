@@ -1,47 +1,53 @@
 <div class="cmp search-overlay order">
   {{#popup-overlay open=open}}
-    <div class="canned-search-container"> 
-        <div class="back-arow">
+    <nav class="tab-bar item_details_title">
+      <section class="left-small">
+        <div class="back-arow" {{action 'closeOverlay'}}>
             <i class="fa fa-angle-left"></i>
             <span>{{t 'cancel'}}</span>
         </div>
-        <div class="search-field">
-            Message Admin
-        </div>
-    </div>
+      </section>
+      <section class="middle tab-bar-section">
+        <h1 class="title">Message Admin</h1>
+      </section>
+    </nav>
     <div class="canned-search-container">
-        <div clas="small-3 columns text-center tabs selected">
+        <div class="small-3 columns text-center tabs {{if isSelected 'selected' ''}}" {{action 'selectTab'}}>
             Canned Message
         </div>
-        <div clas="small-3 columns text-center tabs">
+        <div class="small-3 columns text-center tabs {{if isSelected '' 'selected'}}" {{action 'selectTab' 'system'}}>
             System Message
         </div>
     </div>    
 
     <div class="canned-message-container">
-      <button style="float: right;" {{action 'addMessage'}}>Add Message</button>
-      {{#if displayResults}}
-        {{#infinite-list height="82vh" loadMore=(action "loadMoreCannedMessages") as |cannedMessages| }}
-          <ul>
-            {{#each cannedMessages as |cannedMessage|}}
-              <li>
-                <div class="canned-message-list-container">
-                  <div class="message-container">
-                    {{canned-content cannedMessage=cannedMessage}}
-                </div>
-                    <div class='language-container'>
-                      <span {{action "setCannedResponse" cannedMessage.contentEn}}>EN</span>
-                      <span class="{{if (is-not cannedMessage.contentZhTw) 'disabled'}}"
-                        {{action "setCannedResponse" cannedMessage.contentZhTw}}>
-                        中文
-                      </span>
-                    </div>
+      {{#if (is-equal selected 'canned') }}
+        <button style="float: right;" {{action 'addMessage'}}>Add Message</button>
+        {{#if displayResults}}
+          {{#infinite-list height="82vh" loadMore=(action "loadMoreCannedMessages") as |cannedMessages| }}
+            <ul>
+              {{#each cannedMessages as |cannedMessage|}}
+                <li>
+                  <div class="canned-message-list-container">
+                    <div class="message-container">
+                      {{canned-content cannedMessage=cannedMessage}}
                   </div>
-              </li>
-            {{/each}}
-          </ul>
-        {{/infinite-list}}
-      {{/if}}
+                      <div class='language-container'>
+                        <span {{action "setCannedResponse" cannedMessage.contentEn}}>EN</span>
+                        <span class="{{if (is-not cannedMessage.contentZhTw) 'disabled'}}"
+                          {{action "setCannedResponse" cannedMessage.contentZhTw}}>
+                          中文
+                        </span>
+                      </div>
+                    </div>
+                </li>
+              {{/each}}
+            </ul>
+          {{/infinite-list}}
+        {{/if}}
+      {{else}}  
+        System messages
+      {{/if}}  
     </div>
   {{/popup-overlay}}      
 </div>

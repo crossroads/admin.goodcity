@@ -5,6 +5,13 @@ export default Ember.Component.extend({
   messageService: Ember.inject.service(),
   displayResults: true,
   store: Ember.inject.service(),
+
+  init() {
+    this._super(...arguments);
+    this.set("selected", "canned");
+    this.set("isSelected", true);
+  },
+
   onSearchTextChange: Ember.observer("searchText", function() {
     Ember.run.debounce(this, this.reloadResults, 500);
   }),
@@ -26,6 +33,19 @@ export default Ember.Component.extend({
 
     addMessage() {
       this.set("messageService.isAddMessageVisible", true);
+    },
+
+    closeOverlay() {
+      this.set("messageService.isProFormaMessageVisible", false);
+    },
+
+    selectTab(selectedTab = "canned") {
+      this.set("selected", selectedTab);
+      if (selectedTab == "canned") {
+        this.set("isSelected", true);
+      } else {
+        this.set("isSelected", false);
+      }
     },
 
     setCannedResponse(text) {
