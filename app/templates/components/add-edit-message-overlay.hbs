@@ -12,13 +12,17 @@
       </section>
     </nav>
     <div class="canned-message-container">
-      <button class="light-button">Delete </button>
-      <div class="row" style="margin-top: 18%;">
+      {{#if message.id}}
+        <div>
+          <button class="light-button" {{action "deleteMessage"}}>Delete Message</button>
+        </div>  
+      {{/if}}  
+      <div class="row">
         <span clas="small-3 columns">
             Label
         </span>
         <span clas="small-9 columns">
-          {{textarea type='textarea' value=label}}
+          {{textarea type='textarea' value=message.nameEn}}
         </span>
       </div>  
 
@@ -28,11 +32,11 @@
             Label
         </span>
         <span clas="small-9 columns">
-          {{textarea type='textarea' value=message}}
+          {{textarea type='textarea' value=message.contentEn}}
         </span>
       </div>  
 
-      <button {{action "createCannedMessage"}}>Create</button>
+      <button {{action "createCannedMessage"}}>{{if message.id "Edit" "Create"}}</button>
 
     </div>  
 

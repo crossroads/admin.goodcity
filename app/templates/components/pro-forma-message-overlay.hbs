@@ -22,23 +22,22 @@
 
     <div class="canned-message-container">
       {{#if (is-equal selected 'canned') }}
-        <button style="float: right;" {{action 'addMessage'}}>Add Message</button>
+        <div>
+          <button class="light-button" {{action 'addMessage'}}>Add Message</button>
+        </div>  
         {{#if displayResults}}
           {{#infinite-list height="82vh" loadMore=(action "loadMoreCannedMessages") as |cannedMessages| }}
             <ul>
               {{#each cannedMessages as |cannedMessage|}}
-                <li>
+                <li {{action "editMessage" cannedMessage}}>
                   <div class="canned-message-list-container">
                     <div class="message-container">
                       {{canned-content cannedMessage=cannedMessage}}
-                  </div>
-                      <div class='language-container'>
-                        <span {{action "setCannedResponse" cannedMessage.contentEn}}>EN</span>
-                        <span class="{{if (is-not cannedMessage.contentZhTw) 'disabled'}}"
-                          {{action "setCannedResponse" cannedMessage.contentZhTw}}>
-                          中文
-                        </span>
-                      </div>
+                    </div>
+                    <div class='language-container'>
+                      <span>EN</span>
+                      <span>中文</span>
+                    </div>
                     </div>
                 </li>
               {{/each}}

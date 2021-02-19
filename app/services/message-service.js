@@ -11,6 +11,7 @@ export default ApiBaseService.extend({
     this.set("isCannedMessagesVisible", false);
     this.set("isProFormaMessageVisible", false);
     this.set("isAddMessageVisible", false);
+    this.set("editMessage", "");
   },
 
   toggle() {
