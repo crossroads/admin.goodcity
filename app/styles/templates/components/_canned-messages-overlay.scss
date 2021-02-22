@@ -56,6 +56,14 @@
   flex-direction: column;
   margin-top: 1.5rem;
 
+  .message-textarea {
+    background: #1A3A64;
+    border: 1px solid #002352;
+    color: #8496AE;
+    width: 98%;
+    font-size: 100%;
+  }
+
   .light-button {
     border: 1px solid #fff;
     max-width: 16rem;

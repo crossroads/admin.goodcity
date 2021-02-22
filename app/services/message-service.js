@@ -5,13 +5,16 @@ import ApiBaseService from "./api-base-service";
 
 export default ApiBaseService.extend({
   store: Ember.inject.service(),
+  editMessage: {
+    language: "en",
+    messageId: ""
+  },
 
   init() {
     this._super(...arguments);
     this.set("isCannedMessagesVisible", false);
     this.set("isProFormaMessageVisible", false);
     this.set("isAddMessageVisible", false);
-    this.set("editMessage", "");
   },
 
   toggle() {

@@ -7,15 +7,19 @@ export default Ember.Component.extend(AsyncTasksMixin, {
   store: Ember.inject.service(),
 
   async didReceiveAttrs() {
-    const editMessageId = this.get("messageService.editMessage");
+    const editMessage = this.get("messageService.editMessage");
     const store = this.get("store");
     let message;
-    if (editMessageId) {
-      message = store.peekRecord("canned_response", editMessageId);
+    if (editMessage.messageId) {
+      message = store.peekRecord("canned_response", editMessage.messageId);
     } else {
       message = store.createRecord("canned-response");
     }
     this.set("message", message);
+    this.set(
+      "language",
+      this.get("messageService.editMessage.language") == "en"
+    );
   },
 
   actions: {
@@ -29,7 +33,8 @@ export default Ember.Component.extend(AsyncTasksMixin, {
 
     closeOverlay() {
       this.set("messageService.isAddMessageVisible", false);
-      this.set("messageService.editMessage", "");
+      this.set("messageService.editMessage.language", "en");
+      this.set("messageService.editMessage.messageId", "");
     },
 
     deleteMessage() {

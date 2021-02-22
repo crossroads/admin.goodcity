@@ -29,6 +29,26 @@
           {{#infinite-list height="82vh" loadMore=(action "loadMoreCannedMessages") as |cannedMessages| }}
             <ul>
               {{#each cannedMessages as |cannedMessage|}}
+                <li>
+                  <div class="canned-message-list-container">
+                    <div class="message-container">
+                      {{canned-content cannedMessage=cannedMessage}}
+                    </div>
+                    <div class='language-container'>
+                      <span {{action "editMessage" cannedMessage "en"}}>EN</span>
+                      <span {{action "editMessage" cannedMessage "zh-tw"}}>中文</span>
+                    </div>
+                    </div>
+                </li>
+              {{/each}}
+            </ul>
+          {{/infinite-list}}
+        {{/if}}
+      {{else}}  
+        {{#if displayResults}}
+          {{#infinite-list height="82vh" loadMore=(action "loadMoreCannedMessages") as |cannedMessages| }}
+            <ul>
+              {{#each cannedMessages as |cannedMessage|}}
                 <li {{action "editMessage" cannedMessage}}>
                   <div class="canned-message-list-container">
                     <div class="message-container">
@@ -44,8 +64,6 @@
             </ul>
           {{/infinite-list}}
         {{/if}}
-      {{else}}  
-        System messages
       {{/if}}  
     </div>
   {{/popup-overlay}}      

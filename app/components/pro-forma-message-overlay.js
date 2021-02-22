@@ -28,10 +28,11 @@ export default Ember.Component.extend({
   actions: {
     loadMoreCannedMessages() {
       const params = {
-        searchText: this.get("searchText"),
-        is_canned: false,
-        is_system: false
+        searchText: this.get("searchText")
       };
+      if (this.get("selected") == "system") {
+        params.type = "system";
+      }
       return this.get("store").query("canned_response", params);
     },
 
@@ -52,8 +53,9 @@ export default Ember.Component.extend({
       }
     },
 
-    editMessage(message) {
-      this.set("messageService.editMessage", message.id);
+    editMessage(message, lang) {
+      this.set("messageService.editMessage.messageId", message.id);
+      this.set("messageService.editMessage.language", lang);
       this.send("addMessage");
     },
 
