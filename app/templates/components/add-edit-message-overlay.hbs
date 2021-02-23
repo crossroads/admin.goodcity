@@ -8,7 +8,7 @@
         </div>
       </section>
       <section class="middle tab-bar-section">
-        <h1 class="title">Edit Message</h1>
+        <h1 class="title">{{if message.id "Edit" "Create"}} Message</h1>
       </section>
     </nav>
     <div class="canned-message-container">
@@ -17,15 +17,15 @@
           <button class="light-button" {{action "deleteMessage"}}>Delete Message</button>
         </div>  
       {{/if}}  
-      <div class="row" style="display: flex;">
+      <div class="row edit-message">
         <span clas="small-3 columns" style="flex: 1;text-align: center;">
           Label*
           <div> 
-            <span>EN</span> | <span>中文</span>
+            <span {{action 'setLanguage'}} class={{if isEnglish 'disabled'}}>EN</span> | <span {{action 'setLanguage' 'zh-tw'}} class="{{if (is-not isEnglish) 'disabled'}}">中文</span>
           </div> 
         </span>
         <span clas="small-9 columns" style="flex: 5;">
-          {{#if language}}
+          {{#if isEnglish}}
             {{textarea type='textarea' value=message.nameEn classNames="message-textarea" rows="5"}}
           {{else}}
             {{textarea type='textarea' value=message.nameZhTw classNames="message-textarea" rows="5"}}
@@ -33,15 +33,15 @@
         </span>
       </div>  
 
-      <div class="row" style="display: flex;">
+      <div class="row edit-message">
         <span clas="small-3 columns" style="flex: 1;text-align: center;">
           Message*
           <div> 
-            <span>EN</span> | <span>中文</span>
+            <span {{action 'setLanguage'}} class={{if isEnglish 'disabled'}}>EN</span> | <span {{action 'setLanguage' 'zh-tw'}} class="{{if (is-not isEnglish) 'disabled'}}">中文</span>
           </div> 
         </span>
         <span clas="small-9 columns" style="flex: 5;">
-          {{#if language}}
+          {{#if isEnglish}}
             {{textarea type='textarea' value=message.contentEn classNames="message-textarea" rows="10"}}
           {{else}}
             {{textarea type='textarea' value=message.contentZhTw classNames="message-textarea" rows="10"}}
@@ -49,7 +49,7 @@
         </span>
       </div>  
 
-      <button {{action "createCannedMessage"}} style="width: 50%;margin-left: 30%;">{{if message.id "Edit" "Create"}}</button>
+      <button {{action "createCannedMessage"}} class="create-btn">{{if message.id "Edit" "Create"}}</button>
 
     </div>  
 

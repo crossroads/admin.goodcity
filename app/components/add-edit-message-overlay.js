@@ -16,10 +16,7 @@ export default Ember.Component.extend(AsyncTasksMixin, {
       message = store.createRecord("canned-response");
     }
     this.set("message", message);
-    this.set(
-      "language",
-      this.get("messageService.editMessage.language") == "en"
-    );
+    this.set("isEnglish", true);
   },
 
   actions: {
@@ -35,6 +32,10 @@ export default Ember.Component.extend(AsyncTasksMixin, {
       this.set("messageService.isAddMessageVisible", false);
       this.set("messageService.editMessage.language", "en");
       this.set("messageService.editMessage.messageId", "");
+    },
+
+    setLanguage(lang = "en") {
+      this.set("isEnglish", lang == "en");
     },
 
     deleteMessage() {

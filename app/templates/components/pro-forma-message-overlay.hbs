@@ -34,11 +34,10 @@
                     <div class="message-container">
                       {{canned-content cannedMessage=cannedMessage}}
                     </div>
-                    <div class='language-container'>
-                      <span {{action "editMessage" cannedMessage "en"}}>EN</span>
-                      <span {{action "editMessage" cannedMessage "zh-tw"}}>中文</span>
+                    <div class='language-container' {{action "editMessage" cannedMessage "en"}}>
+                      <i class="fa fa-angle-right edit-pointer"></i>
                     </div>
-                    </div>
+                  </div>
                 </li>
               {{/each}}
             </ul>
@@ -54,11 +53,10 @@
                     <div class="message-container">
                       {{canned-content cannedMessage=cannedMessage}}
                     </div>
-                    <div class='language-container'>
-                      <span>EN</span>
-                      <span>中文</span>
+                    <div class='language-container' {{action "editMessage" cannedMessage "en"}}>
+                      <i class="fa fa-angle-right edit-pointer"></i>
                     </div>
-                    </div>
+                  </div>
                 </li>
               {{/each}}
             </ul>
