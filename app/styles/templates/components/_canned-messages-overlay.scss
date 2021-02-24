@@ -76,6 +76,15 @@
       color: #bab3b3;
       cursor: default;
     }
+
+    .input-error {
+      background: #f46769;
+      color: #fff;
+      padding: .2rem;
+      width: 98%;
+      margin-top: -5%;
+      margin-bottom: 5%;
+    }
   }
 
   .create-btn{

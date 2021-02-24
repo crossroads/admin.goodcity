@@ -30,6 +30,9 @@
           {{else}}
             {{textarea type='textarea' value=message.nameZhTw classNames="message-textarea" rows="5"}}
           {{/if}}
+          {{#unless message.nameEn}}
+            <div class='input-error show-validation'>{{t 'canned_response.en_label'}}</div>
+          {{/unless}}  
         </span>
       </div>  
 
@@ -46,10 +49,13 @@
           {{else}}
             {{textarea type='textarea' value=message.contentZhTw classNames="message-textarea" rows="10"}}
           {{/if}}  
+          {{#unless message.contentEn}}
+            <div class='input-error show-validation'>{{t 'canned_response.en_content'}}</div>
+          {{/unless}}  
         </span>
       </div>  
 
-      <button {{action "createCannedMessage"}} class="create-btn">{{if message.id "Edit" "Create"}}</button>
+      <button {{action "createCannedMessage"}} class="create-btn" disabled={{disableCreateEdit}}>{{if message.id "Edit" "Create"}}</button>
 
     </div>  
 

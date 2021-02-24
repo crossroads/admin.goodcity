@@ -471,5 +471,7 @@ I18nTranslationsZhTw =
 
     "canned_response":
       "title": "Manage pro-forma messages"
+      "en_content": "English content cannot be blank"
+      "en_label": "English label be blank"
 
 `export default I18nTranslationsZhTw`

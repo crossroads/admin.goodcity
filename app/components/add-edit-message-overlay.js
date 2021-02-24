@@ -19,6 +19,14 @@ export default Ember.Component.extend(AsyncTasksMixin, {
     this.set("isEnglish", true);
   },
 
+  disableCreateEdit: Ember.computed(
+    "message.nameEn",
+    "message.contentEn",
+    function() {
+      return !(this.get("message.nameEn") && this.get("message.contentEn"));
+    }
+  ),
+
   actions: {
     createCannedMessage() {
       this.runTask(
