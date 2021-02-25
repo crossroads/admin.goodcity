@@ -11,58 +11,29 @@
         <h1 class="title">Message Admin</h1>
       </section>
     </nav>
-    <div class="canned-search-container">
-        <div class="small-3 columns text-center tabs {{if isSelected 'selected' ''}}" {{action 'selectTab'}}>
-            Canned Message
-        </div>
-        <div class="small-3 columns text-center tabs {{if isSelected '' 'selected'}}" {{action 'selectTab' 'system'}}>
-            System Message
-        </div>
-    </div>    
-
+    
     <div class="canned-message-container">
-      {{#if (is-equal selected 'canned') }}
-        <div>
-          <button class="light-button" {{action 'addMessage'}}>Add Message</button>
-        </div>  
-        {{#if displayResults}}
-          {{#infinite-list height="82vh" loadMore=(action "loadMoreCannedMessages") as |cannedMessages| }}
-            <ul>
-              {{#each cannedMessages as |cannedMessage|}}
-                <li>
-                  <div class="canned-message-list-container">
-                    <div class="message-container">
-                      {{canned-content cannedMessage=cannedMessage}}
-                    </div>
-                    <div class='language-container' {{action "editMessage" cannedMessage "en"}}>
-                      <i class="fa fa-angle-right edit-pointer"></i>
-                    </div>
+      <div>
+        <button class="light-button" {{action 'addMessage'}}>Add Message</button>
+      </div>  
+      {{#if displayResults}}
+        {{#infinite-list height="82vh" loadMore=(action "loadMoreCannedMessages") as |cannedMessages| }}
+          <ul>
+            {{#each cannedMessages as |cannedMessage|}}
+              <li>
+                <div class="canned-message-list-container">
+                  <div class="message-container">
+                    {{canned-content cannedMessage=cannedMessage}}
                   </div>
-                </li>
-              {{/each}}
-            </ul>
-          {{/infinite-list}}
-        {{/if}}
-      {{else}}  
-        {{#if displayResults}}
-          {{#infinite-list height="82vh" loadMore=(action "loadMoreCannedMessages") as |cannedMessages| }}
-            <ul>
-              {{#each cannedMessages as |cannedMessage|}}
-                <li {{action "editMessage" cannedMessage}}>
-                  <div class="canned-message-list-container">
-                    <div class="message-container">
-                      {{canned-content cannedMessage=cannedMessage}}
-                    </div>
-                    <div class='language-container' {{action "editMessage" cannedMessage "en"}}>
-                      <i class="fa fa-angle-right edit-pointer"></i>
-                    </div>
+                  <div class='language-container' {{action "editMessage" cannedMessage "en"}}>
+                    <i class="fa fa-angle-right edit-pointer"></i>
                   </div>
-                </li>
-              {{/each}}
-            </ul>
-          {{/infinite-list}}
-        {{/if}}
-      {{/if}}  
+                </div>
+              </li>
+            {{/each}}
+          </ul>
+        {{/infinite-list}}
+      {{/if}}
     </div>
   {{/popup-overlay}}      
 </div>

@@ -8,7 +8,6 @@ export default Ember.Component.extend({
 
   init() {
     this._super(...arguments);
-    this.set("selected", "canned");
     this.set("isSelected", true);
   },
 
@@ -30,9 +29,6 @@ export default Ember.Component.extend({
       const params = {
         searchText: this.get("searchText")
       };
-      if (this.get("selected") == "system") {
-        params.type = "system";
-      }
       return this.get("store").query("canned_response", params);
     },
 
@@ -42,15 +38,6 @@ export default Ember.Component.extend({
 
     closeOverlay() {
       this.set("messageService.isProFormaMessageVisible", false);
-    },
-
-    selectTab(selectedTab = "canned") {
-      this.set("selected", selectedTab);
-      if (selectedTab == "canned") {
-        this.set("isSelected", true);
-      } else {
-        this.set("isSelected", false);
-      }
     },
 
     editMessage(message, lang) {
