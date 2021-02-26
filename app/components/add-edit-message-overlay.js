@@ -9,12 +9,9 @@ export default Ember.Component.extend(AsyncTasksMixin, {
   async didReceiveAttrs() {
     const editMessage = this.get("messageService.editMessage");
     const store = this.get("store");
-    let message;
-    if (editMessage.messageId) {
-      message = store.peekRecord("canned_response", editMessage.messageId);
-    } else {
-      message = store.createRecord("canned-response");
-    }
+    const message =
+      store.peekRecord("canned_response", editMessage.messageId) ||
+      store.createRecord("canned-response");
     this.set("message", message);
     this.set("isEnglish", true);
   },
