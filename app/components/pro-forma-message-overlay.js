@@ -15,6 +15,15 @@ export default Ember.Component.extend({
     Ember.run.debounce(this, this.reloadResults, 500);
   }),
 
+  refreshDisplayResult: Ember.observer(
+    "messageService.isAddMessageVisible",
+    function() {
+      if (!this.get("messageService.isAddMessageVisible")) {
+        this.reloadResults();
+      }
+    }
+  ),
+
   reloadResults() {
     this.set("displayResults", false);
     Ember.run.debounce(this, () => this.set("displayResults", true), 500);

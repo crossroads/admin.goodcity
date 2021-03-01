@@ -18,6 +18,15 @@ export default Ember.Component.extend({
     return this.get("searchText") && this.get("searchText").trim().length;
   }),
 
+  refreshDisplayResult: Ember.observer(
+    "messageService.isAddMessageVisible",
+    function() {
+      if (!this.get("messageService.isAddMessageVisible")) {
+        this.reloadResults();
+      }
+    }
+  ),
+
   actions: {
     loadMoreCannedMessages() {
       const params = { searchText: this.get("searchText") };
