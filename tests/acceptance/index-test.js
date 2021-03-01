@@ -29,6 +29,14 @@ module("Home Page", {
         roles: [role.toJSON({ includeId: true })]
       }
     });
+    $.mockjax({
+      url: "/api/v1/canned*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        canned_responses: []
+      }
+    });
 
     item = FactoryGuy.make("item", { state: "submitted", offer: offer1 });
     message2 = FactoryGuy.make("message", {

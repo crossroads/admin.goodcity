@@ -51,6 +51,14 @@ module("Receive package", {
         roles: [role.toJSON({ includeId: true })]
       }
     });
+    $.mockjax({
+      url: "/api/v1/canned*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        canned_responses: []
+      }
+    });
 
     $.mockjax({
       url: "/api/v1/offer*",

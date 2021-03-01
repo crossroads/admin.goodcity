@@ -50,6 +50,14 @@ module("Display review Item", {
       }
     });
     $.mockjax({
+      url: "/api/v1/canned*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        canned_responses: []
+      }
+    });
+    $.mockjax({
       url: "/api/v1/packages_location*",
       type: "GET",
       status: 200,

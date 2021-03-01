@@ -43,6 +43,14 @@ module("Reviewer: Accept Item Tab", {
         roles: [role.toJSON({ includeId: true })]
       }
     });
+    $.mockjax({
+      url: "/api/v1/canned*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        canned_responses: []
+      }
+    });
 
     $.mockjax({
       url: "/api/v1/donor_condition*",

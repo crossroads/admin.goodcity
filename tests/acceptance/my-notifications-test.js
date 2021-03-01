@@ -92,6 +92,14 @@ module("Reviewer: Notifications", {
         }
       }),
       $.mockjax({
+        url: "/api/v1/canned*",
+        type: "GET",
+        status: 200,
+        responseText: {
+          canned_responses: []
+        }
+      }),
+      $.mockjax({
         url: "/api/v1/message*",
         type: "GET",
         status: 200,
