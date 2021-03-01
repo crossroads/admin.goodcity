@@ -18,10 +18,23 @@ export default Ember.Component.extend({
     return this.get("searchText") && this.get("searchText").trim().length;
   }),
 
+  refreshDisplayResult: Ember.observer(
+    "messageService.isAddMessageVisible",
+    function() {
+      if (!this.get("messageService.isAddMessageVisible")) {
+        this.reloadResults();
+      }
+    }
+  ),
+
   actions: {
     loadMoreCannedMessages() {
       const params = { searchText: this.get("searchText") };
       return this.get("store").query("canned_response", params);
+    },
+
+    openProFormaOverlay() {
+      this.set("messageService.isProFormaMessageVisible", true);
     },
 
     setCannedResponse(text) {

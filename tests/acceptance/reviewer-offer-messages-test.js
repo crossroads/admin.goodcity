@@ -34,6 +34,15 @@ module("Reviewer: Display Offer Messages", {
         roles: [role.toJSON({ includeId: true })]
       }
     });
+
+    $.mockjax({
+      url: "/api/v1/canned*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        canned_responses: []
+      }
+    });
     user1 = FactoryGuy.make("user");
     user2 = FactoryGuy.make("user_with_image");
     offer = { id: 33, state: "under_review" };

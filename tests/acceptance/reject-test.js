@@ -41,6 +41,15 @@ module("Reviewer: Reject Item Tab", {
       }
     });
 
+    $.mockjax({
+      url: "/api/v1/canned*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        canned_responses: []
+      }
+    });
+
     offer = FactoryGuy.make("offer", {
       state: "under_review"
     });

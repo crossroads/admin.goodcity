@@ -41,6 +41,15 @@ module("Reviewer: Select package type", {
     });
 
     $.mockjax({
+      url: "/api/v1/canned*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        canned_responses: []
+      }
+    });
+
+    $.mockjax({
       url: "/api/v1/package_types",
       type: "GET",
       status: 200,

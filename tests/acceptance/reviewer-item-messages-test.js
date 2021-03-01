@@ -23,6 +23,15 @@ module("Reviewer: Display Item Messages", {
         roles: [role.toJSON({ includeId: true })]
       }
     });
+
+    $.mockjax({
+      url: "/api/v1/canned*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        canned_responses: []
+      }
+    });
     offer = { id: "300", state: "under_review" };
     item = { id: "110", state: "submitted", offer_id: offer.id };
     message1 = {

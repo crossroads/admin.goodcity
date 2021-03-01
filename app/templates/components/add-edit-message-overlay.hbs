@@ -1,0 +1,64 @@
+<div class="cmp search-overlay order">
+  {{#popup-overlay open=open}}
+    <nav class="tab-bar item_details_title">
+      <section class="left-small">
+        <div class="back-arow" {{action 'closeOverlay'}}>
+          <i class="fa fa-angle-left"></i>
+          <span>{{t 'cancel'}}</span>
+        </div>
+      </section>
+      <section class="middle tab-bar-section">
+        <h1 class="title">{{if message.id "Edit" "Create"}} Message</h1>
+      </section>
+    </nav>
+    <div class="canned-message-container">
+      {{#if message.id}}
+        <div>
+          <button class="light-button" {{action "deleteMessage"}}>{{t 'canned_response.delete_message'}}</button>
+        </div>  
+      {{/if}}  
+      <div class="row edit-message">
+        <span clas="small-3 columns" style="flex: 1;text-align: center;">
+          {{t 'canned_response.label'}}*
+          <div> 
+            <span {{action 'setLanguage'}} class={{if isEnglish 'disabled'}}>EN</span> | <span {{action 'setLanguage' 'zh-tw'}} class="{{if (is-not isEnglish) 'disabled'}}">中文</span>
+          </div> 
+        </span>
+        <span clas="small-9 columns" style="flex: 5;">
+          {{#if isEnglish}}
+            {{textarea type='textarea' value=message.nameEn classNames="message-textarea" rows="5"}}
+          {{else}}
+            {{textarea type='textarea' value=message.nameZhTw classNames="message-textarea" rows="5"}}
+          {{/if}}
+          {{#unless message.nameEn}}
+            <div class='input-error show-validation'>{{t 'canned_response.en_label'}}</div>
+          {{/unless}}  
+        </span>
+      </div>  
+
+      <div class="row edit-message">
+        <span clas="small-3 columns" style="flex: 1;text-align: center;">
+          {{t 'canned_response.message'}}*
+          <div> 
+            <span {{action 'setLanguage'}} class={{if isEnglish 'disabled'}}>EN</span> | <span {{action 'setLanguage' 'zh-tw'}} class="{{if (is-not isEnglish) 'disabled'}}">中文</span>
+          </div> 
+        </span>
+        <span clas="small-9 columns" style="flex: 5;">
+          {{#if isEnglish}}
+            {{textarea type='textarea' value=message.contentEn classNames="message-textarea" rows="10"}}
+          {{else}}
+            {{textarea type='textarea' value=message.contentZhTw classNames="message-textarea" rows="10"}}
+          {{/if}}  
+          {{#unless message.contentEn}}
+            <div class='input-error show-validation'>{{t 'canned_response.en_content'}}</div>
+          {{/unless}}  
+        </span>
+      </div>  
+
+      <button {{action "createCannedMessage"}} class="create-btn" disabled={{disableCreateEdit}}>Done</button>
+
+    </div>  
+
+    
+  {{/popup-overlay}}  
+</div>
