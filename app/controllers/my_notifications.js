@@ -183,8 +183,9 @@ export default Ember.Controller.extend({
     const donorId = message.get("offer.createdById");
 
     return (
-      message.get("senderId") !== donorId &&
-      message.get("recipientId") !== donorId
+      !donorId ||
+      (message.get("senderId") !== donorId &&
+        message.get("recipientId") !== donorId)
     );
   },
 
