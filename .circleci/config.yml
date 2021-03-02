@@ -76,6 +76,43 @@ jobs:
       - run: yarn run bower install
       - save-cache: *save-bower-cache
 
+  tests:
+    <<: *defaults
+    docker:
+      - image: circleci/node:10-browsers
+    steps:
+      - restore-cache: *restore-repo-cache
+      - restore-cache: *restore-yarn-cache
+      - restore-cache: *restore-bower-cache
+      - run:
+          name: Start Ember test server
+          command: yarn run ember server --port 4201
+          background: true
+      - run:
+          name: Wait for Ember test server to start
+          command: dockerize -wait tcp://localhost:4201 -timeout 1m
+      - run:
+          name: Run Ember tests
+          command: yarn test:ci
+          # command: COVERAGE=true yarn test:ci
+      # - persist_to_workspace:
+      #     root: .
+      #     paths:
+      #       - coverage*/lcov.info
+
+  upload-coverage:
+    <<: *defaults
+    steps:
+      - restore-cache: *restore-repo-cache
+      - restore-cache: *restore-yarn-cache
+      - restore-cache: *restore-bower-cache
+      - attach_workspace:
+          at: ~/code
+      - run:
+          name: Upload coverage results to Code Climate
+          command: |
+            yarn run codeclimate-test-reporter < coverage*/lcov.info
+
   www_build:
     <<: *defaults
     steps:
@@ -87,9 +124,6 @@ jobs:
           command: |
             case "$CIRCLE_BRANCH" in
               master)
-                ENVIRONMENT=staging
-                ;;
-                GCW-3202-ios-push-notifications)
                 ENVIRONMENT=staging
                 ;;
               preview)
@@ -181,9 +215,6 @@ jobs:
             master)
               ENVIRONMENT=staging
               ;;
-              GCW-3202-ios-push-notifications)
-                ENVIRONMENT=staging
-                ;;
             preview)
               ENVIRONMENT=preview
               ;;
@@ -299,11 +330,6 @@ jobs:
                 echo 'export CERTIFICATE=GoodCity_2020_Development.p12' >> $BASH_ENV
                 echo 'export PROVISIONING_PROFILE=GoodcityAdminStaging.mobileprovision' >> $BASH_ENV
                 ;;
-                GCW-3202-ios-push-notifications)
-                echo 'export ENVIRONMENT=staging' >> $BASH_ENV
-                echo 'export CERTIFICATE=GoodCity_2020_Development.p12' >> $BASH_ENV
-                echo 'export PROVISIONING_PROFILE=GoodcityAdminStaging.mobileprovision' >> $BASH_ENV
-                ;;
               live)
                 echo 'export ENVIRONMENT=production' >> $BASH_ENV
                 echo 'export CERTIFICATE=Goodcity_2020.p12' >> $BASH_ENV
@@ -394,6 +420,7 @@ workflows:
         #         only: /^(master|live)$/
         - www_build:
             requires:
+              - tests
               - package_dependencies
             filters:
               branches:
@@ -406,10 +433,11 @@ workflows:
                 only: /^(master|live|preview)$/
         - ember_cordova_build:
             requires:
+              - tests
               - package_dependencies
             filters:
               branches:
-                only: /^(master|live|GCW-3202-ios-push-notifications)$/
+                only: /^(master|live)$/
         - android_build_and_deploy:
             requires:
               - ember_cordova_build
@@ -418,6 +446,7 @@ workflows:
                 only: /^(master|live)$/
         - ios_build_and_deploy:
             requires:
+              - tests
             filters:
               branches:
-                only: /^(master|live|GCW-3202-ios-push-notifications)$/
+                only: /^(master|live)$/
