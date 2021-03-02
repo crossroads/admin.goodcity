@@ -69,6 +69,10 @@ export default DS.Model.extend({
 
       const donorId = this.get("offer.createdById");
 
+      if (!donorId) {
+        return !this.get("isPrivate");
+      }
+
       // It's a chat with an external user (a charity) if:
       //  - It's public
       //  - It does not involve the donor

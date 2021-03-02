@@ -23,7 +23,6 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     "allMessages.length",
     "allMessages.@each.{senderId,recipientId}",
     function() {
-      const donorId = this.get("offer.createdById");
       return this.get("allMessages")
         .filterBy("offerId", this.get("offer.id"))
         .filter(m =>
