@@ -302,8 +302,7 @@ jobs:
                 GCW-3202-ios-push-notifications)
                 echo 'export ENVIRONMENT=staging' >> $BASH_ENV
                 echo 'export CERTIFICATE=GoodCity_2020_Development.p12' >> $BASH_ENV
-                echo 'export PROVISIONING_PROFILE=GoodCityStockStaging.mobileprovision' >> $BASH_ENV
-                echo 'export SCANDIT_LICENSE_KEY=$SCANDIT_LICENSE_KEY_IOS_STAGING' >> $BASH_ENV
+                echo 'export PROVISIONING_PROFILE=GoodcityAdminStaging.mobileprovision' >> $BASH_ENV
                 ;;
               live)
                 echo 'export ENVIRONMENT=production' >> $BASH_ENV
