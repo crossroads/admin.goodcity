@@ -140,7 +140,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     const t = k => this.get("i18n").t(k);
     const district = this.getWithDefault(
       "offer.createdBy.address.district.name",
-      "N/A"
+      "Hong Kong"
     );
     const lines = [
       `${t("review_offer.donor.district")}: ${district}`,
