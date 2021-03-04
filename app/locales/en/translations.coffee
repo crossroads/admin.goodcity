@@ -252,6 +252,7 @@ I18nTranslationsEn =
       "close_offer_summary": "This will close the offer."
       "add_note": "Tap to add/edit sticky note"
       "tap_to_save": "tap to save"
+      "empty_offer_message": "This offer is empty. Do you want to delete it?"
 
       "donor":
         "offer_id": "Offer ID"
@@ -319,6 +320,7 @@ I18nTranslationsEn =
       "add_item_label": "Add item label"
       "assign": "Assign"
       "select_package_image": "Choose the favourite image for this package:"
+
 
     "reject":
       "select_type": "Please choose Item Type first!"
