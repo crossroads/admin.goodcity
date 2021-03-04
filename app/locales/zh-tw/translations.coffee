@@ -250,6 +250,7 @@ I18nTranslationsZhTw =
       "close_offer_summary": "這項捐贈項目將列為完成。"
       "add_note": "按下以增加/修改記事板"
       "tap_to_save": "按下以儲存"
+      "empty_offer_message": "這個捐贈沒有任何相關物資。你是否需要刪除"
 
       "donor":
         "offer_id": "捐贈項目號碼"
