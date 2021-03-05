@@ -3,7 +3,6 @@ import _ from "lodash";
 
 export default Ember.Component.extend({
   messageService: Ember.inject.service(),
-  displayResults: true,
   store: Ember.inject.service(),
 
   init() {
@@ -23,6 +22,12 @@ export default Ember.Component.extend({
       }
     }
   ),
+
+  didRender() {
+    if (this.get("messageService.isProFormaMessageVisible")) {
+      this.set("displayResults", true);
+    }
+  },
 
   reloadResults() {
     this.set("displayResults", false);
