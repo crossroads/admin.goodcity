@@ -5,6 +5,7 @@ export default Ember.Controller.extend({
   application: Ember.inject.controller(),
   store: Ember.inject.service(),
   messageBox: Ember.inject.service(),
+  packageService: Ember.inject.service(),
   i18n: Ember.inject.service(),
   defaultPackage: Ember.computed.alias("model.packageType"),
   item: Ember.computed.alias("model"),
@@ -95,6 +96,23 @@ export default Ember.Controller.extend({
   actions: {
     setEditing(value) {
       this.set("isEditing", value);
+    },
+
+    returnToItemDetails() {
+      if (
+        this.get("existingPackageType").id !== this.get("model.packageType").id
+      ) {
+        this.set("model.packageType", this.get("existingPackageType"));
+      }
+      this.transitionToRoute("review_offer", this.get("item.offer"));
+    },
+
+    selectPackageType() {
+      this.set("packageService.isPackageTypeOverlayVisible", true);
+    },
+
+    setPackaageType(pkgType) {
+      this.set("model.packageType", pkgType);
     },
 
     copyItem() {
