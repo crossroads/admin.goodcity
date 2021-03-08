@@ -136,6 +136,11 @@
   }
 }
 
+.package-type-list {
+  max-height: 100vh;
+  overflow: scroll;
+}
+
 .item_types_result {
   padding-top: 3rem;
 

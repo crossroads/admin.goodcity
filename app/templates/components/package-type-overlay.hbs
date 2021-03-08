@@ -28,7 +28,7 @@
       <div class="row">
         <div class="small-12 columns item-content">
           {{#if searchText}}
-            <ul class="list list-activity list-offer-items">
+            <ul class="list list-activity list-offer-items package-type-list">
               {{#each filteredResults as |type|}}
                 <li {{action "assignItemLabel" type}}>
                   <div class="package_name">{{type.name}}</div>
@@ -37,7 +37,7 @@
               {{/each}}
             </ul>
           {{else}}
-            <ul class="list list-activity list-offer-items">
+            <ul class="list list-activity list-offer-items package-type-list">
               {{#each allPackageTypes as |type|}}
                 <li {{action "assignItemLabel" type}}>
                   <div class="package_name">{{type.name}}</div>
