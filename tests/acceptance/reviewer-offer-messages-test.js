@@ -18,7 +18,7 @@ var App,
   message5,
   user1,
   user2,
-  offer1,
+  offer2,
   role;
 
 module("Reviewer: Display Offer Messages", {
@@ -34,31 +34,41 @@ module("Reviewer: Display Offer Messages", {
         roles: [role.toJSON({ includeId: true })]
       }
     });
+
+    $.mockjax({
+      url: "/api/v1/canned*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        canned_responses: []
+      }
+    });
     user1 = FactoryGuy.make("user");
     user2 = FactoryGuy.make("user_with_image");
-    offer = { id: 33, state: "under_review" };
-    offer1 = { id: 34, createdBy: user1, state: "under_review" };
+    offer = { id: 33, created_by_id: user1.get("id"), state: "under_review" };
+    offer2 = { id: 34, created_by_id: user2.get("id"), state: "under_review" };
     message4 = {
       id: 81,
-      offer_id: offer1.id,
-      sender: user2.get("id"),
-      item_id: null,
-      body: "Message from donor1",
-      created_at: new Date("2015/1/1").toString()
-    };
-    message5 = {
-      id: 82,
-      offer_id: offer1.id,
+      offer_id: offer.id,
       sender_id: user1.get("id"),
       item_id: null,
-      body: "Message from donor2",
-      created_at: new Date("2015/1/2").toString()
+      body: "Message from donor 1",
+      created_at: new Date("2015/1/1").toString()
     };
     message1 = {
       id: 83,
+      offer_id: offer2.id,
+      item: null,
+      created_at: new Date("2015/1/3").toString(),
+      sender_id: user2.get("id")
+    };
+    message2 = {
+      id: 85,
       offer_id: offer.id,
       item: null,
-      created_at: new Date("2015/1/3").toString()
+      body: "Message from Donor",
+      created_at: new Date("2015/1/4").toString(),
+      sender_id: user1.get("id")
     };
     message3 = {
       id: 84,
@@ -67,22 +77,19 @@ module("Reviewer: Display Offer Messages", {
       body: "Message from Supervisor",
       is_private: true
     };
-    message2 = {
-      id: 85,
-      offer_id: offer.id,
-      item: null,
-      body: "Message from Donor",
-      created_at: new Date("2015/1/4").toString()
-    };
 
-    let messages = [message1, message2, message3, message4, message5];
-    let offers = [offer, offer1];
+    let messages = [message1, message2, message3, message4];
+    let offers = [offer, offer2];
+    let users = [
+      user1.toJSON({ includeId: true }),
+      user2.toJSON({ includeId: true })
+    ];
 
     $.mockjax({
       url: "/api/v1/message*",
       type: "GET",
       status: 200,
-      responseText: { messages }
+      responseText: { messages, users, offers }
     });
 
     $.mockjax({
@@ -98,7 +105,7 @@ module("Reviewer: Display Offer Messages", {
       url: "/api/v1/offer*",
       type: "GET",
       status: 200,
-      responseText: { offers, messages }
+      responseText: { offers, messages, users }
     });
   },
 
@@ -183,7 +190,7 @@ test("offer-messages from staff should add unread bubble in supervisor message t
 
 testSkip("offer-message with image", function(assert) {
   assert.expect(1);
-  visit("/offers/" + offer1.id + "/donor_messages");
+  visit("/offers/" + offer2.id + "/donor_messages");
   andThen(function() {
     var src = $(".received_message#" + message4.id + " img").attr("src");
     assert.equal(src.indexOf("cloudinary") > 0, true);

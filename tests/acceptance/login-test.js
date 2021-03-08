@@ -22,6 +22,14 @@ module("Acceptance: Login", {
         roles: [role.toJSON({ includeId: true })]
       }
     });
+    $.mockjax({
+      url: "/api/v1/canned*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        canned_responses: []
+      }
+    });
     reviewer1 = FactoryGuy.make("user", { isReviwer: true });
     offer1 = FactoryGuy.make("offer", { state: "receiving" });
     offer2 = FactoryGuy.make("offer", { state: "submitted" });

@@ -1,0 +1,10 @@
+{{#let-alias messageService as |s|}}
+  {{pro-forma-message-overlay
+    open=s.isProFormaMessageVisible
+  }}
+
+  {{add-edit-message-overlay
+    open=s.isAddMessageVisible
+    cannedMessageId=s.cannedMessageId
+  }}
+{{/let-alias}}

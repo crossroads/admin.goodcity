@@ -91,7 +91,7 @@ I18nTranslationsZhTw =
         month: "This month",
         next_month: "Next month"
 
-      show_priority_offers: "Only Show Priority Offers"
+      show_priority_offers: "Only Show ..."
       offer_statuses: "Offer Statuses"
       on_or_after: "On or after"
       on_or_before: "On or before"
@@ -102,8 +102,10 @@ I18nTranslationsZhTw =
       all_review: "All"
       time_filter_title: "Offer Due Date"
       button_state: "State"
-      showPriority: "Show Priority"
-      showPriority_info: "Have remained in a state too long. Need attention."
+      priorityOffers: "Priority Offers"
+      priorityOffers_info: "Have remained in a state too long. Need attention."
+      publishedOffers: "Published Offers"
+      publishedOffers_info: "Shared on charity site"
       submitted: "New"
       submitted_info: "Offers that have yet to be reviewed."
       under_review: "Reviewing"
@@ -248,6 +250,7 @@ I18nTranslationsZhTw =
       "close_offer_summary": "這項捐贈項目將列為完成。"
       "add_note": "按下以增加/修改記事板"
       "tap_to_save": "按下以儲存"
+      "empty_offer_message": "這個捐贈沒有任何相關物資。你是否需要刪除"
 
       "donor":
         "offer_id": "捐贈項目號碼"
@@ -349,7 +352,8 @@ I18nTranslationsZhTw =
         "header": "開始接收捐贈項目"
         "cant_modify_note": "提示：一旦捐贈項目狀態改成「正在接收」，將無法還原，捐贈人士亦無法更改物資資料。"
         "not_now": "現在無法進行"
-        "begin_receiving": "開始接收"
+        "begin_receiving": "開始接收",
+      "inventorize_warning": "Are you sure you want to inventorize?"
 
 
     "finished":
@@ -470,5 +474,10 @@ I18nTranslationsZhTw =
 
     "canned_response":
       "title": "Manage pro-forma messages"
+      "en_content": "English content cannot be blank"
+      "en_label": "English label be blank"
+      "delete_message": "Delete Message"
+      "label": "Label"
+      "message": "Message"
 
 `export default I18nTranslationsZhTw`

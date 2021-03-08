@@ -42,11 +42,16 @@
       <i class= "fa fa-print"></i>
       {{t "receive.label"}}
     </div>
+  {{else if isReceivedWithoutInventory}}
+    <div {{action "inventorizeReceivedItem"}} >
+      <i class="fa fa-barcode"></i>
+      {{t "receive.inventory"}}
+    </div>
   {{else}}
-  <div {{action "checkReceiving" "receiveInInventory" isReceived}} class="{{if isReceived 'disabled'}}">
-    <i class="fa fa-barcode"></i>
-    {{t "receive.inventory"}}
-  </div>
+    <div {{action "checkReceiving" "receiveInInventory" isReceived}} class="{{if isReceived 'disabled'}}">
+      <i class="fa fa-barcode"></i>
+      {{t "receive.inventory"}}
+    </div>
   {{/if}}
 
   <div class="options-link-close" {{action "toggle" true}}>

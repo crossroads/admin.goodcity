@@ -8,7 +8,7 @@ import "../factories/offer";
 import "../factories/item";
 import "../factories/role";
 
-var App, offer, item, message1, message2, message3, role;
+var App, offer, item, message1, message2, message3, role, donor;
 
 module("Reviewer: Display Item Messages", {
   beforeEach: function() {
@@ -23,20 +23,35 @@ module("Reviewer: Display Item Messages", {
         roles: [role.toJSON({ includeId: true })]
       }
     });
-    offer = { id: "300", state: "under_review" };
+
+    $.mockjax({
+      url: "/api/v1/canned*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        canned_responses: []
+      }
+    });
+
+    donor = { id: "1000", first_name: "jane", last_name: "doe" };
+    offer = { id: "300", state: "under_review", created_by_id: 1000 };
     item = { id: "110", state: "submitted", offer_id: offer.id };
     message1 = {
       id: "44",
       offer_id: offer.id,
       item_id: item.id,
-      created_at: new Date("2015/1/1").toString()
+      created_at: new Date("2015/1/1").toString(),
+      is_private: false,
+      sender_id: donor.id
     };
     message2 = {
       id: "45",
       offer_id: offer.id,
       item_id: item.id,
       body: "Message from Donor",
-      created_at: new Date("2015/1/2").toString()
+      created_at: new Date("2015/1/2").toString(),
+      is_private: false,
+      sender_id: donor.id
     };
     message3 = {
       id: "46",
@@ -51,7 +66,8 @@ module("Reviewer: Display Item Messages", {
       type: "GET",
       status: 200,
       responseText: {
-        messages: [message1, message2, message3]
+        messages: [message1, message2, message3],
+        users: [donor]
       }
     });
 
@@ -62,7 +78,8 @@ module("Reviewer: Display Item Messages", {
       responseText: {
         items: [item],
         offers: [offer],
-        messages: [message1, message2, message3]
+        messages: [message1, message2, message3],
+        users: [donor]
       }
     });
 

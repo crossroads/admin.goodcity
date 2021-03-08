@@ -31,6 +31,15 @@ module("Search Offers", {
       }
     });
 
+    $.mockjax({
+      url: "/api/v1/canned*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        canned_responses: []
+      }
+    });
+
     user = FactoryGuy.make("user", { firstName: "Johnny", mobile: "99999999" });
     offer = FactoryGuy.make("offer_with_items", {
       state: "scheduled",
@@ -173,7 +182,7 @@ test("Checking multiple states checkboxes in State filter page applies number of
     assert.equal(currentURL(), "/offers_filters?applyStateFilter=true");
     click("#submitted");
     noOfSelectedStates += 1;
-    click("#showPriority");
+    click("#priorityOffers");
     noOfSelectedStates += 1;
   });
 

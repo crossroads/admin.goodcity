@@ -59,14 +59,13 @@ export default Ember.Controller.extend({
         this.get("recipientId") ||
         (this.get("isPrivate") ? null : this.get("offer.createdById"));
 
-      if (recipientId) {
-        messages = messages.filter(m => {
-          return (
-            m.get("recipientId") === recipientId ||
-            m.get("senderId") === recipientId
-          );
-        });
-      }
+      messages = messages.filter(m => {
+        return (
+          recipientId &&
+          (m.get("recipientId") === recipientId ||
+            m.get("senderId") === recipientId)
+        );
+      });
 
       return messages.filter(m => {
         return Boolean(m.get("isPrivate")) === this.get("isPrivate");

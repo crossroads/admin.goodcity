@@ -97,6 +97,17 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     }
   }),
 
+  deleteOffer(offer, path = this.get("backLinkPath")) {
+    this.set("cancelByMe", true);
+    this.runTask(offer.destroyRecord())
+      .then(() => this.transitionToRoute(path))
+      .catch(error => {
+        offer.rollbackAttributes();
+        throw error;
+      })
+      .finally(() => this.set("cancelByMe", false));
+  },
+
   actions: {
     toggleOfferOptions() {
       this.toggleProperty("displayOfferOptions");
@@ -133,23 +144,34 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
 
     deleteOffer() {
       this.send("toggleOfferOptions");
-      var offer = this.get("model");
+      const offer = this.get("model");
       this.get("messageBox").custom(
         this.get("i18n").t("delete_confirm"),
         this.get("i18n").t("review_offer.options.yes"),
         () => {
-          this.set("cancelByMe", true);
-          this.runTask(offer.destroyRecord())
-            .then(() => this.transitionToRoute(this.get("backLinkPath")))
-            .catch(error => {
-              offer.rollbackAttributes();
-              throw error;
-            })
-            .finally(() => this.set("cancelByMe", false));
+          this.deleteOffer(offer);
         },
         this.get("i18n").t("review_item.not_now"),
         null
       );
+    },
+
+    transitionTo(path) {
+      const offer = this.get("model");
+      const items = offer.get("items");
+      if (!items.length) {
+        this.get("messageBox").custom(
+          this.get("i18n").t("review_offer.empty_offer_message"),
+          this.get("i18n").t("review_offer.options.yes"),
+          () => {
+            this.deleteOffer(offer, path);
+          },
+          this.get("i18n").t("review_item.not_now"),
+          null
+        );
+      } else {
+        this.transitionToRoute(path);
+      }
     },
 
     reopenOffer() {

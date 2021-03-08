@@ -1,0 +1,39 @@
+<div class="cmp search-overlay order">
+  {{#popup-overlay open=open}}
+    <nav class="tab-bar item_details_title">
+      <section class="left-small">
+        <div class="back-arow" {{action 'closeOverlay'}}>
+            <i class="fa fa-angle-left"></i>
+            <span>{{t 'cancel'}}</span>
+        </div>
+      </section>
+      <section class="middle tab-bar-section">
+        <h1 class="title">Message Admin</h1>
+      </section>
+    </nav>
+    
+    <div class="canned-message-container">
+      <div>
+        <button class="light-button" {{action 'addMessage'}}>Add Message</button>
+      </div>  
+      {{#if displayResults}}
+        {{#infinite-list height="82vh" loadMore=(action "loadMoreCannedMessages") as |cannedMessages| }}
+          <ul>
+            {{#each cannedMessages as |cannedMessage|}}
+              <li>
+                <div class="canned-message-list-container">
+                  <div class="message-container">
+                    {{canned-content cannedMessage=cannedMessage}}
+                  </div>
+                  <div class='language-container' {{action "editMessage" cannedMessage "en"}}>
+                    <i class="fa fa-angle-right edit-pointer"></i>
+                  </div>
+                </div>
+              </li>
+            {{/each}}
+          </ul>
+        {{/infinite-list}}
+      {{/if}}
+    </div>
+  {{/popup-overlay}}      
+</div>

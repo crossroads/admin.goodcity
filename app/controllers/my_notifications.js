@@ -183,8 +183,9 @@ export default Ember.Controller.extend({
     const donorId = message.get("offer.createdById");
 
     return (
-      message.get("senderId") !== donorId &&
-      message.get("recipientId") !== donorId
+      !donorId ||
+      (message.get("senderId") !== donorId &&
+        message.get("recipientId") !== donorId)
     );
   },
 
@@ -235,6 +236,9 @@ export default Ember.Controller.extend({
         const messageId = notification.get("id");
         var message = this.store.peekRecord("message", messageId);
         var route = this.get("messagesUtil").getRoute(message);
+        if (message.get("messageableType") === "Item") {
+          route[1] = message.get("item.offer.id");
+        }
         this.transitionToRoute.apply(this, route);
       }
     },

@@ -91,7 +91,7 @@ I18nTranslationsEn =
         month: "This month",
         next_month: "Next month"
 
-      show_priority_offers: "Only Show Priority Offers"
+      show_priority_offers: "Only Show ..."
       offer_statuses: "Offer Statuses"
       on_or_after: "On or after"
       on_or_before: "On or before"
@@ -103,8 +103,10 @@ I18nTranslationsEn =
       time_filter_title: "Offer Due Date"
       button_state: "State"
       button_due: "Due"
-      showPriority: "Show Priority"
-      showPriority_info: "Have remained in a state too long. Need attention."
+      priorityOffers: "Priority Offers"
+      priorityOffers_info: "Have remained in a state too long. Need attention."
+      publishedOffers: "Published Offers"
+      publishedOffers_info: "Shared on charity site"
       submitted: "New"
       submitted_info: "Offers that have yet to be reviewed."
       under_review: "Reviewing"
@@ -250,6 +252,7 @@ I18nTranslationsEn =
       "close_offer_summary": "This will close the offer."
       "add_note": "Tap to add/edit sticky note"
       "tap_to_save": "tap to save"
+      "empty_offer_message": "This offer is empty. Do you want to delete it?"
 
       "donor":
         "offer_id": "Offer ID"
@@ -318,6 +321,7 @@ I18nTranslationsEn =
       "assign": "Assign"
       "select_package_image": "Choose the favourite image for this package:"
 
+
     "reject":
       "select_type": "Please choose Item Type first!"
       "option_error": "Please choose a reason."
@@ -352,6 +356,8 @@ I18nTranslationsEn =
         "cant_modify_note": "Note: Putting an offer in the \"receiving\" state cannot be undone. Donors cannot modify their offer once you start receiving the items."
         "not_now": "Not Now"
         "begin_receiving": "Begin Receiving"
+
+      "inventorize_warning": "Are you sure you want to inventorize?"
 
     "finished":
       "title": "Finished"
@@ -471,5 +477,9 @@ I18nTranslationsEn =
 
     "canned_response":
       "title": "Manage pro-forma messages"
-
+      "en_content": "English content cannot be blank"
+      "en_label": "English label be blank"
+      "delete_message": "Delete Message"
+      "label": "Label"
+      "message": "Message"
 `export default I18nTranslationsEn`

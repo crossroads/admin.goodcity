@@ -1,6 +1,6 @@
 {
   "name": "goodcity",
-  "version": "0.18.0",
+  "version": "0.18.1",
   "description": "The GoodCity Admin app enables administrators to process donated goods.",
   "private": true,
   "directories": {
@@ -9,6 +9,7 @@
   },
   "scripts": {
     "start": "EMBER_CLI_CORDOVA=0 ENVIRONMENT=development ember serve --port 4201 --live-reload-port 35730",
+    "start:staging": "EMBER_CLI_CORDOVA=0 ENVIRONMENT=staging ember serve --port 4201 --live-reload-port 35730",
     "test": "EMBER_CLI_CORDOVA=0 ENVIRONMENT=test ember test --server --test-port 7358",
     "test:ci": "EMBER_CLI_CORDOVA=0 ENVIRONMENT=test ember-pretty-test",
     "build:web:development": "EMBER_CLI_CORDOVA=0 ENVIRONMENT=development ember build",

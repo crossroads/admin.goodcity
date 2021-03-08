@@ -19,9 +19,10 @@
       </div>
     </div>
     <div class="canned-message-container">
-      <div class="header">
+      <div class="header" style="cursor: pointer; display: flex;" {{action "openProFormaOverlay"}}>
         {{t 'canned_response.title'}}
       </div>
+      
       {{#if displayResults}}
         {{#infinite-list height="82vh" loadMore=(action "loadMoreCannedMessages") as |cannedMessages| }}
           <ul>

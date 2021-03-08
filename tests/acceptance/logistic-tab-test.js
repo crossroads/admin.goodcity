@@ -47,6 +47,14 @@ module("Review Offer Logistics", {
         roles: [role.toJSON({ includeId: true })]
       }
     });
+    $.mockjax({
+      url: "/api/v1/canned*",
+      type: "GET",
+      status: 200,
+      responseText: {
+        canned_responses: []
+      }
+    });
 
     reviewer = FactoryGuy.make("user");
     offer = FactoryGuy.make("offer", {
