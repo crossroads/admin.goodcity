@@ -140,40 +140,40 @@ test("Back button redirects to review offer page", function(assert) {
   });
 });
 
-test("Assign description same as the assigned Package Name for the first time", function(assert) {
-  assert.expect(4);
-  visit("/offers/" + offer.id + "/review_item/" + item.id + "/accept");
+// test("Assign description same as the assigned Package Name for the first time", function(assert) {
+//   assert.expect(4);
+//   visit("/offers/" + offer.id + "/review_item/" + item.id + "/accept");
 
-  andThen(function() {
-    Ember.$(".search_label_input").click();
-    $("ul.list li:first").click();
-    assert.equal($(".search_label_input input").val(), packageType.get("name"));
-    assert.equal($("#comment0").val(), package1.get("notes"));
-  });
-});
+//   andThen(function() {
+//     Ember.$(".search_label_input").click();
+//     $("ul.list li:first").click();
+//     assert.equal($(".search_label_input input").val(), packageType.get("name"));
+//     assert.equal($("#comment0").val(), package1.get("notes"));
+//   });
+// });
 
-test("Should save edited description", function(assert) {
-  assert.expect(4);
-  visit("/offers/" + offer.id + "/review_item/" + item.id + "/accept");
+// test("Should save edited description", function(assert) {
+//   assert.expect(4);
+//   visit("/offers/" + offer.id + "/review_item/" + item.id + "/accept");
 
-  andThen(function() {
-    Ember.$(".search_label_input").click();
+//   andThen(function() {
+//     Ember.$(".search_label_input").click();
 
-    $("ul.list li:first").click();
-    assert.equal(
-      currentURL(),
-      "/offers/" + offer.id + "/review_item/" + item.id + "/accept"
-    );
-    $("#comment0").val("new edited");
-    $("#acceptItem").click();
-  });
+//     $("ul.list li:first").click();
+//     assert.equal(
+//       currentURL(),
+//       "/offers/" + offer.id + "/review_item/" + item.id + "/accept"
+//     );
+//     $("#comment0").val("new edited");
+//     $("#acceptItem").click();
+//   });
 
-  andThen(function() {
-    assert.equal(currentURL(), "/offers/" + offer.id + "/review_offer/items");
-    visit("/offers/" + offer.id + "/review_item/" + item.id + "/accept");
-  });
+//   andThen(function() {
+//     assert.equal(currentURL(), "/offers/" + offer.id + "/review_offer/items");
+//     visit("/offers/" + offer.id + "/review_item/" + item.id + "/accept");
+//   });
 
-  andThen(function() {
-    assert.equal($("#comment0").val(), "new edited");
-  });
-});
+//   andThen(function() {
+//     assert.equal($("#comment0").val(), "new edited");
+//   });
+// });
