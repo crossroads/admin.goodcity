@@ -18,6 +18,11 @@ export default ApiBaseService.extend({
     return this.POST(`/inventory_numbers`);
   },
 
+  init() {
+    this._super(...arguments);
+    this.set("isPackageTypeOverlayVisible", false);
+  },
+
   printBarcode(pkgParams) {
     return this.POST(`/packages/print_barcode`, pkgParams);
   },

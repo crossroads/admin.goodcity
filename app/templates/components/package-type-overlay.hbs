@@ -1,0 +1,53 @@
+<div class="cmp search-overlay order">
+  {{#popup-overlay open=open}}
+    <div class="row fixed_item_type_search">
+      <div class="small-12 columns search-box ui">
+        <div class="row">
+          <span class="back-arow small-1 columns cancel-button" {{action "closeOverlay"}}>
+            <i class="fa fa-angle-left">&nbsp;{{t 'cancel'}}</i>
+          </span>
+        
+          <span class="small-10 columns">
+            {{focus-textfield
+              name="searchText"
+              id="searchText"
+              placeholder=(t "search_item_label")
+              value=searchText }}
+          </span>    
+
+          <span class="small-1 columns clear-button">
+            {{#if hasSearchText}}
+              <i class="fa fa-times-circle" {{action "clearSearch"}}></i>
+            {{/if}}  
+          </span>  
+        </div>
+      </div>
+    </div>
+
+    <section class="main-section review_offer search overlay item_types_result">
+      <div class="row">
+        <div class="small-12 columns item-content">
+          {{#if searchText}}
+            <ul class="list list-activity list-offer-items">
+              {{#each filteredResults as |type|}}
+                <li {{action "assignItemLabel" type}}>
+                  <div class="package_name">{{type.name}}</div>
+                  <div>{{type.otherTerms}}</div>
+                </li>
+              {{/each}}
+            </ul>
+          {{else}}
+            <ul class="list list-activity list-offer-items">
+              {{#each allPackageTypes as |type|}}
+                <li {{action "assignItemLabel" type}}>
+                  <div class="package_name">{{type.name}}</div>
+                  <div>{{type.otherTerms}}</div>
+                </li>
+              {{/each}}
+            </ul>
+          {{/if}}
+        </div>
+      </div>
+    </section>
+  {{/popup-overlay}}
+</div>
