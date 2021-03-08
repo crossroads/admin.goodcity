@@ -146,21 +146,7 @@ test("Assign description same as the assigned Package Name for the first time", 
 
   andThen(function() {
     Ember.$(".search_label_input").click();
-  });
-
-  andThen(function() {
-    assert.equal(
-      currentURL(),
-      "/offers/" + offer.id + "/item/" + item.id + "/search_label"
-    );
     $("ul.list li:first").click();
-  });
-
-  andThen(function() {
-    assert.equal(
-      currentURL(),
-      "/offers/" + offer.id + "/review_item/" + item.id + "/accept"
-    );
     assert.equal($(".search_label_input input").val(), packageType.get("name"));
     assert.equal($("#comment0").val(), package1.get("notes"));
   });
@@ -172,17 +158,8 @@ test("Should save edited description", function(assert) {
 
   andThen(function() {
     Ember.$(".search_label_input").click();
-  });
 
-  andThen(function() {
-    assert.equal(
-      currentURL(),
-      "/offers/" + offer.id + "/item/" + item.id + "/search_label"
-    );
     $("ul.list li:first").click();
-  });
-
-  andThen(function() {
     assert.equal(
       currentURL(),
       "/offers/" + offer.id + "/review_item/" + item.id + "/accept"
