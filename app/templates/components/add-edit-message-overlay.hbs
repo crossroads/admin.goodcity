@@ -26,9 +26,9 @@
         </span>
         <span clas="small-9 columns" style="flex: 5;">
           {{#if isEnglish}}
-            {{textarea type='textarea' value=message.nameEn classNames="message-textarea" rows="5" focus-out=(if message.id "createUpdateCannedMessage")}}
+            {{textarea type='textarea' value=message.nameEn classNames="message-textarea" rows="5" focus-out=(if message.id "createOrUpdateCannedMessage")}}
           {{else}}
-            {{textarea type='textarea' value=message.nameZhTw classNames="message-textarea" rows="5" focus-out=(if message.id "createUpdateCannedMessage")}}
+            {{textarea type='textarea' value=message.nameZhTw classNames="message-textarea" rows="5" focus-out=(if message.id "createOrUpdateCannedMessage")}}
           {{/if}}
           {{#unless message.nameEn}}
             <div class='input-error show-validation'>{{t 'canned_response.en_label'}}</div>
@@ -45,9 +45,9 @@
         </span>
         <span clas="small-9 columns" style="flex: 5;">
           {{#if isEnglish}}
-            {{textarea type='textarea' value=message.contentEn classNames="message-textarea" rows="10" focus-out=(if message.id "createUpdateCannedMessage")}}
+            {{textarea type='textarea' value=message.contentEn classNames="message-textarea" rows="10" focus-out=(if message.id "createOrUpdateCannedMessage")}}
           {{else}}
-            {{textarea type='textarea' value=message.contentZhTw classNames="message-textarea" rows="10" focus-out=(if message.id "createUpdateCannedMessage")}}
+            {{textarea type='textarea' value=message.contentZhTw classNames="message-textarea" rows="10" focus-out=(if message.id "createOrUpdateCannedMessage")}}
           {{/if}}  
           {{#unless message.contentEn}}
             <div class='input-error show-validation'>{{t 'canned_response.en_content'}}</div>
@@ -56,7 +56,7 @@
       </div>  
 
       {{#unless message.id}}
-        <button {{action "createUpdateCannedMessage"}} class="create-btn" disabled={{disableCreateEdit}}>Done</button>
+        <button {{action "createOrUpdateCannedMessage"}} class="create-btn" disabled={{disableCreateEdit}}>Done</button>
       {{/unless}}  
     </div>  
 

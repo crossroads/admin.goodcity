@@ -25,7 +25,7 @@ export default Ember.Component.extend(AsyncTasksMixin, {
   ),
 
   actions: {
-    createUpdateCannedMessage() {
+    createOrUpdateCannedMessage() {
       this.runTask(
         this.get("message")
           .save()
