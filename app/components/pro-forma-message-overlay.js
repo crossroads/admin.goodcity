@@ -8,6 +8,7 @@ export default Ember.Component.extend({
   init() {
     this._super(...arguments);
     this.set("isSelected", true);
+    this.set("selected", "canned");
   },
 
   onSearchTextChange: Ember.observer("searchText", function() {
@@ -43,6 +44,9 @@ export default Ember.Component.extend({
       const params = {
         searchText: this.get("searchText")
       };
+      if (this.get("selected") == "system") {
+        params.isPrivate = true;
+      }
       return this.get("store").query("canned_response", params);
     },
 
@@ -62,6 +66,15 @@ export default Ember.Component.extend({
 
     cancel() {
       this.set("open", false);
+    },
+
+    selectTab(selectedTab = "canned") {
+      this.set("selected", selectedTab);
+      if (selectedTab == "canned") {
+        this.set("isSelected", true);
+      } else {
+        this.set("isSelected", false);
+      }
     }
   }
 });

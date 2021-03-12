@@ -49,6 +49,10 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
       this.get("application").send("logMeOut");
     },
 
+    manageCannedMessage() {
+      this.get("application").send("manageCannedMessage");
+    },
+
     createOffer() {
       const now = new Date();
       const offer = this.get("store").createRecord("offer", {
