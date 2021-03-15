@@ -478,4 +478,5 @@ I18nTranslationsEn =
       "delete_message": "Delete Message"
       "label": "Label"
       "message": "Message"
+      "back": "Back"
 `export default I18nTranslationsEn`

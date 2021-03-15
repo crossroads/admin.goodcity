@@ -99,10 +99,12 @@ export default Ember.Controller.extend({
     },
 
     returnToItemDetails() {
+      const existingPkgType = this.get("existingPackageType");
       if (
-        this.get("existingPackageType").id !== this.get("model.packageType").id
+        !existingPkgType ||
+        existingPkgType.id !== this.get("model.packageType").id
       ) {
-        this.set("model.packageType", this.get("existingPackageType"));
+        this.set("model.packageType", existingPkgType);
       }
       this.transitionToRoute("review_offer", this.get("item.offer"));
     },

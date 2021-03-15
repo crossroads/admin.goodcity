@@ -29,11 +29,15 @@ export default Ember.Component.extend(AsyncTasksMixin, {
   ),
 
   actions: {
-    createCannedMessage() {
+    createOrUpdateCannedMessage() {
       this.runTask(
         this.get("message")
           .save()
-          .then(() => this.set("messageService.isAddMessageVisible", false))
+          .then(() => {
+            if (!this.get("messageService.editMessage.messageId")) {
+              this.set("messageService.isAddMessageVisible", false);
+            }
+          })
       );
     },
 
