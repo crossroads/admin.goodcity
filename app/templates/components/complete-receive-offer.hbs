@@ -4,6 +4,6 @@
   <strong>{{t "review_offer.message_donor"}}</strong>
 
   <div class="{{if invalidMessage 'has-error'}} ui">
-    {{auto-resize-textarea data-autoresize=true id="closeOfferMessage" name="closeOfferMessage" value=closeMessage maxlength=255 }}
+    {{auto-resize-textarea data-autoresize=true id="closeOfferMessage" name="closeOfferMessage" value=closeMessage.content maxlength=255 }}
   </div>
 {{/message-box}}

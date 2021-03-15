@@ -124,6 +124,9 @@ I18nTranslationsEn =
       inactive: "Inactive"
       inactive_info: "Donor non-responsive"
 
+    "proforma":
+      "title": "Pro Forma Messges"
+
     "items":
       "title": "Receive-{{packageName}}"
       "remove_item":

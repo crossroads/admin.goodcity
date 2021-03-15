@@ -24,7 +24,11 @@ export default Ember.Component.extend({
 
   closeMessage: Ember.computed("offer", function() {
     if (this.get("rejectOffer")) {
-      return this.get("i18n").t("review_offer.close_offer_message");
+      return Promisify(() =>
+        this.get("messageService").getSystemMessage({
+          guid: "review-offer-close-offer-message"
+        })
+      );
     } else {
       return Promisify(() =>
         this.get("messageService").getSystemMessage({
@@ -47,8 +51,7 @@ export default Ember.Component.extend({
     },
 
     completeReview() {
-      var completeReviewMessage =
-        this.get("closeMessage").string || this.get("closeMessage") || "";
+      var completeReviewMessage = this.get("closeMessage").content || "";
       if (completeReviewMessage.trim().length === 0) {
         this.set("invalidMessage", true);
         return false;
