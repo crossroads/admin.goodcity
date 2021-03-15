@@ -4,7 +4,7 @@
     <li><a href="#" class="create-offer-btn" {{action 'createOffer'}}>{{t "inbox.create_offer"}}</a></li>
     {{#if session.currentUser.isSupervisor}}
       <li>{{#link-to 'holidays'}}{{t "inbox.holidays"}}{{/link-to}}</li>
-      <li> <a href="#" {{action "manageCannedMessage"}}>{{t "proforma.title"}}</a> </li>
+      <li> <a href="#" {{action "manageCannedMessage"}}>{{t "canned_response.title"}}</a> </li>
     {{/if}}
     <li><a href="#" {{action 'logMeOut'}}>{{t "application.logout"}}</a></li>
   </ul>

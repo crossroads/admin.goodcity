@@ -124,9 +124,6 @@ I18nTranslationsEn =
       inactive: "Inactive"
       inactive_info: "Donor non-responsive"
 
-    "proforma":
-      "title": "Pro Forma Messges"
-
     "items":
       "title": "Receive-{{packageName}}"
       "remove_item":
@@ -248,9 +245,6 @@ I18nTranslationsEn =
       "all_items_processed": "All items marked received or missing."
       "inactive_offer": "This offer is marked as inactive."
       "message_donor": "Send message to donor about closing offer:"
-      "receive_offer_message": "Your offer was received, thank you."
-      "missing_offer_message": "The delivery arrived at Crossroads but expected items were missing. We may follow up with you to confirm what happened."
-      "close_offer_message": "We have finished processing your offer. Unfortunately we are unable to receive your items this time. We hope we can place items you offer in the future."
       "confirm_receiving_message": "Receiving items after an offer has been finished will change the state of the offer to 'Receiving'. Are you sure you want to receive the item(s)?"
       "close_offer_summary": "This will close the offer."
       "add_note": "Tap to add/edit sticky note"
@@ -302,7 +296,6 @@ I18nTranslationsEn =
       "van": "Van"
       "receiving" : "This offer is currently being received."
       "offer_cancelled_by": "Offer cancelled by {{firstName}} {{lastName}}"
-      "complete_review_message": "Your offer has been reviewed. Please [click_here|transport_page] to arrange transportation."
       "choose_ggv_option": "Choose GoGoVan hire requirement"
       "finished_review": "Finished reviewing this offer?"
       "add_message_to_donor": "Message to the donor:"
