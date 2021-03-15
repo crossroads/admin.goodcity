@@ -70,11 +70,11 @@
 
   .edit-message {
     display: flex;
+    color: #bab3b3;
 
-
-    .disabled {
-      color: #bab3b3;
-      cursor: default;
+    .active {
+      color: #fff;
+      cursor: pointer;
     }
 
     .input-error {
@@ -118,7 +118,7 @@
     margin-right: 25%;
 
 
-    @media #{$small-only} {  
+    @media #{$small-only} {
       line-height: 2rem;
       font-size: 120%;
       padding-bottom: 7.5%;
