@@ -274,7 +274,7 @@ PLATFORMS
   x86_64-darwin-19
 
 DEPENDENCIES
-  capistrano
+  capistrano (= 3.16.0)
   cocoapods (= 1.8.4)
   fastlane
   nokogiri
