@@ -1,4 +1,4 @@
-lock '3.14.1'
+lock '3.16.0'
 
 # Load DSL and set up stages
 require 'capistrano/setup'
