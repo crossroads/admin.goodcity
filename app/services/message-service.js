@@ -5,6 +5,7 @@ import ApiBaseService from "./api-base-service";
 
 export default ApiBaseService.extend({
   store: Ember.inject.service(),
+  i18n: Ember.inject.service(),
   editMessage: {
     language: "en",
     messageId: ""
@@ -50,7 +51,9 @@ export default ApiBaseService.extend({
       .get("firstObject.content");
 
     if (!record) {
-      record = await this.GET(`/canned_responses/${guid}`);
+      record = await this.GET(`/canned_responses/${guid}`, {
+        language: this.get("i18n").get("locale")
+      });
       record = record.canned_response.content;
     }
 

@@ -18,7 +18,7 @@ export default Ember.Service.extend({
 
   // ----- Utilities -----
   _request(url, options, authorizedRequest) {
-    const { action, body, persist = false } = options;
+    const { action, body, persist = false, language } = options;
 
     url = this.baseUrl ? `${this.baseUrl}${url}` : url;
 
@@ -26,7 +26,9 @@ export default Ember.Service.extend({
       url,
       action,
       authorizedRequest ? this.get("session.authToken") : null,
-      body
+      body,
+      null,
+      language || "en"
     ).then(data => {
       if (persist) {
         this.get("store").pushPayload(data);
