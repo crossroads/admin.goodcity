@@ -10,6 +10,7 @@ export default Ember.Controller.extend({
   defaultPackage: Ember.computed.alias("model.packageType"),
   item: Ember.computed.alias("model"),
   cordova: Ember.inject.service(),
+  isPackageTypeChanged: false,
 
   isItemVanished: Ember.computed.or("item.isDeleted", "item.isDeleting"),
 
@@ -96,17 +97,6 @@ export default Ember.Controller.extend({
   actions: {
     setEditing(value) {
       this.set("isEditing", value);
-    },
-
-    returnToItemDetails() {
-      const existingPkgType = this.get("existingPackageType");
-      if (
-        !existingPkgType ||
-        existingPkgType.id !== this.get("model.packageType").id
-      ) {
-        this.set("model.packageType", existingPkgType);
-      }
-      this.transitionToRoute("review_offer", this.get("item.offer"));
     },
 
     selectPackageType() {
