@@ -1,6 +1,6 @@
 {
   "name": "goodcity",
-  "version": "0.18.1",
+  "version": "0.18.2",
   "description": "The GoodCity Admin app enables administrators to process donated goods.",
   "private": true,
   "directories": {
@@ -65,7 +65,7 @@
     "ember-cli-inject-live-reload": "^1.7.0",
     "ember-cli-qunit": "^2.2.4",
     "ember-cli-release": "^1.0.0-beta.2",
-    "ember-cli-sass": "^7.1.2",
+    "ember-cli-sass": "5.5.2",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-uglify": "^2.1.0",
     "ember-data": "~2.11.0",
