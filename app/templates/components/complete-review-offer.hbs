@@ -5,25 +5,26 @@
 {{else}}
   <a {{action 'confirmCloseOffer'}}>{{t "logistics.complete_review"}}</a>
 {{/if}}
+{{#if displayUserPrompt}}
+  {{#message-box btn1Text=(t "logistics.complete_review") btn1Callback=(action "completeReview") btn2Text=(t "receive.receiving.not_now")  btn2Callback=(action "hideClosePopup") isVisible=true classNames="popupOverlay complete_receive_overlay" summaryText=summaryText}}
 
-{{#message-box btn1Text=(t "logistics.complete_review") btn1Callback=(action "completeReview") btn2Text=(t "receive.receiving.not_now")  isVisible=displayUserPrompt classNames="popupOverlay complete_receive_overlay" summaryText=summaryText}}
+    <div class= "popup_heading">{{t "logistics.finished_review"}}</div>
 
-  <div class= "popup_heading">{{t "logistics.finished_review"}}</div>
+    {{#unless rejectOffer}}
+      <div class="ui {{if invalidSelection 'has-error'}}">
+        {{select-list
+          content=gogovanOptions
+          on-change=(action (mut selectedGogovanOption))
+          selectedValue=selectedGogovanOption
+          selectArrow=true
+          prompt=ggvOptionPlaceholder}}
+      </div>
+    {{/unless}}
 
-  {{#unless rejectOffer}}
-    <div class="ui {{if invalidSelection 'has-error'}}">
-      {{select-list
-        content=gogovanOptions
-        on-change=(action (mut selectedGogovanOption))
-        selectedValue=selectedGogovanOption
-        selectArrow=true
-        prompt=ggvOptionPlaceholder}}
+    <div class= "popup_subheading">{{t "logistics.add_message_to_donor"}}</div>
+
+    <div class="{{if invalidMessage 'has-error'}} ui">
+      {{auto-resize-textarea data-autoresize=true id=(concat this "closeOfferMessage") name="closeOfferMessage" value=closeMessage  }}
     </div>
-  {{/unless}}
-
-  <div class= "popup_subheading">{{t "logistics.add_message_to_donor"}}</div>
-
-  <div class="{{if invalidMessage 'has-error'}} ui">
-    {{auto-resize-textarea data-autoresize=true id=(concat this "closeOfferMessage") name="closeOfferMessage" value=closeMessage  }}
-  </div>
-{{/message-box}}
+  {{/message-box}}
+{{/if}}

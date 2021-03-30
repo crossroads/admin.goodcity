@@ -37,6 +37,10 @@ export default Ember.Component.extend({
       this.set("displayUserPrompt", true);
     },
 
+    hideClosePopup(){
+      this.set("displayUserPrompt", false);
+    },
+
     closeOffer() {
       var closeOfferMessage = this.get("closeMessage") || "";
 
