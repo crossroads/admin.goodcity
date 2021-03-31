@@ -21,10 +21,7 @@ export default AuthorizeRoute.extend({
 
   setupController(controller, model) {
     this._super(controller, model);
-    this.set(
-      "existingPackageType",
-      model.get("packageType") && model.get("packageType").id
-    );
+    controller.set("existingPackageType", model.get("packageType"));
 
     if (this.get("editItemRequest")) {
       var itemDetails = {

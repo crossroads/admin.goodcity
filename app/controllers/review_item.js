@@ -5,10 +5,12 @@ export default Ember.Controller.extend({
   application: Ember.inject.controller(),
   store: Ember.inject.service(),
   messageBox: Ember.inject.service(),
+  packageService: Ember.inject.service(),
   i18n: Ember.inject.service(),
   defaultPackage: Ember.computed.alias("model.packageType"),
   item: Ember.computed.alias("model"),
   cordova: Ember.inject.service(),
+  isPackageTypeChanged: false,
 
   isItemVanished: Ember.computed.or("item.isDeleted", "item.isDeleting"),
 
@@ -95,6 +97,14 @@ export default Ember.Controller.extend({
   actions: {
     setEditing(value) {
       this.set("isEditing", value);
+    },
+
+    selectPackageType() {
+      this.set("packageService.isPackageTypeOverlayVisible", true);
+    },
+
+    setPackaageType(pkgType) {
+      this.set("model.packageType", pkgType);
     },
 
     copyItem() {

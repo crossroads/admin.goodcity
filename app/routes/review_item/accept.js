@@ -5,5 +5,17 @@ export default AuthorizeRoute.extend({
     this._super(controller, model);
     controller.notifyPropertyChange("itemTypeId");
     controller.set("packageTypeUpdated", null);
+  },
+
+  resetController(controller, isExiting) {
+    if (isExiting) {
+      const reviewItem = controller.get("reviewItem");
+      if (!reviewItem.get("isPackageTypeChanged")) {
+        reviewItem.set(
+          "model.packageType",
+          reviewItem.get("existingPackageType")
+        );
+      }
+    }
   }
 });
