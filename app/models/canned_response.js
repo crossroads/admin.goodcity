@@ -7,5 +7,7 @@ export default Model.extend({
   nameZhTw: attr("string"),
   content: attr("string"),
   contentEn: attr("string"),
-  contentZhTw: attr("string")
+  contentZhTw: attr("string"),
+  guid: attr("string"),
+  isPrivate: attr("boolean")
 });

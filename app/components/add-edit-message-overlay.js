@@ -16,6 +16,10 @@ export default Ember.Component.extend(AsyncTasksMixin, {
     this.set("isEnglish", true);
   },
 
+  canDelete: Ember.computed("message.id", function() {
+    return this.get("message.id") && !this.get("message.isPrivate");
+  }),
+
   disableCreateEdit: Ember.computed(
     "message.nameEn",
     "message.contentEn",

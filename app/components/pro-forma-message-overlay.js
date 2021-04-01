@@ -1,6 +1,8 @@
 import Ember from "ember";
 import _ from "lodash";
 
+const SYSTEM = "SYSTEM";
+
 export default Ember.Component.extend({
   messageService: Ember.inject.service(),
   store: Ember.inject.service(),
@@ -8,6 +10,7 @@ export default Ember.Component.extend({
   init() {
     this._super(...arguments);
     this.set("isSelected", true);
+    this.set("selected", "canned");
   },
 
   onSearchTextChange: Ember.observer("searchText", function() {
@@ -43,6 +46,9 @@ export default Ember.Component.extend({
       const params = {
         searchText: this.get("searchText")
       };
+      if (this.get("selected") == "system") {
+        params.message_type = SYSTEM;
+      }
       return this.get("store").query("canned_response", params);
     },
 
@@ -62,6 +68,15 @@ export default Ember.Component.extend({
 
     cancel() {
       this.set("open", false);
+    },
+
+    selectTab(selectedTab = "canned") {
+      this.set("selected", selectedTab);
+      if (selectedTab == "canned") {
+        this.set("isSelected", true);
+      } else {
+        this.set("isSelected", false);
+      }
     }
   }
 });

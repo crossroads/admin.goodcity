@@ -41,6 +41,10 @@ export default Ember.Controller.extend({
       this.transitionToRoute("login");
     },
 
+    manageCannedMessage() {
+      this.set("messageService.isProFormaMessageVisible", true);
+    },
+
     logMeIn() {
       this.send("setSubscriptions");
     },
