@@ -1,6 +1,8 @@
 import Ember from "ember";
 import _ from "lodash";
 
+const SYSTEM = "SYSTEM";
+
 export default Ember.Component.extend({
   messageService: Ember.inject.service(),
   store: Ember.inject.service(),
@@ -45,7 +47,7 @@ export default Ember.Component.extend({
         searchText: this.get("searchText")
       };
       if (this.get("selected") == "system") {
-        params.isPrivate = true;
+        params.message_type = SYSTEM;
       }
       return this.get("store").query("canned_response", params);
     },
