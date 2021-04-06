@@ -1,5 +1,6 @@
 import Model from "ember-data/model";
 import attr from "ember-data/attr";
+import Ember from "ember";
 
 export default Model.extend({
   name: attr("string"),
@@ -9,5 +10,8 @@ export default Model.extend({
   contentEn: attr("string"),
   contentZhTw: attr("string"),
   guid: attr("string"),
-  isPrivate: attr("boolean")
+  messageType: attr("string"),
+  isPrivate: Ember.computed("ordersPackages.@each.state", function() {
+    return this.get("messageType") === "SYSTEM";
+  })
 });
