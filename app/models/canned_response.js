@@ -11,7 +11,7 @@ export default Model.extend({
   contentZhTw: attr("string"),
   guid: attr("string"),
   messageType: attr("string"),
-  isPrivate: Ember.computed("ordersPackages.@each.state", function() {
+  isPrivate: Ember.computed(function() {
     return this.get("messageType") === "SYSTEM";
   })
 });
