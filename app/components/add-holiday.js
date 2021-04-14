@@ -30,13 +30,8 @@ export default Ember.Component.extend({
       let isNameEmpty = name.trim().length === 0;
       let isDateEmpty = date.toString().trim().length === 0;
 
-      if (isNameEmpty) {
-        this.set("invalidName", true);
-      }
-
-      if (isDateEmpty) {
-        this.set("invalidDate", true);
-      }
+      this.set("invalidName", isNameEmpty);
+      this.set("invalidDate", isDateEmpty);
 
       if (isNameEmpty || isDateEmpty) {
         return false;
