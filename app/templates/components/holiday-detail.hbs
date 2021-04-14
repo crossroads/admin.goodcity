@@ -3,7 +3,7 @@
   {{#validatable-form class="form-horizontal ui" action="saveHoliday" on="submit"}}
 
     <div class="row">
-      <div class="small-12 columns">
+      <div class="small-12 columns {{if invalidName 'has-error'}}">
         {{input name='name' value=day.name required="true" placeholder=(t "holiday.name")}}
       </div>
     </div>
