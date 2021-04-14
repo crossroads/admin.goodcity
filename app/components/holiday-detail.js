@@ -45,11 +45,6 @@ export default Ember.Component.extend({
       var holiday = this.get("day");
       let isNamePresent = holiday.get("name").trim().length !== 0;
 
-      if (!isNamePresent) {
-        this.set("invalidName", true);
-        return false;
-      }
-
       if (isNamePresent) {
         var loadingView = getOwner(this)
           .lookup("component:loading")
@@ -66,6 +61,9 @@ export default Ember.Component.extend({
             this.set("isEditing", false);
             this.set("invalidName", false);
           });
+      } else {
+        this.set("invalidName", true);
+        return false;
       }
     }
   }
