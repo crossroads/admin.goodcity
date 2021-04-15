@@ -6,6 +6,7 @@ export default Ember.Component.extend({
   messageBox: Ember.inject.service(),
   isEditing: false,
   selectedDate: Ember.computed.alias("day.holiday"),
+  invalidName: false,
 
   actions: {
     removeHoliday(holiday) {
@@ -37,12 +38,14 @@ export default Ember.Component.extend({
     hideEditForm() {
       this.get("day").rollbackAttributes();
       this.set("isEditing", false);
+      this.set("invalidName", false);
     },
 
     saveHoliday() {
       var holiday = this.get("day");
+      let isNamePresent = holiday.get("name").trim().length !== 0;
 
-      if (holiday.get("name").length !== 0) {
+      if (isNamePresent) {
         var loadingView = getOwner(this)
           .lookup("component:loading")
           .append();
@@ -56,7 +59,11 @@ export default Ember.Component.extend({
           .finally(() => {
             loadingView.destroy();
             this.set("isEditing", false);
+            this.set("invalidName", false);
           });
+      } else {
+        this.set("invalidName", true);
+        return false;
       }
     }
   }
