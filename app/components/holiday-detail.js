@@ -7,6 +7,7 @@ export default Ember.Component.extend({
   isEditing: false,
   selectedDate: Ember.computed.alias("day.holiday"),
   invalidName: false,
+  invalidDate: false,
 
   actions: {
     removeHoliday(holiday) {
@@ -39,32 +40,40 @@ export default Ember.Component.extend({
       this.get("day").rollbackAttributes();
       this.set("isEditing", false);
       this.set("invalidName", false);
+      this.set("invalidDate", false);
     },
 
     saveHoliday() {
       var holiday = this.get("day");
-      let isNamePresent = holiday.get("name").trim().length !== 0;
+      let isNameEmpty = holiday.get("name").trim().length === 0;
+      let isDateEmpty =
+        this.get("selectedDate")
+          .toString()
+          .trim().length === 0;
 
-      if (isNamePresent) {
-        var loadingView = getOwner(this)
-          .lookup("component:loading")
-          .append();
+      this.set("invalidName", isNameEmpty);
+      this.set("invalidDate", isDateEmpty);
 
-        holiday
-          .save()
-          .catch(error => {
-            holiday.rollbackAttributes();
-            throw error;
-          })
-          .finally(() => {
-            loadingView.destroy();
-            this.set("isEditing", false);
-            this.set("invalidName", false);
-          });
-      } else {
-        this.set("invalidName", true);
+      if (isNameEmpty || isDateEmpty) {
         return false;
       }
+
+      var loadingView = getOwner(this)
+        .lookup("component:loading")
+        .append();
+
+      holiday
+        .save()
+        .catch(error => {
+          holiday.rollbackAttributes();
+          throw error;
+        })
+        .finally(() => {
+          loadingView.destroy();
+          this.set("isEditing", false);
+          this.set("invalidName", false);
+          this.set("invalidDate", false);
+        });
     }
   }
 });

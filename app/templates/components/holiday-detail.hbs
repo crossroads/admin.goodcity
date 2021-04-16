@@ -9,7 +9,7 @@
     </div>
 
     <div class="row">
-      <div class="small-6 large-8 columns date_selector">
+      <div class="small-6 large-8 columns date_selector {{if invalidDate 'has-error'}}">
         {{holiday-calender
           name='selectedDate'
           id=(concat this 'selectedDate')
