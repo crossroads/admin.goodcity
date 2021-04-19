@@ -469,12 +469,12 @@ I18nTranslationsZhTw =
           "cell_phone": "電話號碼不能漏空"
 
     "canned_response":
-      "title": "Manage pro-forma messages"
-      "en_content": "English content cannot be blank"
-      "en_label": "English label be blank"
-      "delete_message": "Delete Message"
-      "label": "Label"
-      "message": "Message"
-      "back": "Back"
+      "title": "管理預設訊息"
+      "en_content": "英文內容不可留空"
+      "en_label": "英文標籤不可留空"
+      "delete_message": "刪除訊息"
+      "label": "標籤"
+      "message": "訊息"
+      "back": "返回"
 
 `export default I18nTranslationsZhTw`
