@@ -42,12 +42,16 @@ export default Ember.Controller.extend({
     },
 
     async mergeOffer(baseOffer) {
+      var loadingView = getOwner(this)
+        .lookup("component:loading")
+        .append();
       var offer = this.get("model");
       var url = "/offers/" + offer.id + "/merge_offer";
       const data = await this.get("apiBaseService").PUT(url, {
         base_offer_id: baseOffer.id
       });
 
+      loadingView.destroy();
       if (data.status) {
         this.transitionToRoute("review_offer.items", baseOffer);
       } else {
