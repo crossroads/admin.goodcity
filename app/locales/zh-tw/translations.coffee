@@ -476,5 +476,12 @@ I18nTranslationsZhTw =
       "label": "標籤"
       "message": "訊息"
       "back": "返回"
+      "message_admin": "訊息管理"
+      "canned_message": "預設訊息"
+      "system_message": "系統訊息"
+      "add_message": "新增訊息"
+      "create_message": "創建訊息"
+      "edit_message": "編輯訊息"
+      "done": "完成"
 
 `export default I18nTranslationsZhTw`

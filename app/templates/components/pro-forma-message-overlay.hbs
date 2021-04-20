@@ -8,25 +8,25 @@
         </div>
       </section>
       <section class="middle tab-bar-section">
-        <h1 class="title">Message Admin</h1>
+        <h1 class="title">{{t 'canned_response.message_admin'}}</h1>
       </section>
     </nav>
 
     <div class="canned-search-container">
         <div class="small-3 columns text-center tabs {{if isSelected 'selected' ''}}" {{action 'selectTab'}}>
-            Canned Message
+            {{t 'canned_response.canned_message'}}
         </div>
         <div class="small-3 columns text-center tabs {{if isSelected '' 'selected'}}" {{action 'selectTab' 'system'}}>
-            System Message
+            {{t 'canned_response.system_message'}}
         </div>
     </div>
-
-
 
     <div class="canned-message-container">
       {{#if (is-equal selected 'canned') }}
         <div>
-          <button class="light-button" {{action 'addMessage'}}>Add Message</button>
+          <button class="light-button" {{action 'addMessage'}}>
+            {{t 'canned_response.add_message'}}
+          </button>
         </div>
         {{#if displayResults}}
           {{#infinite-list height="82vh" loadMore=(action "loadMoreCannedMessages") as |cannedMessages| }}

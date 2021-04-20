@@ -8,7 +8,13 @@
         </div>
       </section>
       <section class="middle tab-bar-section">
-        <h1 class="title">{{if message.id "Edit" "Create"}} Message</h1>
+        <h1 class="title">
+          {{#if message.id}}
+            {{t 'canned_response.edit_message'}}
+          {{else}}
+            {{t 'canned_response.create_message'}}
+          {{/if}}
+        </h1>
       </section>
     </nav>
     <div class="canned-message-container">
@@ -62,7 +68,7 @@
       </div>
 
       {{#unless message.id}}
-        <button {{action "createOrUpdateCannedMessage"}} class="create-btn" disabled={{disableCreateEdit}}>Done</button>
+        <button {{action "createOrUpdateCannedMessage"}} class="create-btn" disabled={{disableCreateEdit}}>{{t 'canned_response.done'}}</button>
       {{/unless}}
     </div>
 

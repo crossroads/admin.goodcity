@@ -474,9 +474,17 @@ I18nTranslationsEn =
     "canned_response":
       "title": "Manage pro-forma messages"
       "en_content": "English content cannot be blank"
-      "en_label": "English label be blank"
+      "en_label": "English label cannot be blank"
       "delete_message": "Delete Message"
       "label": "Label"
       "message": "Message"
       "back": "Back"
+      "message_admin": "Message Admin"
+      "canned_message": "Canned Message"
+      "system_message": "System Message"
+      "add_message": "Add Message"
+      "create_message": "Create Message"
+      "edit_message": "Edit Message"
+      "done": "Done"
+
 `export default I18nTranslationsEn`
