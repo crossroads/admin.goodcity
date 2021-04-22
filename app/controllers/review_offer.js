@@ -88,6 +88,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     if (this.get("isOfferVanished") && !this.get("cancelByMe")) {
       if (
         currentPath.indexOf("review_item") < 0 &&
+        currentPath.indexOf("merge") < 0 &&
         currentPath.indexOf(`offers/${this.get("offer.id")}`) >= 0
       ) {
         this.get("messageBox").alert(this.get("i18n").t("404_error"), () => {

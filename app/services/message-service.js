@@ -5,6 +5,7 @@ import ApiBaseService from "./api-base-service";
 
 export default ApiBaseService.extend({
   store: Ember.inject.service(),
+  i18n: Ember.inject.service(),
   editMessage: {
     language: "en",
     messageId: ""
@@ -40,5 +41,22 @@ export default ApiBaseService.extend({
     });
 
     return deferred.promise;
+  },
+
+  async getSystemMessage({ guid }) {
+    // check if record is already present in store
+    const cannedResponses = this.get("store").peekAll("canned_response");
+    let record = cannedResponses
+      .filter(res => res.get("guid") === guid)
+      .get("firstObject.content");
+
+    if (!record) {
+      record = await this.GET(`/canned_responses/${guid}`, {
+        language: this.get("i18n").get("locale")
+      });
+      record = record.canned_response.content;
+    }
+
+    return record;
   }
 });

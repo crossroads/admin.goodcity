@@ -1,5 +1,6 @@
 import Model from "ember-data/model";
 import attr from "ember-data/attr";
+import Ember from "ember";
 
 export default Model.extend({
   name: attr("string"),
@@ -7,5 +8,10 @@ export default Model.extend({
   nameZhTw: attr("string"),
   content: attr("string"),
   contentEn: attr("string"),
-  contentZhTw: attr("string")
+  contentZhTw: attr("string"),
+  guid: attr("string"),
+  messageType: attr("string"),
+  isPrivate: Ember.computed("messageType", function() {
+    return this.get("messageType") === "SYSTEM";
+  })
 });
