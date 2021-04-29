@@ -63,7 +63,7 @@ export default DS.Model.extend({
     "isPrivate",
     "recipientId",
     function() {
-      if (this.get("messageableType") !== "Offer") {
+      if (!this.get("recipientId") || this.get("messageableType") !== "Offer") {
         return false;
       }
 
