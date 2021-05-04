@@ -39,6 +39,23 @@ export default AuthorizeRoute.extend({
     return offer;
   },
 
+  async afterModel(model) {
+    await this.store.query("message", {
+      messageable_type: "Offer",
+      messageable_id: model.get("id"),
+      include_organisations_users: "true"
+    });
+
+    let itemIds = model.get("items").getEach("id");
+
+    if (itemIds.length) {
+      await this.store.query("message", {
+        messageable_type: "Item",
+        messageable_id: itemIds
+      });
+    }
+  },
+
   setupController(controller, model) {
     this._super(controller, model);
     controller.set("displayOfferOptions", false);
