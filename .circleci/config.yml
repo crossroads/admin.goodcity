@@ -459,4 +459,4 @@ workflows:
               - package_dependencies
             filters:
               branches:
-                only: /^(master|live|Upgrade-xcode))$/
+                only: /^(master|live|Upgrade-xcode)$/
