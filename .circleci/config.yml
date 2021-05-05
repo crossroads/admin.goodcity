@@ -349,6 +349,7 @@ jobs:
       - run:
           command: npm rebuild node-sass
       - run:
+          name: Ember build
           command: |
             echo "Building for ENVIRONMENT: ${ENVIRONMENT}"
             EMBER_CLI_CORDOVA=1 ENVIRONMENT=${ENVIRONMENT} yarn run ember build --environment=production
