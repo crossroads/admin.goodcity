@@ -147,7 +147,7 @@ jobs:
   www_deploy:
     <<: *defaults
     docker:
-      - image: circleci/ruby:2.6.0-node
+      - image: circleci/ruby:2.7.1
     steps:
       - restore-cache: *restore-repo-cache
       - restore-cache: *restore-bundler-cache
@@ -297,7 +297,7 @@ jobs:
 
   ios_build_and_deploy:
     macos:
-      xcode: "11.0.0"
+      xcode: "12.0.1"
     working_directory: ~/code
     shell: /bin/bash --login -eo pipefail
     environment:
@@ -328,6 +328,11 @@ jobs:
           command: |
             case "$CIRCLE_BRANCH" in
               master)
+                echo 'export ENVIRONMENT=staging' >> $BASH_ENV
+                echo 'export CERTIFICATE=hk.goodcity.dev.p12' >> $BASH_ENV
+                echo 'export PROVISIONING_PROFILE=GoodcityAdminStaging.mobileprovision' >> $BASH_ENV
+                ;;
+              Upgrade-xcode)
                 echo 'export ENVIRONMENT=staging' >> $BASH_ENV
                 echo 'export CERTIFICATE=hk.goodcity.dev.p12' >> $BASH_ENV
                 echo 'export PROVISIONING_PROFILE=GoodcityAdminStaging.mobileprovision' >> $BASH_ENV
@@ -413,6 +418,9 @@ workflows:
         - tests:
             requires:
               - package_dependencies
+            filters:
+              branches:
+                only: /^(master|live|preview)$/
         # - upload-coverage:
         #     requires:
         #       - package_dependencies
@@ -448,7 +456,7 @@ workflows:
                 only: /^(master|live)$/
         - ios_build_and_deploy:
             requires:
-              - tests
+              - package_dependencies
             filters:
               branches:
-                only: /^(master|live)$/
+                only: /^(master|live|Upgrade-xcode))$/
