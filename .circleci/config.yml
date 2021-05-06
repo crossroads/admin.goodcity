@@ -126,6 +126,9 @@ jobs:
               master)
                 ENVIRONMENT=staging
                 ;;
+              Upgrade-xcode)
+                ENVIRONMENT=staging
+                ;;
               preview)
                 ENVIRONMENT=preview
                 ;;
@@ -147,7 +150,7 @@ jobs:
   www_deploy:
     <<: *defaults
     docker:
-      - image: circleci/ruby:2.7.1
+      - image: circleci/ruby:2.7.3
     steps:
       - restore-cache: *restore-repo-cache
       - restore-cache: *restore-bundler-cache
@@ -427,13 +430,13 @@ workflows:
               - package_dependencies
             filters:
               branches:
-                only: /^(master|live|preview)$/
+                only: /^(master|live|preview|Upgrade-xcode)$/
         - www_deploy:
             requires:
               - www_build
             filters:
               branches:
-                only: /^(master|live|preview)$/
+                only: /^(master|live|preview|Upgrade-xcode)$/
         - ember_cordova_build:
             requires:
               - tests
@@ -452,4 +455,4 @@ workflows:
               - tests
             filters:
               branches:
-                only: /^(master|live)$/
+                only: /^(master|live|Upgrade-xcode)$/
