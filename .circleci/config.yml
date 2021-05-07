@@ -126,9 +126,6 @@ jobs:
               master)
                 ENVIRONMENT=staging
                 ;;
-               Upgrade-xcode)
-                ENVIRONMENT=staging
-                ;;
               preview)
                 ENVIRONMENT=preview
                 ;;
@@ -167,9 +164,6 @@ jobs:
           command: |
             case "$CIRCLE_BRANCH" in
               master)
-                STAGE=staging
-                ;;
-              Upgrade-xcode)
                 STAGE=staging
                 ;;
               preview)
@@ -433,13 +427,13 @@ workflows:
               - package_dependencies
             filters:
               branches:
-                only: /^(master|live|preview|Upgrade-xcode)$/
+                only: /^(master|live|preview)$/
         - www_deploy:
             requires:
               - www_build
             filters:
               branches:
-                only: /^(master|live|preview|Upgrade-xcode)$/
+                only: /^(master|live|preview)$/
         - ember_cordova_build:
             requires:
               - tests
