@@ -147,7 +147,7 @@ jobs:
   www_deploy:
     <<: *defaults
     docker:
-      - image: circleci/ruby:2.6.0-node
+      - image: cimg/ruby:2.7.3
     steps:
       - restore-cache: *restore-repo-cache
       - restore-cache: *restore-bundler-cache
@@ -297,7 +297,7 @@ jobs:
 
   ios_build_and_deploy:
     macos:
-      xcode: "11.0.0"
+      xcode: "12.0.1"
     working_directory: ~/code
     shell: /bin/bash --login -eo pipefail
     environment:
@@ -344,6 +344,7 @@ jobs:
       - run:
           command: npm rebuild node-sass
       - run:
+          name: Ember build
           command: |
             echo "Building for ENVIRONMENT: ${ENVIRONMENT}"
             EMBER_CLI_CORDOVA=1 ENVIRONMENT=${ENVIRONMENT} yarn run ember build --environment=production
