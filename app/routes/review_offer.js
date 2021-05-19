@@ -1,5 +1,6 @@
 import Ember from "ember";
 import AuthorizeRoute from "./authorize";
+import AjaxPromise from "goodcity/utils/ajax-promise";
 import { SHAREABLE_TYPES } from "../models/shareable";
 
 export default AuthorizeRoute.extend({
@@ -22,11 +23,22 @@ export default AuthorizeRoute.extend({
   },
 
   loadIfAbsent(offerId) {
+    let _this = this;
     let offer = this.get("store").peekRecord("offer", offerId);
+
     if (offer && this.hasLoadedAssociations(offer)) {
       return offer;
     }
-    return this.store.findRecord("offer", offerId, { reload: true });
+
+    return new AjaxPromise(
+      `/offers/${offerId}`,
+      "GET",
+      _this.get("session.authToken"),
+      { exclude_messages: "true" }
+    ).then(function(data) {
+      _this.store.pushPayload(data);
+      return _this.store.peekRecord("offer", offerId);
+    });
   },
 
   async model() {
@@ -42,8 +54,7 @@ export default AuthorizeRoute.extend({
   async afterModel(model) {
     await this.store.query("message", {
       messageable_type: "Offer",
-      messageable_id: model.get("id"),
-      include_organisations_users: "true"
+      messageable_id: model.get("id")
     });
 
     let itemIds = model.get("items").getEach("id");
