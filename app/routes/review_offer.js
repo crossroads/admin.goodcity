@@ -35,9 +35,9 @@ export default AuthorizeRoute.extend({
       "GET",
       _this.get("session.authToken"),
       { exclude_messages: "true" }
-    ).then(function(data) {
-      _this.store.pushPayload(data);
-      return _this.store.peekRecord("offer", offerId);
+    ).then((data) => {
+      this.store.pushPayload(data);
+      return this.store.peekRecord("offer", offerId);
     });
   },
 
