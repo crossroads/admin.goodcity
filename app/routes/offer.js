@@ -7,7 +7,8 @@ export default AuthorizeRoute.extend({
   model(params) {
     if (params.offer_id) {
       return this.get("offerService").fetchOffer(params.offer_id, {
-        include_organisations_users: "true"
+        include_organisations_users: "true",
+        exclude_messages: "true"
       });
     }
   },
