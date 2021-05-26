@@ -1,6 +1,7 @@
 import Ember from "ember";
+import AsyncMixin from "../mixins/async_tasks";
 
-export default Ember.Controller.extend({
+export default Ember.Controller.extend(AsyncMixin, {
   messageLinkConvertor: Ember.inject.service(),
   messageService: Ember.inject.service(),
   body: "",
@@ -27,9 +28,18 @@ export default Ember.Controller.extend({
     )
   ),
 
-  disabled: Ember.computed("offer.isCancelled", "item.isDraft", function() {
-    return this.get("offer.isCancelled") || this.get("item.isDraft");
-  }),
+  disabled: Ember.computed(
+    "offer.isCancelled",
+    "item.isDraft",
+    "missingRecipient",
+    function() {
+      return (
+        this.get("missingRecipient") ||
+        this.get("offer.isCancelled") ||
+        this.get("item.isDraft")
+      );
+    }
+  ),
 
   groupedElements: Ember.computed("sortedElements.[]", function() {
     return this.groupBy(this.get("sortedElements"), "createdDate");
@@ -84,6 +94,14 @@ export default Ember.Controller.extend({
       var packageVersions = this.get("packageVersions").toArray();
       var offerVersions = this.get("offerVersions").toArray();
       return messages.concat(itemVersions, packageVersions, offerVersions);
+    }
+  ),
+
+  missingRecipient: Ember.computed(
+    "recipientId",
+    "offer.createdById",
+    function() {
+      return !this.get("recipientId") && !this.get("offer.createdById");
     }
   ),
 
@@ -189,6 +207,8 @@ export default Ember.Controller.extend({
       if (!this.get("isPrivate")) {
         values.recipientId =
           this.get("recipientId") || this.get("offer.createdById");
+
+        if (!values.recipientId) return this.i18nAlert("chats.no_recipient");
       }
 
       this.get("messageLinkConvertor").convert(values);

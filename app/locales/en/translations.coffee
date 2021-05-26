@@ -41,6 +41,9 @@ I18nTranslationsEn =
       "description": "Donors will not be able to book a delivery or drop-off on the 'holiday' dates listed below."
       "delete_confirm": "Are you sure you wish to delete this holiday?"
 
+    "chats":
+      "no_recipient": "Missing recipient. This chat is disabled"
+
     "offer":
       "title": "Offer"
       "donor": "Details"
