@@ -2,8 +2,6 @@ import Ember from "ember";
 const { getOwner } = Ember;
 
 export default Ember.Controller.extend({
-  queryParams: ["packageTypeUpdated"],
-  packageTypeUpdated: null,
   applicationController: Ember.inject.controller("application"),
   reviewOfferController: Ember.inject.controller("review_offer"),
   reviewItem: Ember.inject.controller(),
