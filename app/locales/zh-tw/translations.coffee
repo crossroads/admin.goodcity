@@ -41,6 +41,9 @@ I18nTranslationsZhTw =
       "description": "捐贈者將無法於「假期」內預約送貨！"
       "delete_confirm": "你確定要刪除此項假期嗎？"
 
+    "chats":
+      "no_recipient": "Missing recipient. This chat is disabled"
+
     "offer":
       "title": "捐贈細節"
       "donor": "Details"
