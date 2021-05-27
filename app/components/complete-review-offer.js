@@ -51,12 +51,16 @@ export default Ember.Component.extend({
     },
 
     completeReview() {
-      var completeReviewMessage = this.get("closeMessage").content || "";
-      if (completeReviewMessage.trim().length === 0) {
-        this.set("invalidMessage", true);
-        return false;
+      var completeReviewMessage = "";
+
+      if (this.get("offer.createdById")) {
+        completeReviewMessage = this.get("closeMessage").content || "";
+        if (completeReviewMessage.trim().length === 0) {
+          this.set("invalidMessage", true);
+          return false;
+        }
+        this.set("invalidMessage", false);
       }
-      this.set("invalidMessage", false);
 
       var offerId = this.get("offer.id");
       var offerProperties = {},

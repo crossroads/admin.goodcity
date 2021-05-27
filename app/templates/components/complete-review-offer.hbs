@@ -21,9 +21,11 @@
     </div>
   {{/unless}}
 
-  <div class= "popup_subheading">{{t "logistics.add_message_to_donor"}}</div>
+  {{#if offer.createdById}}
+    <div class= "popup_subheading">{{t "logistics.add_message_to_donor"}}</div>
 
-  <div class="{{if invalidMessage 'has-error'}} ui">
-    {{auto-resize-textarea data-autoresize=true id=(concat this "closeOfferMessage") name="closeOfferMessage" value=closeMessage.content  }}
-  </div>
+    <div class="{{if invalidMessage 'has-error'}} ui">
+      {{auto-resize-textarea data-autoresize=true id=(concat this "closeOfferMessage") name="closeOfferMessage" value=closeMessage.content  }}
+    </div>
+  {{/if}}
 {{/message-box}}
