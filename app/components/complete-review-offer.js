@@ -59,8 +59,9 @@ export default Ember.Component.extend({
           this.set("invalidMessage", true);
           return false;
         }
-        this.set("invalidMessage", false);
       }
+
+      this.set("invalidMessage", false);
 
       var offerId = this.get("offer.id");
       var offerProperties = {},
