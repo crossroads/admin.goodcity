@@ -1,9 +1,18 @@
 <a {{action 'confirmCloseOffer'}}>{{t "review_offer.close_offer"}}</a>
 
-{{#message-box btn1Text=(t "review_offer.close_offer") btn1Callback=(action "closeOffer") btn2Text=(t "receive.receiving.not_now")  isVisible=displayUserPrompt classNames="popupOverlay complete_receive_overlay"}}
-  <strong>{{t "review_offer.message_donor"}}</strong>
-
-  <div class="{{if invalidMessage 'has-error'}} ui">
-    {{auto-resize-textarea data-autoresize=true id="closeOfferMessage" name="closeOfferMessage" value=closeMessage.content maxlength=255 }}
-  </div>
+{{#message-box btn1Text=(t "review_offer.close_offer") btn1Callback=(action "closeOffer") btn2Text=(t "receive.receiving.not_now") isVisible=displayUserPrompt classNames="popupOverlay complete_receive_overlay"}}
+  {{#if offer.createdById}}
+    <strong>{{t "review_offer.message_donor"}}</strong>
+    <div class="{{if invalidMessage 'has-error'}} ui">
+      {{auto-resize-textarea
+        data-autoresize=true
+        id="closeOfferMessage"
+        name="closeOfferMessage"
+        value=closeMessage.content
+        maxlength=255
+      }}
+    </div>
+  {{else}}
+    <strong>{{ t "review_offer.close_offer" }} ?</strong>
+  {{/if}}
 {{/message-box}}

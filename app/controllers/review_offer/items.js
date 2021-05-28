@@ -12,6 +12,7 @@ export default Ember.Controller.extend({
     "offer.messages.[]",
     function() {
       return this.get("offer.messages")
+        .filterBy("item", null)
         .filter(m => !m.get("isCharityConversation"))
         .sortBy("createdAt")
         .get("lastObject");

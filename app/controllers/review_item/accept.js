@@ -2,8 +2,6 @@ import Ember from "ember";
 const { getOwner } = Ember;
 
 export default Ember.Controller.extend({
-  queryParams: ["packageTypeUpdated"],
-  packageTypeUpdated: null,
   applicationController: Ember.inject.controller("application"),
   reviewOfferController: Ember.inject.controller("review_offer"),
   reviewItem: Ember.inject.controller(),
@@ -56,13 +54,7 @@ export default Ember.Controller.extend({
   }),
 
   returnPackageTypes(itemType) {
-    return (
-      itemType &&
-      itemType
-        .get("allChildPackagesList")
-        .apply(itemType)
-        .sortBy("name")
-    );
+    return itemType && itemType.get("allChildPackagesList").apply(itemType);
   },
 
   returnPackageProperties(pkg) {
@@ -105,9 +97,8 @@ export default Ember.Controller.extend({
     if (itemType && itemType.get("id") === this.get("item.packageType.id")) {
       this.get("item.packages").forEach((pkg, index) => {
         var obj = this.returnPackageProperties(pkg);
-        if (this.get("packageTypeUpdated")) {
-          obj.packageType = packageTypes[index] || packageTypes[0];
-        }
+        obj.packageType = packageTypes[index] || packageTypes[0];
+        obj.changedNotes = obj.packageType.get("name");
         obj.hideComment = false;
         obj.receivedQuantity = obj.receivedQuantity || 1;
         packages.pushObject(obj);

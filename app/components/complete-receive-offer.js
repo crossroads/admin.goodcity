@@ -41,11 +41,13 @@ export default Ember.Component.extend({
     },
 
     closeOffer() {
-      var closeOfferMessage = this.get("closeMessage").content || "";
-
-      if (closeOfferMessage.trim().length === 0) {
-        this.set("invalidMessage", true);
-        return false;
+      let closeOfferMessage = "";
+      if (this.get("offer.createdById")) {
+        closeOfferMessage = this.get("closeMessage").content || "";
+        if (closeOfferMessage.trim().length === 0) {
+          this.set("invalidMessage", true);
+          return false;
+        }
       }
 
       this.set("invalidMessage", false);
