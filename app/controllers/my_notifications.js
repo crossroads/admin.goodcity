@@ -22,6 +22,11 @@ export default Ember.Controller.extend({
       this,
       this.onNewNotification
     );
+    this.get("subscriptions").on(
+      "update:message",
+      this,
+      this.onUpdateNotification
+    );
   },
 
   off() {
@@ -30,6 +35,24 @@ export default Ember.Controller.extend({
       this,
       this.onNewNotification
     );
+    this.get("subscriptions").off(
+      "update:message",
+      this,
+      this.onUpdateNotification
+    );
+  },
+
+  onUpdateNotification({ id }) {
+    const store = this.get("store");
+    const msg = store.peekRecord("message", id);
+    let notif = this.get("notifications").findBy(
+      "key",
+      this.buildMessageKey(msg)
+    );
+
+    if (notif) {
+      notif.set("unreadCount", null);
+    }
   },
 
   onNewNotification({ id }) {
@@ -43,15 +66,21 @@ export default Ember.Controller.extend({
     }
 
     let notif = notifications.findBy("key", this.buildMessageKey(msg));
+    let isMessageByCurrentUser =
+      this.get("session.currentUser.id") === notif.get("sender.id");
 
     if (notif) {
       // Update existing one
       notifications.removeObject(notif);
-      msg.set("unreadCount", +notif.get("unreadCount") + 1);
+      if (!isMessageByCurrentUser) {
+        msg.set("unreadCount", +notif.get("unreadCount") + 1);
+      }
       notif.get("messages").addObject(msg);
     } else {
       // Create new one
-      msg.set("unreadCount", 1);
+      if (!isMessageByCurrentUser) {
+        msg.set("unreadCount", 1);
+      }
       notif = this.messagesToNotification([msg]);
     }
 
