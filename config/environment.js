@@ -182,6 +182,8 @@ module.exports = function(environment) {
     ENV.APP.API_HOST_URL = "https://api-staging.goodcity.hk";
     ENV.ADMIN_APP_HOST_URL = "https://admin-staging.goodcity.hk";
     ENV.BROWSE_APP_HOST_URL = "https://charities-staging.goodcity.hk";
+    ENV.APP.STOCK_APP_HOST_URL = "https://stock-staging.goodcity.hk";
+    ENV.APP.STOCK_ANDROID_APP_HOST_URL = "stock-staging.goodcity.hk";
     ENV.APP.SOCKETIO_WEBSERVICE_URL =
       "https://socket-staging.goodcity.hk:81/goodcity";
     ENV.APP.GOODCITY_NUMBER = "+85258084822";
