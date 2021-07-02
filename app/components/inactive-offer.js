@@ -9,6 +9,7 @@ export default Ember.Component.extend({
   i18n: Ember.inject.service(),
   invalidMessage: false,
   displayUserPrompt: false,
+  stopSharingAt: null,
 
   inactiveMessage: Ember.computed(function() {
     return this.get("i18n").t("inactive_offer.message");
@@ -36,7 +37,10 @@ export default Ember.Component.extend({
       var url = "/offers/" + offer.id + "/mark_inactive";
 
       new AjaxPromise(url, "PUT", this.get("session.authToken"), {
-        offer: { inactive_message: inactiveMessage }
+        offer: {
+          inactive_message: inactiveMessage,
+          sharing_expires_at: this.get("stopSharingAt")
+        }
       })
         .then(data => {
           this.get("store").pushPayload(data);

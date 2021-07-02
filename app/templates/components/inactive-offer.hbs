@@ -10,5 +10,7 @@
     <div class="{{if invalidMessage 'has-error'}} ui">
       {{auto-resize-textarea data-autoresize=true name="inactiveMessage" id="inactiveMessage" value=inactiveMessage maxlength=140 }}
     </div>
+
+    {{stop-offer-sharing offer=offer stopSharingAt=stopSharingAt}}
   {{/message-box}}
 {{/if}}
