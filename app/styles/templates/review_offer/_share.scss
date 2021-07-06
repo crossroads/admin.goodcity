@@ -115,7 +115,7 @@
           padding-right: 1rem;
           padding-bottom: 1rem;
           border-bottom: 1px solid gray;
-          
+
           .bold {
             @include bold();
             color: white;
@@ -130,7 +130,7 @@
           .package {
             padding: 1rem;
             border-bottom: 1px solid gray;
-            
+
             .package-share-checkbox {
               visibility: visible;
               position: relative;
@@ -208,6 +208,10 @@
 
   .threads {
     border-top: 1px solid gray;
+
+    .org-status-icon {
+      color: $white;
+    }
 
     .thread {
       width: 100%;

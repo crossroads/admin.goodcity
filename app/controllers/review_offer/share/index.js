@@ -198,6 +198,23 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   },
 
   actions: {
+    goToStockUserPage(userId) {
+      let finalUrl;
+
+      if (this.get("isMobileApp") && cordova.platformId === "android") {
+        // jshint ignore:line
+        finalUrl =
+          "android-app://hk.goodcity.stockstaging/https/" +
+          config.APP.STOCK_ANDROID_APP_HOST_URL +
+          "/users/" +
+          userId;
+        window.open(finalUrl, "_system");
+      } else {
+        finalUrl = config.APP.STOCK_APP_HOST_URL + "/users/" + userId;
+        window.open(finalUrl, "_blank");
+      }
+    },
+
     setSharingMode(mode) {
       this.set("selectedSharingMode", mode);
     },

@@ -22,6 +22,7 @@ export default Ember.Controller.extend({
   unreadOfferMessagesCount: Ember.computed(
     "offer.messages",
     "offer.messages.[]",
+    "offer.messages.@each.state",
     function() {
       return this.get("offer.messages")
         .filter(m => !m.get("isCharityConversation"))

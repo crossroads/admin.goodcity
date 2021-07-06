@@ -27,7 +27,10 @@
 <div class="threads">
   {{#each messageThreads as |thread|}}
     <div class="thread row" {{action 'openChat' thread.userId}}>
-      <div class="columns small-11">
+      <div class="columns small-2">
+        <img src={{thread.user.displayImageUrl}} />
+      </div>
+      <div class="columns small-9">
         <div class="flex space-between">
           <div>{{thread.user.firstName}} {{thread.user.lastName}}</div>
           <div>
@@ -35,7 +38,11 @@
             {{display-datetime thread.lastMessage.createdAt format="DD MMM YY, HH:mm"}}
           </div>
         </div>
-        <div>{{thread.organisation.nameEn}}</div>
+
+        <div {{action "goToStockUserPage" thread.user.id on='click' bubbles=false}}>
+          <i class="fa {{user-organisation-status-icon thread.user.organisationStatus}} org-status-icon"></i>
+          {{thread.user.organisation.nameEn}}
+        </div>
         <div class="message-preview">
           {{thread.lastMessage.body}}
         </div>
