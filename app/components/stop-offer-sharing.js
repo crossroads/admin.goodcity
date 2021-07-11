@@ -39,12 +39,17 @@ export default Ember.Component.extend({
     "selectedStopSharingTime",
     "selectedStopSharingDate",
     function() {
-      this.set(
-        "stopSharingAt",
-        `${this.get("selectedStopSharingDate")} ${this.get(
-          "selectedStopSharingTime"
-        )} HKT`
-      );
+      let pattern = /(\d{2})\/(\d{2})\/(\d{2})/;
+      if (typeof this.get("selectedStopSharingDate") === "string") {
+        let date = this.get("selectedStopSharingDate").replace(
+          pattern,
+          "$3/$2/$1"
+        );
+        this.set(
+          "stopSharingAt",
+          `${date} ${this.get("selectedStopSharingTime")} HKT`
+        );
+      }
     }
   ),
 

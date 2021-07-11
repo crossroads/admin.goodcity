@@ -54,7 +54,7 @@ export default Ember.TextField.extend({
           }
         },
 
-        onStart: function() {
+        onOpen: function() {
           var date = _this.get("selection");
           if (date) {
             date = _this._getValidDate(date);
