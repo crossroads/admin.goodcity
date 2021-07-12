@@ -27,5 +27,7 @@
         {{input type="text" name="cancelReason" value=offerCancelReason maxlength="50"}}
       </div>
     {{/if}}
+
+    {{stop-offer-sharing offer=offer stopSharingAt=stopSharingAt}}
   {{/message-box}}
 {{/if}}
