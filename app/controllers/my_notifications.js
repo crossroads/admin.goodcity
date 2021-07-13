@@ -232,7 +232,7 @@ export default Ember.Controller.extend({
       const params = {
         page: pageNo,
         state: state,
-        messageable_type: ["offer", "item"]
+        messageable_type: ["Offer", "Item"]
       };
 
       return new AjaxPromise(
