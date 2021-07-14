@@ -13,13 +13,15 @@
           <div class='ellipsis one-line-ellipsis message-text'>
             {{#if notification.item}}
               {{notification.item.donorDescription}}
+            {{else if notification.offerResponse}}
+              {{t "my_notifications.heading" name=notification.offerResponse.offer.createdBy.fullName}}
             {{else}}
               {{t "my_notifications.heading" name=notification.offer.createdBy.fullName}}
             {{/if}}
           </div>
 
           <div class="sender">
-            {{#if notification.isCharity}}
+            {{#if notification.offerResponse}}
               <i class="fa fa-building-o fa-lg"></i>
             {{else}}
               <i class="fa fa-user fa-lg"></i>

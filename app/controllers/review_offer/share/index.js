@@ -16,49 +16,36 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     return this.get("store").peekAll("message");
   }),
 
-  threadUserIds: Ember.computed(
-    "offer.id",
-    "offer.createdById",
-    "allMessages.[]",
-    "allMessages.length",
-    "allMessages.@each.{senderId,recipientId}",
-    function() {
-      return this.get("allMessages")
-        .filterBy("offerId", this.get("offer.id"))
-        .filter(m =>
-          // Messages from staff will have a recipient_id, but charity messages wont
-          m.get("fromCharity")
-        )
-        .mapBy("senderId")
-        .uniq();
-    }
-  ),
-
   messageThreads: Ember.computed(
     "offer.id",
     "offer.createdById",
-    "threadUserIds",
-    "threadUserIds.length",
     "allMessages.[]",
     "allMessages.length",
     "allMessages.@each.{senderId,recipientId}",
     function() {
-      return this.get("threadUserIds").map(uid => {
-        const messages = this.get("offer.messages")
+      let offerResponse = this.get("store")
+        .peekAll("offerResponse")
+        .filterBy("offerId", this.get("offer.id"));
+
+      return offerResponse.uniq().map(uid => {
+        let messages = this.get("allMessages")
           .sortBy("createdAt")
           .filter(
-            m => m.get("senderId") === uid || m.get("recipientId") === uid
+            m =>
+              m.get("messageableType") === "OfferResponse" &&
+              m.get("messageableId") === uid.id
           );
+
         const lastMessage = messages.get("lastObject");
 
         return {
-          userId: uid,
-          user: this.get("store").peekRecord("user", uid),
+          userId: uid.get("userId"),
+          user: this.get("store").peekRecord("user", uid.get("userId")),
           lastMessage: lastMessage,
           unreadCount: messages.reduce((sum, m) => {
             return sum + (m.get("isRead") ? 0 : 1);
           }, 0),
-          organisation: this.organisationOf(uid)
+          organisation: this.organisationOf(uid.get("userId"))
         };
       });
     }
