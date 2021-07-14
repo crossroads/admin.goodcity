@@ -1,0 +1,35 @@
+{{#if isSharedOffer}}
+  <div class="row offer-expiry-block">
+    <div class="heading">{{t "review_offer.update_offer_sharing"}}</div>
+    <div class="row">
+      <div class="small-5 columns listing-text">
+        {{t "review_offer.include_in_listing"}} <i class="fa fa-eye"></i>
+      </div>
+      <div class="small-6 columns">
+        {{input type="checkbox" class="stop-share-checkbox"
+        id='stopShareOffer'
+        checked=allowListingEnabled}}
+      </div>
+      <div class="small-1 columns"></div>
+    </div>
+    <div class="row">
+      <div class="small-5 columns">
+        {{t "review_offer.share_offer_until"}}
+      </div>
+      <div class="small-3 columns ui stop-share-input">
+        {{date-selector
+          name='selectedDate'
+          id='selectedDate'
+          value=selectedStopSharingDate
+          selection=selectedStopSharingDate
+          class="stopSharingDate"
+          placeholder="dd/mm/yy"
+          pattern="[a-zA-Z]{3}\s?[a-zA-Z]{3}\s?[0-9]{1,2}"}}
+      </div>
+      <div class="small-4 columns ui">
+        {{input type="time" class="stopSharingTime" name="stopSharingTime" value=selectedStopSharingTime}}
+      </div>
+    </div>
+    <span {{action "resetDateToNow"}}>{{t "review_offer.set_expiry_to_now"}}</span>
+  </div>
+{{/if}}

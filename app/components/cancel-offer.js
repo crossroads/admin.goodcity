@@ -50,6 +50,7 @@ export default Ember.Component.extend({
       offer.set("cancellationReason", selectedReason);
       offer.set("state_event", "cancel");
       this.set("offerCancelReason", "");
+      offer.set("sharing_expires_at", this.get("stopSharingAt"));
 
       offer.save().finally(() => {
         this.sendAction("toggleAction");

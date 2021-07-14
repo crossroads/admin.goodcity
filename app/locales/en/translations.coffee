@@ -253,6 +253,10 @@ I18nTranslationsEn =
       "add_note": "Tap to add/edit sticky note"
       "tap_to_save": "tap to save"
       "empty_offer_message": "This offer is empty. Do you want to delete it?"
+      "update_offer_sharing": "Update Offer Sharing"
+      "include_in_listing": "Include in listing"
+      "share_offer_until": "Share offer until"
+      "set_expiry_to_now": "Set expiry to now"
 
       "donor":
         "offer_id": "Offer ID"

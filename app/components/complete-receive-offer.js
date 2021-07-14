@@ -8,6 +8,7 @@ export default Ember.Component.extend({
   i18n: Ember.inject.service(),
   messageService: Ember.inject.service(),
   displayUserPrompt: false,
+  stopSharingAt: null,
 
   invalidMessage: Ember.computed({
     get() {
@@ -60,7 +61,8 @@ export default Ember.Component.extend({
       var url = "/offers/" + offerId + "/receive_offer";
 
       new AjaxPromise(url, "PUT", this.get("session.authToken"), {
-        close_offer_message: closeOfferMessage
+        close_offer_message: closeOfferMessage,
+        sharing_expires_at: this.get("stopSharingAt")
       })
         .then(data => {
           this.get("store").pushPayload(data);
