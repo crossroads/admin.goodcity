@@ -87,6 +87,16 @@ export default Ember.Controller.extend({
     notifications.insertAt(0, notif);
   },
 
+  loadIfAbsent(modelName, id) {
+    let store = this.get("store");
+    let cachedRecord = store.peekRecord(modelName, id);
+    if (cachedRecord) {
+      return cachedRecord;
+    }
+
+    return store.findRecord(modelName, id);
+  },
+
   /**
    * Creates a single notification out of multiple messages
    *
@@ -103,34 +113,41 @@ export default Ember.Controller.extend({
       "isPrivate"
     ];
 
-    let item, offer;
+    let item, offer, offerResponse;
     const lastMessage = messages.sortBy("id").get("lastObject");
     let messageableType = lastMessage.get("messageableType");
     let recordId = lastMessage.get("messageableId");
 
-    if (messageableType === "Item") {
-      item =
-        this.get("store").peekRecord("item", recordId) ||
-        this.get("store").findRecord("item", recordId);
-    } else if (messageableType === "Offer") {
-      offer =
-        this.get("store").peekRecord("offer", recordId) ||
-        this.get("store").findRecord("offer", recordId);
+    let camelCaseValue = _.camelCase(messageableType);
+
+    switch (camelCaseValue) {
+      case "offerResponse":
+        offerResponse = this.loadIfAbsent(camelCaseValue, recordId);
+        Ember.run(() => {
+          offerResponse &&
+            offerResponse.then(data => {
+              offer = this.loadIfAbsent("offer", data.get("offerId"));
+            });
+        });
+        break;
+      case "offer":
+        offer = this.loadIfAbsent(camelCaseValue, recordId);
+        break;
+      case "item":
+        item = this.loadIfAbsent(camelCaseValue, recordId);
+        break;
     }
 
-    let controller = this;
     let notification = Ember.Object.create(lastMessage.getProperties(props));
     notification.setProperties({
       key: this.buildMessageKey(lastMessage),
       item: item,
       messages: messages,
+      offerResponse: offerResponse,
       isSingleMessage: computed.equal("unreadCount", 1),
       isThread: computed.not("isSingleMessage"),
       offer: offer,
       recipientId: this.getRecipientId(lastMessage),
-      isCharity: computed("offer.createdById", function() {
-        return controller.isCharityDiscussion(this.get("messages.lastObject"));
-      }),
       text: computed("messages.[]", function() {
         return this.get("messages")
           .sortBy("id")
@@ -201,23 +218,6 @@ export default Ember.Controller.extend({
     return msg.get("senderId");
   },
 
-  isCharityDiscussion(message) {
-    if (
-      message.get("messageableType") !== "Offer" ||
-      message.get("isPrivate")
-    ) {
-      return false;
-    }
-
-    const donorId = message.get("offer.createdById");
-
-    return (
-      !donorId ||
-      (message.get("senderId") !== donorId &&
-        message.get("recipientId") !== donorId)
-    );
-  },
-
   actions: {
     /**
      * Loads a page of Message Notifications
@@ -232,7 +232,7 @@ export default Ember.Controller.extend({
       const params = {
         page: pageNo,
         state: state,
-        messageable_type: ["Offer", "Item"]
+        messageable_type: ["Offer", "Item", "OfferResponse"]
       };
 
       return new AjaxPromise(
@@ -255,21 +255,16 @@ export default Ember.Controller.extend({
     },
 
     view(notification) {
-      if (notification.get("isCharity")) {
-        this.transitionToRoute(
-          "review_offer.share.chat",
-          notification.get("offer.id"),
-          notification.get("recipientId")
-        );
-      } else {
-        const messageId = notification.get("id");
-        var message = this.store.peekRecord("message", messageId);
-        var route = this.get("messagesUtil").getRoute(message);
-        if (message.get("messageableType") === "Item") {
-          route[1] = message.get("item.offer.id");
-        }
-        this.transitionToRoute.apply(this, route);
+      const messageId = notification.get("id");
+      var message = this.store.peekRecord("message", messageId);
+
+      var route = this.get("messagesUtil").getRoute(message);
+      if (message.get("messageableType") === "Item") {
+        route[1] = message.get("item.offer.id");
+      } else if (message.get("messageableType") === "OfferResponse") {
+        route[1] = notification.offerResponse.get("offerId");
       }
+      this.transitionToRoute.apply(this, route);
     },
 
     markThreadRead(notification) {

@@ -18,6 +18,7 @@ export default DS.Model.extend({
   sender: belongsTo("user", { async: false }),
   item: belongsTo("item", { async: false }),
   offer: belongsTo("offer", { async: false }),
+  offerResponse: belongsTo("offerResponse", { async: false }),
 
   messageableType: attr("string"),
   messageableId: attr("string"),
@@ -35,54 +36,6 @@ export default DS.Model.extend({
   createdDate: Ember.computed(function() {
     return new Date(this.get("createdAt")).toDateString();
   }),
-
-  fromCharity: Ember.computed(
-    "messageableType",
-    "messageableId",
-    "senderId",
-    "isPrivate",
-    "recipientId",
-    "isCharityConversation",
-    function() {
-      if (!this.get("isCharityConversation")) {
-        return false;
-      }
-
-      // It's a message FROM an external user (a charity) if there is no recipient
-      return (
-        !this.get("recipientId") &&
-        this.get("senderId") !== this.get("offer.createdById")
-      );
-    }
-  ),
-
-  isCharityConversation: Ember.computed(
-    "messageableType",
-    "messageableId",
-    "senderId",
-    "isPrivate",
-    "recipientId",
-    function() {
-      if (this.get("messageableType") !== "Offer") {
-        return false;
-      }
-
-      const donorId = this.get("offer.createdById");
-
-      if (!donorId) {
-        return !this.get("isPrivate");
-      }
-
-      // It's a chat with an external user (a charity) if:
-      //  - It's public
-      //  - It does not involve the donor
-      return (
-        !this.get("isPrivate") &&
-        this.get("recipientId") !== donorId &&
-        this.get("senderId") !== donorId
-      );
-    }
-  ),
 
   itemImageUrl: Ember.computed.alias("item.displayImageUrl"),
   isRead: Ember.computed.equal("state", "read"),
