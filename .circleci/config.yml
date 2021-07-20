@@ -332,6 +332,11 @@ jobs:
                 echo 'export CERTIFICATE=hk.goodcity.dev.p12' >> $BASH_ENV
                 echo 'export PROVISIONING_PROFILE=GoodcityAdminStaging.mobileprovision' >> $BASH_ENV
                 ;;
+              Fix-ios-build-failure)
+               echo 'export ENVIRONMENT=staging' >> $BASH_ENV
+                echo 'export CERTIFICATE=hk.goodcity.dev.p12' >> $BASH_ENV
+                echo 'export PROVISIONING_PROFILE=GoodcityAdminStaging.mobileprovision' >> $BASH_ENV
+                ;;
               live)
                 echo 'export ENVIRONMENT=production' >> $BASH_ENV
                 echo 'export CERTIFICATE=hk.goodcity.p12' >> $BASH_ENV
@@ -452,4 +457,4 @@ workflows:
               - tests
             filters:
               branches:
-                only: /^(master|live)$/
+                only: /^(master|live|Fix-ios-build-failure)$/
