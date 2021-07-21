@@ -457,4 +457,4 @@ workflows:
               - tests
             filters:
               branches:
-                only: /^(master|live|Fix-ios-build-failure)$/
+                only: /^(master|live)$/
