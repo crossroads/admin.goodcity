@@ -98,7 +98,6 @@
     "deep-extend": "^0.5.1",
     "ember-cli-test-loader": "^1.1.0",
     "ember-form-validator": "^1.0.7",
-    "ember-infinite-list": "1.0.4",
     "ember-pretty-test": "^1.0.4",
     "ember-resolver": "^4.5.5",
     "extend": "2.0.2",
