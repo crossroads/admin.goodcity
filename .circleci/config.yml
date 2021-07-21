@@ -297,7 +297,7 @@ jobs:
 
   ios_build_and_deploy:
     macos:
-      xcode: "12.0.1"
+      xcode: "12.4.0"
     working_directory: ~/code
     shell: /bin/bash --login -eo pipefail
     environment:
@@ -392,7 +392,7 @@ jobs:
           command: npm i -g cordova-update-config
       - run:
           name: Install cordova globally
-          command: npm i -g cordova@10.0.0
+          command: npm i -g cordova@9.0.0
       - run:
           name: Create keychain and import p12 certificate
           command: bundle exec fastlane ios prepare_certificates cert:$CERTIFICATE
