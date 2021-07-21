@@ -416,9 +416,12 @@ workflows:
         - package_dependencies:
             requires:
               - checkout_code
-        # - tests:
-        #     requires:
-        #       - package_dependencies
+        - tests:
+            requires:
+              - package_dependencies
+            filters:
+              branches:
+                only: /^(master|live)$/
         # - upload-coverage:
         #     requires:
         #       - package_dependencies
