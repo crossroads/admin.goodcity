@@ -63,7 +63,7 @@ module.exports = function(environment) {
       NAMESPACE: "api/v1",
       NAMESPACE_V2: "api/v2",
 
-      PRELOAD_TYPES: ["territory", "printer"],
+      PRELOAD_TYPES: ["territory"],
       PRELOAD_AUTHORIZED_TYPES: [
         "package_type",
         "donor_condition",
