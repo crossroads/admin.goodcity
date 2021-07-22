@@ -84,13 +84,32 @@
     margin: 0 !important;
   }
 
+  input.stopSharingDate {
+    @media #{$large-only} {
+      padding-left: 1.5rem !important;
+      font-size: 1rem;
+    }
+
+    @media #{$small-only} {
+      padding-left: 0.5rem !important;
+    }
+
+    @media #{$medium-only} {
+      padding-top: 0.45rem !important;
+    }
+  }
+
   input.stopSharingTime {
-    height: 2.1rem;
-    width: 7.3rem;
+    font-size: 1rem;
+
+    @media #{$large-only} {
+      height: 2.05rem;
+      width: 7.5rem;
+    }
 
     @media #{$small-only} {
       height: 1.8rem;
-      width: 5.7rem;
+      font-size: 0.8rem;
     }
   }
 
