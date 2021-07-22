@@ -28,7 +28,7 @@ export default Ember.Component.extend({
   allowListingEnabled: Ember.computed.alias("isSharedOffer.allowListing"),
 
   selectedStopSharingTime: Ember.computed(function() {
-    return moment().format("hh:mm");
+    return moment().format("HH:mm");
   }),
 
   selectedStopSharingDate: Ember.computed(function() {
@@ -56,7 +56,7 @@ export default Ember.Component.extend({
   actions: {
     resetDateToNow() {
       this.set("selectedStopSharingDate", moment().format("DD/MM/YY"));
-      this.set("selectedStopSharingTime", moment().format("hh:mm"));
+      this.set("selectedStopSharingTime", moment().format("HH:mm"));
     },
 
     //Remove when Ember is upgraded to >= 3.0
