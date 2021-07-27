@@ -63,7 +63,7 @@ module.exports = function(environment) {
       NAMESPACE: "api/v1",
       NAMESPACE_V2: "api/v2",
 
-      PRELOAD_TYPES: ["territory", "printer"],
+      PRELOAD_TYPES: ["territory"],
       PRELOAD_AUTHORIZED_TYPES: [
         "package_type",
         "donor_condition",
@@ -74,7 +74,8 @@ module.exports = function(environment) {
         "crossroads_transport",
         "location",
         "cancellation_reason",
-        "holiday"
+        "holiday",
+        "printer"
       ],
       SHA: process.env.APP_SHA,
       SHARED_SHA: process.env.APP_SHARED_SHA,
