@@ -115,27 +115,39 @@ export default Ember.Controller.extend({
 
     let item, offer, offerResponse;
     const lastMessage = messages.sortBy("id").get("lastObject");
-    let messageableType = lastMessage.get("messageableType");
+    let messageableType = _.camelCase(lastMessage.get("messageableType"));
     let recordId = lastMessage.get("messageableId");
+    let response = this.loadIfAbsent(messageableType, recordId);
 
-    let camelCaseValue = _.camelCase(messageableType);
+    if (messageableType === "offerResponse") {
+      offerResponse = response;
 
-    switch (camelCaseValue) {
-      case "offerResponse":
-        offerResponse = this.loadIfAbsent(camelCaseValue, recordId);
-        Ember.run(() => {
-          offerResponse &&
-            offerResponse.then(data => {
-              offer = this.loadIfAbsent("offer", data.get("offerId"));
-            });
-        });
-        break;
-      case "offer":
-        offer = this.loadIfAbsent(camelCaseValue, recordId);
-        break;
-      case "item":
-        item = this.loadIfAbsent(camelCaseValue, recordId);
-        break;
+      Ember.run.later(() => {
+        let presentOffer = this.get("store").peekRecord(
+          "offer",
+          offerResponse.get("offerId")
+        );
+
+        if (presentOffer) {
+          if (!presentOffer.get("createdById")) {
+            this.get("store").unloadRecord(presentOffer); // Removing offer recieved in serializers of offer Response
+            notification.offerResponse.offer = this.get("store").findRecord(
+              "offer",
+              offerResponse.get("offerId")
+            );
+          } else {
+            notification.offerResponse.offer = presentOffer;
+          }
+        }
+      }, 2000);
+    }
+
+    if (messageableType === "offer") {
+      offer = response;
+    }
+
+    if (messageableType === "item") {
+      item = response;
     }
 
     let notification = Ember.Object.create(lastMessage.getProperties(props));
