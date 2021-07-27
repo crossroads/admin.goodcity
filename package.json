@@ -1,6 +1,6 @@
 {
   "name": "goodcity",
-  "version": "0.20.0",
+  "version": "0.20.1",
   "description": "The GoodCity Admin app enables administrators to process donated goods.",
   "private": true,
   "directories": {
@@ -103,6 +103,7 @@
     "ember-resolver": "^4.5.5",
     "extend": "2.0.2",
     "hoek": "4.2.1",
+    "ios-deploy": "^1.11.4",
     "loader.js": "^4.0.0",
     "lodash": "^4.17.11",
     "minimatch": "^3.0.2",
