@@ -1,7 +1,7 @@
 import Ember from "ember";
-import AsyncTasksMixin from "../../../mixins/async_tasks";
-import { SHAREABLE_TYPES } from "../../../models/shareable";
-import config from "../../../config/environment";
+import AsyncTasksMixin from "goodcity/mixins/async_tasks";
+import { SHAREABLE_TYPES } from "goodcity/models/shareable";
+import config from "goodcity/config/environment";
 
 export default Ember.Controller.extend(AsyncTasksMixin, {
   parent: Ember.inject.controller("review_offer.share"),
@@ -11,6 +11,8 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   shareables: Ember.computed.alias("parent.shareables"),
   offerService: Ember.inject.service(),
   sharingService: Ember.inject.service(),
+
+  charitiesWebsiteURL: config.BROWSE_APP_HOST_URL,
 
   allMessages: Ember.computed(function() {
     return this.get("store").peekAll("message");
@@ -51,6 +53,24 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     }
   ),
 
+  allowListingEnabled: Ember.computed({
+    get() {
+      this.get("offerShareable.allowListing");
+    },
+    set(_, value) {
+      return value;
+    }
+  }),
+
+  allowConfirm: Ember.computed(
+    "packageList",
+    "packageList.length",
+    "packageList.@each.shared",
+    function() {
+      return this.getWithDefault("packageList", []).findBy("shared", true);
+    }
+  ),
+
   organisationOf(userId) {
     const ou = this.get("store")
       .peekAll("organisations_user")
@@ -59,18 +79,6 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     return ou && ou.get("organisation");
   },
 
-  charitiesWebsiteURL: config.BROWSE_APP_HOST_URL,
-
-  sharingModes: Object.freeze({
-    PRIVATE: "private",
-    PUBLIC: "public",
-    PUBLIC_LISTED: "public_listed"
-  }),
-
-  sharingEnabled: Ember.computed("selectedSharingMode", function() {
-    return this.get("selectedSharingMode") !== this.get("sharingModes.PRIVATE");
-  }),
-
   isPackageShared(pkg) {
     return Boolean(
       this.get("store")
@@ -78,15 +86,6 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
         .filterBy("isPackage")
         .findBy("resourceId", pkg.get("id"))
     );
-  },
-
-  computeSharingMode(shareable) {
-    if (!shareable) {
-      return this.sharingModes.PRIVATE;
-    }
-    return shareable.get("allowListing")
-      ? this.sharingModes.PUBLIC_LISTED
-      : this.sharingModes.PUBLIC;
   },
 
   buildPackageList() {
@@ -104,19 +103,6 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
       };
     });
   },
-
-  allowConfirm: Ember.computed(
-    "selectedSharingMode",
-    "packageList",
-    "packageList.length",
-    "packageList.@each.shared",
-    function() {
-      return (
-        this.get("selectedSharingMode") === this.get("sharingModes").PRIVATE ||
-        this.getWithDefault("packageList", []).findBy("shared", true)
-      );
-    }
-  ),
 
   defaultNotes(locale) {
     const currentLocale = this.get("i18n.locale");
@@ -202,10 +188,6 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
       }
     },
 
-    setSharingMode(mode) {
-      this.set("selectedSharingMode", mode);
-    },
-
     openChat(recipientId) {
       this.replaceRoute("review_offer.share.chat", recipientId);
     },
@@ -213,7 +195,6 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     startEdit() {
       this.modalCatch(() => {
         const shareable = this.get("offerShareable");
-        this.set("selectedSharingMode", this.computeSharingMode(shareable));
         this.set("showZhNotes", false);
         this.set(
           "notesEn",
@@ -237,26 +218,24 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     },
 
     applyChanges() {
-      const offer = this.get("offer");
-      const shared =
-        this.get("selectedSharingMode") !== this.get("sharingModes.PRIVATE");
-      const listed =
-        this.get("selectedSharingMode") ===
-        this.get("sharingModes.PUBLIC_LISTED");
+      const listed = this.get("allowListingEnabled");
 
       this.runTask(async () => {
-        if (!shared) {
-          await this.get("sharingService").unshareOffer(offer);
-        } else {
-          await Ember.RSVP.all([
-            this.persistPackageChanges(),
-            this.persistOfferShareable({ allowListing: listed }),
-            this.persistPackageShareables()
-          ]);
-        }
+        await Ember.RSVP.all([
+          this.persistPackageChanges(),
+          this.persistOfferShareable({ allowListing: listed }),
+          this.persistPackageShareables()
+        ]);
 
         this.set("showEditor", false);
       });
+    },
+
+    deleteSharing() {
+      this.runTask(async () => {
+        await this.get("sharingService").unshareOffer(this.get("offer"));
+      });
+      this.set("showEditor", false);
     },
 
     toggleSelectAllPackages() {
