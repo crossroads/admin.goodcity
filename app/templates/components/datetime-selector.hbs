@@ -1,5 +1,5 @@
-<div class="row">
-  <div class="small-5 columns ui stop-share-input">
+<div class="row date-time-component">
+  <div class="date-calendar-input {{if invalidDateTime "error"}}">
     {{date-selector
       name='selectedDate'
       value=selectedDate
@@ -8,7 +8,7 @@
       placeholder="dd/mm/yy"
       pattern="[a-zA-Z]{3}\s?[a-zA-Z]{3}\s?[0-9]{1,2}"}}
   </div>
-  <div class="small-7 columns ui">
+  <div class="time-clock-input {{if invalidDateTime "error"}}">
     {{input type="time" class="selectedTime" name="selectedTime" value=selectedTime}}
   </div>
 </div>

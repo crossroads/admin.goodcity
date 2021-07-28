@@ -70,7 +70,16 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     }
   }),
 
-  allowConfirm: Ember.computed(
+  hasSelectedPackages: Ember.computed(
+    "packageList",
+    "packageList.length",
+    "packageList.@each.shared",
+    function() {
+      return this.getWithDefault("packageList", []).findBy("shared", true);
+    }
+  ),
+
+  allowSharing: Ember.computed(
     "packageList",
     "packageList.length",
     "packageList.@each.shared",

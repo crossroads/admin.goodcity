@@ -81,7 +81,8 @@
                 <div class="row notes-edition">
                   <div class="notes-lang-selection">
                     <span class="lang {{if pkgRow.zhNotes 'unselected' 'selected'}}" {{action (mut pkgRow.zhNotes) false}}>{{t 'notes_en'}}</span> |
-                    <span class="lang {{if pkgRow.zhNotes 'selected' 'unselected'}}" {{action (mut pkgRow.zhNotes) true}}>{{t 'notes_zh'}} *</span>
+                    <span class="lang {{if pkgRow.zhNotes 'selected' 'unselected'}}" {{action (mut pkgRow.zhNotes) true}}>{{t 'notes_zh'}}</span>
+                    {{#if pkgRow.package.notesZhTw}}<sup>●</sup>{{/if}}
                   </div>
                   <div class="notes-text">
                     {{#if pkgRow.zhNotes}}
@@ -98,7 +99,7 @@
       </div>
     </div>
 
-    {{#unless allowConfirm}}
+    {{#unless hasSelectedPackages}}
     <div class="sharing-warning">
       <i class="fa fa-exclamation-triangle"></i>
       You must select at least one item to share the offer.
@@ -112,7 +113,7 @@
         </button>
       </div>
       <div class="columns small-6">
-        <button {{action 'applyChanges'}} class="{{unless allowConfirm 'disabled'}}">
+        <button {{action 'applyChanges'}} class="{{unless allowSharing 'disabled'}}">
           {{t 'save_changes'}}
         </button>
       </div>

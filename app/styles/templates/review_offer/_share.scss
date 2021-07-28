@@ -289,3 +289,27 @@
     }
   }
 }
+
+.date-time-component {
+  padding: 0;
+
+  .date-calendar-input {
+    padding: 0;
+    width: 45%;
+    display: inline-block;
+
+    input {
+      height: 2.3rem !important;
+
+      @media #{$small-only} {
+        height: 1.95rem !important;
+      }
+    }
+  }
+
+  .time-clock-input {
+    padding: 0;
+    width: 53%;
+    display: inline-block;
+  }
+}
