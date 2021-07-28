@@ -32,7 +32,7 @@ export default Ember.Component.extend({
   }),
 
   selectedStopSharingDate: Ember.computed(function() {
-    return moment().format("DD/MM/YY");
+    return moment().format("DD/MM/YYYY");
   }),
 
   stopSharingObserver: Ember.observer(
@@ -55,7 +55,7 @@ export default Ember.Component.extend({
 
   actions: {
     resetDateToNow() {
-      this.set("selectedStopSharingDate", moment().format("DD/MM/YY"));
+      this.set("selectedStopSharingDate", moment().format("DD/MM/YYYY"));
       this.set("selectedStopSharingTime", moment().format("HH:mm"));
     },
 

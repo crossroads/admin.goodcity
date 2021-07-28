@@ -13,22 +13,13 @@ export default Ember.TextField.extend({
     "placeholder"
   ],
 
-  _getValidDate: function(selectedDate) {
-    var today = new Date();
-    var currentDate = new Date();
-    var selected = new Date(selectedDate);
-    currentDate.setHours(0, 0, 0, 0);
-    selected.setHours(0, 0, 0, 0);
-    return currentDate > selected ? today : selectedDate;
-  },
-
   didInsertElement() {
     var _this = this;
     var setting = false;
 
     Ember.run.scheduleOnce("afterRender", this, function() {
       Ember.$(".pickadate").pickadate({
-        format: "dd/mm/yy",
+        format: "dd/mm/yyyy",
         monthsFull: moment.months(),
         monthsShort: moment.monthsShort(),
         weekdaysShort: moment.weekdaysShort(),
@@ -48,7 +39,7 @@ export default Ember.TextField.extend({
             _this.set("selection", date);
             setting = true;
             Ember.run.next(() => {
-              this.set("select", new Date(date), { format: "dd/mm/yy" });
+              this.set("select", new Date(date), { format: "dd/mm/yyyy" });
               setting = false;
             });
           }
@@ -57,8 +48,8 @@ export default Ember.TextField.extend({
         onOpen: function() {
           var date = _this.get("selection");
           if (date) {
-            date = _this._getValidDate(date);
-            this.set("select", new Date(date), { format: "dd/mm/yy" });
+            date = date.replace(/(\d{2})\/(\d{2})\/(\d{4})/, "$2/$1/$3");
+            this.set("select", new Date(date), { format: "dd/mm/yyyy" });
           }
         }
       });

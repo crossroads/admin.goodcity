@@ -1,6 +1,7 @@
 {{#if isSharedOffer}}
   <div class="row offer-expiry-block">
     <div class="heading">{{t "review_offer.update_offer_sharing"}}</div>
+
     <div class="row">
       <div class="small-5 columns listing-text">
         {{t "review_offer.include_in_listing"}} <i class="fa fa-eye"></i>
@@ -12,6 +13,7 @@
       </div>
       <div class="small-1 columns"></div>
     </div>
+
     <div class="row">
       <div class="small-5 columns">
         {{t "review_offer.share_offer_until"}}
@@ -30,6 +32,7 @@
         {{input type="time" class="stopSharingTime" name="stopSharingTime" value=selectedStopSharingTime}}
       </div>
     </div>
+
     <span {{action "resetDateToNow"}}>{{t "review_offer.set_expiry_to_now"}}</span>
   </div>
 {{/if}}

@@ -11,7 +11,6 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   shareables: Ember.computed.alias("parent.shareables"),
   offerService: Ember.inject.service(),
   sharingService: Ember.inject.service(),
-
   charitiesWebsiteURL: config.BROWSE_APP_HOST_URL,
 
   allMessages: Ember.computed(function() {
@@ -53,9 +52,18 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     }
   ),
 
+  stopSharingAt: Ember.computed({
+    get() {
+      return this.get("offerShareable.expiresAt");
+    },
+    set(_, value) {
+      return value;
+    }
+  }),
+
   allowListingEnabled: Ember.computed({
     get() {
-      this.get("offerShareable.allowListing");
+      return this.get("offerShareable.allowListing");
     },
     set(_, value) {
       return value;
@@ -66,8 +74,12 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     "packageList",
     "packageList.length",
     "packageList.@each.shared",
+    "stopSharingAt",
     function() {
-      return this.getWithDefault("packageList", []).findBy("shared", true);
+      return (
+        this.getWithDefault("packageList", []).findBy("shared", true) &&
+        this.get("stopSharingAt")
+      );
     }
   ),
 
@@ -147,7 +159,8 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     return sharing.share(SHAREABLE_TYPES.OFFER, this.get("offer.id"), {
       allowListing: allowListing,
       notes: this.get("notesEn"),
-      notesZhTw: this.get("notesZh")
+      notesZhTw: this.get("notesZh"),
+      expiresAt: this.get("stopSharingAt")
     });
   },
 

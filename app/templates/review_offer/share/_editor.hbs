@@ -21,14 +21,7 @@
           {{t "review_offer.share_offer_until"}} *
         </div>
         <div class="small-7 columns stop-share-input">
-          {{date-selector
-          name='selectedDate'
-          id='stopSharingDate'
-          value=selectedStopSharingDate
-          selection=selectedStopSharingDate
-          class="stopSharingDate"
-          placeholder="dd/mm/yy"
-          pattern="[a-zA-Z]{3}\s?[a-zA-Z]{3}\s?[0-9]{1,2}"}}
+          {{datetime-selector selectedDateTime=stopSharingAt}}
         </div>
       </div>
 
