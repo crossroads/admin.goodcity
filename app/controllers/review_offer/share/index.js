@@ -83,10 +83,14 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     "packageList",
     "packageList.length",
     "packageList.@each.shared",
+    "packageList.@each.package.notes.length",
     "stopSharingAt",
     function() {
+      let packageList = this.getWithDefault("packageList", []);
       return (
-        this.getWithDefault("packageList", []).findBy("shared", true) &&
+        packageList.findBy("shared", true) &&
+        packageList.filterBy("shared", true).rejectBy("package.notes")
+          .length === 0 &&
         this.get("stopSharingAt")
       );
     }

@@ -84,13 +84,19 @@
                     <span class="lang {{if pkgRow.zhNotes 'selected' 'unselected'}}" {{action (mut pkgRow.zhNotes) true}}>{{t 'notes_zh'}}</span>
                     {{#if pkgRow.package.notesZhTw}}<sup>●</sup>{{/if}}
                   </div>
-                  <div class="notes-text">
+
                     {{#if pkgRow.zhNotes}}
+                    <div class="notes-text">
                       {{textarea type='textarea' value=pkgRow.package.notesZhTw placeholder=(t 'notes_zh')}}
+                    </div>
                     {{else}}
-                      {{textarea type='textarea' value=pkgRow.package.notes placeholder=(t 'notes_en')}}
+                    <div class="notes-text {{unless pkgRow.package.notes 'error'}}">
+                      {{textarea type='textarea'
+                        value=pkgRow.package.notes
+                        placeholder=(t 'notes_en')}}
+                    </div>
                     {{/if}}
-                  </div>
+
                 </div>
               </div>
             </div>

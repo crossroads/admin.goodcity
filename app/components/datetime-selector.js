@@ -24,7 +24,7 @@ export default Ember.Component.extend({
         { timeZone: "Asia/Hong_Kong" }
       );
       return moment(date).format("HH:mm");
-    } else {
+    } else if (this.get("selectedDate")) {
       return "00:00";
     }
   }),

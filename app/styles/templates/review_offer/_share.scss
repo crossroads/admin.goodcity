@@ -288,6 +288,12 @@
       width: 100vw;
     }
   }
+
+  .error textarea {
+    border-color: $coral-red !important;
+    background: $light-pitch !important;
+    margin-bottom: 1rem;
+  }
 }
 
 .date-time-component {
