@@ -13,7 +13,7 @@
 
     <div class="sharing-mode-selection">
       <div class="sharing-info">
-        Only users who have already responded will be able to see information about this offer after the share expires.
+        {{t "review_offer.share.info"}}
       </div>
 
       <div class="row ui">
@@ -108,7 +108,7 @@
     {{#unless hasSelectedPackages}}
     <div class="sharing-warning">
       <i class="fa fa-exclamation-triangle"></i>
-      You must select at least one item to share the offer.
+      {{t "review_offer.share.select_package"}}
     </div>
     {{/unless}}
 
@@ -127,7 +127,7 @@
 
     {{#if isShared}}
     <div class="delete-sharing-link" {{action "deleteSharing"}}>
-      Delete sharing link
+      {{t "review_offer.share.delete_sharing_link"}}
     </div>
     {{/if}}
   </div>
