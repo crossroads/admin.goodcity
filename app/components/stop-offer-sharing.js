@@ -46,10 +46,9 @@ export default Ember.Component.extend({
           pattern,
           "$3/$2/$1"
         );
-        this.set(
-          "stopSharingAt",
-          `${date} ${this.get("selectedStopSharingTime")} HKT`
-        );
+        let time = this.get("selectedStopSharingTime") || "23:59";
+
+        this.set("stopSharingAt", `${date} ${time} HKT`);
       }
     }
   ),

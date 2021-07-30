@@ -25,7 +25,7 @@ export default Ember.Component.extend({
       );
       return moment(date).format("HH:mm");
     } else if (this.get("selectedDate")) {
-      return "00:00";
+      return "23:59";
     }
   }),
 
@@ -37,7 +37,7 @@ export default Ember.Component.extend({
 
       if (typeof this.get("selectedDate") === "string") {
         let date = this.get("selectedDate").replace(pattern, "$3/$2/$1");
-        let time = this.get("selectedTime") || "00:00";
+        let time = this.get("selectedTime") || "23:59";
 
         if (date) {
           this.set("selectedDateTime", `${date} ${time} HKT`);
