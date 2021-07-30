@@ -225,7 +225,6 @@ I18nTranslationsEn =
       "offer_closed_by": "Offer closed by {{firstName}} {{lastName}}"
       "offer_cancelled_by": "Cancelled by {{firstName}} {{lastName}}"
       "receive": "Receive"
-      "share": "Share"
       "view_shared_offer": "View Shared Offer"
       "modify_sharing": "Modify Sharing"
       "share_offer": "Share offer"
@@ -259,6 +258,7 @@ I18nTranslationsEn =
       "set_expiry_to_now": "Set expiry to now"
 
       "share":
+        "title": "Share"
         "info": "Only users who have already responded will be able to see information about this offer after the share expires."
         "select_package": "You must select at least one item to share the offer."
         "delete_sharing_link": "Delete sharing link"
