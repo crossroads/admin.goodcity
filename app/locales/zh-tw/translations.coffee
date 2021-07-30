@@ -256,6 +256,11 @@ I18nTranslationsZhTw =
       "share_offer_until": "Share offer until"
       "set_expiry_to_now": "Set expiry to now"
 
+      "share":
+        "info": "Only users who have already responded will be able to see information about this offer after the share expires."
+        "select_package": "You must select at least one item to share the offer."
+        "delete_sharing_link": "Delete sharing link"
+
       "donor":
         "offer_id": "捐贈項目號碼"
         "district": "地區"

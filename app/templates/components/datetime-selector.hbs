@@ -1,0 +1,14 @@
+<div class="row date-time-component">
+  <div class="date-calendar-input {{if invalidDateTime "error"}}">
+    {{date-selector
+      name='selectedDate'
+      value=selectedDate
+      selection=selectedDate
+      class="stopSharingDate"
+      placeholder="dd/mm/yy"
+      pattern="[a-zA-Z]{3}\s?[a-zA-Z]{3}\s?[0-9]{1,2}"}}
+  </div>
+  <div class="time-clock-input {{if invalidDateTime "error"}}">
+    {{input type="time" class="selectedTime" name="selectedTime" value=selectedTime}}
+  </div>
+</div>
