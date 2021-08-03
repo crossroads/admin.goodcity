@@ -67,7 +67,7 @@ export default Ember.Controller.extend({
 
     let notif = notifications.findBy("key", this.buildMessageKey(msg));
     let isMessageByCurrentUser =
-      this.get("session.currentUser.id") === notif.get("sender.id");
+      this.get("session.currentUser.id") === msg.data["senderId"];
 
     if (notif) {
       // Update existing one
@@ -271,6 +271,11 @@ export default Ember.Controller.extend({
       var message = this.store.peekRecord("message", messageId);
 
       var route = this.get("messagesUtil").getRoute(message);
+
+      if (!route) {
+        return;
+      }
+
       if (message.get("messageableType") === "Item") {
         route[1] = message.get("item.offer.id");
       } else if (message.get("messageableType") === "OfferResponse") {

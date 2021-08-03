@@ -8,6 +8,7 @@ export default Ember.Service.extend({
   store: Ember.inject.service(),
   subscriptions: Ember.inject.controller(),
   messageBox: Ember.inject.service(),
+  i18n: Ember.inject.service(),
 
   unreadMessageCount: 0,
 
@@ -118,10 +119,10 @@ export default Ember.Service.extend({
 
   getRoute: function(message) {
     if (!message) {
-      this.get("messageBox").alert(this.get("i18n").t("404_error"), () => {
-        this.transitionToRoute("/");
-      });
+      this.get("messageBox").alert(this.get("i18n").t("404_error"));
+      return;
     }
+
     var messageableType = message.get
       ? message.get("messageableType")
       : message.messageable_type;
