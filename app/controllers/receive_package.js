@@ -23,7 +23,6 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   isAndroidDevice: false,
   displayError: false,
   // ----- Aliases -----
-  inventoryNumber: Ember.computed.alias("package.inventoryNumber"),
   package: Ember.computed.alias("model"),
 
   item: Ember.computed.alias("model.item"),
@@ -264,8 +263,8 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     });
   },
 
-  generateInventoryNumber() {
-    this.runTask(
+  async generateInventoryNumber() {
+    await this.runTask(
       this.get("packageService")
         .generateInventoryNumber()
         .then(data => this.set("inventoryNumber", data.inventory_number))
@@ -391,7 +390,10 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
               )
             );
           })
-          .catch(() => this.send("pkgUpdateError", pkg))
+          .catch(() => {
+            pkg.rollbackAttributes();
+            this.send("pkgUpdateError", pkg);
+          })
       );
     },
 
