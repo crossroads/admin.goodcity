@@ -33,14 +33,16 @@ export default AuthorizeRoute.extend({
     controller.set("displayInventoryOptions", false);
     controller.set("autoGenerateInventory", true);
     controller.set("inputInventory", false);
-    model.get("inventoryNumber");
+
     this.setupPrinterId(controller);
 
     if (model.get("isReceived") && model.get("inventoryNumber")) {
       return controller.redirectToReceiveOffer();
     }
     if (!model.get("inventoryNumber")) {
-      controller.generateInventoryNumber();
+      await controller.generateInventoryNumber();
+    } else {
+      controller.set("inventoryNumber", model.get("inventoryNumber"));
     }
 
     const valueHkDollar = await this.get("packageService").getItemValuation({
