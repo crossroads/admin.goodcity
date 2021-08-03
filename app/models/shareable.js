@@ -25,9 +25,11 @@ export default DS.Model.extend({
   notesZhTw: attr("string"),
 
   active: Ember.computed("expiresAt", function() {
-    return (
-      !this.get("expiresAt") || this.get("expiresAt").getTime() > Date.now()
-    );
+    if (this.get("expiresAt") && typeof this.get("expiresAt") !== "string") {
+      return this.get("expiresAt").getTime() > Date.now();
+    } else if (!this.get("expiresAt")) {
+      return true;
+    }
   }).volatile(),
 
   isPackage: Ember.computed.equal("resourceType", SHAREABLE_TYPES.PACKAGE),

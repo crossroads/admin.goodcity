@@ -52,7 +52,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     }
   ),
 
-  stopSharingAt: Ember.computed({
+  stopSharingAt: Ember.computed("offerShareable.expiresAt", {
     get() {
       return this.get("offerShareable.expiresAt");
     },
