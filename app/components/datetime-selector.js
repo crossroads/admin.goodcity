@@ -4,7 +4,7 @@ export default Ember.Component.extend({
   selectedDate: "",
   selectedTime: "",
 
-  setDate() {
+  initDate() {
     if (
       this.get("selectedDateTime") &&
       typeof this.get("selectedDateTime") !== "string"
@@ -16,7 +16,7 @@ export default Ember.Component.extend({
     }
   },
 
-  setTime() {
+  initTime() {
     if (
       this.get("selectedDateTime") &&
       typeof this.get("selectedDateTime") !== "string"
@@ -31,8 +31,8 @@ export default Ember.Component.extend({
 
   init() {
     this._super(...arguments);
-    this.setDate();
-    this.setTime();
+    this.initDate();
+    this.initTime();
   },
 
   invalidDateTime: Ember.computed("selectedDateTime", function() {
