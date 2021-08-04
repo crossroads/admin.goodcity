@@ -1,6 +1,6 @@
 {
   "name": "goodcity",
-  "version": "0.20.1",
+  "version": "0.20.2",
   "description": "The GoodCity Admin app enables administrators to process donated goods.",
   "private": true,
   "directories": {
