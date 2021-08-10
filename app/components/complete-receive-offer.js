@@ -58,19 +58,16 @@ export default Ember.Component.extend({
         .append();
       var offerId = this.get("offer.id");
 
-      var url_with_text = closeOfferMessage.slice(
-        closeOfferMessage.indexOf("[") + 1,
-        closeOfferMessage.indexOf("]")
-      );
-      var url_text_begin = url_with_text.indexOf("|");
-      var url_text = url_with_text.slice(0, url_text_begin);
-      var url_for = url_with_text.slice(url_text_begin + 1);
-
-      if (url_for === "feedback_form") {
-        closeOfferMessage = closeOfferMessage.replace(
-          "[" + url_with_text + "]",
-          `<a href=' https://crossroads-foundation.formstack.com/forms/goodcity_feedback?OfferId=${offerId}'>${url_text}</a>`
-        );
+      let expressionMatch = closeOfferMessage.match(/\[(.*?)\]/);
+      if (expressionMatch) {
+        let expression = expressionMatch[1];
+        let [mainText, replaceText] = expression.split("|");
+        if (replaceText === "feedback_form") {
+          closeOfferMessage = closeOfferMessage.replace(
+            "[" + expression + "]",
+            `<a href=' https://crossroads-foundation.formstack.com/forms/goodcity_feedback?OfferId=${offerId}'>${mainText}</a>`
+          );
+        }
       }
       var url = "/offers/" + offerId + "/receive_offer";
 
