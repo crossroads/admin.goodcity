@@ -58,6 +58,17 @@ export default Ember.Component.extend({
         .append();
       var offerId = this.get("offer.id");
 
+      let expressionMatch = closeOfferMessage.match(/\[(.*?)\]/);
+      if (expressionMatch) {
+        let expression = expressionMatch[1];
+        let [mainText, replaceText] = expression.split("|");
+        if (replaceText === "feedback_form") {
+          closeOfferMessage = closeOfferMessage.replace(
+            "[" + expression + "]",
+            `<a href=' https://crossroads-foundation.formstack.com/forms/goodcity_feedback?OfferId=${offerId}'>${mainText}</a>`
+          );
+        }
+      }
       var url = "/offers/" + offerId + "/receive_offer";
 
       new AjaxPromise(url, "PUT", this.get("session.authToken"), {
