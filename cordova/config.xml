@@ -88,6 +88,7 @@
   <preference name="scheme" value="app" />
   <preference name="hostname" value="localhost" />
   <allow-intent href="https://maps.google.com/*" />
+  <allow-intent href="https://crossroads-foundation.formstack.com/*"/>
   <engine name="ios" spec="6.1.1" />
   <engine name="android" spec="9.0.0" />
   <engine name="windows" spec="~4.3.1" />
