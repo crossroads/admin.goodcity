@@ -31,7 +31,7 @@
     </div>
   {{/unless}}
 
-  <div class="option_menu">
+  <div class="option_menu {{if isShared 'disable'}}">
     <a {{action "deleteOffer"}}>
       <i class="fa fa-trash"></i>
       {{t "review_offer.options.delete_offer"}}
