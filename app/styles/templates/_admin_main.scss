@@ -28,6 +28,14 @@
     padding: 0 1rem;
     line-height: 2.8rem;
 
+    &.disable {
+      a{
+        color: #7c8391 !important;
+        pointer-events: none;
+        cursor: not-allowed !important;
+      }
+    }
+
     i {
       margin-right: 0.5rem;
     }
