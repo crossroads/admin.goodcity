@@ -28,23 +28,22 @@ export default DS.Model.extend({
     let body = this.get("body");
     body = body.replace(/(<br>)/gm, "\n");
     body = body.replace(/(<)/g, "&lt;");
-    var offerId = this.get("messageableId");
 
     let hrefExpressionMatch = body.match(
       /\&lt;a href=(.*?)\>(.*?)\&lt;\/a\s*?\>/
     );
     if (hrefExpressionMatch) {
-      body = this.sanitizingAnchorLinks(body, offerId, hrefExpressionMatch);
+      body = this.sanitizingAnchorLinks(body, hrefExpressionMatch);
     }
     return body;
   }),
 
-  sanitizingAnchorLinks(body, offerId, hrefExpressionMatch) {
+  sanitizingAnchorLinks(body, hrefExpressionMatch) {
     let originalLink = hrefExpressionMatch[0];
     let anchorLink = hrefExpressionMatch[1];
     let text = hrefExpressionMatch[2];
     if (
-      anchorLink.includes(`offers/${offerId}/plan_delivery`) ||
+      anchorLink.includes("/plan_delivery") ||
       anchorLink.includes(
         "crossroads-foundation.formstack.com/forms/goodcity_feedback"
       )
