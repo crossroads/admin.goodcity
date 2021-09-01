@@ -163,7 +163,7 @@ export default Ember.Controller.extend({
       text: computed("messages.[]", function() {
         return this.get("messages")
           .sortBy("id")
-          .get("lastObject.body");
+          .get("lastObject.parsedBody");
       }),
       unreadCount: computed("messages.@each.unreadCount", "messages.[]", {
         get() {
