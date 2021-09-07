@@ -65,7 +65,7 @@ export default Ember.Component.extend({
         if (replaceText === "feedback_form") {
           closeOfferMessage = closeOfferMessage.replace(
             "[" + expression + "]",
-            `<a href=' https://crossroads-foundation.formstack.com/forms/goodcity_feedback?OfferId=${offerId}'>${mainText}</a>`
+            `<a href='https://crossroads-foundation.formstack.com/forms/goods_donor_survey?field114124226=${offerId}'>${mainText}</a>`
           );
         }
       }

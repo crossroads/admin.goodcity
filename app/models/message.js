@@ -45,7 +45,7 @@ export default DS.Model.extend({
     if (
       anchorLink.includes("/plan_delivery") ||
       anchorLink.includes(
-        "crossroads-foundation.formstack.com/forms/goodcity_feedback"
+        "crossroads-foundation.formstack.com/forms/goods_donor_survey?field"
       )
     ) {
       body = body.replace(originalLink, `<a href=${anchorLink}>${text}</a>`);
