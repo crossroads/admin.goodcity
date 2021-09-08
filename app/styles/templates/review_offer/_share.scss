@@ -28,14 +28,19 @@
 
     .notes-subtitle {
       margin-bottom: 0.5rem;
+      font-style: italic;
     }
 
     .notes-lang-selection {
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.2rem;
+
       .lang {
         color: gray;
         &.selected {
           color: white;
+        }
+        &.unselected {
+          text-decoration: underline;
         }
       }
     }
@@ -84,28 +89,26 @@
       }
 
       .sharing-mode-selection {
-        margin-top: 1rem;
-        li {
-          line-height: 1.5rem;
-          margin-bottom: 0.5rem;
-          border: none;
-          .bullet {
-            width: 1.5rem;
-            height: 1.5rem;
-            background-color: white;
-            border-radius: 50%;
-            padding-top: 0.25rem;
-            margin-left: 1rem;
-            margin-right: 1rem;
+        padding: 0.8rem;
 
-            .bullet-fill {
-              width: 1rem;
-              height: 1rem;
-              background-color: black;
-              border-radius: 50%;
-              margin: auto auto;
-            }
-          }
+        .sharing-info {
+          font-style: italic;
+          margin-bottom: 1rem;
+        }
+
+        .row {
+          color: white;
+          line-height: 2;
+          height: 100%;
+        }
+
+        .show-listing-checkbox {
+          visibility: visible;
+          position: relative !important;
+          width: 1rem;
+          height: 1rem;
+          background: white;
+          left: 0 !important;
         }
       }
 
@@ -130,6 +133,7 @@
           .package {
             padding: 1rem;
             border-bottom: 1px solid gray;
+            padding-bottom: 0;
 
             .package-share-checkbox {
               visibility: visible;
@@ -145,7 +149,7 @@
               width: 5rem;
               height: 5rem;
               overflow: hidden;
-              margin: 1rem auto 0 auto;
+              // margin: 1rem auto 0 auto;
 
               @include screen-lte(300px) {
                 width: 4rem;
@@ -175,7 +179,7 @@
 
             .package-name {
               margin-bottom: 0;
-              height: 1.5rem;
+              height: 1rem;
 
               .columns {
                 padding-left: 0;
@@ -189,6 +193,7 @@
         .columns {
           text-align: center;
           padding: 1rem;
+          height: 5rem;
 
           button {
             &.light {
@@ -204,6 +209,26 @@
         }
       }
     }
+
+    .button-row button {
+      font-size: 0.8rem;
+      width: 100%;
+    }
+  }
+
+  .sharing-warning {
+    background: #f34d4f;
+    padding: 0.2rem;
+    margin: 1rem;
+    margin-bottom: 0;
+    color: white;
+  }
+
+  .delete-sharing-link {
+    text-align: center;
+    height: 5rem;
+    text-decoration: underline;
+    color: white;
   }
 
   .threads {
@@ -262,5 +287,35 @@
       left: 0;
       width: 100vw;
     }
+  }
+
+  .error textarea {
+    border-color: $coral-red !important;
+    background: $light-pitch !important;
+    margin-bottom: 1rem;
+  }
+}
+
+.date-time-component {
+  padding: 0;
+
+  .date-calendar-input {
+    padding: 0;
+    width: 45%;
+    display: inline-block;
+
+    input {
+      height: 2.3rem !important;
+
+      @media #{$small-only} {
+        height: 1.95rem !important;
+      }
+    }
+  }
+
+  .time-clock-input {
+    padding: 0;
+    width: 53%;
+    display: inline-block;
   }
 }

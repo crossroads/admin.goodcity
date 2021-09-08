@@ -67,7 +67,7 @@ export default Ember.Controller.extend({
 
     let notif = notifications.findBy("key", this.buildMessageKey(msg));
     let isMessageByCurrentUser =
-      this.get("session.currentUser.id") === notif.get("sender.id");
+      this.get("session.currentUser.id") === msg.data["senderId"];
 
     if (notif) {
       // Update existing one
@@ -87,6 +87,16 @@ export default Ember.Controller.extend({
     notifications.insertAt(0, notif);
   },
 
+  loadIfAbsent(modelName, id) {
+    let store = this.get("store");
+    let cachedRecord = store.peekRecord(modelName, id);
+    if (cachedRecord) {
+      return cachedRecord;
+    }
+
+    return store.findRecord(modelName, id);
+  },
+
   /**
    * Creates a single notification out of multiple messages
    *
@@ -103,38 +113,57 @@ export default Ember.Controller.extend({
       "isPrivate"
     ];
 
-    let item, offer;
+    let item, offer, offerResponse;
     const lastMessage = messages.sortBy("id").get("lastObject");
-    let messageableType = lastMessage.get("messageableType");
+    let messageableType = _.camelCase(lastMessage.get("messageableType"));
     let recordId = lastMessage.get("messageableId");
+    let response = this.loadIfAbsent(messageableType, recordId);
 
-    if (messageableType === "Item") {
-      item =
-        this.get("store").peekRecord("item", recordId) ||
-        this.get("store").findRecord("item", recordId);
-    } else if (messageableType === "Offer") {
-      offer =
-        this.get("store").peekRecord("offer", recordId) ||
-        this.get("store").findRecord("offer", recordId);
+    if (messageableType === "offerResponse") {
+      offerResponse = response;
+
+      Ember.run.later(() => {
+        let presentOffer = this.get("store").peekRecord(
+          "offer",
+          offerResponse.get("offerId")
+        );
+
+        if (presentOffer) {
+          if (!presentOffer.get("createdById")) {
+            this.get("store").unloadRecord(presentOffer); // Removing offer recieved in serializers of offer Response
+            notification.offerResponse.offer = this.get("store").findRecord(
+              "offer",
+              offerResponse.get("offerId")
+            );
+          } else {
+            notification.offerResponse.offer = presentOffer;
+          }
+        }
+      }, 2000);
     }
 
-    let controller = this;
+    if (messageableType === "offer") {
+      offer = response;
+    }
+
+    if (messageableType === "item") {
+      item = response;
+    }
+
     let notification = Ember.Object.create(lastMessage.getProperties(props));
     notification.setProperties({
       key: this.buildMessageKey(lastMessage),
       item: item,
       messages: messages,
+      offerResponse: offerResponse,
       isSingleMessage: computed.equal("unreadCount", 1),
       isThread: computed.not("isSingleMessage"),
       offer: offer,
       recipientId: this.getRecipientId(lastMessage),
-      isCharity: computed("offer.createdById", function() {
-        return controller.isCharityDiscussion(this.get("messages.lastObject"));
-      }),
       text: computed("messages.[]", function() {
         return this.get("messages")
           .sortBy("id")
-          .get("lastObject.body");
+          .get("lastObject.parsedBody");
       }),
       unreadCount: computed("messages.@each.unreadCount", "messages.[]", {
         get() {
@@ -201,23 +230,6 @@ export default Ember.Controller.extend({
     return msg.get("senderId");
   },
 
-  isCharityDiscussion(message) {
-    if (
-      message.get("messageableType") !== "Offer" ||
-      message.get("isPrivate")
-    ) {
-      return false;
-    }
-
-    const donorId = message.get("offer.createdById");
-
-    return (
-      !donorId ||
-      (message.get("senderId") !== donorId &&
-        message.get("recipientId") !== donorId)
-    );
-  },
-
   actions: {
     /**
      * Loads a page of Message Notifications
@@ -232,7 +244,7 @@ export default Ember.Controller.extend({
       const params = {
         page: pageNo,
         state: state,
-        messageable_type: ["offer", "item"]
+        messageable_type: ["Offer", "Item", "OfferResponse"]
       };
 
       return new AjaxPromise(
@@ -255,21 +267,21 @@ export default Ember.Controller.extend({
     },
 
     view(notification) {
-      if (notification.get("isCharity")) {
-        this.transitionToRoute(
-          "review_offer.share.chat",
-          notification.get("offer.id"),
-          notification.get("recipientId")
-        );
-      } else {
-        const messageId = notification.get("id");
-        var message = this.store.peekRecord("message", messageId);
-        var route = this.get("messagesUtil").getRoute(message);
-        if (message.get("messageableType") === "Item") {
-          route[1] = message.get("item.offer.id");
-        }
-        this.transitionToRoute.apply(this, route);
+      const messageId = notification.get("id");
+      var message = this.store.peekRecord("message", messageId);
+
+      var route = this.get("messagesUtil").getRoute(message);
+
+      if (!route) {
+        return;
       }
+
+      if (message.get("messageableType") === "Item") {
+        route[1] = message.get("item.offer.id");
+      } else if (message.get("messageableType") === "OfferResponse") {
+        route[1] = notification.offerResponse.get("offerId");
+      }
+      this.transitionToRoute.apply(this, route);
     },
 
     markThreadRead(notification) {

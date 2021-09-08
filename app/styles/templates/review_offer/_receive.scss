@@ -114,9 +114,32 @@
     display: none;
   }
 }
+
 .complete_receive_overlay {
-  div {
+  .close-offer-message-box div {
     width: 100%;
+  }
+
+  .offer-expiry-block .row {
+    width: 100%;
+  }
+
+  .stop-share-input div {
+    display: block;
+  }
+
+  input.stopSharingTime {
+    width: 7.8rem;
+
+    @media #{$small-only} {
+      width: 5.8rem;
+    }
+  }
+
+  .listing-text {
+    @media #{$small-only} {
+      width: 7.5rem;
+    }
   }
 }
 

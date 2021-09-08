@@ -61,6 +61,7 @@ module.exports = function(environment) {
         "https://www.google.com.hk/maps/place/22%C2%B022'27.9%22N+113%C2%B059'36.1%22E/@22.3744154,113.9758515,14z/data=!3m1!4b1!4m2!3m1!1s0x0:0x0",
       // RESTAdapter Settings
       NAMESPACE: "api/v1",
+      OTP_RESEND_TIME: 60,
       NAMESPACE_V2: "api/v2",
 
       PRELOAD_TYPES: ["territory"],

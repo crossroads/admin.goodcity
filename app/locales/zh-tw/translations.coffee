@@ -251,6 +251,15 @@ I18nTranslationsZhTw =
       "add_note": "按下以增加/修改記事板"
       "tap_to_save": "按下以儲存"
       "empty_offer_message": "這個捐贈沒有任何相關物資。你是否需要刪除"
+      "update_offer_sharing": "Update Offer Sharing"
+      "include_in_listing": "Include in listing"
+      "share_offer_until": "Share offer until"
+      "set_expiry_to_now": "Set expiry to now"
+
+      "share":
+        "info": "Only users who have already responded will be able to see information about this offer after the share expires."
+        "select_package": "You must select at least one item to share the offer."
+        "delete_sharing_link": "Delete sharing link"
 
       "donor":
         "offer_id": "捐贈項目號碼"
