@@ -1,15 +1,27 @@
 <div class="button-container flex space-between">
-    {{#if isShared}}
+  {{#if offerShareableLinkPresentAndNotDeleted}}
+    <div class="expiry-details">
       <div>
-        <span class="charities-link">
-          <a target="_blank" href="{{charitiesWebsiteURL}}/offers/{{offerShareable.publicUid}}">
-            {{t 'review_offer.view_shared_offer'}}
-          </a>
-        </span>
-        <i class="fa fa-external-link fa-lg"></i>
+        Expiry:{{date-time-string offerShareableLinkPresentAndNotDeleted.expiresAt}}
       </div>
-    {{/if}}
-    <button class="button add-item" {{action 'startEdit'}}>
+      <div>
+        {{#if isShared}}
+          <span class="charities-link">
+            <a target="_blank" href="{{charitiesWebsiteURL}}/offers/{{offerShareable.publicUid}}">
+              {{t 'review_offer.view_shared_offer'}}
+            </a>
+          </span>
+          <i class="fa fa-external-link fa-lg"></i>
+          {{#if allowListingEnabled}}
+            (listed)
+          {{/if}}
+        {{else}}
+          {{t 'review_offer.share_expired'}}
+        {{/if}}
+      </div>
+    </div>
+  {{/if}}
+  <button class="button add-item" {{action 'startEdit'}}>
     {{#if isShared}}
       <span>{{t "review_offer.modify_sharing"}}</span>
     {{else}}
