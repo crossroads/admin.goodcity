@@ -61,6 +61,18 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     }
   }),
 
+  isOfferShareableLinkAvailable: Ember.computed(
+    "offerShareable",
+    "stopSharingAt",
+    "offer.id",
+    function() {
+      return this.get("store")
+        .peekAll("shareable")
+        .filterBy("offerId", this.get("offer.id"))
+        .shift();
+    }
+  ),
+
   allowListingEnabled: Ember.computed({
     get() {
       return this.get("offerShareable.allowListing");
