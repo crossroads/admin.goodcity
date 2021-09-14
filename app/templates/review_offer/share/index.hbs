@@ -1,8 +1,8 @@
 <div class="button-container flex space-between">
-  {{#if offerShareableLinkPresentAndNotDeleted}}
+  {{#if isOfferShareableLinkAvailable}}
     <div class="expiry-details">
       <div>
-        Expiry:{{date-time-string offerShareableLinkPresentAndNotDeleted.expiresAt}}
+        Expiry:{{date-time-string isOfferShareableLinkAvailable.expiresAt}}
       </div>
       <div>
         {{#if isShared}}

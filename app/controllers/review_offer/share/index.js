@@ -61,7 +61,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     }
   }),
 
-  offerShareableLinkPresentAndNotDeleted: Ember.computed(
+  isOfferShareableLinkAvailable: Ember.computed(
     "offerShareable",
     "stopSharingAt",
     "offer.id",
