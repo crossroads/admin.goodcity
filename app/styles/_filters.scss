@@ -140,6 +140,12 @@
     @media #{$small-only} {
       margin-left: -0.1rem !important;
     }
+    .intended-expired-sharing{
+      padding-left: 1rem;
+      .offer-state{
+        color: $medium-blue ;
+      }
+    }
     .offer-state {
       color: white;
       margin-left: 0.5rem;

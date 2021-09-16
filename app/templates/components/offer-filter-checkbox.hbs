@@ -5,5 +5,7 @@
 <i class="fa fa-{{state-filter-icon name}}"></i>
 <br>
 <label class="radio-button-text state-info" for={{name}}>
-  <span>{{t (concat (concat "offer_filters." name) "_info")}}</span>
+  {{#unless noLabel }}
+    <span>{{t (concat (concat "offer_filters." name) "_info")}}</span>
+  {{/unless}}
 </label>

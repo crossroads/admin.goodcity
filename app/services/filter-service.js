@@ -25,7 +25,8 @@ const PERSISTENT_VAR = function(propName, defaultValue, deserializeMap = {}) {
 
 export const STATE_FILTERS = {
   PRIORITY: "priorityOffers",
-  PUBLISHED: "publishedOffers",
+  PUBLISHED: "nonExpiredPublishedOffers",
+  EXPIREDSHAREABLES: "allPublishedOffers",
   NEW: "submitted",
   REVIEWING: "under_review",
   REVIEWED: "reviewed",
@@ -52,6 +53,11 @@ export default Ember.Service.extend(Ember.Evented, {
   isPublished() {
     const filters = this.get("offerStateFilters");
     return _.includes(filters, STATE_FILTERS.PUBLISHED);
+  },
+
+  includeExpiryShareables() {
+    const filters = this.get("offerStateFilters");
+    return _.includes(filters, STATE_FILTERS.EXPIREDSHAREABLES);
   },
 
   clearOfferStateFilters() {
