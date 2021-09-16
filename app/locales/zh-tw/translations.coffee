@@ -16,7 +16,7 @@ I18nTranslationsZhTw =
     "notes_en": "Notes EN"
     "notes_zh": "Notes 中文"
     "not_now" : "暫不決定"
-    "save_changes": "Save Changes"
+    "save_changes": "儲存變更"
     "search":
       "no_results": "抱歉，未能找到結果！"
       "server_search": "於服務器上尋找更多資訊"
@@ -31,7 +31,7 @@ I18nTranslationsZhTw =
       "search": "搜尋使用者"
 
     "camera_scan":
-      "permission_error": "Camera permission is not turned on."
+      "permission_error": "未能取得相機鏡頭的權限。"
 
     "holiday":
       "name": "假期名稱"
@@ -42,7 +42,7 @@ I18nTranslationsZhTw =
       "delete_confirm": "你確定要刪除此項假期嗎？"
 
     "chats":
-      "no_recipient": "Missing recipient. This chat is disabled"
+      "no_recipient": "沒有收件人。本對話已失效"
 
     "offer":
       "title": "捐贈細節"
@@ -79,81 +79,81 @@ I18nTranslationsZhTw =
         "start_receiving_by": "{{lastName}} {{firstName}} 正在接收"
         "inactive": "列作暫停"
     offer_sorts:
-      sort_by: "Sort By",
-      due_date: "Due date"
-      create_date: "Created date"
-      oldest: "Oldest"
-      newest: "Newest"
+      sort_by: "排序",
+      due_date: "到期日"
+      create_date: "建立日期"
+      oldest: "最舊"
+      newest: "最新"
     offer_filters:
       time_presets:
-        overdue: "Overdue",
-        today: "Today",
-        tomorrow: "Tomorrow",
-        week: "This week",
-        next_week: "Next week",
-        month: "This month",
-        next_month: "Next month"
+        overdue: "已逾期",
+        today: "今天",
+        tomorrow: "明天",
+        week: "本星期",
+        next_week: "下星期",
+        month: "本月",
+        next_month: "下月"
 
-      show_priority_offers: "Only Show ..."
-      offer_statuses: "Offer Statuses"
-      on_or_after: "On or after"
-      on_or_before: "On or before"
-      apply: "Apply"
-      clear: "Clear"
-      back: "Back"
-      self_review: "Mine"
-      all_review: "All"
-      time_filter_title: "Offer Due Date"
-      button_state: "State"
-      priorityOffers: "Priority Offers"
-      priorityOffers_info: "Have remained in a state too long. Need attention."
-      publishedOffers: "Published Offers"
-      publishedOffers_info: "Shared on charity site"
-      submitted: "New"
-      submitted_info: "Offers that have yet to be reviewed."
-      under_review: "Reviewing"
-      under_review_info: "Offers currently being reviewed."
-      reviewed: "Reviewed"
-      reviewed_info: "Offers that need to be scheduled."
-      scheduled: "Scheduled"
-      scheduled_info: "GoodCity order being dispatctched now."
-      receiving: "Receiving"
-      receiving_info: "We are unloading truck right now"
-      received: "Received"
-      received_info: "Success"
-      cancelled: "Cancelled"
-      cancelled_info: "Failed"
-      inactive: "Inactive"
-      inactive_info: "Donor non-responsive"
+      show_priority_offers: "只顯示 …"
+      offer_statuses: "捐贈狀態"
+      on_or_after: "在此日期或之後"
+      on_or_before: "在此日期或之前"
+      apply: "應用"
+      clear: "清除"
+      back: "返回"
+      self_review: "我的"
+      all_review: "全部"
+      time_filter_title: "捐贈到期日"
+      button_state: "狀態"
+      priorityOffers: "優先的捐贈"
+      priorityOffers_info: "在此狀態維持太長時間。需要跟進。"
+      publishedOffers: "已發佈的捐贈"
+      publishedOffers_info: "在好人好市慈善機構版網站分享"
+      submitted: "新的"
+      submitted_info: "等待審核的捐贈。"
+      under_review: "審核中"
+      under_review_info: "現正就捐贈進行審核。"
+      reviewed: "已審核"
+      reviewed_info: "需要排期的捐贈。"
+      scheduled: "已排期"
+      scheduled_info: "好人好市訂單已發出。"
+      receiving: "接收中"
+      receiving_info: "我們現正從貨車卸貨"
+      received: "已接收"
+      received_info: "成功"
+      cancelled: "已取消"
+      cancelled_info: "失敗"
+      inactive: "非活躍"
+      inactive_info: "捐贈者未有回應"
 
     "items":
-      "title": "Receive-{{packageName}}"
+      "title": "接收中-{{packageName}}"
       "remove_item":
-        "confirmation_message": "Are you sure you want to cancel this item?"
-        "yes": "Yes"
-        "no": "No"
+        "confirmation_message": "你確定要取消這個項目嗎？"
+        "yes": "是"
+        "no": "否"
       "add_item":
         "description_placeholder" : "這是甚麼？有多少件物資？物資大小？"
-        "quantity": "Quantity"
-        "type": "Type"
-        "add_images": "Add Images"
-        "description": "Description"
-        "quality": "Quality"
-        "location": "Locations"
-        "size": "Size(cm)"
-        "labels": "Labels"
-        "inventory": "Inventory"
-        "publish": "Publish"
-        "receive": "Receive"
-        "print": "& Print {{labels}}"
-        "printer": "Printer"
+        "quantity": "數量"
+        "type": "類別"
+        "add_images": "新增圖片"
+        "description": "描述"
+        "quality": "質量"
+        "location": "位置"
+        "size": "大小(厘米)"
+        "labels": "標籤"
+        "inventory": "庫存"
+        "publish": "發佈"
+        "receive": "接收"
+        "print": "及列印 {{labels}}"
+        "printer": "打印機"
       "validation":
-        "dimensions": "Provide all three dimensions(or none)"
-        "quantity": "Quantity cannot be blank or 0."
-        "labels": "Can't be blank."
-        "max_lable_count": "Max 300"
-        "description": "Description cannot be blank."
-        "inventory_number": "Inventory Number cannot be blank."
+        "dimensions": "提供三邊尺寸 (或不適用)"
+        "quantity": "數量不能留空或為0。"
+        "labels": "不能留空。"
+        "max_lable_count": "最多300"
+        "description": "描述不能留空。"
+        "inventory_number": "庫存編號不能留空。"
 
     "item":
       "accepted": "已接受"
@@ -170,18 +170,18 @@ I18nTranslationsZhTw =
         "info_text2": "假如您想添加任何有關捐贈物品的資料，請於下面的對話框輸入。"
 
     "dashboard":
-      "title": "Dashboard",
-      "all_active_offers": "All Active Offers"
-      "my_active_offers": "My Active Offers",
-      "under_review": "Reviewing",
-      "reviewed": "Reviewed",
-      "scheduled": "Scheduled",
-      "receiving": "Receiving",
-      "inactive": "Inactive",
-      "cancelled": "Cancelled",
-      "received": "Received",
-      "new_offers": "New Offers",
-      "view_all_offers": "View all new offers"
+      "title": "儀表板",
+      "all_active_offers": "全部活躍捐贈"
+      "my_active_offers": "我的活躍捐贈",
+      "under_review": "審核中",
+      "reviewed": "已審核",
+      "scheduled": "已排期",
+      "receiving": "接收中",
+      "inactive": "非活躍",
+      "cancelled": "已取消",
+      "received": "已接收",
+      "new_offers": "新的捐贈",
+      "view_all_offers": "查看所有新捐贈"
 
     "inbox":
       "quick_links": "快捷鍵"
@@ -223,24 +223,24 @@ I18nTranslationsZhTw =
       "offer_closed_by": "捐贈項目由 {{firstName}} {{lastName}} 關閉"
       "offer_cancelled_by": "捐贈項目由 {{firstName}} {{lastName}} 取消"
       "receive": "收到"
-      "share": "Share"
-      "share_offer": "Share this offer"
-      "sale_allowed": "Sale of these items is allowed"
-      "sharing_notes_default": "Interested parties should indicate the quantity and timing of their interest"
-      "sale_not_allowed": "Sale of these items is not allowed"
-      "offer_instructions_en": "Offer Instructions EN"
-      "offer_instructions_zh": "Offer Instructions 中文"
-      "offer_instructions_details": "These will be visible to external viewers"
-      "modify_sharing": "Modify Sharing"
+      "share": "分享"
+      "share_offer": "分享此捐贈"
+      "sale_allowed": "這些物品可以被轉售"
+      "sharing_notes_default": "有意申請的團體可表明需求的數量、日期及時間。"
+      "sale_not_allowed": "這些物品不可被轉售"
+      "offer_instructions_en": "捐贈教學 EN"
+      "offer_instructions_zh": "捐贈教學 中文"
+      "offer_instructions_details": "所有使用者都可以瀏覽此捐贈"
+      "modify_sharing": "更改分享"
       "view_shared_offer": "View Share"
       "share_expired": "Share Expired"
-      "share_offer_explanation": "Make it possible for registered charities to see and indicate interest in this offer"
-      "private_sharing_mode_desc": "Do not share"
-      "public_sharing_mode_desc": "Share via URL"
-      "public_listed_sharing_mode_desc": "Share via URL + Website listing"
-      "items_to_share": "Items to share"
-      "cannot_share_offer_without_packages": "An offer with no created packages cannot be shared"
-      "select_all": "Select all"
+      "share_offer_explanation": "讓本地註冊慈善團體查看及申請此捐贈"
+      "private_sharing_mode_desc": "不要分享"
+      "public_sharing_mode_desc": "透過網址分享"
+      "public_listed_sharing_mode_desc": "透過網址分享 + 網站列表"
+      "items_to_share": "分享的項目"
+      "cannot_share_offer_without_packages": "不能分享沒有項目的捐贈"
+      "select_all": "全選"
       "missing": "遺失"
       "received": "已經收到"
       "expecting": "等候中"
@@ -252,15 +252,15 @@ I18nTranslationsZhTw =
       "add_note": "按下以增加/修改記事板"
       "tap_to_save": "按下以儲存"
       "empty_offer_message": "這個捐贈沒有任何相關物資。你是否需要刪除"
-      "update_offer_sharing": "Update Offer Sharing"
-      "include_in_listing": "Include in listing"
-      "share_offer_until": "Share offer until"
-      "set_expiry_to_now": "Set expiry to now"
+      "update_offer_sharing": "更新捐贈分享"
+      "include_in_listing": "包含在列表內"
+      "share_offer_until": "分享捐贈至"
+      "set_expiry_to_now": "設定到期日為現在"
 
       "share":
-        "info": "Only users who have already responded will be able to see information about this offer after the share expires."
-        "select_package": "You must select at least one item to share the offer."
-        "delete_sharing_link": "Delete sharing link"
+        "info": "只有已回覆的使用者可在分享到期後繼續查看捐贈資訊。"
+        "select_package": "你必須選擇至少1個項目以分享捐贈。"
+        "delete_sharing_link": "刪除分享連結"
 
       "donor":
         "offer_id": "捐贈項目號碼"
@@ -276,7 +276,7 @@ I18nTranslationsZhTw =
 
       "options":
         "reopen_offer": "Reopen"
-        "resume_resuming_offer": "Resume receiving"
+        "resume_resuming_offer": "繼續接收"
         "add_item": "添加項目"
         "delete_offer": "刪除捐贈項目"
         "submit_offer": "重新提交捐贈項目"
@@ -351,7 +351,7 @@ I18nTranslationsZhTw =
       "notify_donor": "聯絡捐贈者，告知預約已被取消"
 
     "receive":
-      "unplanned_inventory": "Add unplanned item to inventory"
+      "unplanned_inventory": "新增未預期接收的項目到庫存"
       "missing": "遺失"
       "receive": "接收"
       "inventory": "存貨"
@@ -362,7 +362,7 @@ I18nTranslationsZhTw =
         "cant_modify_note": "提示：一旦捐贈項目狀態改成「正在接收」，將無法還原，捐贈人士亦無法更改物資資料。"
         "not_now": "現在無法進行"
         "begin_receiving": "開始接收",
-      "inventorize_warning": "Are you sure you want to inventorize?"
+      "inventorize_warning": "你確定要新增庫存嗎？"
 
 
     "finished":
@@ -429,14 +429,14 @@ I18nTranslationsZhTw =
         "assign": "指定另一間公司"
         "edit": "編輯這間公司"
         "add": "不適用，個人資料-補加公司資料"
-        "new_company": "New Company"
-        "edit_company": "Edit Company"
-        "company_name": "Company Name"
-        "company_name_validation": "Enter valid name"
-        "crm_id": "CRM ID"
-        "enter_crm_id": "Enter numeric values"
-        "optional": "(Optional)"
-        "enter_name": "Enter Company Name"
+        "new_company": "新公司"
+        "edit_company": "編輯公司"
+        "company_name": "公司名稱"
+        "company_name_validation": "輸入有效的名稱"
+        "crm_id": "CRM編號"
+        "enter_crm_id": "輸入數值"
+        "optional": "(可選填)"
+        "enter_name": "輸入公司名稱"
       "contact":
         "title": "捐助者聯絡資料"
         "remove": "去除捐助者聯絡資料"
