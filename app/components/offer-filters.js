@@ -5,7 +5,9 @@ import { STATE_FILTERS } from "../services/filter-service";
 // --- Helpers
 
 function setFilter(filter, val) {
-  Ember.$(`#${filter}`)[0].checked = val;
+  if (Ember.$(`#${filter}`)[0]) {
+    Ember.$(`#${filter}`)[0].checked = val;
+  }
 }
 
 function checkFilter(filter) {
@@ -17,7 +19,9 @@ function uncheckFilter(filter) {
 }
 
 function isChecked(filter) {
-  return Ember.$(`#${filter}`)[0].checked;
+  if (Ember.$(`#${filter}`)[0]) {
+    return Ember.$(`#${filter}`)[0].checked;
+  }
 }
 
 function startOfDay(date) {
@@ -40,6 +44,7 @@ const UNKNOWN = "unknown";
 
 export default Ember.Component.extend({
   i18n: Ember.inject.service(),
+  isSharedSelected: false,
   filterService: Ember.inject.service(),
 
   selectedTimeRange: {
@@ -57,7 +62,8 @@ export default Ember.Component.extend({
     return _.without(
       this.get("allOfferStateFilters"),
       STATE_FILTERS.PRIORITY,
-      STATE_FILTERS.PUBLISHED
+      STATE_FILTERS.PUBLISHED,
+      STATE_FILTERS.EXPIREDSHAREABLES
     );
   }),
 
@@ -79,7 +85,13 @@ export default Ember.Component.extend({
 
     switch (context) {
       case STATE:
-        return service.get("offerStateFilters").forEach(checkFilter);
+        service.get("offerStateFilters").forEach(checkFilter);
+        Ember.run.once("afterRender", () => {
+          this.set(
+            "isSharedSelected",
+            Boolean(isChecked("nonExpiredPublishedOffers"))
+          );
+        });
       case TIME:
         const { preset, after, before } = service.get("offerTimeRange");
         return this.set("selectedTimeRange", {
@@ -88,6 +100,13 @@ export default Ember.Component.extend({
           before: preset ? null : before
         });
     }
+  },
+
+  didRender() {
+    this.set(
+      "isSharedSelected",
+      Boolean(isChecked("nonExpiredPublishedOffers"))
+    );
   },
 
   // Adds applied filters to localStorage as an array and redirects
@@ -110,6 +129,7 @@ export default Ember.Component.extend({
 
   uncheckAll(filterType) {
     this.get(filterType).forEach(uncheckFilter);
+    this.set("isSharedSelected", false);
   },
 
   clearTimeFilters() {

@@ -77,17 +77,20 @@ export default Ember.Controller.extend(backNavigator, {
     const filterService = this.get("filterService");
     const isPriority = filterService.isPriority();
     const isPublished = filterService.isPublished();
+    const includeExpiryShareables = filterService.includeExpiryShareables();
     const { after, before } = filterService.get("offerTimeRange");
     let stateFilters = _.without(
       filterService.get("offerStateFilters"),
       "priorityOffers",
-      "publishedOffers"
+      "nonExpiredPublishedOffers",
+      "allPublishedOffers"
     );
 
     return {
       state: utilityMethods.stringifyArray(stateFilters),
       priority: isPriority,
       shareable: isPublished,
+      include_expiry: includeExpiryShareables,
       after: after && after.getTime(),
       before: before && before.getTime()
     };
