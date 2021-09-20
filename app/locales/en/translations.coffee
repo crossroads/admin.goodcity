@@ -183,6 +183,7 @@ I18nTranslationsEn =
       "cancelled": "Cancelled",
       "received": "Received",
       "new_offers": "New Offers",
+      "shared_offers": "Shared Offers",
       "view_all_offers": "View all new offers"
 
     "inbox":
