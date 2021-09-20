@@ -1,13 +1,17 @@
 <div class="row">
   <div class="small-12 columns summary recent_offers counts" >
-    <span>
-      <h2 class="offer-title">
-        <i class="fa fa-inbox"></i> {{t "dashboard.new_offers"}} ({{offers-count-display offersCount "submitted" false}})&ensp;
+    <div class="counts-row">
+      <span>
+        <i class="fa fa-inbox"></i><span  class="view_all" {{action 'clearAndApplyStateFilter' 'submitted' target=filterService}}>{{t "dashboard.new_offers"}} </span> ({{offers-count-display offersCount "submitted" false}})&ensp;
         {{#if offersCount.priority_submitted}}
           <i class="fa fa-exclamation-triangle"></i> {{offersCount.priority_submitted}}
         {{/if}}
-      </h2>
-    </span>
+      </span>
+
+      <span>
+        <i class="fa fa-eye"></i><span  class="view_all" {{action 'clearAndApplyStateFilter' 'nonExpiredPublishedOffers' target=filterService}}>{{t "dashboard.shared_offers"}} </span> ({{offers-count-display offersCount "shareable_offers_count" false}})
+      </span>
+    </div>
 
     {{#each model.recentOffers as |offer|}}
       {{#link-to 'review_offer' offer}}

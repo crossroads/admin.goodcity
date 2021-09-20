@@ -181,6 +181,7 @@ I18nTranslationsZhTw =
       "cancelled": "已取消",
       "received": "已接收",
       "new_offers": "新的捐贈",
+      "shared_offers": "Shared Offers",
       "view_all_offers": "查看所有新捐贈"
 
     "inbox":
