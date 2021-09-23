@@ -5,7 +5,6 @@ import config from "goodcity/config/environment";
 
 export default Ember.Controller.extend(AsyncTasksMixin, {
   parent: Ember.inject.controller("review_offer.share"),
-  isShared: Ember.computed.alias("parent.isShared"),
   offer: Ember.computed.alias("parent.offer"),
   offerShareable: Ember.computed.alias("parent.offerShareable"),
   shareables: Ember.computed.alias("parent.shareables"),
@@ -72,6 +71,14 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
         .shift();
     }
   ),
+
+  isShared: Ember.computed("isOfferShareableLinkAvailable", function() {
+    return this.get("store")
+      .peekAll("shareable")
+      .filter(sh => {
+        return sh.get("resourceId") == this.get("offer.id") && sh.get("active");
+      });
+  }),
 
   allowListingEnabled: Ember.computed({
     get() {
