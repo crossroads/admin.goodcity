@@ -38,11 +38,23 @@ ul.off-canvas-list li a {
       font-size: 0.63rem;
     }
   }
-
-  .row.offer {
-    margin-top: 0.7rem;
-    margin-right: 0.3rem;
+  .offer_lists{
+    display: flex;
+    margin: 0.7rem;
   }
+
+  .unread-count{
+    display: grid;
+    i{
+      color: white;
+      font-size: 1rem;
+    }
+  }
+  .row.offer {
+    margin-right: 0.3rem;
+    width: fit-content;
+  }
+
 
   .item-image {
     width: 4.5rem; }
