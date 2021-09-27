@@ -29,7 +29,7 @@ export default Ember.Component.extend({
         );
 
         unreadMessageCount += messages.reduce((sum, m) => {
-          return sum + (m.get("isRead") ? 0 : 1);
+          return sum + (m.get("isUnread") ? 1 : 0);
         }, 0);
       });
 

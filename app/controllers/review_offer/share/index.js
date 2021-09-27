@@ -43,7 +43,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
           user: this.get("store").peekRecord("user", uid.get("userId")),
           lastMessage: lastMessage,
           unreadCount: messages.reduce((sum, m) => {
-            return sum + (m.get("isRead") ? 0 : 1);
+            return sum + (m.get("isUnread") ? 1 : 0);
           }, 0),
           organisation: this.organisationOf(uid.get("userId"))
         };
@@ -72,13 +72,21 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     }
   ),
 
-  isShared: Ember.computed("isOfferShareableLinkAvailable", function() {
-    return this.get("store")
-      .peekAll("shareable")
-      .filter(sh => {
-        return sh.get("resourceId") == this.get("offer.id") && sh.get("active");
-      });
-  }),
+  isShared: Ember.computed(
+    "isOfferShareableLinkAvailable",
+    "stopSharingAt",
+    "offerShareable",
+    "offer.id",
+    function() {
+      return this.get("store")
+        .peekAll("shareable")
+        .filter(sh => {
+          return (
+            sh.get("resourceId") == this.get("offer.id") && sh.get("active")
+          );
+        });
+    }
+  ),
 
   allowListingEnabled: Ember.computed({
     get() {

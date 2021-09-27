@@ -61,9 +61,10 @@
               <i class="fa fa-eye-slash fa-2x"></i>
             {{/if}}
             <div>{{t "review_offer.share.title"}}</div>
-            {{#if unreadCharityMessages.length}}
+
+            {{#if unreadCharityMessages}}
               <div class="notification-circle top-right">
-                {{unreadCharityMessages.length}}
+                {{unreadCharityMessages}}
               </div>
             {{/if}}
           {{/link-to}}
