@@ -1,0 +1,49 @@
+<div class="offer_lists">
+  <span class="item-image">
+    <img src={{offer.displayImageUrl}} class="thumb small" />
+  </span>
+
+  <div class="row offer">
+    <div class="small-11 columns">
+      <span class="info offer_description">
+        <h3>
+          {{partial 'offer_title'}}
+        </h3>
+
+        <div class='time_indicator'>
+          {{offer.timeDetail.prefix}}
+          {{#if offer.isScheduled}}
+            <i class="fa fa-truck"></i>
+            <b>
+              {{#if offer.delivery.isGogovan}}
+                {{display-datetime offer.timeDetail.date format='h:mm A, ddd Do MMM'}}
+              {{else}}
+                {{display-datetime offer.timeDetail.date format='ddd Do MMM'}}
+              {{/if}}
+
+              {{offer.timeDetail.suffix}}
+            </b>
+          {{else}}
+            {{#if offer.timeDetail.date}}
+              {{time-ago timeValue=offer.timeDetail.date smallPrefix=true}}
+            {{/if}}
+            {{offer.timeDetail.suffix}}
+          {{/if}}
+        </div>
+
+        <div>
+          {{partial 'offers/item_status'}}
+        </div>
+      </span>
+    </div>
+
+    <div class="small-1 unread-count columns">
+      {{#if messageThreads}}
+        <span class='unread_length'>{{messageThreads}}</span>
+      {{/if}}
+      {{#if offer.isShared}}
+        <i class="fa fa-eye"></i>
+      {{/if}}
+    </div>
+  </div>
+</div>
