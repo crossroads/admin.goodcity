@@ -12,9 +12,16 @@
   </div>
   <div class="row">
     <div class='checkbox-area small-12 medium-12 large-12 columns'>
-      {{offer-filter-checkbox name="publishedOffers"}}
+      {{offer-filter-checkbox name="nonExpiredPublishedOffers" noLabel="true"}}
     </div>
   </div>
+  {{#if isSharedSelected}}
+    <div class="row intended-expired-sharing">
+      <div class='checkbox-area small-12 medium-12 large-12 columns'>
+        {{offer-filter-checkbox name="allPublishedOffers" noLabel="true"}}
+      </div>
+    </div>
+  {{/if}}
   <br/>
 
   {{!-- Offer Status Block --}}

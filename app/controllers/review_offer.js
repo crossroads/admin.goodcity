@@ -21,6 +21,12 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     return this.get("store").peekAll("message");
   }),
 
+  allOfferResponses: Ember.computed("offer", "allMessages.[]", function() {
+    return this.get("store")
+      .peekAll("offerResponse")
+      .filterBy("offerId", this.get("offer.id"));
+  }),
+
   offerShareable: Ember.computed(
     "offer.id",
     "allShareables.length",
@@ -38,15 +44,30 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   ),
 
   unreadCharityMessages: Ember.computed(
+    "offer",
+    "offerShareable",
     "offer.id",
+    "allOfferResponses",
     "allMessages.[]",
     "allMessages.length",
-    "allMessages.@each.isUnread",
+    "allMessages.@each.{senderId,recipientId}",
     function() {
-      return this.get("allMessages")
-        .filterBy("isCharityConversation")
-        .filterBy("isUnread")
-        .filterBy("offerId", this.get("offer.id"));
+      var unreadMessageCount = 0;
+      let offerResponse = this.get("allOfferResponses");
+
+      offerResponse.uniq().map(uid => {
+        let messages = this.get("allMessages").filter(
+          m =>
+            m.get("messageableType") === "OfferResponse" &&
+            m.get("messageableId") === uid.id
+        );
+
+        unreadMessageCount += messages.reduce((sum, m) => {
+          return sum + (m.get("isUnread") ? 1 : 0);
+        }, 0);
+      });
+
+      return unreadMessageCount;
     }
   ),
 

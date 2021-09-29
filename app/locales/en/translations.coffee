@@ -108,8 +108,8 @@ I18nTranslationsEn =
       button_due: "Due"
       priorityOffers: "Priority Offers"
       priorityOffers_info: "Have remained in a state too long. Need attention."
-      publishedOffers: "Published Offers"
-      publishedOffers_info: "Shared on charity site"
+      nonExpiredPublishedOffers: "Shared Offers"
+      allPublishedOffers: "Include expired shares"
       submitted: "New"
       submitted_info: "Offers that have yet to be reviewed."
       under_review: "Reviewing"
@@ -183,6 +183,7 @@ I18nTranslationsEn =
       "cancelled": "Cancelled",
       "received": "Received",
       "new_offers": "New Offers",
+      "shared_offers": "Shared Offers",
       "view_all_offers": "View all new offers"
 
     "inbox":
@@ -225,7 +226,8 @@ I18nTranslationsEn =
       "offer_closed_by": "Offer closed by {{firstName}} {{lastName}}"
       "offer_cancelled_by": "Cancelled by {{firstName}} {{lastName}}"
       "receive": "Receive"
-      "view_shared_offer": "View Shared Offer"
+      "view_shared_offer": "View Share"
+      "share_expired": "Share Expired"
       "modify_sharing": "Modify Sharing"
       "share_offer": "Share offer"
       "sale_allowed": "Sale of these items is allowed"

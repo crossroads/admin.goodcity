@@ -56,13 +56,16 @@
   }
 
   .button-container {
-    padding: 1rem;
+    padding: 0.5rem;
     padding-bottom: 0;
 
     .charities-link {
       line-height: 2rem;
       text-decoration: underline;
-      margin: 0 0.5rem;
+    }
+
+    .expiry-details {
+      color: white;
     }
   }
 

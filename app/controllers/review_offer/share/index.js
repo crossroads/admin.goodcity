@@ -5,7 +5,6 @@ import config from "goodcity/config/environment";
 
 export default Ember.Controller.extend(AsyncTasksMixin, {
   parent: Ember.inject.controller("review_offer.share"),
-  isShared: Ember.computed.alias("parent.isShared"),
   offer: Ember.computed.alias("parent.offer"),
   offerShareable: Ember.computed.alias("parent.offerShareable"),
   shareables: Ember.computed.alias("parent.shareables"),
@@ -44,7 +43,7 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
           user: this.get("store").peekRecord("user", uid.get("userId")),
           lastMessage: lastMessage,
           unreadCount: messages.reduce((sum, m) => {
-            return sum + (m.get("isRead") ? 0 : 1);
+            return sum + (m.get("isUnread") ? 1 : 0);
           }, 0),
           organisation: this.organisationOf(uid.get("userId"))
         };
@@ -60,6 +59,34 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
       return value;
     }
   }),
+
+  isOfferShareableLinkAvailable: Ember.computed(
+    "offerShareable",
+    "stopSharingAt",
+    "offer.id",
+    function() {
+      return this.get("store")
+        .peekAll("shareable")
+        .filterBy("offerId", this.get("offer.id"))
+        .shift();
+    }
+  ),
+
+  isShared: Ember.computed(
+    "isOfferShareableLinkAvailable",
+    "stopSharingAt",
+    "offerShareable",
+    "offer.id",
+    function() {
+      return this.get("store")
+        .peekAll("shareable")
+        .filter(sh => {
+          return (
+            sh.get("resourceId") == this.get("offer.id") && sh.get("active")
+          );
+        });
+    }
+  ),
 
   allowListingEnabled: Ember.computed({
     get() {
