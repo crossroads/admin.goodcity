@@ -49,8 +49,11 @@
       <div class="row top-bottom-margin">
         <div class="small-12 columns link item_lable_input">
           <div class="search_label_input" {{action "selectPackageType"}}>
-            {{input value=(if itemType itemType.name "") placeholder=(t "review_item.add_item_label")}}
-          </div>    
+            {{input
+              value=(if itemType itemType.name "")
+              placeholder=(t "review_item.add_item_label")
+              readonly=true}}
+          </div>
         </div>
       </div>
       <div class="row row-grey">

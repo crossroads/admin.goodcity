@@ -3,22 +3,22 @@
     <div class="row fixed_item_type_search">
       <div class="small-12 columns search-box ui">
         <div class="row">
-          <span class="back-arow small-1 columns cancel-button" {{action "closeOverlay"}}>
-            <i class="fa fa-angle-left">&nbsp;{{t 'cancel'}}</i>
-          </span>
-        
-          <span class="small-10 columns">
+          <div class="back-arow small-2 columns cancel-button" {{action "closeOverlay"}}>
+            {{t 'cancel'}}
+          </div>
+
+          <div class="small-9 columns">
             {{focus-textfield
               name="searchText"
               placeholder=(t "search_item_label")
               value=searchText }}
-          </span>    
+          </div>
 
-          <span class="small-1 columns clear-button">
+          <span class="columns clear-button">
             {{#if hasSearchText}}
               <i class="fa fa-times-circle" {{action "clearSearch"}}></i>
-            {{/if}}  
-          </span>  
+            {{/if}}
+          </span>
         </div>
       </div>
     </div>
