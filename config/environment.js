@@ -187,14 +187,14 @@ module.exports = function(environment) {
     ENV.APP.STOCK_APP_HOST_URL = "https://stock-staging.goodcity.hk";
     ENV.APP.STOCK_ANDROID_APP_HOST_URL = "stock-staging.goodcity.hk";
     ENV.APP.SOCKETIO_WEBSERVICE_URL =
-      "https://socket-staging.goodcity.hk:81/goodcity";
+      "https://socket-staging.goodcity.hk/goodcity";
     ENV.APP.GOODCITY_NUMBER = "+85258084822";
     ENV.contentSecurityPolicy["connect-src"] = [
       "https://admin-staging.goodcity.hk",
       "https://api-staging.goodcity.hk",
-      "https://socket-staging.goodcity.hk:81",
-      "ws://socket-staging.goodcity.hk:81",
-      "wss://socket-staging.goodcity.hk:81",
+      "https://socket-staging.goodcity.hk",
+      "ws://socket-staging.goodcity.hk",
+      "wss://socket-staging.goodcity.hk",
       "https://api.cloudinary.com",
       "https://errbit.crossroads.org.hk",
       "https://media.twiliocdn.com",
@@ -220,16 +220,16 @@ module.exports = function(environment) {
     ENV.ADMIN_APP_HOST_URL = "https://admin-preview.goodcity.hk";
     ENV.BROWSE_APP_HOST_URL = "https://charities-preview.goodcity.hk";
     ENV.APP.SOCKETIO_WEBSERVICE_URL =
-      "https://socket-preview.goodcity.hk:81/goodcity";
+      "https://socket-preview.goodcity.hk/goodcity";
     ENV.APP.STOCK_APP_HOST_URL = "https://stock-staging.goodcity.hk";
     ENV.APP.STOCK_ANDROID_APP_HOST_URL = "stock-staging.goodcity.hk";
     ENV.APP.GOODCITY_NUMBER = "+85258084822";
     ENV.contentSecurityPolicy["connect-src"] = [
       "https://admin-preview.goodcity.hk",
       "https://api-preview.goodcity.hk",
-      "https://socket-preview.goodcity.hk:81",
-      "ws://socket-preview.goodcity.hk:81",
-      "wss://socket-preview.goodcity.hk:81",
+      "https://socket-preview.goodcity.hk",
+      "ws://socket-preview.goodcity.hk",
+      "wss://socket-preview.goodcity.hk",
       "https://api.cloudinary.com",
       "https://errbit.crossroads.org.hk",
       "https://media.twiliocdn.com",
