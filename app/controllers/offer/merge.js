@@ -6,7 +6,7 @@ export default Ember.Controller.extend({
   sortProperties: ["updatedAt:desc"],
   arrangedContent: Ember.computed.sort("offersForMerge", "sortProperties"),
 
-  offerDonor: Ember.computed.alias("model.createdBy"),
+  offerDonor: Ember.computed.alias("offer.createdBy"),
   messageBox: Ember.inject.service(),
   i18n: Ember.inject.service(),
   apiBaseService: Ember.inject.service(),
@@ -14,22 +14,6 @@ export default Ember.Controller.extend({
   locale: function(str) {
     return this.get("i18n").t(str);
   },
-
-  allOffers: Ember.computed(function() {
-    return this.store.peekAll("offer");
-  }),
-
-  offersForMerge: Ember.computed(
-    "allOffers.@each.state",
-    "model",
-    "offerDonor",
-    function() {
-      return this.get("allOffers")
-        .filterBy("createdBy", this.get("offerDonor"))
-        .filterBy("baseForMerge", true)
-        .rejectBy("id", this.get("model.id"));
-    }
-  ),
 
   actions: {
     confirmMergeOffer(offer) {
@@ -45,7 +29,7 @@ export default Ember.Controller.extend({
       var loadingView = getOwner(this)
         .lookup("component:loading")
         .append();
-      var offer = this.get("model");
+      var offer = this.get("offer");
       var url = "/offers/" + offer.id + "/merge_offer";
       const data = await this.get("apiBaseService").PUT(url, {
         base_offer_id: baseOffer.id

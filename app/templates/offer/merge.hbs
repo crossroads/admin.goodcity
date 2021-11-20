@@ -17,7 +17,7 @@
         {{#each arrangedContent as |offer|}}
           <li class='inbox_page'>
             <a {{action "confirmMergeOffer" offer}}>
-              {{partial "offers/display_offer_data"}}
+              {{display-offer-list offer=offer}}
             </a>
           </li>
         {{/each}}

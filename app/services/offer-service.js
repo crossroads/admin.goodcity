@@ -17,6 +17,15 @@ export default ApiBaseService.extend({
     return this.GET(`/offers/search`, searchParams);
   },
 
+  async mergeableOffers(offerID) {
+    const data = await this.GET(`/offers/${offerID}/mergeable_offers`);
+    this.get("store").pushPayload(data);
+
+    return (data.offers || []).map(({ id }) => {
+      return this.get("store").peekRecord("offer", id);
+    });
+  },
+
   addNewItem(offer) {
     const defaultDonorCondition = this.get("store")
       .peekAll("donorCondition")
