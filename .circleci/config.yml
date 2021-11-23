@@ -458,9 +458,9 @@ workflows:
             filters:
               branches:
                 only: /^(master|live|GCW-3746-android-api-30)$/
-        - ios_build_and_deploy:
-            requires:
-              - tests
-            filters:
-              branches:
-                only: /^(master|live)$/
+        # - ios_build_and_deploy:
+        #     requires:
+        #       - tests
+        #     filters:
+        #       branches:
+        #         only: /^(master|live)$/
