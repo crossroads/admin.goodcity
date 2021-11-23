@@ -84,7 +84,7 @@ namespace :cordova do
     Dir.chdir(CORDOVA_PATH) do
       system({"ENVIRONMENT" => environment}, "cordova prepare #{platform}")
       unless platform == "ios"
-        sh %{ cordova plugin add cordova-android-support-gradle-release --variable ANDROID_SUPPORT_VERSION=27 }
+        sh %{ cordova plugin add cordova-android-support-gradle-release --variable ANDROID_SUPPORT_VERSION=30 }
       end
     end
     if platform == "ios"
