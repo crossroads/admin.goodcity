@@ -250,12 +250,12 @@ jobs:
   android_build_and_deploy:
     <<: *defaults
     docker:
-      - image: cimg/android:2021.10-node
+      - image: circleci/android:api-30-node
     environment:
-      # JVM_OPTS: -Xmx3200m
+      JVM_OPTS: -Xmx3200m
       KEYSTORE: goodcity.keystore
       CIRCLE_ARTIFACTS: /home/circleci/code/cordova/platforms/android/build/outputs/apk
-      JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
+      JAVA_HOME: /usr/lib/jvm/adoptopenjdk-8-hotspot-amd64
     steps:
       - restore_cache: *restore-repo-cache
       - restore_cache: *restore-yarn-cache
@@ -264,12 +264,28 @@ jobs:
       - save_cache: *save-bundler-cache
       - attach_workspace:
           at: ~/code
-      - azure-cli/install
-      - azure-cli/login-with-service-principal
       - run:
           name: Setup Environment variables
           command: |
               echo 'export ENVIRONMENT=$(if [ "$CIRCLE_BRANCH" == "live" ]; then echo production; else echo staging; fi)' >> $BASH_ENV
+              echo 'export PATH=$PATH:`yarn bin`' >> $BASH_ENV
+              echo 'export PATH=$PATH:/usr/lib/jvm/adoptopenjdk-8-hotspot-amd64/bin:$ANDROID_HOME/tools/gradle/bin' >> $BASH_ENV
+      - run:
+          name: Install Java 8 for Cordova
+          command: |
+              sudo rm -rf /usr/local/openjdk-11/
+              sudo apt-get update && sudo apt-get install -y apt-transport-https ca-certificates wget dirmngr gnupg software-properties-common
+              wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | sudo apt-key add -
+              sudo add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/
+              sudo apt-get update && sudo apt-get install -y adoptopenjdk-8-hotspot
+      - run:
+          name: Install Gradle 4.10.3
+          command: |
+            wget -O /tmp/gradle.zip  https://services.gradle.org/distributions/gradle-4.10.3-all.zip
+            unzip -d $ANDROID_HOME/tools /tmp/gradle.zip
+            mv $ANDROID_HOME/tools/gradle-4.10.3 $ANDROID_HOME/tools/gradle
+      - azure-cli/install
+      - azure-cli/login-with-service-principal
       - run: az storage blob download --account-name $GOODCITY_STORAGE -c ci-app-secrets -n admin-$ENVIRONMENT-google-services.json -f ~/code/cordova/google-services.json
       - run: az storage blob download --account-name $GOODCITY_STORAGE -c ci-app-secrets -n goodcity.keystore -f ~/code/cordova/goodcity.keystore
       - run: az storage blob download --account-name $GOODCITY_STORAGE -c ci-app-secrets -n google-play-key.json -f ~/code/fastlane/google-play-key.json
