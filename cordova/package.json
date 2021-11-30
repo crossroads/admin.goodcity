@@ -1,0 +1,46 @@
+{
+  "name": "hk.goodcity.adminstaging",
+  "version": "0.14.017",
+  "displayName": "S. Admin GoodCity",
+  "dependencies": {},
+  "devDependencies": {
+    "cordova-android": "^10.1.1",
+    "cordova-ios": "6.1.1",
+    "cordova-plugin-actionsheet": "https://github.com/EddyVerbruggen/cordova-plugin-actionsheet.git",
+    "cordova-plugin-android-permissions": "https://github.com/NeoLSN/cordova-plugin-android-permissions",
+    "cordova-plugin-camera": "^4.0.0",
+    "cordova-plugin-device": "2.0.3",
+    "cordova-plugin-inappbrowser": "https://github.com/apache/cordova-plugin-inappbrowser.git",
+    "cordova-plugin-ios-no-export-compliance": "https://github.com/mikaoelitiana/cordova-plugin-ios-no-export-compliance.git",
+    "cordova-plugin-network-information": "^1.2.0",
+    "cordova-plugin-splashscreen": "~3.1.0",
+    "cordova-plugin-statusbar": "~2.1.1",
+    "cordova-plugin-twiliovoicesdk": "https://github.com/abulsayyad123/cordova-plugin-twiliovoicesdk#c33116b722521fbaec5c0b2c43837fbac95bb1b5",
+    "cordova-plugin-whitelist": "~1.2.1",
+    "phonegap-plugin-barcodescanner": "https://github.com/wildabeast/BarcodeScanner.git",
+    "phonegap-plugin-media-stream": "https://github.com/phonegap/phonegap-plugin-media-stream.git"
+  },
+  "cordova": {
+    "platforms": [
+      "ios", "android"
+    ],
+    "plugins": {
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-android-permissions": {},
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-inappbrowser": {},
+      "cordova-plugin-network-information": {},
+      "cordova-plugin-actionsheet": {},
+      "cordova-plugin-camera": {},
+      "cordova-plugin-splashscreen": {},
+      "phonegap-plugin-barcodescanner": {},
+      "cordova-plugin-ios-no-export-compliance": {},
+      "cordova-plugin-twiliovoicesdk": {
+        "INCOMING_CALL_APP_NAME": "Crossroads",
+        "MASK_INCOMING_PHONE_NUMBER": "true"
+      },
+      "phonegap-plugin-media-stream": {}
+    }
+  }
+}
