@@ -1,112 +1,90 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget android-versionCode="0" id="hk.goodcity.adminstaging" ios-CFBundleVersion="0" version="0.14.017" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>S. Admin GoodCity</name>
-  <description>The GoodCity initiative is a new way to donate quality goods in Hong Kong. See www.goodcity.hk for more details.</description>
-  <author href="https://www.crossroads.org.hk">Crossroads</author>
-  <icon src="www/assets/images/goodcity-icon-128.png" />
-  <content src="index.html" />
-  <hook src="scripts/update_build_number.py" type="before_prepare" />
-  <platform name="android">
-    <hook src="scripts/copyAndroidAssets.js" type="after_prepare" />
-    <resource-file src="google-services.json" target="app/google-services.json" />
-    <preference name="LoadUrlTimeoutValue" value="120000" />
-    <preference name="SplashScreen" value="screen" />
-    <preference name="SplashScreenDelay" value="5000" />
-    <preference name="Orientation" value="portrait" />
-    <icon density="ldpi" src="res/android/drawable-ldpi/icon.png" />
-    <icon density="mdpi" src="res/android/drawable-mdpi/icon.png" />
-    <icon density="hdpi" src="res/android/drawable-hdpi/icon.png" />
-    <icon density="xhdpi" src="res/android/drawable-xhdpi/icon.png" />
-    <icon density="xxhdpi" src="res/android/drawable-xxhdpi/icon.png" />
-    <icon density="xxxhdpi" src="res/android/drawable-xxxhdpi/icon.png" />
-    <splash density="port-ldpi" src="res/android/drawable-ldpi/screen.png" />
-    <splash density="port-mdpi" src="res/android/drawable-mdpi/screen.png" />
-    <splash density="port-hdpi" src="res/android/drawable-hdpi/screen.png" />
-    <splash density="port-xhdpi" src="res/android/drawable-xhdpi/screen.png" />
-    <splash density="port-xxhdpi" src="res/android/drawable-xxhdpi/screen.png" />
-    <splash density="port-xxxhdpi" src="res/android/drawable-xxxhdpi/screen.png" />
-  </platform>
-  <platform name="windows">
-    <hook src="hooks/windows/include.bat" type="after_platform_add" />
-  </platform>
-  <platform name="ios">
-    <hook src="scripts/delete_x86_arch.js" type="after_prepare" />
-    <icon height="29" src="res/ios/Icon-29x29~ipad.png" width="29" />
-    <icon height="58" src="res/ios/Icon-29x29@2x.png" width="58" />
-    <icon height="58" src="res/ios/Icon-29x29@2x~ipad.png" width="58" />
-    <icon height="80" src="res/ios/Icon-App-40x40@2x.png" width="80" />
-    <icon height="80" src="res/ios/Icon-40x40@2x~ipad.png" width="80" />
-    <icon height="120" src="res/ios/Icon-40x40@3x.png" width="120" />
-    <icon height="40" src="res/ios/Icon-40x40~ipad.png" width="40" />
-    <icon height="100" src="res/ios/Icon-50x50@2x~ipad.png" width="100" />
-    <icon height="167" src="res/ios/Icon-83.5x83.5@2x~ipad.png" width="167" />
-    <icon height="50" src="res/ios/Icon-50x50~ipad.png" width="50" />
-    <icon height="57" src="res/ios/Icon-57x57.png" width="57" />
-    <icon height="114" src="res/ios/Icon-57x57@2x.png" width="114" />
-    <icon height="120" src="res/ios/Icon-60x60@2x.png" width="120" />
-    <icon height="180" src="res/ios/Icon-60x60@3x.png" width="180" />
-    <icon height="144" src="res/ios/Icon-72x72@2x~ipad.png" width="144" />
-    <icon height="72" src="res/ios/Icon-72x72~ipad.png" width="72" />
-    <icon height="152" src="res/ios/Icon-76x76@2x~ipad.png" width="152" />
-    <icon height="76" src="res/ios/Icon-76x76~ipad.png" width="76" />
-    <icon height="1024" src="res/ios/Icon-App-1024.png" width="1024" />
-    <icon height="29" src="res/ios/icon29x29.png" width="29" />
-    <splash height="480" src="res/ios/Default~iphone.png" width="320" />
-    <splash height="960" src="res/ios/Default@2x~iphone.png" width="640" />
-    <splash height="1136" src="res/ios/Default-568h@2x~iphone.png" width="640" />
-    <splash height="1334" src="res/ios/Default-667h.png" width="750" />
-    <splash height="2208" src="res/ios/Default-736h.png" width="1242" />
-    <splash height="1024" src="res/ios/Default-1024h.png" width="768" />
-    <splash height="2048" src="res/ios/Default-2048h.png" width="1536" />
-    <splash height="768" src="res/ios/Default-768h.png" width="1024" />
-    <splash height="1536" src="res/ios/Default-1536h.png" width="2048" />
-    <splash height="1242" src="res/ios/Default-1242h.png" width="2208" />
-    <feature name="StatusBar">
-      <param name="ios-package" onload="true" value="CDVStatusBar" />
-    </feature>
-    <preference name="Orientation" value="portrait" />
-    <preference name="Fullscreen" value="true" />
-    <preference name="CAMERA_USAGE_DESCRIPTION" default=" " />
-    <config-file target="*-Info.plist" parent="NSCameraUsageDescription">
-      <string>So you can add item to Donor's offer</string>
-    </config-file>
-    <preference name="PHOTOLIBRARY_USAGE_DESCRIPTION" default=" " />
-    <config-file target="*-Info.plist" parent="NSPhotoLibraryUsageDescription">
-      <string>Needs photo library access to get photos from there</string>
-    </config-file>
-    <preference name="PHOTOLIBRARY_ADD_USAGE_DESCRIPTION" default=" " />
-    <config-file target="*-Info.plist" parent="NSPhotoLibraryAddUsageDescription">
-      <string>Needs photo library access to save photos</string>
-    </config-file>
-    <preference name="MICROPHONEUSAGE_USAGE_DESCRIPTION" default=" " />
-    <config-file target="*-Info.plist" parent="NSMicrophoneUsageDescription">
-      <string>Needs permission to use the microphone</string>
-    </config-file>
-  </platform>
-  <access launch-external="yes" origin="tel:*" />
-  <access origin="*" />
-  <preference name="scheme" value="app" />
-  <preference name="hostname" value="localhost" />
-  <allow-intent href="https://maps.google.com/*" />
-  <allow-intent href="https://crossroads-foundation.formstack.com/*"/>
-  <engine name="ios" spec="6.1.1" />
-  <engine name="android" spec="9.0.0" />
-  <engine name="windows" spec="~4.3.1" />
-  <plugin name="cordova-plugin-statusbar" spec="~2.1.1" />
-  <plugin name="cordova-plugin-device" spec="2.0.3" />
-  <plugin name="cordova-plugin-android-permissions" spec="https://github.com/NeoLSN/cordova-plugin-android-permissions" />
-  <plugin name="cordova-plugin-whitelist" spec="~1.2.1" />
-  <plugin name="cordova-plugin-inappbrowser" spec="https://github.com/apache/cordova-plugin-inappbrowser.git"/>
-  <plugin name="cordova-plugin-network-information" spec="^1.2.0" />
-  <plugin name="cordova-plugin-actionsheet" spec="https://github.com/EddyVerbruggen/cordova-plugin-actionsheet.git" />
-  <plugin name="cordova-plugin-camera" spec="^4.0.0" />
-  <plugin name="cordova-plugin-splashscreen" spec="~3.1.0" />
-  <plugin name="phonegap-plugin-barcodescanner" spec="https://github.com/wildabeast/BarcodeScanner.git" />
-  <plugin name="cordova-plugin-ios-no-export-compliance" spec="https://github.com/mikaoelitiana/cordova-plugin-ios-no-export-compliance.git" />
-  <plugin name="cordova-plugin-twiliovoicesdk" spec="https://github.com/abulsayyad123/cordova-plugin-twiliovoicesdk#c33116b722521fbaec5c0b2c43837fbac95bb1b5">
-    <variable name="INCOMING_CALL_APP_NAME" value="Crossroads" />
-    <variable name="MASK_INCOMING_PHONE_NUMBER" value="true" />
-  </plugin>
-  <plugin name="phonegap-plugin-media-stream" spec="https://github.com/phonegap/phonegap-plugin-media-stream.git" />
+    <name>S. Admin GoodCity</name>
+    <description>The GoodCity initiative is a new way to donate quality goods in Hong Kong. See www.goodcity.hk for more details.</description>
+    <author href="https://www.goodcity.hk">GoodCity.HK</author>
+    <icon src="www/assets/images/goodcity-icon-128.png" />
+    <content src="index.html" />
+    <hook src="scripts/update_build_number.py" type="before_prepare" />
+    <access launch-external="yes" origin="tel:*" />
+    <access origin="*" />
+    <preference name="scheme" value="app" />
+    <preference name="hostname" value="localhost" />
+    <allow-intent href="https://maps.google.com/*" />
+    <allow-intent href="https://crossroads-foundation.formstack.com/*" />
+    <allow-intent href="tel:*" />
+    <platform name="android">
+        <hook src="scripts/copyAndroidAssets.js" type="after_prepare" />
+        <resource-file src="google-services.json" target="app/google-services.json" />
+        <preference name="LoadUrlTimeoutValue" value="120000" />
+        <preference name="SplashScreen" value="screen" />
+        <preference name="SplashScreenDelay" value="5000" />
+        <preference name="Orientation" value="portrait" />
+        <icon density="ldpi" src="res/android/drawable-ldpi/icon.png" />
+        <icon density="mdpi" src="res/android/drawable-mdpi/icon.png" />
+        <icon density="hdpi" src="res/android/drawable-hdpi/icon.png" />
+        <icon density="xhdpi" src="res/android/drawable-xhdpi/icon.png" />
+        <icon density="xxhdpi" src="res/android/drawable-xxhdpi/icon.png" />
+        <icon density="xxxhdpi" src="res/android/drawable-xxxhdpi/icon.png" />
+        <splash density="port-ldpi" src="res/android/drawable-ldpi/screen.png" />
+        <splash density="port-mdpi" src="res/android/drawable-mdpi/screen.png" />
+        <splash density="port-hdpi" src="res/android/drawable-hdpi/screen.png" />
+        <splash density="port-xhdpi" src="res/android/drawable-xhdpi/screen.png" />
+        <splash density="port-xxhdpi" src="res/android/drawable-xxhdpi/screen.png" />
+        <splash density="port-xxxhdpi" src="res/android/drawable-xxxhdpi/screen.png" />
+    </platform>
+    <platform name="ios">
+        <hook src="scripts/delete_x86_arch.js" type="after_prepare" />
+        <icon height="29" src="res/ios/Icon-29x29~ipad.png" width="29" />
+        <icon height="58" src="res/ios/Icon-29x29@2x.png" width="58" />
+        <icon height="58" src="res/ios/Icon-29x29@2x~ipad.png" width="58" />
+        <icon height="80" src="res/ios/Icon-App-40x40@2x.png" width="80" />
+        <icon height="80" src="res/ios/Icon-40x40@2x~ipad.png" width="80" />
+        <icon height="120" src="res/ios/Icon-40x40@3x.png" width="120" />
+        <icon height="40" src="res/ios/Icon-40x40~ipad.png" width="40" />
+        <icon height="100" src="res/ios/Icon-50x50@2x~ipad.png" width="100" />
+        <icon height="167" src="res/ios/Icon-83.5x83.5@2x~ipad.png" width="167" />
+        <icon height="50" src="res/ios/Icon-50x50~ipad.png" width="50" />
+        <icon height="57" src="res/ios/Icon-57x57.png" width="57" />
+        <icon height="114" src="res/ios/Icon-57x57@2x.png" width="114" />
+        <icon height="120" src="res/ios/Icon-60x60@2x.png" width="120" />
+        <icon height="180" src="res/ios/Icon-60x60@3x.png" width="180" />
+        <icon height="144" src="res/ios/Icon-72x72@2x~ipad.png" width="144" />
+        <icon height="72" src="res/ios/Icon-72x72~ipad.png" width="72" />
+        <icon height="152" src="res/ios/Icon-76x76@2x~ipad.png" width="152" />
+        <icon height="76" src="res/ios/Icon-76x76~ipad.png" width="76" />
+        <icon height="1024" src="res/ios/Icon-App-1024.png" width="1024" />
+        <icon height="29" src="res/ios/icon29x29.png" width="29" />
+        <splash height="480" src="res/ios/Default~iphone.png" width="320" />
+        <splash height="960" src="res/ios/Default@2x~iphone.png" width="640" />
+        <splash height="1136" src="res/ios/Default-568h@2x~iphone.png" width="640" />
+        <splash height="1334" src="res/ios/Default-667h.png" width="750" />
+        <splash height="2208" src="res/ios/Default-736h.png" width="1242" />
+        <splash height="1024" src="res/ios/Default-1024h.png" width="768" />
+        <splash height="2048" src="res/ios/Default-2048h.png" width="1536" />
+        <splash height="768" src="res/ios/Default-768h.png" width="1024" />
+        <splash height="1536" src="res/ios/Default-1536h.png" width="2048" />
+        <splash height="1242" src="res/ios/Default-1242h.png" width="2208" />
+        <feature name="StatusBar">
+            <param name="ios-package" onload="true" value="CDVStatusBar" />
+        </feature>
+        <preference name="Orientation" value="portrait" />
+        <preference name="Fullscreen" value="true" />
+        <preference default=" " name="CAMERA_USAGE_DESCRIPTION" />
+        <config-file parent="NSCameraUsageDescription" target="*-Info.plist">
+            <string>So you can add item to Donor's offer</string>
+        </config-file>
+        <preference default=" " name="PHOTOLIBRARY_USAGE_DESCRIPTION" />
+        <config-file parent="NSPhotoLibraryUsageDescription" target="*-Info.plist">
+            <string>Needs photo library access to get photos from there</string>
+        </config-file>
+        <preference default=" " name="PHOTOLIBRARY_ADD_USAGE_DESCRIPTION" />
+        <config-file parent="NSPhotoLibraryAddUsageDescription" target="*-Info.plist">
+            <string>Needs photo library access to save photos</string>
+        </config-file>
+        <preference default=" " name="MICROPHONEUSAGE_USAGE_DESCRIPTION" />
+        <config-file parent="NSMicrophoneUsageDescription" target="*-Info.plist">
+            <string>Needs permission to use the microphone</string>
+        </config-file>
+    </platform>
 </widget>
-
