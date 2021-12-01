@@ -79,18 +79,17 @@ namespace :cordova do
     sh %{ ln -s "#{ROOT_PATH}/dist" "#{CORDOVA_PATH}/www" } unless File.exists?("#{CORDOVA_PATH}/www")
     build_details.map{|key, value| log("#{key.upcase}: #{value}")}
     sh %{ cd #{CORDOVA_PATH}; cordova-update-config --appname "#{app_name}" --appid #{app_id} --appversion #{app_version} }
-    
-    log("Preparing app for #{platform}")
     Dir.chdir(CORDOVA_PATH) do
-      system({"ENVIRONMENT" => environment}, "cordova prepare #{platform}")
-      unless platform == "ios"
+      if platform == "android"
+        system({"ENVIRONMENT" => environment}, "cordova add android@10.1.1") # API 30
+        system({"ENVIRONMENT" => environment}, "cordova prepare android")
         sh %{ cordova plugin add cordova-android-support-gradle-release --variable ANDROID_SUPPORT_VERSION=30 }
-      end
-    end
-    if platform == "ios"
-      Dir.chdir(CORDOVA_PATH) do
-        sh %{ cordova plugin add #{TESTFAIRY_PLUGIN_URL} } if environment == "staging"
-        sh %{ cordova plugin remove #{TESTFAIRY_PLUGIN_NAME}; true } if environment == "production"
+      else
+        system({"ENVIRONMENT" => environment}, "cordova prepare ios")
+        Dir.chdir(CORDOVA_PATH) do
+          sh %{ cordova plugin add #{TESTFAIRY_PLUGIN_URL} } if environment == "staging"
+          sh %{ cordova plugin remove #{TESTFAIRY_PLUGIN_NAME}; true } if environment == "production"
+        end
       end
     end
   end

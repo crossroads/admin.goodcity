@@ -133,17 +133,12 @@ jobs:
               master)
                 ENVIRONMENT=staging
                 ;;
-              preview)
-                ENVIRONMENT=preview
-                ;;
               live)
                 ENVIRONMENT=production
                 ;;
               *)
-                echo 'Unexpected branch deployment. Choose master|preview|live'
-                exit 1
+                ENVIRONMENT=staging
             esac
-            echo "Building for ENVIRONMENT: ${ENVIRONMENT}"
             EMBER_CLI_CORDOVA=0 ENVIRONMENT=${ENVIRONMENT} yarn run ember build --environment=production
       - run: mv dist/ dist-www
       - persist_to_workspace:
@@ -175,15 +170,11 @@ jobs:
               master)
                 STAGE=staging
                 ;;
-              preview)
-                STAGE=preview
-                ;;
               live)
                 STAGE=production
                 ;;
               *)
-                echo 'Unexpected branch deployment. Choose master|preview|live'
-                exit 1
+                ENVIRONMENT=staging
             esac
             STAGE=$STAGE bundle exec fastlane web deploy
       - run:
@@ -196,15 +187,11 @@ jobs:
               master)
                 ASSET_HOST_URL=https://stock-staging.goodcity.hk/assets
                 ;;
-              preview)
-                ASSET_HOST_URL=https://stock-preview.goodcity.hk/assets
-                ;;
               live)
                 ASSET_HOST_URL=https://stock.goodcity.hk/assets
                 ;;
               *)
-                echo 'Unexpected branch deployment. Choose master|preview|live'
-                exit 1
+                ENVIRONMENT=staging
             esac
             curl https://api.rollbar.com/api/1/sourcemap/download -F access_token="${ROLLBAR_KEY}" -F version="${APP_VERSION}" -F minified_url=$ASSET_HOST_URL/$SOURCE_MAP
 
@@ -226,15 +213,11 @@ jobs:
             master)
               ENVIRONMENT=staging
               ;;
-            preview)
-              ENVIRONMENT=preview
-              ;;
             live)
               ENVIRONMENT=production
               ;;
             *)
-              echo 'Unexpected branch deployment. Choose master|preview|live'
-              exit 1
+              ENVIRONMENT=staging
             esac
             echo "Building for ENVIRONMENT: ${ENVIRONMENT}"
             EMBER_CLI_CORDOVA=1 ENVIRONMENT=${ENVIRONMENT} yarn run ember build --environment=production
@@ -415,9 +398,9 @@ workflows:
         - package_dependencies:
             requires:
               - checkout_code
-        - tests:
-            requires:
-              - package_dependencies
+        # - tests:
+        #     requires:
+        #       - package_dependencies
         # - upload-coverage:
         #     requires:
         #       - package_dependencies
@@ -425,35 +408,35 @@ workflows:
         #     filters:
         #       branches:
         #         only: /^(master|live)$/
-        - www_build:
-            requires:
-              - tests
-              - package_dependencies
-            filters:
-              branches:
-                only: /^(master|live|preview)$/
-        - www_deploy:
-            requires:
-              - www_build
-            filters:
-              branches:
-                only: /^(master|live|preview)$/
+        # - www_build:
+        #     requires:
+        #       - tests
+        #       - package_dependencies
+        #     filters:
+        #       branches:
+        #         only: /^(master|live)$/
+        # - www_deploy:
+        #     requires:
+        #       - www_build
+        #     filters:
+        #       branches:
+        #         only: /^(master|live)$/
         - ember_cordova_build:
             requires:
-              - tests
+              # - tests
               - package_dependencies
             filters:
               branches:
-                only: /^(master|live)$/
+                only: /^(master|live|GCW-3746-cordova-android-10.1.1)$/
         - android_build_and_deploy:
             requires:
               - ember_cordova_build
             filters:
               branches:
-                only: /^(master|live)$/
-        - ios_build_and_deploy:
-            requires:
-              - tests
-            filters:
-              branches:
-                only: /^(master|live)$/
+                only: /^(master|live|GCW-3746-cordova-android-10.1.1)$/
+        # - ios_build_and_deploy:
+        #     requires:
+        #       - tests
+        #     filters:
+        #       branches:
+        #         only: /^(master|live)$/
