@@ -81,7 +81,6 @@ namespace :cordova do
     sh %{ cd #{CORDOVA_PATH}; cordova-update-config --appname "#{app_name}" --appid #{app_id} --appversion #{app_version} }
     Dir.chdir(CORDOVA_PATH) do
       if platform == "android"
-        system({"ENVIRONMENT" => environment}, "cordova add android@10.1.1") # API 30
         system({"ENVIRONMENT" => environment}, "cordova prepare android")
         sh %{ cordova plugin add cordova-android-support-gradle-release --variable ANDROID_SUPPORT_VERSION=30 }
       else

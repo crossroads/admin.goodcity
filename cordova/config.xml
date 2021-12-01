@@ -90,7 +90,7 @@
   <allow-intent href="https://maps.google.com/*" />
   <allow-intent href="https://crossroads-foundation.formstack.com/*"/>
   <engine name="ios" spec="6.1.1" />
-  <engine name="android" spec="9.0.0" />
+  <engine name="android" spec="10.1.1" />
   <engine name="windows" spec="~4.3.1" />
   <plugin name="cordova-plugin-statusbar" spec="~2.1.1" />
   <plugin name="cordova-plugin-device" spec="2.0.3" />
