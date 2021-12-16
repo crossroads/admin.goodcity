@@ -36,7 +36,6 @@
         <preference name="deployment-target" value="11.0" />
         <preference name="Orientation" value="portrait" />
         <preference name="Fullscreen" value="true" />
-        <hook src="scripts/delete_x86_arch.js" type="after_prepare" />
         <icon height="29" src="res/ios/Icon-29x29~ipad.png" width="29" />
         <icon height="58" src="res/ios/Icon-29x29@2x.png" width="58" />
         <icon height="58" src="res/ios/Icon-29x29@2x~ipad.png" width="58" />
