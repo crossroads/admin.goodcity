@@ -4,6 +4,7 @@
   "displayName": "S. Admin GoodCity",
   "dependencies": {},
   "devDependencies": {
+    "@havesource/cordova-plugin-push": "^3.0.0",
     "cordova-ios-plugin-no-export-compliance": "git+https://github.com/mikaoelitiana/cordova-plugin-ios-no-export-compliance.git",
     "cordova-plugin-actionsheet": "^2.3.3",
     "cordova-plugin-android-permissions": "^1.1.2",
@@ -40,7 +41,8 @@
       "es6-promise-plugin": {},
       "phonegap-plugin-barcodescanner": {
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
-      }
+      },
+      "@havesource/cordova-plugin-push": {}
     }
   }
 }
