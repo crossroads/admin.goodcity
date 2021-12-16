@@ -260,6 +260,11 @@ jobs:
                --packageType="${PACKAGE_TYPE}" --automaticProvisioning=true  --buildFlag="IPHONEOS_DEPLOYMENT_TARGET=11.0" \
                --provisioningProfile="${UUID}"
           working_directory: cordova
+      - store_artifacts:
+          path: cordova/platforms/ios/build/device
+      - run:
+          name: Release ios build
+          command: bundle exec fastlane ios ${ENVIRONMENT}
 
 workflows:
     version: 2
