@@ -205,13 +205,6 @@ module.exports = function(environment) {
     ].join(" ");
     ENV.googleAnalytics = { webPropertyId: "UA-62978462-3" };
     ENV.cordova.FcmSenderId = "907786683525";
-
-    // VSO build
-    if (process.env.BUILD_BUILDNUMBER) {
-      ENV.APP.VERSION =
-        process.env.VERSION + "." + process.env.BUILD_BUILDNUMBER;
-      ENV.APP.APP_SHA = process.env.BUILD_SOURCEVERSION;
-    }
   }
   if (environment === "preview") {
     ENV.APP.API_HOST_URL = "https://api-preview.goodcity.hk";
@@ -239,13 +232,6 @@ module.exports = function(environment) {
     ].join(" ");
     ENV.googleAnalytics = { webPropertyId: "UA-62978462-3" };
     ENV.cordova.FcmSenderId = "907786683525";
-
-    // VSO build
-    if (process.env.BUILD_BUILDNUMBER) {
-      ENV.APP.VERSION =
-        process.env.VERSION + "." + process.env.BUILD_BUILDNUMBER;
-      ENV.APP.APP_SHA = process.env.BUILD_SOURCEVERSION;
-    }
   }
 
   ENV.APP.SERVER_PATH = ENV.APP.API_HOST_URL + "/" + ENV.APP.NAMESPACE;
