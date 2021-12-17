@@ -73,7 +73,7 @@ export default Ember.Component.extend({
         ]);
       })
       .catch(error => {
-        this.get("logger").error(e);
+        this.get("logger").error(error);
       });
   },
 
