@@ -115,6 +115,7 @@ module.exports = function(environment) {
     ENV.APP.GOODCITY_NUMBER = "+85258087803";
 
     ENV.contentSecurityPolicy["connect-src"] = [
+      "https://api.rollbar.com",
       "http://localhost:4201",
       "http://localhost:3000",
       "http://localhost:1337",
@@ -160,6 +161,7 @@ module.exports = function(environment) {
     ENV.APP.GOODCITY_NUMBER = "+85258088700";
 
     ENV.contentSecurityPolicy["connect-src"] = [
+      "https://api.rollbar.com",
       "https://admin.goodcity.hk",
       "https://api.goodcity.hk",
       "https://socket.goodcity.hk:81",
@@ -189,6 +191,7 @@ module.exports = function(environment) {
       "https://socket-staging.goodcity.hk/goodcity";
     ENV.APP.GOODCITY_NUMBER = "+85258084822";
     ENV.contentSecurityPolicy["connect-src"] = [
+      "https://api.rollbar.com",
       "https://admin-staging.goodcity.hk",
       "https://api-staging.goodcity.hk",
       "https://socket-staging.goodcity.hk",
@@ -216,6 +219,7 @@ module.exports = function(environment) {
     ENV.APP.STOCK_ANDROID_APP_HOST_URL = "stock-staging.goodcity.hk";
     ENV.APP.GOODCITY_NUMBER = "+85258084822";
     ENV.contentSecurityPolicy["connect-src"] = [
+      "https://api.rollbar.com",
       "https://admin-preview.goodcity.hk",
       "https://api-preview.goodcity.hk",
       "https://socket-preview.goodcity.hk",
