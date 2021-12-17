@@ -79,7 +79,7 @@
             <string>Needs photo library access to save photos</string>
         </edit-config>
         <edit-config file="*-Info.plist" mode="merge" target="NSMicrophoneUsageDescription">
-            <string>Needs permission to use the microphone</string>
+            <string>Needs permission to use the microphone to make and receive in-app phone calls</string>
         </edit-config>
     </platform>
 </widget>
