@@ -86,8 +86,7 @@ module.exports = function(environment) {
     cordova: {
       enabled: process.env.EMBER_CLI_CORDOVA !== "0",
       rebuildOnChange: false,
-      emulate: false,
-      FcmSenderId: "907786683525"
+      emulate: false
     },
     coffeeOptions: {
       blueprints: false
@@ -177,7 +176,6 @@ module.exports = function(environment) {
     ].join(" ");
     //google analytics
     ENV.googleAnalytics = { webPropertyId: "UA-62978462-2" };
-    ENV.cordova.FcmSenderId = "876198075877";
   }
 
   if (environment === "staging") {
@@ -207,7 +205,6 @@ module.exports = function(environment) {
       "https://eventgw.twilio.com"
     ].join(" ");
     ENV.googleAnalytics = { webPropertyId: "UA-62978462-3" };
-    ENV.cordova.FcmSenderId = "907786683525";
   }
   if (environment === "preview") {
     ENV.APP.API_HOST_URL = "https://api-preview.goodcity.hk";
@@ -234,7 +231,6 @@ module.exports = function(environment) {
       "https://eventgw.twilio.com"
     ].join(" ");
     ENV.googleAnalytics = { webPropertyId: "UA-62978462-3" };
-    ENV.cordova.FcmSenderId = "907786683525";
   }
 
   ENV.APP.SERVER_PATH = ENV.APP.API_HOST_URL + "/" + ENV.APP.NAMESPACE;
