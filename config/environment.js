@@ -127,7 +127,7 @@ module.exports = function(environment) {
       "https://media.twiliocdn.com",
       "wss://chunderw.twilio.com/signal",
       "wss://chunderw-vpc-gll.twilio.com/signal",
-      "https://eventgw.twilio.com/v1/EndpointEvents"
+      "https://eventgw.twilio.com"
     ].join(" ");
   }
 
@@ -173,7 +173,7 @@ module.exports = function(environment) {
       "https://media.twiliocdn.com",
       "wss://chunderw.twilio.com/signal",
       "wss://chunderw-vpc-gll.twilio.com/signal",
-      "https://eventgw.twilio.com/v1/EndpointEvents"
+      "https://eventgw.twilio.com"
     ].join(" ");
     //google analytics
     ENV.googleAnalytics = { webPropertyId: "UA-62978462-2" };
@@ -204,7 +204,7 @@ module.exports = function(environment) {
       "https://media.twiliocdn.com",
       "wss://chunderw.twilio.com/signal",
       "wss://chunderw-vpc-gll.twilio.com/signal",
-      "https://eventgw.twilio.com/v1/EndpointEvents"
+      "https://eventgw.twilio.com"
     ].join(" ");
     ENV.googleAnalytics = { webPropertyId: "UA-62978462-3" };
     ENV.cordova.FcmSenderId = "907786683525";
@@ -231,7 +231,7 @@ module.exports = function(environment) {
       "https://media.twiliocdn.com",
       "wss://chunderw.twilio.com/signal",
       "wss://chunderw-vpc-gll.twilio.com/signal",
-      "https://eventgw.twilio.com/v1/EndpointEvents"
+      "https://eventgw.twilio.com"
     ].join(" ");
     ENV.googleAnalytics = { webPropertyId: "UA-62978462-3" };
     ENV.cordova.FcmSenderId = "907786683525";

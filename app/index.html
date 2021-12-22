@@ -10,29 +10,22 @@
     <link rel="stylesheet" href="assets/vendor.css">
     <link rel="stylesheet" href="assets/goodcity.css">
 
+    <link rel="shortcut icon" type="image/png" href="icon-192x192.png">
+    <link rel="shortcut icon" sizes="192x192" href="icon-192x192.png">
+
     <!-- "Add to homescreen" icon for android devices -->
     <link rel="manifest" href="assets/manifest.json">
 
     <!-- "Add to homescreen" icon for ios devices -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="apple-touch-icon" href="assets/images/goodcity-icon-57.png" />
-    <link rel="apple-touch-icon" sizes="72x72" href="assets/images/goodcity-icon-72.png" />
-    <link rel="apple-touch-icon" sizes="114x114" href="assets/images/goodcity-icon-114.png" />
-    <script type="text/javascript">
-      document.addEventListener("deviceready", onDeviceReady, false);
-
-      function onDeviceReady(){
-          StatusBar.overlaysWebView(false);
-          StatusBar.backgroundColorByName("black");
-          StatusBar.styleLightContent();
-      }
-    </script>
-
+    <link rel="apple-touch-icon" href="icon-192x192.png">
+    
     {{content-for 'head-footer'}}
 
   </head>
   <body class="global">
+    <script src="cordova.js"></script>
     <script src="assets/vendor.js" integrity=""></script>
     <script src="assets/goodcity.js" integrity=""></script>
     {{content-for 'body-footer'}}
