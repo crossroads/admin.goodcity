@@ -126,7 +126,8 @@ module.exports = function(environment) {
       "https://media.twiliocdn.com",
       "wss://chunderw.twilio.com/signal",
       "wss://chunderw-vpc-gll.twilio.com/signal",
-      "https://eventgw.twilio.com"
+      "https://eventgw.twilio.com",
+      "https://www.google-analytics.com"
     ].join(" ");
   }
 
@@ -172,7 +173,8 @@ module.exports = function(environment) {
       "https://media.twiliocdn.com",
       "wss://chunderw.twilio.com/signal",
       "wss://chunderw-vpc-gll.twilio.com/signal",
-      "https://eventgw.twilio.com"
+      "https://eventgw.twilio.com",
+      "https://www.google-analytics.com"
     ].join(" ");
     //google analytics
     ENV.googleAnalytics = { webPropertyId: "UA-62978462-2" };
@@ -202,33 +204,8 @@ module.exports = function(environment) {
       "https://media.twiliocdn.com",
       "wss://chunderw.twilio.com/signal",
       "wss://chunderw-vpc-gll.twilio.com/signal",
-      "https://eventgw.twilio.com"
-    ].join(" ");
-    ENV.googleAnalytics = { webPropertyId: "UA-62978462-3" };
-  }
-  if (environment === "preview") {
-    ENV.APP.API_HOST_URL = "https://api-preview.goodcity.hk";
-    ENV.ADMIN_APP_HOST_URL = "https://admin-preview.goodcity.hk";
-    ENV.BROWSE_APP_HOST_URL = "https://charities-preview.goodcity.hk";
-    ENV.APP.SOCKETIO_WEBSERVICE_URL =
-      "https://socket-preview.goodcity.hk/goodcity";
-    ENV.APP.STOCK_APP_HOST_URL = "https://stock-staging.goodcity.hk";
-    ENV.APP.STOCK_ANDROID_APP_HOST_URL = "stock-staging.goodcity.hk";
-    ENV.APP.GOODCITY_NUMBER = "+85258084822";
-    ENV.contentSecurityPolicy["connect-src"] = [
-      "https://api.rollbar.com",
-      "https://admin-preview.goodcity.hk",
-      "https://api-preview.goodcity.hk",
-      "https://socket-preview.goodcity.hk",
-      "ws://socket-preview.goodcity.hk",
-      "wss://socket-preview.goodcity.hk",
-      "https://api.cloudinary.com",
-      "https://static.twilio.com",
-      "https://api.twilio.com",
-      "https://media.twiliocdn.com",
-      "wss://chunderw.twilio.com/signal",
-      "wss://chunderw-vpc-gll.twilio.com/signal",
-      "https://eventgw.twilio.com"
+      "https://eventgw.twilio.com",
+      "https://www.google-analytics.com"
     ].join(" ");
     ENV.googleAnalytics = { webPropertyId: "UA-62978462-3" };
   }
