@@ -10,6 +10,7 @@
     "cordova-ios-plugin-no-export-compliance": "git+https://github.com/mikaoelitiana/cordova-plugin-ios-no-export-compliance.git",
     "cordova-plugin-actionsheet": "^2.3.3",
     "cordova-plugin-android-permissions": "^1.1.2",
+    "cordova-plugin-androidx-adapter": "^1.1.3",
     "cordova-plugin-camera": "^6.0.0",
     "cordova-plugin-device": "^2.0.3",
     "cordova-plugin-inappbrowser": "^5.0.0",
@@ -30,7 +31,7 @@
     "plugins": {
       "cordova-plugin-ios-no-export-compliance": {},
       "cordova-plugin-twiliovoicesdk": {
-        "INCOMING_CALL_APP_NAME": "Crossroads",
+        "INCOMING_CALL_APP_NAME": "GoodCity.HK",
         "MASK_INCOMING_PHONE_NUMBER": "true",
         "ENABLE_CALL_KIT": "false"
       },
@@ -53,7 +54,8 @@
         "ANDROIDX_CORE_VERSION": "1.6.+",
         "FCM_VERSION": "18.+"
       },
-      "phonegap-plugin-media-stream": {}
+      "phonegap-plugin-media-stream": {},
+      "cordova-plugin-androidx-adapter": {}
     }
   }
 }
