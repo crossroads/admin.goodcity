@@ -10,6 +10,7 @@
     <preference name="scheme" value="app" />
     <preference name="hostname" value="localhost" />
     <preference name="StatusBarOverlaysWebView" value="false" />
+    <preference name="StatusBarBackgroundColor" value="#002352" />
     <preference name="StatusBarStyle" value="lightcontent" />
     <allow-intent href="https://maps.google.com/*" />
     <allow-intent href="https://crossroads-foundation.formstack.com/*" />
