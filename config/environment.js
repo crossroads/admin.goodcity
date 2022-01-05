@@ -150,7 +150,7 @@ module.exports = function(environment) {
 
   if (environment === "production") {
     if (!process.env.ENVIRONMENT)
-      throw "Please pass an appropriate ENVIRONMENT=(staging|preview|production) param.";
+      throw "Please pass an appropriate ENVIRONMENT=(staging|production) param.";
     // RESTAdapter Settings
     ENV.APP.API_HOST_URL = "https://api.goodcity.hk";
     ENV.ADMIN_APP_HOST_URL = "https://admin.goodcity.hk";
