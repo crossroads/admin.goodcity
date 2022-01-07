@@ -69,6 +69,9 @@
         <splash height="768" src="res/ios/Default-768h.png" width="1024" />
         <splash height="1536" src="res/ios/Default-1536h.png" width="2048" />
         <splash height="1242" src="res/ios/Default-1242h.png" width="2208" />
+        <edit-config file="*-Info.plist" mode="add" target="ITSAppUsesNonExemptEncryption">
+            <false/>
+        </edit-config>
         <edit-config file="*-Info.plist" mode="merge" target="NSCameraUsageDescription">
             <string>To enable you to read inventory barcodes and photograph inventory items.</string>
         </edit-config>
