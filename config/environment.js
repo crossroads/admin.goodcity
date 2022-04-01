@@ -111,7 +111,7 @@ module.exports = function(environment) {
     ENV.BROWSE_APP_HOST_URL = "http://localhost:4202";
     ENV.APP.STOCK_APP_HOST_URL = "http://localhost:4203";
     ENV.APP.STOCK_ANDROID_APP_HOST_URL = "stock-staging.goodcity.hk"; //Added for localhost replacement
-    ENV.APP.GOODCITY_NUMBER = "+85258087803";
+    ENV.APP.GOODCITY_NUMBER = "+85230015405";
 
     ENV.contentSecurityPolicy["connect-src"] = [
       "https://api.rollbar.com",
@@ -188,7 +188,7 @@ module.exports = function(environment) {
     ENV.APP.STOCK_ANDROID_APP_HOST_URL = "stock-staging.goodcity.hk";
     ENV.APP.SOCKETIO_WEBSERVICE_URL =
       "https://socket-staging.goodcity.hk/goodcity";
-    ENV.APP.GOODCITY_NUMBER = "+85258084822";
+    ENV.APP.GOODCITY_NUMBER = "+85230015405";
     ENV.contentSecurityPolicy["connect-src"] = [
       "https://api.rollbar.com",
       "https://admin-staging.goodcity.hk",
