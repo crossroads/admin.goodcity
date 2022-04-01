@@ -157,7 +157,7 @@ module.exports = function(environment) {
     ENV.APP.SOCKETIO_WEBSERVICE_URL = "https://socket.goodcity.hk:81/goodcity";
     ENV.APP.STOCK_APP_HOST_URL = "https://stock.goodcity.hk";
     ENV.APP.STOCK_ANDROID_APP_HOST_URL = "stock.goodcity.hk";
-    ENV.APP.GOODCITY_NUMBER = "+85258088700";
+    ENV.APP.GOODCITY_NUMBER = "+85230011580";
 
     ENV.contentSecurityPolicy["connect-src"] = [
       "https://admin.goodcity.hk",
@@ -221,7 +221,7 @@ module.exports = function(environment) {
       "https://socket-preview.goodcity.hk/goodcity";
     ENV.APP.STOCK_APP_HOST_URL = "https://stock-staging.goodcity.hk";
     ENV.APP.STOCK_ANDROID_APP_HOST_URL = "stock-staging.goodcity.hk";
-    ENV.APP.GOODCITY_NUMBER = "+85258084822";
+    ENV.APP.GOODCITY_NUMBER = "+85230015405";
     ENV.contentSecurityPolicy["connect-src"] = [
       "https://admin-preview.goodcity.hk",
       "https://api-preview.goodcity.hk",
