@@ -188,6 +188,9 @@ export default Ember.Controller.extend({
       this.get("packages").forEach(data => {
         var pkg;
         data.notes = Ember.$("#comment" + packages.indexOf(data)).val();
+        data.donorConditionId = this.get(
+          "reviewItem.formData.donorConditionId"
+        );
         if (existing[data.id]) {
           pkg = existing[data.id];
           pkg.setProperties(data);
