@@ -18,6 +18,10 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     showCallToAction: true
   },
 
+  districts: Ember.computed(function() {
+    return this.store.peekAll("district").sortBy("name");
+  }),
+
   showNoteCallToAction: Ember.computed(
     "currentOffer.notes",
     "stickyNote.showCallToAction",
@@ -51,6 +55,14 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
   }),
 
   actions: {
+    setOfferDistrict(district) {
+      this.runTask(() => {
+        const offer = this.get('currentOffer')
+        offer.set('district', district);
+        return offer.save();
+      })
+    },
+
     toggleOptions(optionName) {
       let optionNames = [
         "displayCompanyOptions",

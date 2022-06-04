@@ -453,6 +453,7 @@ I18nTranslationsZhTw =
         "call_using_phone": "致電捐助者"
       "location":
         "title": "捐助者位置"
+        "offer": "Offer's location:"
       "sale_allowed":
         "title": "可供銷售"
         "yes": "是"

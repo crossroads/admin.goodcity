@@ -164,6 +164,23 @@
 
     <div class="row corporate-donor donor-details">
       <div class="small-5 columns">
+        {{t "donor_details.location.offer"}}
+      </div>
+      <div class="small-7 columns donor-data inline-dropdown">
+        {{select-list
+          content=districts
+          on-change=(action 'setOfferDistrict')
+          selectedValue=currentOffer.district
+          prompt=(t "offer_creation.create_donor.select_district")
+          value=currentOffer.district
+          selectArrow=false
+          classNames='district-selector'
+          idNames='district-select-dropdown'}}
+      </div>
+    </div>
+
+    <div class="row corporate-donor donor-details">
+      <div class="small-5 columns">
         {{t "review_offer.donor.registered"}}:
       </div>
       <div class="small-7 columns donor-data">

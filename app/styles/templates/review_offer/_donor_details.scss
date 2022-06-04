@@ -3,6 +3,20 @@
   padding-right: 0;
   cursor: pointer;
 
+  .inline-dropdown {
+    * {
+      height: 18px;
+            padding: 0;
+      margin: 0;
+    }
+    select {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 0.7rem;
+    }
+  }
+
   .options_menu_list {
     margin-left: unset;
     margin-top: unset;

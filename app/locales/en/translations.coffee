@@ -456,6 +456,7 @@ I18nTranslationsEn =
         "call_using_phone": "Call donor using phone"
       "location":
         "title": "Donors location:"
+        "offer": "Offer's location:"
       "sale_allowed":
         "title": "Sale allowed"
         "yes": "Yes"
