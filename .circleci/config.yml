@@ -29,6 +29,7 @@ aliases:
         - ~/.cache/yarn
   - &yarn
     |
+      git config --global url.https://github.com/.insteadOf git://github.com/  
       yarn install --non-interactive --cache-folder ~/.cache/yarn --frozen-lockfile
   - &restore-bower-cache
       key: v1-admin-goodcity-bower-components-{{ checksum "bower.json" }}
