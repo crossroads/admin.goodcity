@@ -163,10 +163,10 @@ export default Ember.Controller.extend(AsyncTasksMixin, {
     this.set("i18n.locale", locale);
 
     const t = k => this.get("i18n").t(k);
-    const district = this.getWithDefault(
+    const district = this.getWithDefault("offer.district.name", this.getWithDefault(
       "offer.createdBy.address.district.name",
       "Hong Kong"
-    );
+    ));
     const lines = [
       `${t("review_offer.donor.district")}: ${district}`,
       saleable
