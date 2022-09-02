@@ -9,6 +9,8 @@
     <access origin="*" />
     <preference name="scheme" value="app" />
     <preference name="hostname" value="localhost" />
+    <allow-navigation href="http://localhost/*" />
+    <allow-navigation href="https://localhost/*" />
     <preference name="StatusBarOverlaysWebView" value="false" />
     <preference name="StatusBarBackgroundColor" value="#002352" />
     <preference name="StatusBarStyle" value="lightcontent" />
@@ -70,7 +72,7 @@
         <splash height="1536" src="res/ios/Default-1536h.png" width="2048" />
         <splash height="1242" src="res/ios/Default-1242h.png" width="2208" />
         <edit-config file="*-Info.plist" mode="add" target="ITSAppUsesNonExemptEncryption">
-            <false/>
+            <false />
         </edit-config>
         <edit-config file="*-Info.plist" mode="merge" target="NSCameraUsageDescription">
             <string>To enable you to read inventory barcodes and photograph inventory items.</string>

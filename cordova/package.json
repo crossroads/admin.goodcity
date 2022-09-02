@@ -6,6 +6,7 @@
   "devDependencies": {
     "@havesource/cordova-plugin-push": "^3.0.0",
     "cordova-android": "^10.1.1",
+    "cordova-android-support-gradle-release": "^3.0.1",
     "cordova-ios": "^6.2.0",
     "cordova-plugin-actionsheet": "^2.3.3",
     "cordova-plugin-android-permissions": "^1.1.2",
@@ -27,6 +28,9 @@
       "android"
     ],
     "plugins": {
+      "cordova-android-support-gradle-release": {
+        "ANDROID_SUPPORT_VERSION": "30"
+      },
       "cordova-plugin-twiliovoicesdk": {
         "INCOMING_CALL_APP_NAME": "GoodCity.HK",
         "MASK_INCOMING_PHONE_NUMBER": "true",
