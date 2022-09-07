@@ -4,8 +4,8 @@
   "displayName": "S. Admin GoodCity",
   "dependencies": {},
   "devDependencies": {
-    "@havesource/cordova-plugin-push": "^3.0.0",
-    "cordova-android": "^10.1.1",
+    "@havesource/cordova-plugin-push": "^3.0.1",
+    "cordova-android": "^10.1.2",
     "cordova-android-support-gradle-release": "^3.0.1",
     "cordova-ios": "^6.2.0",
     "cordova-plugin-actionsheet": "^2.3.3",
@@ -19,8 +19,7 @@
     "cordova-plugin-statusbar": "^3.0.0",
     "cordova-plugin-twiliovoicesdk": "^6.0.3",
     "es6-promise-plugin": "^4.2.2",
-    "phonegap-plugin-barcodescanner": "^8.1.0",
-    "phonegap-plugin-media-stream": "git+https://github.com/Kacoze/phonegap-plugin-media-stream.git"
+    "phonegap-plugin-barcodescanner": "^8.1.0"
   },
   "cordova": {
     "platforms": [
@@ -28,14 +27,6 @@
       "android"
     ],
     "plugins": {
-      "cordova-android-support-gradle-release": {
-        "ANDROID_SUPPORT_VERSION": "30"
-      },
-      "cordova-plugin-twiliovoicesdk": {
-        "INCOMING_CALL_APP_NAME": "GoodCity.HK",
-        "MASK_INCOMING_PHONE_NUMBER": "true",
-        "ENABLE_CALL_KIT": "false"
-      },
       "cordova-plugin-actionsheet": {},
       "cordova-plugin-android-permissions": {},
       "cordova-plugin-camera": {
@@ -46,16 +37,23 @@
       "cordova-plugin-network-information": {},
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-statusbar": {},
-      "es6-promise-plugin": {},
-      "phonegap-plugin-barcodescanner": {
-        "ANDROID_SUPPORT_V4_VERSION": "27.+"
-      },
       "@havesource/cordova-plugin-push": {
         "ANDROIDX_CORE_VERSION": "1.6.+",
         "FCM_VERSION": "18.+"
       },
+      "es6-promise-plugin": {},
       "cordova-plugin-androidx-adapter": {},
-      "phonegap-plugin-media-stream": {}
+      "cordova-android-support-gradle-release": {
+        "ANDROID_SUPPORT_VERSION": "30"
+      },
+      "cordova-plugin-twiliovoicesdk": {
+        "INCOMING_CALL_APP_NAME": "GoodCity.HK",
+        "MASK_INCOMING_PHONE_NUMBER": "true",
+        "ENABLE_CALL_KIT": "false"
+      },
+      "phonegap-plugin-barcodescanner": {
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      }
     }
   }
 }
