@@ -21,6 +21,10 @@
     <preference name="StatusBarStyle" value="lightcontent" />
     <allow-intent href="http://*/*" launch-external="yes" />
     <allow-intent href="https://*/*" launch-external="yes" />
+    <!-- Allow tel: links to open the dialer -->
+    <allow-intent href="tel:*" />
+    <!-- Allow geo: links to open maps -->
+    <allow-intent href="geo:*" />
     <platform name="android">
         <resource-file src="google-services.json" target="/app/google-services.json" />
         <resource-file src="res/android/notification.png" target="app/src/main/res/drawable/notification.png" />
