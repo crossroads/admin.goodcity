@@ -86,8 +86,7 @@ module.exports = function(environment) {
     cordova: {
       enabled: process.env.EMBER_CLI_CORDOVA !== "0",
       rebuildOnChange: false,
-      emulate: false,
-      FcmSenderId: "907786683525"
+      emulate: false
     },
     coffeeOptions: {
       blueprints: false
@@ -115,18 +114,20 @@ module.exports = function(environment) {
     ENV.APP.GOODCITY_NUMBER = "+85230015405";
 
     ENV.contentSecurityPolicy["connect-src"] = [
+      "https://api.rollbar.com",
       "http://localhost:4201",
       "http://localhost:3000",
       "http://localhost:1337",
       "ws://localhost:1337",
       "wss://localhost:1337",
       "https://api.cloudinary.com",
-      "https://api.twilio.com",
-      "http://static.twilio.com",
       "https://static.twilio.com",
+      "https://api.twilio.com",
+      "https://media.twiliocdn.com",
       "wss://chunderw.twilio.com/signal",
       "wss://chunderw-vpc-gll.twilio.com/signal",
-      "https://eventgw.twilio.com/v1/EndpointEvents"
+      "https://eventgw.twilio.com",
+      "https://www.google-analytics.com"
     ].join(" ");
   }
 
@@ -149,7 +150,7 @@ module.exports = function(environment) {
 
   if (environment === "production") {
     if (!process.env.ENVIRONMENT)
-      throw "Please pass an appropriate ENVIRONMENT=(staging|preview|production) param.";
+      throw "Please pass an appropriate ENVIRONMENT=(staging|production) param.";
     // RESTAdapter Settings
     ENV.APP.API_HOST_URL = "https://api.goodcity.hk";
     ENV.ADMIN_APP_HOST_URL = "https://admin.goodcity.hk";
@@ -160,23 +161,23 @@ module.exports = function(environment) {
     ENV.APP.GOODCITY_NUMBER = "+85230011580";
 
     ENV.contentSecurityPolicy["connect-src"] = [
+      "https://api.rollbar.com",
       "https://admin.goodcity.hk",
       "https://api.goodcity.hk",
       "https://socket.goodcity.hk:81",
       "ws://socket.goodcity.hk:81",
       "wss://socket.goodcity.hk:81",
       "https://api.cloudinary.com",
-      "https://media.twiliocdn.com",
-      "https://api.twilio.com",
-      "http://static.twilio.com",
       "https://static.twilio.com",
+      "https://api.twilio.com",
+      "https://media.twiliocdn.com",
       "wss://chunderw.twilio.com/signal",
       "wss://chunderw-vpc-gll.twilio.com/signal",
-      "https://eventgw.twilio.com/v1/EndpointEvents"
+      "https://eventgw.twilio.com",
+      "https://www.google-analytics.com"
     ].join(" ");
     //google analytics
     ENV.googleAnalytics = { webPropertyId: "UA-62978462-2" };
-    ENV.cordova.FcmSenderId = "876198075877";
   }
 
   if (environment === "staging") {
@@ -189,6 +190,7 @@ module.exports = function(environment) {
       "https://socket-staging.goodcity.hk/goodcity";
     ENV.APP.GOODCITY_NUMBER = "+85230015405";
     ENV.contentSecurityPolicy["connect-src"] = [
+      "https://api.rollbar.com",
       "https://admin-staging.goodcity.hk",
       "https://api-staging.goodcity.hk",
       "https://socket-staging.goodcity.hk",
@@ -197,55 +199,15 @@ module.exports = function(environment) {
       "https://api.cloudinary.com",
       "https://media.twiliocdn.com",
       "https://api.twilio.com",
-      "http://static.twilio.com",
       "https://static.twilio.com",
-      "wss://chunderw.twilio.com/signal",
-      "wss://chunderw-vpc-gll.twilio.com/signal",
-      "https://eventgw.twilio.com/v1/EndpointEvents"
-    ].join(" ");
-    ENV.googleAnalytics = { webPropertyId: "UA-62978462-3" };
-    ENV.cordova.FcmSenderId = "907786683525";
-
-    // VSO build
-    if (process.env.BUILD_BUILDNUMBER) {
-      ENV.APP.VERSION =
-        process.env.VERSION + "." + process.env.BUILD_BUILDNUMBER;
-      ENV.APP.APP_SHA = process.env.BUILD_SOURCEVERSION;
-    }
-  }
-  if (environment === "preview") {
-    ENV.APP.API_HOST_URL = "https://api-preview.goodcity.hk";
-    ENV.ADMIN_APP_HOST_URL = "https://admin-preview.goodcity.hk";
-    ENV.BROWSE_APP_HOST_URL = "https://charities-preview.goodcity.hk";
-    ENV.APP.SOCKETIO_WEBSERVICE_URL =
-      "https://socket-preview.goodcity.hk/goodcity";
-    ENV.APP.STOCK_APP_HOST_URL = "https://stock-staging.goodcity.hk";
-    ENV.APP.STOCK_ANDROID_APP_HOST_URL = "stock-staging.goodcity.hk";
-    ENV.APP.GOODCITY_NUMBER = "+85230015405";
-    ENV.contentSecurityPolicy["connect-src"] = [
-      "https://admin-preview.goodcity.hk",
-      "https://api-preview.goodcity.hk",
-      "https://socket-preview.goodcity.hk",
-      "ws://socket-preview.goodcity.hk",
-      "wss://socket-preview.goodcity.hk",
-      "https://api.cloudinary.com",
-      "https://media.twiliocdn.com",
       "https://api.twilio.com",
-      "http://static.twilio.com",
-      "https://static.twilio.com",
+      "https://media.twiliocdn.com",
       "wss://chunderw.twilio.com/signal",
       "wss://chunderw-vpc-gll.twilio.com/signal",
-      "https://eventgw.twilio.com/v1/EndpointEvents"
+      "https://eventgw.twilio.com",
+      "https://www.google-analytics.com"
     ].join(" ");
     ENV.googleAnalytics = { webPropertyId: "UA-62978462-3" };
-    ENV.cordova.FcmSenderId = "907786683525";
-
-    // VSO build
-    if (process.env.BUILD_BUILDNUMBER) {
-      ENV.APP.VERSION =
-        process.env.VERSION + "." + process.env.BUILD_BUILDNUMBER;
-      ENV.APP.APP_SHA = process.env.BUILD_SOURCEVERSION;
-    }
   }
 
   ENV.APP.SERVER_PATH = ENV.APP.API_HOST_URL + "/" + ENV.APP.NAMESPACE;
