@@ -9,7 +9,7 @@ The GoodCity initiative is a new way to donate quality goods in Hong Kong. See h
 
 ## Installation
 
-Install and configure NodeJS 12 using NVM: https://github.com/creationix/nvm#install-script
+Install and configure NodeJS 10 using NVM: https://github.com/creationix/nvm#install-script
 
 You can clone the GoodCity app repo direct:
 
