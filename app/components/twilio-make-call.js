@@ -40,90 +40,73 @@ export default Ember.Component.extend({
     return this.get("isCordovaApp") ? Twilio.TwilioVoiceClient : Twilio.Device;
   }),
 
-  // web browser only, not cordova
   initTwilioDeviceBindings: function() {
-    const twilio_token = this.get("twilioToken");
-    const twilio_device = this.get("twilio_device");
+    const twilioToken = this.get("twilioToken");
 
-    twilio_device.setup(twilio_token, {
-      debug: true
-    });
+    if (!twilioToken) {
+      console.log("TwilioToken empty. Cannot proceed with initialization.");
+      return;
+    }
+    this.get("isCordovaApp")
+      ? this.initTwilioMobileDevice()
+      : this.initTwilioBrowser();
+  },
 
-    twilio_device.error(() => {
+  initTwilioMobileDevice: function() {
+    const twilioDevice = this.get("twilio_device");
+    const twilioToken = this.get("twilioToken");
+
+    // ensure mobile device permissions are granted prior to library initialization
+    const permissions = _.get(window, "cordova.plugins.permissions");
+    permissions.requestPermission(
+      permissions.RECORD_AUDIO,
+      status => {
+        if (status.hasPermission) {
+          twilioDevice.initialize(twilioToken);
+        } else {
+          console.log(
+            "Audio permissions not granted. Not instantiating Twilio SDK."
+          );
+        }
+      },
+      () => {
+        console.log(
+          "Audio permissions not granted. Not instantiating Twilio SDK."
+        );
+      }
+    );
+
+    twilioDevice.error(() => {
       if (!this.get("isDestroying")) {
         this.set("activeCall", false);
+        this.get("internetCallStatus").set("activeCall", false);
+      }
+      this.get("twilio_device").disconnect();
+    });
+
+    twilioDevice.calldiddisconnect(() => {
+      this.set("activeCall", false);
+      this.get("internetCallStatus").set("activeCall", false);
+    });
+  },
+
+  initTwilioBrowser: function() {
+    const twilioDevice = this.get("twilio_device");
+    const twilioToken = this.get("twilioToken");
+
+    twilioDevice.setup(twilioToken, { debug: true });
+    twilioDevice.on("error", () => {
+      if (!this.get("isDestroying")) {
+        this.set("activeCall", false);
+        this.get("internetCallStatus").set("activeCall", false);
       }
       this.get("twilio_device").disconnectAll();
     });
 
-    twilio_device.disconnect(() => {
-      if (!this.isDestroying && !this.isDestroyed) {
-        this.set("activeCall", false);
-        this.get("internetCallStatus").set("activeCall", false);
-      }
+    twilioDevice.on("disconnect", () => {
+      this.set("activeCall", false);
+      this.get("internetCallStatus").set("activeCall", false);
     });
-  },
-
-  // cordova only
-  async audioDeviceAccessPrompt() {
-    const permissions = _.get(window, "cordova.plugins.permissions");
-    const allowed = await this.requestPermissions([
-      permissions.RECORD_AUDIO,
-      permissions.MODIFY_AUDIO_SETTINGS
-    ]);
-    if (allowed) {
-      const twilioToken = this.get("twilioToken");
-      const twilioDevice = this.get("twilio_device");
-      twilioDevice.initialize(twilioToken);
-
-      // navigator.mediaDevices.getUserMedia({ audio: true })
-      // .then(function(mediaStream) {
-      //   this.get("outputSources").set("optional", [
-      //     { sourceId: mediaStream.id }
-      //   ]);
-      // })
-      // .catch(error => {
-      //   this.get("logger").error(error);
-      // });
-    }
-  },
-
-  /**
-   * Tries to get requested permissions
-   * requestedPermissions = [ permissions.RECORD_AUDIO, permissions.MODIFY_AUDIO_SETTINGS ]
-   *
-   * @returns {Promise<boolean>} whether the user has granted the permission
-   */
-  requestPermissions: function(requestedPermissions) {
-    const permissions = _.get(window, "cordova.plugins.permissions");
-
-    if (!this.get("isCordovaApp") || !permissions) {
-      return Ember.RSVP.resolve(false);
-    }
-
-    const deferred = Ember.RSVP.defer();
-
-    const permissionError = e => {
-      deferred.reject(e); // Something went wrong
-    };
-
-    const permissionSuccess = ({ hasPermission }) => {
-      deferred.resolve(hasPermission); // We got an answer from the user
-    };
-
-    permissions.checkPermission(requestedPermissions, status => {
-      if (status.hasPermission) {
-        deferred.resolve(true);
-      } else {
-        permissions.requestPermissions(
-          requestedPermissions,
-          permissionSuccess,
-          permissionError
-        );
-      }
-    });
-
-    return deferred.promise;
   },
 
   actions: {
@@ -133,12 +116,9 @@ export default Ember.Component.extend({
       const twilioDevice = this.get("twilio_device");
       this.set("activeCall", true);
       this.get("internetCallStatus").set("activeCall", true);
-      if (this.get("isCordovaApp")) {
-        twilioDevice.call(twilioToken, { To: params });
-      } else {
-        twilioDevice.connect({ To: params });
-      }
-      console.log("Calling...");
+      this.get("isCordovaApp")
+        ? twilioDevice.call(twilioToken, { To: params })
+        : twilioDevice.connect({ To: params });
     },
 
     hangupCall() {
@@ -160,9 +140,7 @@ export default Ember.Component.extend({
         this.get("session.authToken")
       ).then(data => {
         this.set("twilioToken", data["token"]);
-        this.get("isCordovaApp")
-          ? this.audioDeviceAccessPrompt()
-          : this.initTwilioDeviceBindings();
+        this.initTwilioDeviceBindings();
         this.get("internetCallStatus").set(
           "twilio_device",
           this.get("twilio_device")
