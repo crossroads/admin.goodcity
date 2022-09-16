@@ -55,7 +55,7 @@
     "ember-cli-code-coverage": "^0.4.2",
     "ember-cli-coffeescript": "^1.16.1",
     "ember-cli-content-security-policy": "1.0.0",
-    "ember-cli-cordova": "https://github.com/poetic/ember-cli-cordova.git",
+    "ember-cli-cordova": "0.1.0-beta-2",
     "ember-cli-dependency-checker": "^2.1.1",
     "ember-cli-google-analytics": "^1.5.0",
     "ember-cli-gzip": "^1.1.3",

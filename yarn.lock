@@ -5247,9 +5247,10 @@ ember-cli-content-security-policy@1.0.0:
     body-parser "^1.17.0"
     chalk "^2.0.0"
 
-"ember-cli-cordova@https://github.com/poetic/ember-cli-cordova.git":
+ember-cli-cordova@0.1.0-beta-2:
   version "0.1.0-beta-2"
-  resolved "https://github.com/poetic/ember-cli-cordova.git#c78241c566028b362ee0b212889e37ce0622f6d5"
+  resolved "https://registry.yarnpkg.com/ember-cli-cordova/-/ember-cli-cordova-0.1.0-beta-2.tgz#0d70b79fdbd3965f7e57c9ad842ec84bd98e25ce"
+  integrity sha512-J5uH1HsZ/pRAys2u6QLGUCm1W+l/eNYHtRqhfhe6u9KksBZcC7fygAqbemuiFijZUOmzhyYonRpZw0P+g/jtNQ==
   dependencies:
     broccoli-funnel "^0.2.3"
     broccoli-merge-trees "^1.1.0"
