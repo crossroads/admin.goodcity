@@ -30,6 +30,7 @@ npm-debug.log
 testem.log
 cordova/www
 cordova/platforms
+cordova/google-services.json
 .hgignore
 .DS_Store
 cordova/plugins/*

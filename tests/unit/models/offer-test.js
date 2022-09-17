@@ -8,6 +8,7 @@ moduleForModel("offer", "Offer Model", {
     "model:message",
     "model:package",
     "model:image",
+    "model:district",
     "model:donor_condition",
     "model:delivery",
     "model:user",
