@@ -16,7 +16,7 @@
     "cordova-plugin-statusbar": "^3.0.0",
     "cordova-plugin-twiliovoicesdk": "^6.0.3",
     "es6-promise-plugin": "^4.2.2",
-    "phonegap-plugin-barcodescanner": "^8.1.0"
+    "phonegap-plugin-barcodescanner": "git+https://github.com/ochakov/phonegap-plugin-barcodescanner.git"
   },
   "cordova": {
     "platforms": [
