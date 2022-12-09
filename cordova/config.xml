@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="hk.goodcity.adminstaging" version="0.21.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="hk.goodcity.adminstaging" version="0.21.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
     <name>S. Admin GoodCity</name>
     <description>The GoodCity initiative is a new way to donate quality goods in Hong Kong. See www.goodcity.hk for more details.</description>
     <author href="https://www.crossroads.org.hk">Crossroads</author>

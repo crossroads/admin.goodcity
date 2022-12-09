@@ -1,6 +1,6 @@
 {
   "name": "hk.goodcity.adminstaging",
-  "version": "0.21.0",
+  "version": "0.21.1",
   "displayName": "S. Admin GoodCity",
   "dependencies": {},
   "devDependencies": {
@@ -14,7 +14,7 @@
     "cordova-plugin-inappbrowser": "^5.0.0",
     "cordova-plugin-network-information": "^3.0.0",
     "cordova-plugin-statusbar": "^3.0.0",
-    "cordova-plugin-twiliovoicesdk": "^6.0.3",
+    "cordova-plugin-twiliovoicesdk": "git+https://github.com/broadly/cordova-plugin-twiliovoicesdk.git",
     "es6-promise-plugin": "^4.2.2",
     "phonegap-plugin-barcodescanner": "git+https://github.com/ochakov/phonegap-plugin-barcodescanner.git"
   },

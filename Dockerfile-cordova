@@ -13,8 +13,8 @@ RUN node --version \
   && gradle -version \
   && java -version
 
-# docker build -f Dockerfile-cordova -t admin.goodcity.hk:latest .
-# docker run -it admin.goodcity.hk:latest /bin/bash
+# docker build -f Dockerfile-cordova -t goodcity:latest .
+# docker run -it goodcity:latest /bin/bash
 # cordova build android --debug --device
 
 # ADVANCED USAGE KEEPS IMAGE RUNNING TO MAINTAIN GRADLE CACHE
@@ -23,6 +23,6 @@ RUN node --version \
 # ln -s ../dist www
 # cordova platform add android@11
 # cd ..
-# docker run -i -v `pwd`/dist/:/home/circleci/project/dist/ -v `pwd`/cordova:/home/circleci/project/cordova/ -w /home/circleci/project/cordova/ -u root -t admin.goodcity.hk:latest /bin/bash
+# docker run -i --rm -v `pwd`/dist/:/home/circleci/project/dist/ -v `pwd`/cordova:/home/circleci/project/cordova/ -w /home/circleci/project/cordova/ -u root -t goodcity:latest /bin/bash
 #   cordova build android --debug --device
 # App located in `pwd`/cordova/platforms/android/app/build/outputs/apk/debug/app-debug.apk
