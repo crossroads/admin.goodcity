@@ -2,11 +2,14 @@
   "name": "hk.goodcity.adminstaging",
   "version": "0.21.1",
   "displayName": "S. Admin GoodCity",
-  "dependencies": {},
+  "dependencies": {
+    "cordova": "^12.0.0"
+  },
   "devDependencies": {
-    "@havesource/cordova-plugin-push": "^3.0.1",
-    "cordova-android": "^11.0.0",
-    "cordova-ios": "^6.2.0",
+    "@broadly/cordova-plugin-twiliovoicesdk": "github:broadly/cordova-plugin-twiliovoicesdk",
+    "@havesource/cordova-plugin-push": "github:havesource/cordova-plugin-push",
+    "cordova-android": "^12.0.1",
+    "cordova-ios": "^7.0.0",
     "cordova-plugin-actionsheet": "^2.3.3",
     "cordova-plugin-android-permissions": "^1.1.2",
     "cordova-plugin-camera": "^6.0.0",
@@ -14,9 +17,8 @@
     "cordova-plugin-inappbrowser": "^5.0.0",
     "cordova-plugin-network-information": "^3.0.0",
     "cordova-plugin-statusbar": "^3.0.0",
-    "cordova-plugin-twiliovoicesdk": "git+https://github.com/broadly/cordova-plugin-twiliovoicesdk.git",
     "es6-promise-plugin": "^4.2.2",
-    "phonegap-plugin-barcodescanner": "git+https://github.com/ochakov/phonegap-plugin-barcodescanner.git"
+    "phonegap-plugin-barcodescanner": "github:ochakov/phonegap-plugin-barcodescanner"
   },
   "cordova": {
     "platforms": [
@@ -24,27 +26,27 @@
       "android"
     ],
     "plugins": {
-      "cordova-plugin-actionsheet": {},
       "cordova-plugin-android-permissions": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-actionsheet": {},
       "cordova-plugin-camera": {
         "ANDROIDX_CORE_VERSION": "1.6.+"
       },
-      "cordova-plugin-device": {},
       "cordova-plugin-inappbrowser": {},
       "cordova-plugin-network-information": {},
       "cordova-plugin-statusbar": {},
+      "es6-promise-plugin": {},
       "@havesource/cordova-plugin-push": {
         "ANDROIDX_CORE_VERSION": "1.6.+",
-        "FCM_VERSION": "18.+"
+        "FCM_VERSION": "23.+"
       },
-      "es6-promise-plugin": {},
+      "phonegap-plugin-barcodescanner": {
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      },
       "cordova-plugin-twiliovoicesdk": {
         "INCOMING_CALL_APP_NAME": "GoodCity.HK",
         "MASK_INCOMING_PHONE_NUMBER": "true",
         "ENABLE_CALL_KIT": "false"
-      },
-      "phonegap-plugin-barcodescanner": {
-        "ANDROID_SUPPORT_V4_VERSION": "27.+"
       }
     }
   }
