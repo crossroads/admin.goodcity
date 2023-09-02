@@ -6,8 +6,8 @@
     "cordova": "^12.0.0"
   },
   "devDependencies": {
-    "@broadly/cordova-plugin-twiliovoicesdk": "github:broadly/cordova-plugin-twiliovoicesdk",
     "@havesource/cordova-plugin-push": "github:havesource/cordova-plugin-push",
+    "@steveyken/cordova-plugin-twiliovoicesdk": "github:steveyken/cordova-plugin-twiliovoicesdk",
     "cordova-android": "^12.0.1",
     "cordova-ios": "^7.0.0",
     "cordova-plugin-actionsheet": "^2.3.3",
@@ -43,7 +43,7 @@
       "phonegap-plugin-barcodescanner": {
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
       },
-      "cordova-plugin-twiliovoicesdk": {
+      "@steveyken/cordova-plugin-twiliovoicesdk": {
         "INCOMING_CALL_APP_NAME": "GoodCity.HK",
         "MASK_INCOMING_PHONE_NUMBER": "true",
         "ENABLE_CALL_KIT": "false"
