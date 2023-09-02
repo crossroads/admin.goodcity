@@ -50,9 +50,9 @@ aliases:
       paths:
         - vendor/bundle
   - &restore-ios-bundler-cache
-      key: v1-admin-goodcity-ios-bundle-{{ checksum "Gemfile.lock" }}
+      key: v2-admin-goodcity-ios-bundle-{{ checksum "Gemfile.lock" }}
   - &save-ios-bundler-cache
-      key: v1-admin-goodcity-ios-bundle-{{ checksum "Gemfile.lock" }}
+      key: v2-admin-goodcity-ios-bundle-{{ checksum "Gemfile.lock" }}
       paths:
         - vendor/bundle
 
@@ -175,7 +175,7 @@ jobs:
   android_build_and_deploy:
     <<: *defaults
     docker:
-      - image: cimg/android:2022.04-browsers
+      - image: cimg/android:2023.08-browsers
     environment:
       JVM_OPTS: -Xmx3200m
       CIRCLE_ARTIFACTS: /home/circleci/code/cordova/platforms/android/build/outputs/apk
@@ -192,6 +192,7 @@ jobs:
           command: |
               echo 'export ENVIRONMENT=$(if [ "$CIRCLE_BRANCH" == "live" ]; then echo production; else echo staging; fi)' >> $BASH_ENV
               echo 'export PATH=$PATH:`yarn bin`' >> $BASH_ENV
+      - run: curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
       - azure-cli/install
       - azure-cli/login-with-service-principal
       - run: az storage blob download --account-name $GOODCITY_STORAGE -c ci-app-secrets -n admin-$ENVIRONMENT-google-services.json -f ~/code/cordova/google-services.json
@@ -200,7 +201,7 @@ jobs:
       - run:
           name: Build android app
           command: |
-            npm install cordova@11.0.0
+            npm install cordova@12
             node rename_package.js
             cordova platform add android
             if [ "$ENVIRONMENT" == "production" ]; then
@@ -220,11 +221,12 @@ jobs:
 
   ios_build_and_deploy:
     macos:
-      xcode: "13.2.1"
+      xcode: "14.3.1"
+    resource_class: macos.x86.medium.gen2
     working_directory: ~/code
     shell: /bin/bash --login -eo pipefail
     environment:
-      CIRCLE_ARTIFACTS: /Users/distiller/code/cordova/platforms/ios/build/device
+      CIRCLE_ARTIFACTS: /Users/distiller/code/cordova/platforms/ios/build/Release-iphoneos
       HOMEBREW_NO_AUTO_UPDATE: 1
     steps:
       - checkout
@@ -237,6 +239,7 @@ jobs:
               echo 'export ENVIRONMENT=$(if [ "$CIRCLE_BRANCH" == "live" ]; then echo production; else echo staging; fi)' >> $BASH_ENV
               echo 'export PATH=$PATH:`npm bin`' >> $BASH_ENV
       - restore_cache: *restore-ios-bundler-cache
+      - run: rbenv local 3.0.6
       - run: bundle config set --local deployment 'true' && (bundle check || bundle install --jobs=2 --retry=3)
       - save_cache: *save-ios-bundler-cache
       - run: az login --service-principal --tenant ${AZURE_SP_TENANT} -u ${AZURE_SP} -p ${AZURE_SP_PASSWORD}
@@ -248,14 +251,14 @@ jobs:
       - run:
           name: Build iOS app
           command: |
-            npm install cordova@11.0.0
+            npm install cordova@12
             node rename_package.js
-            cordova platform add ios
+            yarn run cordova platform add ios@7
             UUID=`openssl smime -inform der -verify -noverify -in "/Users/distiller/Library/MobileDevice/Provisioning Profiles/admin-${ENVIRONMENT}.mobileprovision" | grep -A 1 UUID | sed "s@.*<string>\(.*\)</string>.*@\1@" | tail -n 1`
             PACKAGE_TYPE=$(if [ "$ENVIRONMENT" == "production" ]; then echo app-store; else echo development; fi)
             CODE_SIGN_IDENTITY=$(if [ "$ENVIRONMENT" == "production" ]; then echo 'iPhone Distribution'; else echo 'iPhone Developer'; fi)
-            cordova build ios --release --device --codeSignIdentity="${CODE_SIGN_IDENTITY}" --developmentTeam="6B8FS8W94M" \
-               --packageType="${PACKAGE_TYPE}" --automaticProvisioning=true  --buildFlag="IPHONEOS_DEPLOYMENT_TARGET=11.0" \
+            yarn run cordova build ios --release --device --codeSignIdentity="${CODE_SIGN_IDENTITY}" --developmentTeam="6B8FS8W94M" \
+               --packageType="${PACKAGE_TYPE}" --automaticProvisioning=true  --buildFlag="IPHONEOS_DEPLOYMENT_TARGET=13" \
                --provisioningProfile="${UUID}"
           working_directory: cordova
       - store_artifacts:
@@ -292,20 +295,20 @@ workflows:
             requires:
               - tests
               - package_dependencies
-            filters:
-              branches:
-                only: /^(master|live)$/
+            # filters:
+            #   branches:
+            #     only: /^(master|live)$/
         - android_build_and_deploy:
             requires:
               - tests
               - ember_cordova_build
-            filters:
-              branches:
-                only: /^(master|live)$/
+            # filters:
+            #   branches:
+            #     only: /^(master|live)$/
         - ios_build_and_deploy:
             requires:
               - tests
               - ember_cordova_build
-            filters:
-              branches:
-                only: /^(master|live)$/
+            # filters:
+            #   branches:
+            #     only: /^(master|live)$/
