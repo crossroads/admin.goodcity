@@ -12,7 +12,7 @@
     "cordova-ios": "^7.0.0",
     "cordova-plugin-actionsheet": "^2.3.3",
     "cordova-plugin-android-permissions": "^1.1.2",
-    "cordova-plugin-camera": "^6.0.0",
+    "cordova-plugin-camera": "^7.0.0",
     "cordova-plugin-device": "^2.0.3",
     "cordova-plugin-inappbrowser": "^5.0.0",
     "cordova-plugin-network-information": "^3.0.0",
@@ -29,17 +29,10 @@
       "cordova-plugin-android-permissions": {},
       "cordova-plugin-device": {},
       "cordova-plugin-actionsheet": {},
-      "cordova-plugin-camera": {
-        "ANDROIDX_CORE_VERSION": "1.6.+"
-      },
       "cordova-plugin-inappbrowser": {},
       "cordova-plugin-network-information": {},
       "cordova-plugin-statusbar": {},
       "es6-promise-plugin": {},
-      "@havesource/cordova-plugin-push": {
-        "ANDROIDX_CORE_VERSION": "1.6.+",
-        "FCM_VERSION": "23.+"
-      },
       "phonegap-plugin-barcodescanner": {
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
       },
@@ -47,6 +40,13 @@
         "INCOMING_CALL_APP_NAME": "GoodCity.HK",
         "MASK_INCOMING_PHONE_NUMBER": "true",
         "ENABLE_CALL_KIT": "false"
+      },
+      "cordova-plugin-camera": {
+        "ANDROIDX_CORE_VERSION": "1.6.+"
+      },
+      "@havesource/cordova-plugin-push": {
+        "ANDROIDX_CORE_VERSION": "1.6.+",
+        "FCM_VERSION": "23.+"
       }
     }
   }
