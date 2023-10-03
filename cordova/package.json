@@ -11,7 +11,7 @@
     "cordova-android": "^12.0.1",
     "cordova-ios": "^7.0.0",
     "cordova-plugin-actionsheet": "^2.3.3",
-    "cordova-plugin-android-permissions": "^1.1.2",
+    "cordova-plugin-android-permissions": "^1.1.5",
     "cordova-plugin-camera": "^7.0.0",
     "cordova-plugin-device": "^2.0.3",
     "cordova-plugin-inappbrowser": "^5.0.0",
