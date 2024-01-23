@@ -46,6 +46,7 @@ I18nTranslationsEn =
       "delete_confirm": "Are you sure you wish to delete this holiday?"
 
     "my_account":
+      "nav_title": "Manage my account"
       "title": "Manage My Account"
       "delete_title": "Delete My Account"
       "delete_account": "Delete my account"
