@@ -1,0 +1,77 @@
+<div class="off-canvas-wrap my_account" data-offcanvas>
+  <div class="inner-wrap">
+    {{outlet "appMenuList"}}
+
+    {{#init-foundation}}
+      <nav class="tab-bar submitted_page">
+        <section class="left-small">
+          <a class="left-off-canvas-toggle menu-icon" href="#"><i class="fa fa-angle-left"></i></a>
+        </section>
+
+        <section class="middle tab-bar-section">
+          <h1 class="title">
+            {{t "my_account.title"}}
+          </h1>
+        </section>
+
+        <section class="right-small">
+        </section>
+
+      </nav>
+    {{/init-foundation}}
+
+    <section class="main-section">
+      <div class="row">
+        <div class="small-12 columns item-content">
+          <div class="small-12 columns">
+
+            <div class="row">
+              <div class="small-4 columns">
+                {{t 'users.title'}}
+              </div>
+              <div class="small-8 columns">
+                {{ user.title }}
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="small-4 columns">
+                {{t 'users.first_name'}}
+              </div>
+              <div class="small-8 columns">
+                {{ user.firstName }}
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="small-4 columns">
+                {{t 'users.last_name'}}
+              </div>
+              <div class="small-8 columns">
+                {{ user.lastName }}
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="small-4 columns">
+                {{t 'users.mobile'}}
+              </div>
+              <div class="small-8 columns">
+                {{ user.mobile }}
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="small-12 columns delete-button">
+                <button {{action "deleteAccount" }} class="secondary">{{t 'my_account.delete_account'}}</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+    <a class="exit-off-canvas modify-off-canvas"></a>
+
+  </div>
+</div>
