@@ -111,8 +111,9 @@ Router.map(function() {
   this.route("dashboard", function() {
     this.route("my_offers");
   });
-
   this.route("holidays");
+  this.route("my_account");
+  this.route("delete_account");
 });
 
 export default Router;

@@ -29,6 +29,10 @@ I18nTranslationsEn =
 
     "users":
       "search": "Search User"
+      "title": "Title"
+      "first_name": "First Name"
+      "last_name": "Last Name"
+      "mobile": "Mobile"
 
     "camera_scan":
       "permission_error": "Camera permission is not turned on."
@@ -40,6 +44,15 @@ I18nTranslationsEn =
       "manage": "Manage Holidays"
       "description": "Donors will not be able to book a delivery or drop-off on the 'holiday' dates listed below."
       "delete_confirm": "Are you sure you wish to delete this holiday?"
+
+    "my_account":
+      "nav_title": "Manage my account"
+      "title": "Manage My Account"
+      "delete_title": "Delete My Account"
+      "delete_account": "Delete my account"
+
+    "delete_account":
+      "title": "Delete My Account"
 
     "chats":
       "no_recipient": "Missing recipient. This chat is disabled"
