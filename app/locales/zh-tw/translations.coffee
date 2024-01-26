@@ -29,6 +29,10 @@ I18nTranslationsZhTw =
 
     "users":
       "search": "搜尋使用者"
+      "title": "Title"
+      "first_name": "First Name"
+      "last_name": "Last Name"
+      "mobile": "Mobile"
 
     "camera_scan":
       "permission_error": "未能取得相機鏡頭的權限。"
@@ -40,6 +44,23 @@ I18nTranslationsZhTw =
       "manage": "管理假期"
       "description": "捐贈者將無法於「假期」內預約送貨！"
       "delete_confirm": "你確定要刪除此項假期嗎？"
+
+    "my_account":
+      "nav_title": "管理賬戶"
+      "title": "管理賬戶"
+      "delete_title": "刪除賬戶"
+      "delete_account": "刪除賬戶"
+
+    "delete_account":
+      "title": "刪除賬戶"
+      "crf_privacy_policy": "國際十字路會私隱政策"
+      "section1": "刪除你的賬戶後，你將無法再登入GoodCity.HK"
+      "section2": "如若將來你想再使用服務，歡迎你重新建立新賬戶。"
+      "section3": "請注意你的部分資料可能會被保留，以符合的合規和審計要求。"
+      "section4": "所有資料將按照我們的政策處理。"
+      "section5": "If you press the button below, you will be immediately logged out from the GoodCity.HK service."
+      "yes_delete": "是的，請刪除我的賬戶"
+      "cancel": "取消"
 
     "chats":
       "no_recipient": "沒有收件人。本對話已失效"
@@ -78,6 +99,7 @@ I18nTranslationsZhTw =
         "submitted": "已提交"
         "start_receiving_by": "{{lastName}} {{firstName}} 正在接收"
         "inactive": "列作暫停"
+
     offer_sorts:
       sort_by: "排序",
       due_date: "到期日"

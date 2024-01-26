@@ -53,6 +53,14 @@ I18nTranslationsEn =
 
     "delete_account":
       "title": "Delete My Account"
+      "crf_privacy_policy": "Crossroads Foundation Privacy Policy"
+      "section1": "If you delete your account you will no longer be able to log in to GoodCity.HK."
+      "section2": "If you wish to use this service again in the future, you will need to create a new account."
+      "section3": "Please note that some of your details may be retained to adhere with our compliance and auditing requirements."
+      "section4": "All information will be treated in accordance with our policies:"
+      "section5": "If you press the button below, you will be immediately logged out from the GoodCity.HK service."
+      "yes_delete": "Yes, delete my account"
+      "cancel": "Cancel"
 
     "chats":
       "no_recipient": "Missing recipient. This chat is disabled"
@@ -168,7 +176,6 @@ I18nTranslationsEn =
         "max_lable_count": "Max 300"
         "description": "Description cannot be blank."
         "inventory_number": "Inventory Number cannot be blank."
-
 
     "item":
       "accepted": "Accepted"
