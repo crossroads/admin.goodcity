@@ -67,7 +67,7 @@ I18nTranslationsZhTw =
 
     "offer":
       "title": "捐贈細節"
-      "donor": "Details"
+      "donor": "捐贈者"
       "transport": "運輸"
       "details" : "捐贈詳情"
       "donor_messages" : "捐贈者信息"
@@ -281,6 +281,7 @@ I18nTranslationsZhTw =
       "set_expiry_to_now": "設定到期日為現在"
 
       "share":
+        "title": "分享"
         "info": "只有已回覆的使用者可在分享到期後繼續查看捐贈資訊。"
         "select_package": "你必須選擇至少1個項目以分享捐贈。"
         "delete_sharing_link": "刪除分享連結"
