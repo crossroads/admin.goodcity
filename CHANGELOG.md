@@ -1,5 +1,10 @@
 # Admin App
 
+## v0.24.2
+
+- Update with shared.goodcity to fix bug in chinese date selector
+- Increased visibility of validation errors
+
 ## v0.24.1
 
 - Translations for account deletion
