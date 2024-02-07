@@ -130,6 +130,10 @@ export default Ember.Controller.extend(AsyncMixin, {
     })
   ),
 
+  isImageOnLongTermStorage: Ember.computed("previewImage", function() {
+    return this.get("previewImage.isImageOnLongTermStorage");
+  }),
+
   //css related
   previewImageBgCss: Ember.computed(
     "previewImage",
