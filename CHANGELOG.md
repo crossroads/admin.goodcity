@@ -1,5 +1,9 @@
 # Admin App
 
+## v0.24.3
+
+- Added ability to load images from Azure Storage rather than Cloudinary
+
 ## v0.24.2
 
 - Update with shared.goodcity to fix bug in chinese date selector
