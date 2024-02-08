@@ -13,12 +13,15 @@
           <a {{action "setFavourite"}} title={{t "edit_images.favourite_tooltip"}}>
             <i class="fa {{if previewMatchesFavourite 'fa-star' 'fa-star-o'}}"></i>
           </a>
+          {{#unless isImageOnLongTermStorage}}
+          <!-- disabled if image source is not Cloudinary -->
           <a {{action "rotateImageRight"}} >
             <i class="fa fa-repeat"></i>
           </a>
           <a {{action "rotateImageLeft"}} >
             <i class="fa fa-undo"></i>
           </a>
+          {{/unless}}
           <a {{action "expandImage"}} title={{t "edit_images.fullscreen_tooltip"}}>
             <i class="fa {{if isExpanded 'fa-compress' 'fa-expand'}}"></i>
           </a>
