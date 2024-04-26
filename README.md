@@ -15,10 +15,9 @@ You can clone the GoodCity app repo direct:
 
 ```shell
 nvm use # switch to node as specified in .nvmrc
-yarn add bower ember-cli phantomjs-prebuilt
+yarn add ember-cli phantomjs-prebuilt
 git clone https://github.com/crossroads/admin.goodcity.git
 ./yarn --offline
-bower install
 ```
 
 Or use the more complicated setup where you link the `shared.goodcity` library also (useful for development):
@@ -32,7 +31,6 @@ git clone https://github.com/crossroads/admin.goodcity.git
 cd admin.goodcity
 ./yarn link shared-goodcity
 ./yarn
-bower install
 ```
 
 ## Running in development/staging mode
