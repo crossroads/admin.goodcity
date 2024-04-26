@@ -150,7 +150,7 @@ test("for scheduled offer", function(assert) {
     );
 
     assert.equal(
-      $.trim($(".delivery-details .row:eq(5)").text()),
+      $.trim($(".delivery-details .row:eq(6)").text()),
       "Accepted items to be transported"
     );
     assert.equal($(".items_list img").length, 1);
@@ -221,7 +221,7 @@ test("for scheduled offer with pending GGV order state", function(assert) {
     );
 
     assert.equal(
-      $.trim($(".delivery-details .row:eq(3)").text()),
+      $.trim($(".delivery-details .row:eq(4)").text()),
       "Accepted items to be transported"
     );
     assert.equal($(".items_list img").length, 1);
@@ -277,7 +277,7 @@ test("for scheduled offer with active GGV order state", function(assert) {
     );
 
     assert.equal(
-      $.trim($(".delivery-details .row:eq(7)").text()),
+      $.trim($(".delivery-details .row:eq(8)").text()),
       "Accepted items to be transported"
     );
     assert.equal($(".items_list img").length, 1);
@@ -304,7 +304,7 @@ test("for scheduled offer with active GGV order state", function(assert) {
       true
     );
     assert.equal(
-      $(".delivery-details .row:eq(9) div a")
+      $(".delivery-details .row:eq(10) div a")
         .text()
         .trim()
         .indexOf("Driver Screen") >= 0,
