@@ -1,5 +1,14 @@
 # Admin App
 
+## v0.24.4
+
+- Added Donation Reference Number to transport screen
+- Updated Crossroads' contact number
+- Setup yarn offline mirror
+- Updated documentation to use local yarn version
+- Checked in bower_components to remove external dependency
+- Bug fix: image size in Receive Packages reverted to 120px (had changed to 300px)
+
 ## v0.24.3
 
 - Added ability to load images from Azure Storage rather than Cloudinary
