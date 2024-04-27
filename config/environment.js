@@ -57,7 +57,7 @@ module.exports = function(environment) {
       IMAGE_PATH: "http://res.cloudinary.com/ddoadcjjl/image/upload/",
       HK_COUNTRY_CODE: "+852",
       GOGOVAN_CONTACT: "3590 3399",
-      CROSSROADS_CONTACT: "2272 9345",
+      CROSSROADS_CONTACT: "2984 9309",
       GMAP_URL:
         "https://www.google.com.hk/maps/place/22%C2%B022'27.9%22N+113%C2%B059'36.1%22E/@22.3744154,113.9758515,14z/data=!3m1!4b1!4m2!3m1!1s0x0:0x0",
       // RESTAdapter Settings
