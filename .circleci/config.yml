@@ -13,17 +13,17 @@ aliases:
       key: v1-admin-goodcity-repo-{{ .Environment.CIRCLE_SHA1 }}
   - &restore-yarn-cache
       keys:
-        - v1-admin-goodcity-yarn-packages-{{ checksum "yarn.lock" }}
+        - v2-admin-goodcity-yarn-packages-{{ checksum "yarn.lock" }}
   - &save-yarn-cache
-      key: v1-admin-goodcity-yarn-packages-{{ checksum "yarn.lock" }}
+      key: v2-admin-goodcity-yarn-packages-{{ checksum "yarn.lock" }}
       paths:
         - node_modules
         - ~/.cache/yarn
   - &restore-ios-yarn-cache
       keys:
-        - v1-admin-goodcity-ios-yarn-packages-{{ checksum "yarn.lock" }}
+        - v2-admin-goodcity-ios-yarn-packages-{{ checksum "yarn.lock" }}
   - &save-ios-yarn-cache
-      key: v1-admin-goodcity-ios-yarn-packages-{{ checksum "yarn.lock" }}
+      key: v2-admin-goodcity-ios-yarn-packages-{{ checksum "yarn.lock" }}
       paths:
         - node_modules
         - ~/.cache/yarn
@@ -32,21 +32,15 @@ aliases:
       git config --global url.https://github.com/.insteadOf git://github.com/  
       yarn install --non-interactive --cache-folder ~/.cache/yarn --frozen-lockfile
   - &restore-bower-cache
-      key: v1-admin-goodcity-bower-components-{{ checksum "bower.json" }}
+      key: v2-admin-goodcity-bower-components-{{ checksum "bower.json" }}
   - &save-bower-cache
-      key: v1-admin-goodcity-bower-components-{{ checksum "bower.json" }}
-      paths:
-        - bower_components
-  - &restore-ios-bower-cache
-      key: v1-admin-goodcity-ios-bower-components-{{ checksum "bower.json" }}
-  - &save-ios-bower-cache
-      key: v1-admin-goodcity-ios-bower-components-{{ checksum "bower.json" }}
+      key: v2-admin-goodcity-bower-components-{{ checksum "bower.json" }}
       paths:
         - bower_components
   - &restore-bundler-cache
-      key: v1-admin-goodcity-bundle-{{ checksum "Gemfile.lock" }}
+      key: v2-admin-goodcity-bundle-{{ checksum "Gemfile.lock" }}
   - &save-bundler-cache
-      key: v1-admin-goodcity-bundle-{{ checksum "Gemfile.lock" }}
+      key: v2-admin-goodcity-bundle-{{ checksum "Gemfile.lock" }}
       paths:
         - vendor/bundle
   - &restore-ios-bundler-cache
