@@ -202,13 +202,13 @@ jobs:
           command: |
             npm install cordova@12
             node rename_package.js
-            ../yarn run cordova platform add android
+            cordova platform add android
             if [ "$ENVIRONMENT" == "production" ]; then
-              ../yarn run cordova build android --release -- \
+              cordova build android --release -- \
                 --packageType=apk --keystore=goodcity.keystore --storePassword="${GOODCITY_KEYSTORE_PASSWORD}" \
                 --alias="${GOODCITY_KEYSTORE_ALIAS}" --password="${GOODCITY_KEYSTORE_PASSWORD}"
             else
-              ../yarn run cordova build android --debug --device
+              cordova build android --debug --device
             fi
           working_directory: cordova
       - store_artifacts:
