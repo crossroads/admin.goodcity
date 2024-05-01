@@ -13,40 +13,34 @@ aliases:
       key: v1-admin-goodcity-repo-{{ .Environment.CIRCLE_SHA1 }}
   - &restore-yarn-cache
       keys:
-        - v1-admin-goodcity-yarn-packages-{{ checksum "yarn.lock" }}
+        - v2-admin-goodcity-yarn-packages-{{ checksum "yarn.lock" }}
   - &save-yarn-cache
-      key: v1-admin-goodcity-yarn-packages-{{ checksum "yarn.lock" }}
+      key: v2-admin-goodcity-yarn-packages-{{ checksum "yarn.lock" }}
       paths:
         - node_modules
         - ~/.cache/yarn
   - &restore-ios-yarn-cache
       keys:
-        - v1-admin-goodcity-ios-yarn-packages-{{ checksum "yarn.lock" }}
+        - v2-admin-goodcity-ios-yarn-packages-{{ checksum "yarn.lock" }}
   - &save-ios-yarn-cache
-      key: v1-admin-goodcity-ios-yarn-packages-{{ checksum "yarn.lock" }}
+      key: v2-admin-goodcity-ios-yarn-packages-{{ checksum "yarn.lock" }}
       paths:
         - node_modules
         - ~/.cache/yarn
   - &yarn
     |
       git config --global url.https://github.com/.insteadOf git://github.com/  
-      ./yarn install --offline --non-interactive --cache-folder ~/.cache/yarn --frozen-lockfile
+      yarn install --non-interactive --cache-folder ~/.cache/yarn --frozen-lockfile
   - &restore-bower-cache
-      key: v1-admin-goodcity-bower-components-{{ checksum "bower.json" }}
+      key: v2-admin-goodcity-bower-components-{{ checksum "bower.json" }}
   - &save-bower-cache
-      key: v1-admin-goodcity-bower-components-{{ checksum "bower.json" }}
-      paths:
-        - bower_components
-  - &restore-ios-bower-cache
-      key: v1-admin-goodcity-ios-bower-components-{{ checksum "bower.json" }}
-  - &save-ios-bower-cache
-      key: v1-admin-goodcity-ios-bower-components-{{ checksum "bower.json" }}
+      key: v2-admin-goodcity-bower-components-{{ checksum "bower.json" }}
       paths:
         - bower_components
   - &restore-bundler-cache
-      key: v1-admin-goodcity-bundle-{{ checksum "Gemfile.lock" }}
+      key: v2-admin-goodcity-bundle-{{ checksum "Gemfile.lock" }}
   - &save-bundler-cache
-      key: v1-admin-goodcity-bundle-{{ checksum "Gemfile.lock" }}
+      key: v2-admin-goodcity-bundle-{{ checksum "Gemfile.lock" }}
       paths:
         - vendor/bundle
   - &restore-ios-bundler-cache
@@ -81,7 +75,7 @@ jobs:
       - run: *yarn
       - save_cache: *save-yarn-cache
       - restore_cache: *restore-bower-cache
-      - run: ./yarn run bower install
+      - run: yarn run bower install
       - save_cache: *save-bower-cache
 
   tests:
@@ -94,14 +88,14 @@ jobs:
       - restore_cache: *restore-bower-cache
       - run:
           name: Start Ember test server
-          command: ./yarn run ember server --port 4201
+          command: yarn run ember server --port 4201
           background: true
       - run:
           name: Wait for Ember test server to start
           command: dockerize -wait tcp://localhost:4201 -timeout 1m
       - run:
           name: Run Ember tests
-          command: ./yarn test:ci
+          command: yarn test:ci
 
   www_build:
     <<: *defaults
@@ -115,7 +109,7 @@ jobs:
             APP_SHA=$(echo $CIRCLE_SHA1 | cut -c1-7)
             APP_SHARED_SHA=$(grep "resolved.*shared.goodcity" yarn.lock | cut -d '#' -f2 | sed 's,\",,g')
             ENVIRONMENT=$(if [ "$CIRCLE_BRANCH" == "live" ]; then echo "production"; else echo "staging"; fi)
-            EMBER_CLI_CORDOVA=0 ENVIRONMENT=${ENVIRONMENT} ./yarn run ember build --environment=production
+            EMBER_CLI_CORDOVA=0 ENVIRONMENT=${ENVIRONMENT} yarn run ember build --environment=production
       - run: mv dist/ dist-www
       - persist_to_workspace:
           root: .
@@ -165,7 +159,7 @@ jobs:
             APP_SHA=$(echo $CIRCLE_SHA1 | cut -c1-7)
             APP_SHARED_SHA=$(grep "resolved.*shared.goodcity" yarn.lock | cut -d '#' -f2 | sed 's,\",,g')
             ENVIRONMENT=$(if [ "$CIRCLE_BRANCH" == "live" ]; then echo "production"; else echo "staging"; fi)
-            EMBER_CLI_CORDOVA=1 ENVIRONMENT=${ENVIRONMENT} ./yarn run ember build --environment=production
+            EMBER_CLI_CORDOVA=1 ENVIRONMENT=${ENVIRONMENT} yarn run ember build --environment=production
       - run: mv dist/ cordova/www
       - persist_to_workspace:
           root: .
@@ -191,7 +185,7 @@ jobs:
           name: Setup Environment variables
           command: |
               echo 'export ENVIRONMENT=$(if [ "$CIRCLE_BRANCH" == "live" ]; then echo production; else echo staging; fi)' >> $BASH_ENV
-              echo 'export PATH=$PATH:`./yarn bin`' >> $BASH_ENV
+              echo 'export PATH=$PATH:/home/circleci/code/cordova/node_modules/.bin' >> $BASH_ENV
       - run: curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
       - azure-cli/install
       - azure-cli/login-with-service-principal
@@ -203,13 +197,13 @@ jobs:
           command: |
             npm install cordova@12
             node rename_package.js
-            ../yarn run cordova platform add android
+            cordova platform add android
             if [ "$ENVIRONMENT" == "production" ]; then
-              ../yarn run cordova build android --release -- \
+              cordova build android --release -- \
                 --packageType=apk --keystore=goodcity.keystore --storePassword="${GOODCITY_KEYSTORE_PASSWORD}" \
                 --alias="${GOODCITY_KEYSTORE_ALIAS}" --password="${GOODCITY_KEYSTORE_PASSWORD}"
             else
-              ../yarn run cordova build android --debug --device
+              cordova build android --debug --device
             fi
           working_directory: cordova
       - store_artifacts:
@@ -253,11 +247,11 @@ jobs:
           command: |
             npm install cordova@12
             node rename_package.js
-            ../yarn run cordova platform add ios@7
+            yarn run cordova platform add ios@7
             UUID=`openssl smime -inform der -verify -noverify -in "/Users/distiller/Library/MobileDevice/Provisioning Profiles/admin-${ENVIRONMENT}.mobileprovision" | grep -A 1 UUID | sed "s@.*<string>\(.*\)</string>.*@\1@" | tail -n 1`
             PACKAGE_TYPE=$(if [ "$ENVIRONMENT" == "production" ]; then echo app-store; else echo development; fi)
             CODE_SIGN_IDENTITY=$(if [ "$ENVIRONMENT" == "production" ]; then echo 'iPhone Distribution'; else echo 'iPhone Developer'; fi)
-            ../yarn run cordova build ios --release --device --codeSignIdentity="${CODE_SIGN_IDENTITY}" --developmentTeam="6B8FS8W94M" \
+            yarn run cordova build ios --release --device --codeSignIdentity="${CODE_SIGN_IDENTITY}" --developmentTeam="6B8FS8W94M" \
                --packageType="${PACKAGE_TYPE}" --automaticProvisioning=true  --buildFlag="IPHONEOS_DEPLOYMENT_TARGET=13" \
                --provisioningProfile="${UUID}"
           working_directory: cordova
@@ -278,19 +272,19 @@ workflows:
         - tests:
             requires:
               - package_dependencies
-        - www_build:
-            requires:
-              - tests
-              - package_dependencies
-            filters:
-              branches:
-                only: /^(master|live)$/
-        - www_deploy:
-            requires:
-              - www_build
-            filters:
-              branches:
-                only: /^(master|live)$/
+        # - www_build:
+        #     requires:
+        #       - tests
+        #       - package_dependencies
+        #     filters:
+        #       branches:
+        #         only: /^(master|live)$/
+        # - www_deploy:
+        #     requires:
+        #       - www_build
+        #     filters:
+        #       branches:
+        #         only: /^(master|live)$/
         - ember_cordova_build:
             requires:
               - tests
@@ -305,10 +299,10 @@ workflows:
             filters:
               branches:
                 only: /^(master|live)$/
-        - ios_build_and_deploy:
-            requires:
-              - tests
-              - ember_cordova_build
-            filters:
-              branches:
-                only: /^(master|live)$/
+        # - ios_build_and_deploy:
+        #     requires:
+        #       - tests
+        #       - ember_cordova_build
+        #     filters:
+        #       branches:
+        #         only: /^(master|live)$/
