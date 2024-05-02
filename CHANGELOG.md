@@ -1,5 +1,11 @@
 # Admin App
 
+## v0.25.0
+
+- Removed yarn offline mirror code for now (wasn't working well with CI builds)
+- Removed bower_components from source control (also not working well with CI builds)
+- Updated to XCode 15 / iOS SDK 17
+
 ## v0.24.4
 
 - Added Donation Reference Number to transport screen
