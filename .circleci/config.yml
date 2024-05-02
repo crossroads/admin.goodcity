@@ -272,19 +272,19 @@ workflows:
         - tests:
             requires:
               - package_dependencies
-        # - www_build:
-        #     requires:
-        #       - tests
-        #       - package_dependencies
-        #     filters:
-        #       branches:
-        #         only: /^(master|live)$/
-        # - www_deploy:
-        #     requires:
-        #       - www_build
-        #     filters:
-        #       branches:
-        #         only: /^(master|live)$/
+        - www_build:
+            requires:
+              - tests
+              - package_dependencies
+            filters:
+              branches:
+                only: /^(master|live)$/
+        - www_deploy:
+            requires:
+              - www_build
+            filters:
+              branches:
+                only: /^(master|live)$/
         - ember_cordova_build:
             requires:
               - tests
@@ -299,10 +299,10 @@ workflows:
             filters:
               branches:
                 only: /^(master|live)$/
-        # - ios_build_and_deploy:
-        #     requires:
-        #       - tests
-        #       - ember_cordova_build
-        #     filters:
-        #       branches:
-        #         only: /^(master|live)$/
+        - ios_build_and_deploy:
+            requires:
+              - tests
+              - ember_cordova_build
+            filters:
+              branches:
+                only: /^(master|live)$/
