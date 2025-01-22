@@ -98,7 +98,7 @@ ln -s `pwd`/dist `pwd`/cordova/www
 cd cordova
 # can help to start with a clean env, if android build issues
 rm -rf platforms/ plugins/ node_modules/
-cordova platform add android@12
+cordova platform add android@13
 # now open Android Studio and build or run gradle in the docker env
 ```
 
@@ -113,7 +113,7 @@ rm -rf node_modules/ platforms/ plugins/
 yarn
 npm install cordova@12
 cordova platform remove android
-cordova platform add android@12
+cordova platform add android@13
 cordova platform remove ios
 cordova platform add ios@7
 
@@ -184,3 +184,20 @@ Add-MpPreference -ExclusionPath ([System.Environment]::ExpandEnvironmentVariable
 Add-MpPreference -ExclusionPath (Get-ItemProperty "HKLM:SOFTWARE\Node.js" | Select-Object -Property InstallPath)
 ```
 ````
+
+## Steps for installing Python2
+
+Replace 2.7.18 to the latest available version
+
+```sh
+wget https://www.python.org/ftp/python/2.7.18/Python-2.7.18.tgz
+sudo tar xzf Python-2.7.18.tgz
+cd Python-2.7.18
+sudo ./configure --enable-optimizations
+sudo make altinstall
+sudo ln -sfn '/usr/local/bin/python2.7' '/usr/bin/python2'
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 1
+
+# check with following
+sudo update-alternatives --config python
+```
