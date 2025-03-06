@@ -38,15 +38,15 @@ aliases:
       paths:
         - bower_components
   - &restore-bundler-cache
-      key: v2-admin-goodcity-bundle-{{ checksum "Gemfile.lock" }}
+      key: v3-admin-goodcity-bundle-{{ checksum "Gemfile.lock" }}
   - &save-bundler-cache
-      key: v2-admin-goodcity-bundle-{{ checksum "Gemfile.lock" }}
+      key: v3-admin-goodcity-bundle-{{ checksum "Gemfile.lock" }}
       paths:
         - vendor/bundle
   - &restore-ios-bundler-cache
-      key: v2-admin-goodcity-ios-bundle-{{ checksum "Gemfile.lock" }}
+      key: v3-admin-goodcity-ios-bundle-{{ checksum "Gemfile.lock" }}
   - &save-ios-bundler-cache
-      key: v2-admin-goodcity-ios-bundle-{{ checksum "Gemfile.lock" }}
+      key: v3-admin-goodcity-ios-bundle-{{ checksum "Gemfile.lock" }}
       paths:
         - vendor/bundle
 
@@ -56,6 +56,7 @@ aliases:
 
 orbs:
   azure-cli: circleci/azure-cli@1.2.0
+  ruby: circleci/ruby@2.5.0
 
 jobs:
   checkout_code:
@@ -174,6 +175,8 @@ jobs:
       JVM_OPTS: -Xmx3200m
       CIRCLE_ARTIFACTS: /home/circleci/code/cordova/platforms/android/build/outputs/apk
     steps:
+      - ruby/install:
+          version: '3.3.5'
       - restore_cache: *restore-repo-cache
       - restore_cache: *restore-yarn-cache
       - restore_cache: *restore-bundler-cache
