@@ -215,7 +215,7 @@ jobs:
 
   ios_build_and_deploy:
     macos:
-      xcode: "15.0.0"
+      xcode: "16.2.0"
     resource_class: macos.m1.medium.gen1
     working_directory: ~/code
     shell: /bin/bash --login -eo pipefail
@@ -233,7 +233,7 @@ jobs:
               echo 'export ENVIRONMENT=$(if [ "$CIRCLE_BRANCH" == "live" ]; then echo production; else echo staging; fi)' >> $BASH_ENV
               echo 'export PATH=$PATH:`npm bin`' >> $BASH_ENV
       - restore_cache: *restore-ios-bundler-cache
-      - run: rbenv local 3.0.6
+      - run: rbenv local 3.3.5
       - run: bundle config set --local deployment 'true' && (bundle check || bundle install --jobs=2 --retry=3)
       - save_cache: *save-ios-bundler-cache
       - run: az login --service-principal --tenant ${AZURE_SP_TENANT} -u ${AZURE_SP} -p ${AZURE_SP_PASSWORD}
