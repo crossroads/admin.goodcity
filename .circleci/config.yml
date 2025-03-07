@@ -177,6 +177,7 @@ jobs:
     steps:
       - ruby/install:
           version: '3.3.5'
+      - run: rvm autolibs enable && rvm reinstall 3.3.5
       - restore_cache: *restore-repo-cache
       - restore_cache: *restore-yarn-cache
       - restore_cache: *restore-bundler-cache
