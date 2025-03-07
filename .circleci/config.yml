@@ -180,9 +180,10 @@ jobs:
               echo 409B6B1796C275462A1703113804BB82D39DC0E3:6: | gpg --import-ownertrust
               echo 7D2BAF1CF37B13E2069D6956105BD0E739499BDB:6: | gpg --import-ownertrust
               curl -sSL "https://get.rvm.io" | bash -s stable
-              echo "export RVM_HOME=$RVM_HOME" >> $BASH_ENV
-              echo 'export PATH=$PATH:$RVM_HOME/bin' >> $BASH_ENV
-              echo "source $RVM_HOME/scripts/rvm" >> $BASH_ENV
+              echo "export RVM_HOME=/home/circleci/.rvm" >> $BASH_ENV
+              echo 'export PATH=$PATH:/home/circleci/.rvm/bin' >> $BASH_ENV
+              echo "source /home/circleci/.rvm/scripts/rvm" >> $BASH_ENV
+              source /home/circleci/.rvm/scripts/rvm
           name: Install/Verify Ruby Version Manager.
       - run: rvm autolibs enable && rvm install 3.3.5
       - restore_cache: *restore-repo-cache
