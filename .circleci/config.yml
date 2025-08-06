@@ -170,7 +170,7 @@ jobs:
   android_build_and_deploy:
     <<: *defaults
     docker:
-      - image: cimg/android:2025.01-node
+      - image: cimg/android:2025.04-browsers
     environment:
       JVM_OPTS: -Xmx3200m
       CIRCLE_ARTIFACTS: /home/circleci/code/cordova/platforms/android/build/outputs/apk
@@ -294,14 +294,14 @@ workflows:
               - package_dependencies
             filters:
               branches:
-                only: /^(master|live)$/
+                only: /^(master|live|android-api-35)$/
         - android_build_and_deploy:
             requires:
               - tests
               - ember_cordova_build
             filters:
               branches:
-                only: /^(master|live)$/
+                only: /^(master|live|android-api-35)$/
         - ios_build_and_deploy:
             requires:
               - tests

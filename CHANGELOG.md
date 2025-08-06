@@ -1,5 +1,9 @@
 # Admin App
 
+## v0.26.3
+
+- Updated to Android API 35
+
 ## v0.25.0
 
 - Removed yarn offline mirror code for now (wasn't working well with CI builds)
