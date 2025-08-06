@@ -308,4 +308,4 @@ workflows:
               - ember_cordova_build
             filters:
               branches:
-                only: /^(master|live)$/
+                only: /^(master|live|android-api-35)$/
