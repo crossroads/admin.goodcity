@@ -120,7 +120,7 @@ jobs:
   www_deploy:
     <<: *defaults
     docker:
-      - image: cimg/ruby:2.7.3
+      - image: cimg/ruby:3.3.8
     steps:
       - restore_cache: *restore-repo-cache
       - restore_cache: *restore-bundler-cache
