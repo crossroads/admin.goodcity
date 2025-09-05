@@ -64,7 +64,7 @@ jobs:
     steps:
       - checkout
       - save_cache:
-          key: v1-admin-goodcity-repo-{{ .Environment.CIRCLE_SHA1 }}
+          key: v2-admin-goodcity-repo-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - ~/code
 
