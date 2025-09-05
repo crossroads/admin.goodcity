@@ -10,7 +10,7 @@ aliases:
         # JOBS: 1 required to disable workers pools on broccoli as the underlying container reports 36 cores and runs out of memory if trying to spawn 36 threads!
         JOBS: 1
   - &restore-repo-cache
-      key: v1-admin-goodcity-repo-{{ .Environment.CIRCLE_SHA1 }}
+      key: v2-admin-goodcity-repo-{{ .Environment.CIRCLE_SHA1 }}
   - &restore-yarn-cache
       keys:
         - v2-admin-goodcity-yarn-packages-{{ checksum "yarn.lock" }}
@@ -38,9 +38,9 @@ aliases:
       paths:
         - bower_components
   - &restore-bundler-cache
-      key: v3-admin-goodcity-bundle-{{ checksum "Gemfile.lock" }}
+      key: v4-admin-goodcity-bundle-{{ checksum "Gemfile.lock" }}
   - &save-bundler-cache
-      key: v3-admin-goodcity-bundle-{{ checksum "Gemfile.lock" }}
+      key: v4-admin-goodcity-bundle-{{ checksum "Gemfile.lock" }}
       paths:
         - vendor/bundle
   - &restore-ios-bundler-cache
