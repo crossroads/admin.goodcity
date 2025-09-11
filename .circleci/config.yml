@@ -136,7 +136,7 @@ jobs:
           command: |
             sudo ln -s /usr/local/bin/ruby /usr/local/bin/ruby2.7
             STAGE=$(if [ "$CIRCLE_BRANCH" == "live" ]; then echo "production"; else echo "staging"; fi)
-            apt-cache policy azure-cli | sudo apt-get install --allow-downgrades azure-cli=2.76.0
+            apt-cache policy azure-cli | sudo apt-get install --allow-downgrades azure-cli=2.76.0-1~jammy_amd64
             STAGE=$STAGE bundle exec fastlane web deploy
       - run:
           name: Upload Source Map to Rollbar
