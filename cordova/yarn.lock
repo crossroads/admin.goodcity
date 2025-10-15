@@ -3,8 +3,8 @@
 
 
 "@havesource/cordova-plugin-push@github:havesource/cordova-plugin-push":
-  version "5.0.6-dev.0"
-  resolved "git+ssh://git@github.com/havesource/cordova-plugin-push.git#d50a41b8edd6d159914814d16ae8f486c29698ca"
+  version "7.0.1-dev.0"
+  resolved "git+ssh://git@github.com/havesource/cordova-plugin-push.git#c166ffffb4494bd3c1c3b40c6b89959d9d27ca0a"
 
 "@isaacs/cliui@^8.0.2":
   version "8.0.2"
@@ -225,7 +225,7 @@
 
 "@steveyken/cordova-plugin-twiliovoicesdk@github:steveyken/cordova-plugin-twiliovoicesdk":
   version "6.0.6"
-  resolved "git+ssh://git@github.com/steveyken/cordova-plugin-twiliovoicesdk.git#cfb60f2a46f44df2034655685ac22107a4921a8a"
+  resolved "git+ssh://git@github.com/steveyken/cordova-plugin-twiliovoicesdk.git#9422dd8d645ec50d4db2fecbb0920a073ad28c99"
 
 "@tootallnate/once@2":
   version "2.0.0"
