@@ -1,5 +1,24 @@
 # Admin App
 
+## v0.26.3
+
+- Updated to Android API 35
+
+## v0.26.2
+
+- Update CI config to Xcode 16
+- Change Ruby versions to 3.3.5
+
+## v0.26.1
+
+- Update Cordova to use Node 22
+
+## v0.26.0
+
+- Update Cordova Android to 13
+- Plugin updates
+- CI config updates
+
 ## v0.25.0
 
 - Removed yarn offline mirror code for now (wasn't working well with CI builds)

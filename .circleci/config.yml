@@ -10,7 +10,7 @@ aliases:
         # JOBS: 1 required to disable workers pools on broccoli as the underlying container reports 36 cores and runs out of memory if trying to spawn 36 threads!
         JOBS: 1
   - &restore-repo-cache
-      key: v1-admin-goodcity-repo-{{ .Environment.CIRCLE_SHA1 }}
+      key: v2-admin-goodcity-repo-{{ .Environment.CIRCLE_SHA1 }}
   - &restore-yarn-cache
       keys:
         - v2-admin-goodcity-yarn-packages-{{ checksum "yarn.lock" }}
@@ -38,15 +38,15 @@ aliases:
       paths:
         - bower_components
   - &restore-bundler-cache
-      key: v2-admin-goodcity-bundle-{{ checksum "Gemfile.lock" }}
+      key: v5-admin-goodcity-bundle-{{ checksum "Gemfile.lock" }}
   - &save-bundler-cache
-      key: v2-admin-goodcity-bundle-{{ checksum "Gemfile.lock" }}
+      key: v5-admin-goodcity-bundle-{{ checksum "Gemfile.lock" }}
       paths:
         - vendor/bundle
   - &restore-ios-bundler-cache
-      key: v2-admin-goodcity-ios-bundle-{{ checksum "Gemfile.lock" }}
+      key: v4-admin-goodcity-ios-bundle-{{ checksum "Gemfile.lock" }}
   - &save-ios-bundler-cache
-      key: v2-admin-goodcity-ios-bundle-{{ checksum "Gemfile.lock" }}
+      key: v4-admin-goodcity-ios-bundle-{{ checksum "Gemfile.lock" }}
       paths:
         - vendor/bundle
 
@@ -56,6 +56,7 @@ aliases:
 
 orbs:
   azure-cli: circleci/azure-cli@1.2.0
+  ruby: circleci/ruby@2.5.3
 
 jobs:
   checkout_code:
@@ -63,7 +64,7 @@ jobs:
     steps:
       - checkout
       - save_cache:
-          key: v1-admin-goodcity-repo-{{ .Environment.CIRCLE_SHA1 }}
+          key: v2-admin-goodcity-repo-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - ~/code
 
@@ -119,7 +120,7 @@ jobs:
   www_deploy:
     <<: *defaults
     docker:
-      - image: cimg/ruby:2.7.3
+      - image: cimg/ruby:3.4.3
     steps:
       - restore_cache: *restore-repo-cache
       - restore_cache: *restore-bundler-cache
@@ -169,11 +170,13 @@ jobs:
   android_build_and_deploy:
     <<: *defaults
     docker:
-      - image: cimg/android:2025.01-browsers
+      - image: cimg/android:2025.08-browsers
     environment:
       JVM_OPTS: -Xmx3200m
       CIRCLE_ARTIFACTS: /home/circleci/code/cordova/platforms/android/build/outputs/apk
     steps:
+      - ruby/install:
+          version: '3.4.3'
       - restore_cache: *restore-repo-cache
       - restore_cache: *restore-yarn-cache
       - restore_cache: *restore-bundler-cache
@@ -215,7 +218,7 @@ jobs:
 
   ios_build_and_deploy:
     macos:
-      xcode: "15.0.0"
+      xcode: "16.4.0"
     resource_class: macos.m1.medium.gen1
     working_directory: ~/code
     shell: /bin/bash --login -eo pipefail
@@ -233,7 +236,7 @@ jobs:
               echo 'export ENVIRONMENT=$(if [ "$CIRCLE_BRANCH" == "live" ]; then echo production; else echo staging; fi)' >> $BASH_ENV
               echo 'export PATH=$PATH:`npm bin`' >> $BASH_ENV
       - restore_cache: *restore-ios-bundler-cache
-      - run: rbenv local 3.0.6
+      - run: rbenv local 3.4.3
       - run: bundle config set --local deployment 'true' && (bundle check || bundle install --jobs=2 --retry=3)
       - save_cache: *save-ios-bundler-cache
       - run: az login --service-principal --tenant ${AZURE_SP_TENANT} -u ${AZURE_SP} -p ${AZURE_SP_PASSWORD}
