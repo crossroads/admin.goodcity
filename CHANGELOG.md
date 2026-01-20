@@ -1,5 +1,10 @@
 # Admin App
 
+## v0.26.4
+
+- Upgraded shared.goodcity package to fix senderId null issue
+- Upgrade ruby gems
+
 ## v0.26.3
 
 - Updated to Android API 35
