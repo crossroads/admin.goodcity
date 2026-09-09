@@ -171,9 +171,11 @@ jobs:
     <<: *defaults
     docker:
       - image: cimg/android:2025.08-browsers
-    resource_class: medium+ # Gradle needs more memory to build the android app
     environment:
-      JVM_OPTS: -Xmx3200m
+      # JVM_OPTS is not read by Gradle. GRADLE_OPTS is: it caps the client JVM heap and,
+      # via -D, disables the Gradle daemon and worker parallelism so the whole build runs
+      # in one bounded JVM instead of daemon + workers competing for the 4GB "medium" container.
+      GRADLE_OPTS: -Xmx1536m -Dorg.gradle.jvmargs=-Xmx1536m -Dorg.gradle.daemon=false -Dorg.gradle.workers.max=1
       CIRCLE_ARTIFACTS: /home/circleci/code/cordova/platforms/android/build/outputs/apk
     steps:
       - ruby/install:
