@@ -246,17 +246,6 @@ jobs:
       - run: az storage blob download --account-name $GOODCITY_STORAGE -c ci-app-secrets -n hk.goodcity.${ENVIRONMENT}.p12 -f ~/code/fastlane/hk.goodcity.${ENVIRONMENT}.p12
       - run: bundle exec fastlane ios prepare_certificates cert:hk.goodcity.${ENVIRONMENT}.p12
       - run:
-          name: DEBUG - inspect imported signing identities
-          command: |
-            echo "--- security find-identity -v (all identities) ---"
-            security find-identity -v || true
-            echo "--- security find-identity -v -p codesigning (valid signing identities only) ---"
-            security find-identity -v -p codesigning || true
-            echo "--- provisioning profile TeamIdentifier / ExpirationDate ---"
-            security cms -D -i "/Users/distiller/Library/MobileDevice/Provisioning Profiles/admin-${ENVIRONMENT}.mobileprovision" > /tmp/profile.plist
-            /usr/libexec/PlistBuddy -c "Print :TeamIdentifier" /tmp/profile.plist || true
-            /usr/libexec/PlistBuddy -c "Print :ExpirationDate" /tmp/profile.plist || true
-      - run:
           name: Build iOS app
           command: |
             npm install cordova@12
