@@ -6,8 +6,8 @@
     "cordova": "^12.0.0"
   },
   "devDependencies": {
-    "@havesource/cordova-plugin-push": "github:havesource/cordova-plugin-push",
-    "@steveyken/cordova-plugin-twiliovoicesdk": "github:steveyken/cordova-plugin-twiliovoicesdk",
+    "@havesource/cordova-plugin-push": "github:havesource/cordova-plugin-push#c166ffffb4494bd3c1c3b40c6b89959d9d27ca0a",
+    "@steveyken/cordova-plugin-twiliovoicesdk": "github:steveyken/cordova-plugin-twiliovoicesdk#9422dd8d645ec50d4db2fecbb0920a073ad28c99",
     "cordova-android": "^14.0.1",
     "cordova-ios": "^7.1.1",
     "cordova-plugin-actionsheet": "^2.3.3",
@@ -18,7 +18,7 @@
     "cordova-plugin-network-information": "^3.0.0",
     "cordova-plugin-statusbar": "^4.0.0",
     "es6-promise-plugin": "^4.2.2",
-    "phonegap-plugin-barcodescanner": "github:ochakov/phonegap-plugin-barcodescanner"
+    "phonegap-plugin-barcodescanner": "github:ochakov/phonegap-plugin-barcodescanner#aaa27a368a57f06d4d1f2922b9758f6970c3338b"
   },
   "cordova": {
     "platforms": [
