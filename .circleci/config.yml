@@ -171,6 +171,7 @@ jobs:
     <<: *defaults
     docker:
       - image: cimg/android:2025.08-browsers
+    resource_class: medium+ # Gradle needs more memory to build the android app
     environment:
       JVM_OPTS: -Xmx3200m
       CIRCLE_ARTIFACTS: /home/circleci/code/cordova/platforms/android/build/outputs/apk
