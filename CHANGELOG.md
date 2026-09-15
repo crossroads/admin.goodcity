@@ -1,5 +1,9 @@
 # Admin App
 
+## v0.26.5
+
+- Added option to disable in-app van booking
+
 ## v0.26.4
 
 - Upgraded shared.goodcity package to fix senderId null issue
