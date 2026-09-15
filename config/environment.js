@@ -65,7 +65,7 @@ module.exports = function(environment) {
       OTP_RESEND_TIME: 60,
       NAMESPACE_V2: "api/v2",
 
-      PRELOAD_TYPES: ["territory"],
+      PRELOAD_TYPES: ["territory", "goodcity_setting"],
       PRELOAD_AUTHORIZED_TYPES: [
         "package_type",
         "donor_condition",
