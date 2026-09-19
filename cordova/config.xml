@@ -16,7 +16,6 @@
     <allow-navigation href="http://localhost/*" />
     <allow-navigation href="https://localhost/*" />
     <preference name="DisallowOverscroll" value="true" />
-    <preference name="StatusBarOverlaysWebView" value="false" />
     <preference name="StatusBarBackgroundColor" value="#002352" />
     <preference name="StatusBarStyle" value="lightcontent" />
     <allow-intent href="http://*/*" launch-external="yes" />
@@ -43,8 +42,8 @@
     </platform>
     <platform name="ios">
         <preference name="SwiftVersion" value="5" />
-        <preference name="deployment-target" value="13.0" />
-        <preference name="Orientation" value="portrait" />
+        <preference name="deployment-target" value="15.0" />
+        <preference name="Orientation" value="default" />
         <preference name="Fullscreen" value="true" />
         <icon height="29" src="res/ios/Icon-29x29~ipad.png" width="29" />
         <icon height="58" src="res/ios/Icon-29x29@2x.png" width="58" />
@@ -84,6 +83,12 @@
         </edit-config>
         <edit-config file="*-Info.plist" mode="merge" target="NSMicrophoneUsageDescription">
             <string>Needs permission to use the microphone to make and receive in-app phone calls</string>
+        </edit-config>
+        <edit-config file="*-Info.plist" mode="merge" target="UIViewControllerBasedStatusBarAppearance">
+            <false />
+        </edit-config>
+        <edit-config file="*-Info.plist" mode="merge" target="UIStatusBarStyle">
+            <string>UIStatusBarStyleLightContent</string>
         </edit-config>
     </platform>
 </widget>
