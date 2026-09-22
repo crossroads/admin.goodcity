@@ -6,6 +6,12 @@ All notable changes to the Admin app are documented here, newest first.
 
 ---
 
+## v0.27.0
+
+- ⬆️ Update Cordova Android and Cordova iOS
+- ⬆️ Update fastlane and shared-goodcity dependencies
+- ⬆️ Update CI workflow jobs
+
 ## v0.26.5
 
 - ✨ Add option to disable in-app van booking
