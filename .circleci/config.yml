@@ -56,6 +56,7 @@ aliases:
 
 orbs:
   azure-cli: circleci/azure-cli@1.3.2
+  browser-tools: circleci/browser-tools@1.5.2
   ruby: circleci/ruby@2.5.3
 
 jobs:
@@ -84,6 +85,9 @@ jobs:
   tests:
     <<: *defaults
     steps:
+      - run: sudo apt update && sudo apt -y upgrade libu2f-udev
+      - browser-tools/install-chrome
+      - browser-tools/install-chromedriver
       - restore_cache: *restore-repo-cache
       - restore_cache: *restore-yarn-cache
       - restore_cache: *restore-bower-cache
