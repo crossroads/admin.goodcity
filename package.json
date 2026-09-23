@@ -105,7 +105,6 @@
     "minimatch": "^3.0.2",
     "node-sass": "5",
     "npm": "^3.8.3",
-    "phantomjs-prebuilt": "^2.1.14",
     "shared-goodcity": "https://github.com/crossroads/shared.goodcity.git#master",
     "slick-carousel": "^1.5.8"
   }
