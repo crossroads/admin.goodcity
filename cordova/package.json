@@ -3,20 +3,19 @@
   "version": "0.21.1",
   "displayName": "S. Admin GoodCity",
   "dependencies": {
-    "cordova": "^12.0.0"
+    "cordova": "^13.0.0"
   },
   "devDependencies": {
-    "@havesource/cordova-plugin-push": "github:havesource/cordova-plugin-push#c166ffffb4494bd3c1c3b40c6b89959d9d27ca0a",
+    "@havesource/cordova-plugin-push": "^7.0.0",
     "@steveyken/cordova-plugin-twiliovoicesdk": "github:steveyken/cordova-plugin-twiliovoicesdk#9422dd8d645ec50d4db2fecbb0920a073ad28c99",
-    "cordova-android": "^14.0.1",
-    "cordova-ios": "^7.1.1",
+    "cordova-android": "^15.1.0",
+    "cordova-ios": "^8.1.1",
     "cordova-plugin-actionsheet": "^2.3.3",
     "cordova-plugin-android-permissions": "^1.1.5",
     "cordova-plugin-camera": "^8.0.0",
-    "cordova-plugin-device": "^2.0.3",
-    "cordova-plugin-inappbrowser": "^6.0.0",
-    "cordova-plugin-network-information": "^3.0.0",
-    "cordova-plugin-statusbar": "^4.0.0",
+    "cordova-plugin-device": "^3.0.0",
+    "cordova-plugin-inappbrowser": "^7.0.0",
+    "cordova-plugin-network-information": "^3.1.0",
     "es6-promise-plugin": "^4.2.2",
     "phonegap-plugin-barcodescanner": "github:ochakov/phonegap-plugin-barcodescanner#aaa27a368a57f06d4d1f2922b9758f6970c3338b"
   },
@@ -35,15 +34,14 @@
       },
       "cordova-plugin-actionsheet": {},
       "cordova-plugin-camera": {
-        "ANDROIDX_CORE_VERSION": "1.6.+"
+        "ANDROIDX_CORE_VERSION": "1.16.+"
       },
       "cordova-plugin-inappbrowser": {},
       "cordova-plugin-network-information": {},
-      "cordova-plugin-statusbar": {},
       "es6-promise-plugin": {},
       "@havesource/cordova-plugin-push": {
-        "ANDROIDX_CORE_VERSION": "1.6.+",
-        "FCM_VERSION": "23.+",
+        "ANDROIDX_CORE_VERSION": "1.16.+",
+        "FCM_VERSION": "24.+",
         "IOS_FIREBASE_MESSAGING_VERSION": "10.24.0"
       },
       "phonegap-plugin-barcodescanner": {

@@ -1,195 +1,220 @@
-# GoodCity.HK Admin App
+# GoodCity Admin App
 
 [![Circle CI](https://circleci.com/gh/crossroads/admin.goodcity.svg?style=svg)](https://circleci.com/gh/crossroads/admin.goodcity)
 [![Code Climate](https://codeclimate.com/github/crossroads/admin.goodcity/badges/gpa.svg)](https://codeclimate.com/github/crossroads/admin.goodcity)
 [![Issue Count](https://codeclimate.com/github/crossroads/admin.goodcity/badges/issue_count.svg)](https://codeclimate.com/github/crossroads/admin.goodcity)
 [![Test Coverage](https://codeclimate.com/github/crossroads/admin.goodcity/badges/coverage.svg)](https://codeclimate.com/github/crossroads/admin.goodcity)
 
-The GoodCity initiative is a new way to donate quality goods in Hong Kong. See https://www.goodcity.hk for more details.
+The staff-facing app for [GoodCity.HK](https://www.goodcity.hk) — a new way to
+donate quality goods in Hong Kong, run by the non-profit Crossroads Foundation Ltd.
 
-## Installation
+Crossroads reviewers use it to triage donor offers, accept or reject items,
+chat with donors, and place in-app voice calls. The same codebase ships
+as a **web app** and as a **Cordova-wrapped iOS/Android app**. Available in
+English and Traditional Chinese.
 
-Install and configure NodeJS 10 using NVM: https://github.com/creationix/nvm#install-script
+## Architecture at a glance
 
-You can clone the GoodCity app repo direct:
+This is an [Ember.js](https://emberjs.com) 2.x single-page app. Most models,
+services and shared screens live in the **`shared.goodcity`** addon, which it
+installs from git and shares with the donor app.
+
+| Repo                                                                       | Role                                                          |
+| -------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| [api.goodcity](https://github.com/crossroads/api.goodcity)                 | Rails JSON API — the backend this app talks to                |
+| [shared.goodcity](https://github.com/crossroads/shared.goodcity)           | Ember addon holding shared models, services and screens       |
+| [app.goodcity](https://github.com/crossroads/app.goodcity)                 | Donor app for submitting offers (also uses `shared.goodcity`) |
+| [socket.io-webservice](https://github.com/crossroads/socket.io-webservice) | Pushes live record updates to connected clients               |
+
+## Prerequisites
+
+- **Node 10** (see `.nvmrc`). The build toolchain is pinned to it and will not
+  compile on newer Node. Install via [nvm](https://github.com/nvm-sh/nvm).
+- **Yarn** 1.x.
+- **Google Chrome** — used to run the test suite.
+- Optionally, a local [api.goodcity](https://github.com/crossroads/api.goodcity)
+  running on port 3000. You can skip this and develop against staging instead
+  (see [Running the app](#running-the-app)).
+
+## Getting started
 
 ```shell
-yarn add bower ember-cli phantomjs-prebuilt
 git clone https://github.com/crossroads/admin.goodcity.git
+cd admin.goodcity
+nvm use                    # picks up Node 10 from .nvmrc
 yarn
-bower install
+yarn run bower install     # bower_components/ is gitignored, so this is required
 ```
 
-Or use the more complicated setup where you link the `shared.goodcity` library also (useful for development):
+If you also need to make changes to `shared.goodcity`, link it so your edits are
+picked up without reinstalling:
 
 ```shell
 git clone https://github.com/crossroads/shared.goodcity.git
-cd shared.goodcity
-yarn link
-cd ..
-git clone https://github.com/crossroads/admin.goodcity.git
-cd admin.goodcity
+cd shared.goodcity && yarn link && cd -
 yarn link shared-goodcity
-yarn
-bower install
 ```
 
-## Running in development/staging mode
+## Running the app
 
 ```shell
-yarn start            # connects to API server at http://localhost:3000
-yarn start:staging    # connects to API server at https://api-staging.goodcity.hk
+yarn start            # API at http://localhost:3000 (run api.goodcity locally)
+yarn start:staging    # API at https://api-staging.goodcity.hk (instant test data)
 ```
 
-Open a browser at http://localhost:4201
+Then open <http://localhost:4201>. Use `yarn start:staging` if you would rather
+not run the Rails API yourself.
 
-## Running Tests
+## Running tests
+
+The test suite needs a dev server on port **4201** running first. `ember test`
+serves the app on its own port, but the test environment points the API at
+`localhost:4201` — without it, a large number of tests fail.
 
 ```shell
-# start test server in background
+# terminal 1
 yarn run ember server --port 4201
 
-# then in another window
-yarn run ember test
-yarn run ember test -f offer
+# terminal 2
+yarn run ember test               # full suite
+yarn run ember test -f offer      # filter by name
 yarn run ember test -f item
 ```
 
-If you are using WSL2 or headless linux, you can install Google Chrome browser and run the tests inside XVFB (Virtual frame buffer).
+Tests run in Chrome. On WSL2 or a desktop Linux box this works as-is. Only if
+there is no display available at all do you need a virtual framebuffer:
 
 ```shell
 wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
-sudo apt-get update
-sudo apt-get install -y google-chrome-stable xvfb
-```
+sudo apt-get update && sudo apt-get install -y google-chrome-stable xvfb
 
-Prefix the test command with `xvfb-run` which will start/stop the XVFB process and set the DISPLAY env for you.
-
-```shell
-# start test server in background
+# terminal 1
 yarn run ember server --port 4201
-
-# in another window
+# terminal 2
 xvfb-run yarn run ember test
 ```
 
-## Building for Web
+## Building for web
+
+`ENVIRONMENT` selects which API and services the build points at.
 
 ```shell
-# development
-EMBER_CLI_CORDOVA=0 yarn run ember build --environment=production
-
-# staging (great to get instant test data if not developing API locally)
-EMBER_CLI_CORDOVA=0 ENVIRONMENT=staging yarn run ember build --environment=production
+yarn build:web:staging
+yarn build:web:production
 ```
 
-## Cordova builds
+Output lands in `dist/`. These scripts set `EMBER_CLI_CORDOVA=0`, which is what
+makes this a web build; without it the build targets Cordova and injects a
+`cordova.js` that will 404 in a browser.
 
-CircleCI will automatically build apps for `master` and `live` branches. However, if you wish to do this manually you can use the following commands.
+## Native (Cordova) builds
 
-- Switch your admin.goodcity and shared.goodcity folders to the correct branch (usually `master` or `live`)
-- Build the ember app, install cordova, add the platform
+CircleCI builds and publishes the mobile apps automatically for the `master`
+and `live` branches, so you only need this to debug on a real device.
+
+Cordova platform versions are pinned in `cordova/package.json`
+(`cordova@13`, `cordova-android@15`, `cordova-ios@8`). Note the `cordova/`
+directory uses **Node 24**, not Node 10 — see `cordova/.nvmrc`.
+
+First, build the web assets with Cordova enabled and stamp the version:
 
 ```shell
-# For cordova builds, it's often useful to point at api-staging.goodcity.hk for test data
-EMBER_CLI_CORDOVA=1 ENVIRONMENT=staging yarn run ember build --environment=production
+yarn build:cordova:staging
 ln -s `pwd`/dist `pwd`/cordova/www
 cd cordova
-# can help to start with a clean env, if android build issues
-rm -rf platforms/ plugins/ node_modules/
-cordova platform add android@13
-# now open Android Studio and build or run gradle in the docker env
+nvm use                                       # Node 24
+ENVIRONMENT=staging node rename_package.js    # sets app id, name and version
 ```
 
-## Upgrading Cordova
+Then add the platform and build:
 
-First you will need to review the Cordova blog for changes in new versions of cordova-<platform> and plugins. Then
-
-````shell
-cd cordova
-nvm use 22
-rm -rf node_modules/ platforms/ plugins/
+```shell
+# starting clean helps with Android build issues
+rm -rf platforms/ plugins/ node_modules/
 yarn
-npm install cordova@12
-cordova platform remove android
-cordova platform add android@14
-cordova platform remove ios
-cordova platform add ios@7
+cordova platform add android@15
+cordova build android --debug --device
+```
 
-## Android Studio
+### Debugging on a device with Android Studio
 
-If you want to run the app on a debug mobile device, you can use Android Studio to run the gradle builds and push to your development phone.
+- See ANDROID.md
 
-- After running `cordova platform add android@11` above, open Android Studio with the project folder located at <project root>/cordova/platforms/android
-- Connect your mobile phone and turn on debug mode
-- Run the usual gradle refresh and build processes
-- Once the app is launched on the phone, you will have useful logs (great for Push Notification debugging) inside Android Studio and you can also open Browser Inspector to view the usual processes: `edge://inspect/#devices`
+### Building Android in Docker
 
-## Docker environment
-
-We provide `Dockerfile-cordova` as a means to set up an Android / node environment for building the apps. This is based off the same environment we set up to build the Android apps on CircleCI.
-
-To prepare the build environment the first time:
+`Dockerfile-cordova` mirrors the CircleCI Android environment, so you can build
+without installing the Android SDK locally.
 
 ```shell
 docker build -f Dockerfile-cordova -t admin.goodcity.hk:latest .
-EMBER_CLI_CORDOVA=1 ENVIRONMENT=staging yarn run ember build --environment=production
-cd cordova/
-ENVIRONMENT=staging node rename_package.js
 ```
 
-Once you have built the Ember project, run the docker build container with mounted folders and run the cordova commands to build for Android.
+With the Ember build and `rename_package.js` already done, start a container
+with `dist/` and `cordova/` mounted:
 
-```
-docker run -d -v `pwd`/dist/:/home/circleci/project/dist/ -v `pwd`/cordova:/home/circleci/project/cordova/ -w /home/circleci/project/cordova/ -u root -t admin.goodcity.hk:latest /bin/bash
-# returns container hash e.g. 812cb3...
+```shell
+docker run -d \
+  -v `pwd`/dist/:/home/circleci/project/dist/ \
+  -v `pwd`/cordova:/home/circleci/project/cordova/ \
+  -w /home/circleci/project/cordova/ -u root -t admin.goodcity.hk:latest /bin/bash
+# prints a container hash, e.g. 812cb3...
+
 docker container exec 812cb3 cordova telemetry off
 docker container exec 812cb3 cordova build android --debug --device
-docker cp 812cb3:/home/circleci/project/cordova/platforms/android/app/build/outputs/apk/debug/app-debug.apk /path/to/store/app
+docker cp 812cb3:/home/circleci/project/cordova/platforms/android/app/build/outputs/apk/debug/app-debug.apk .
 ```
 
-To rebuild the app, it's sufficient to delete the app-debug.apk file, rebuild the Ember app (if necessary) and run cordova again. The volume mounts keep the docker container up to date.
+The volume mounts stay live, so to rebuild you only need to remove the old APK,
+rebuild the Ember app if it changed, and run `cordova build` again:
 
 ```shell
 docker container exec 812cb3 rm /home/circleci/project/cordova/platforms/android/app/build/outputs/apk/debug/app-debug.apk
-EMBER_CLI_CORDOVA=1 ENVIRONMENT=staging yarn run ember build --environment=production
+yarn build:cordova:staging
 docker container exec 812cb3 cordova build android --debug --device
 ```
 
-When development has finished, stop and clean up the container
+Clean up with `docker stop 812cb3 && docker rm 812cb3`.
+
+### Upgrading Cordova
+
+Review the Cordova blog for breaking changes in `cordova-<platform>` and the
+plugins first, then rebuild the platforms from scratch:
 
 ```shell
-docker stop 812cb3
-docker rm 812cb3
+cd cordova
+nvm use                     # Node 24
+rm -rf node_modules/ platforms/ plugins/
+yarn
+npm install cordova@13
+cordova platform remove android && cordova platform add android@15
+cordova platform remove ios     && cordova platform add ios@8
 ```
 
-## Using WSL2 in Windows
+### Building on Windows with WSL2
 
-You can run Android Studio in Windows and install the necessary node packages to make it possible to compile the cordova android app.
+You can run Android Studio on the Windows side while developing in WSL2. Install
+Android Studio, Node for Windows, and the Windows build tools that provide
+Python, the VS runtimes and the .NET SDKs:
 
-- Install Android Studio
-- Install NPM for Windows
-- Install windows-build-tools to get python, VS Studio runtimes, .NET 2 SDKs etc
-
-```
+```shell
 nvm install 10
-npm install -g production windows-build-tools
+npm install -g windows-build-tools
 ```
 
-Open a PowerShell in Administrator mode and run the following commands to assist with setting the Node environment.
+Node installs are slow if Defender scans them, so exclude the relevant paths from
+an Administrator PowerShell:
 
 ```powershell
 Add-MpPreference -ExclusionPath ([System.Environment]::ExpandEnvironmentVariables("%APPDATA%\npm\"))
 Add-MpPreference -ExclusionPath (Get-ItemProperty "HKLM:SOFTWARE\Node.js" | Select-Object -Property InstallPath)
 ```
-````
 
-## Steps for installing Python2
+If a native module build still fails looking for a `python`/`python2`
+executable, install Python 2 alongside your system Python and register it as
+an alternative:
 
-Replace 2.7.18 to the latest available version
-
-```sh
+```shell
 wget https://www.python.org/ftp/python/2.7.18/Python-2.7.18.tgz
 sudo tar xzf Python-2.7.18.tgz
 cd Python-2.7.18
@@ -197,7 +222,28 @@ sudo ./configure --enable-optimizations
 sudo make altinstall
 sudo ln -sfn '/usr/local/bin/python2.7' '/usr/bin/python2'
 sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 1
-
-# check with following
 sudo update-alternatives --config python
 ```
+
+## Deployment
+
+CircleCI handles releases from two long-lived branches:
+
+| Branch   | Deploys to                                   |
+| -------- | -------------------------------------------- |
+| `master` | staging web + TestFairy builds               |
+| `live`   | production web + App Store / Play Store beta |
+
+Feature branches run the test suite only. When building the mobile apps
+manually, switch your `shared.goodcity` checkout to the matching branch first.
+
+## Contributing
+
+- Branch from `master` using the Jira key, e.g. `GCW-1234-short-description`
+- Open a pull request against `master`
+- `prettier` runs automatically on commit via a git hook
+- Bump the version in `package.json` and add a `CHANGELOG.md` entry when releasing
+
+## License
+
+See [LICENSE](LICENSE).
