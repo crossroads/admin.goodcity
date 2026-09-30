@@ -6,6 +6,13 @@ All notable changes to the Admin app are documented here, newest first.
 
 ---
 
+## v0.28.0
+
+- ✨ Add "Arrange your own van" delivery option — donors book GoGoX or Lalamove themselves
+- 🐛 Fix text size and checkbox alignment on the van and drop-off screens
+- 🗑️ Remove unused PhantomJS
+- ⬆️ Move CI to cimg images and add browser tools
+
 ## v0.27.0
 
 - ⬆️ Update Cordova Android and Cordova iOS
