@@ -85,6 +85,7 @@ I18nTranslationsZhTw =
         "heading" : "捐贈詳情"
         "is_collection": "收集"
         "is_drop_off": "送抵"
+        "is_self_arranged_van": "自行安排貨車"
         "is_gogovan_order": "預約貨車"
         "is_gogovan_confirm": "確認貨車"
         "driver_completed": "司機已確認預約"

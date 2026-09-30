@@ -85,6 +85,7 @@ I18nTranslationsEn =
         "heading" : "Offer Details"
         "is_collection": "Collection"
         "is_drop_off": "Drop-off"
+        "is_self_arranged_van": "Self-arranged van"
         "is_gogovan_order": "Van ordered"
         "is_gogovan_confirm": "Van confirmed"
         "driver_completed": "Driver completed"
